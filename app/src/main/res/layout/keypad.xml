@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ 
+    android:orientation="vertical" >
+    
+  	<LinearLayout 
+        android:layout_width="fill_parent"  
+        android:layout_height="fill_parent" 
+        android:background="#FFFFFF" 
+        android:layout_weight="1"
+        android:orientation="horizontal"> 
+        
+		 <ScrollView
+			    android:id="@+id/scvKeypadTop"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="5dp"
+			    android:scrollbars="vertical"
+			    android:fillViewport="false">
+				
+		     	<LinearLayout 
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:orientation="vertical"> 
+			        
+				     	  
+				
+			     	  <LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        
+				        android:orientation="horizontal"> 
+					        <TextView
+					        android:text="Keypad id "
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:focusable="true"
+        					android:focusableInTouchMode="true"
+					        android:textColor="#777777"
+					        
+					         />
+				        
+					        <EditText 
+					            android:id="@+id/edtKeypadID"
+					            android:layout_marginLeft="5dp"
+					            android:layout_width="fill_parent"
+					            android:layout_height="wrap_content"
+					             
+					            />
+					</LinearLayout> 
+ 
+			     	
+			     	
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					       <Button 
+						        android:id="@+id/btnReadKeyId"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_marginLeft="30dp"
+						        android:text="Read keypad ID"
+	        				/>
+					       
+					        <Button 
+						        android:id="@+id/btnWriteKeyId"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_marginLeft="50dp"
+						        android:text="Write kepad ID"
+	        				/>
+	
+					</LinearLayout> 
+					
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					        <TextView
+					        android:text="keypad match"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:textColor="#777777"
+					         />
+				        
+					        <View 
+					            android:layout_width="fill_parent"
+					            android:layout_height="2dp"
+					            android:layout_gravity="center_vertical"
+					            android:background="#EEEEEE"
+					            />
+					</LinearLayout> 
+					
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					        <Button 
+						        android:id="@+id/btnStartMatch"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_marginLeft="30dp"
+						        android:text="Start match"
+	        				/>
+					       
+					        <Button 
+						        android:id="@+id/btnStopMatch"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_marginLeft="50dp"
+						        android:text="Stop match"
+	        				/>
+					</LinearLayout> 
+					
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					        <TextView
+					        android:text="Remote off"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:textColor="#777777"
+					        />
+				        
+					         <View 
+					            android:layout_width="fill_parent"
+					            android:layout_height="2dp"
+					            android:layout_gravity="center_vertical"
+					            android:background="#EEEEEE" />
+					</LinearLayout> 
+					
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					       <Button 
+						        android:id="@+id/btnTurnOffAll"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_marginLeft="30dp"
+						        android:text="Turn off all keypad"
+	        				/>
+					       
+					        
+	
+					</LinearLayout> 
+			     	
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					        <TextView
+					        android:text="Keypad authorize"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:textColor="#777777"
+					         />
+				        
+					         <View 
+					            android:layout_width="fill_parent"
+					            android:layout_height="2dp"
+					            android:layout_gravity="center_vertical"
+					            android:background="#EEEEEE" />
+					</LinearLayout> 
+					
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					         
+				        
+					        <EditText 
+					            android:id="@+id/edtAuthKeyID"
+					            android:layout_marginLeft="5dp"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
+					             android:layout_weight="1"
+					             android:hint="Keypad ID"
+					            />
+					        <Spinner 
+					            android:id="@+id/spAuthMode"
+					            android:layout_marginLeft="5dp"
+					            android:entries="@array/authorize_modes"
+					  			  android:layout_weight="1"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"/>
+					        
+					        <Button 
+						        android:id="@+id/btnAuthrize"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						         android:layout_weight="1"
+						        android:layout_marginLeft="30dp"
+						        android:text="Authrize"
+	        				/>
+					        
+					</LinearLayout> 
+					
+			     	
+			     	<LinearLayout 
+				        android:layout_width="fill_parent"  
+				        android:layout_height="wrap_content" 
+				        android:layout_marginLeft="5dp"
+				        android:orientation="horizontal"> 
+					       <Button 
+						        android:id="@+id/btnKeypadTest"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_weight="1"
+						        android:text="Keypad test"
+	        				/>
+					       
+					        <Button 
+						        android:id="@+id/btnStoptest"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						         
+						        android:layout_weight="1"
+						        android:text="Stop test"
+	        				/>
+					        
+					         <Button 
+						        android:id="@+id/btnKeypadClear"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_weight="1"
+						        android:text="Clear"
+	        				/>
+	
+					</LinearLayout> 
+			     	  
+			 </LinearLayout> 
+		</ScrollView>
+     </LinearLayout> 
+	 
+	  <LinearLayout 
+        android:layout_width="fill_parent"  
+        android:layout_height="fill_parent" 
+        android:background="#EEEEEE" 
+        android:layout_weight="1"
+        android:orientation="horizontal"> 
+     
+		      <ScrollView
+		    android:id="@+id/scvKeypad"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="5dp"
+		    android:scrollbars="vertical"
+		    android:fillViewport="false">
+		
+		        <TextView
+		        android:id="@+id/logKeypad"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:minLines="6"
+		        />
+		
+		    </ScrollView>
+    
+      
+    </LinearLayout> 
+    
+</LinearLayout>

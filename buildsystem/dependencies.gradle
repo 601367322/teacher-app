@@ -1,0 +1,168 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+
+    compileSdkVersion = 27//编译版本
+    buildToolsVersion = "27.0.3"//编译工具版本
+    checkReleaseBuilds = false//打包时是否检测
+    abortOnError = false//
+    targetSdkVersion = 27//支持最大版本号
+    minSdkVersion = 19//支持最小版本号
+    versionCode = 1//当前程序版本号
+    versionName = "1.0.0"
+    supportVersion = "27.1.0"//v4 v7版本号
+
+    constraintLayoutVersion = '1.1.0-beta3'
+    eventbus = '3.0.0'
+    gson = '2.8.0'//json解析
+    butterknife = '9.0.0-SNAPSHOT'//注解
+    butterknifeCompiler = '9.0.0-20180416.155025-37'
+    rxjava = '2.1.0'
+    rxandroid = '2.0.1'
+    retrofit2AdapterRxJava = '2.3.0'
+    retrofit2 = '2.3.0'
+    retrofitConverterGson = '2.3.0'
+    getui = '2.9.5.0'
+    greendao = '3.2.0'
+    utdid = '0.0.1'
+    aliyunUtils = '1.1.1'
+    pili = '0.8.+'
+    okhttp3 = '3.6.0'
+    okio = "1.13.0"
+    sensorsdata = '1.8.9'
+    reactNative = '0.54.2'
+    fresco = '1.3.0'
+    leakcanary = '1.5.1'
+    multidex = '1.0.2'
+    wechat = '1.0.2'
+    bugly = '1.3.4'
+    buglyNative = '3.1.2'
+    umeng = '6.0.9'
+    hotfix = '2.0.9'
+    cropper = '2.6.+'
+    gif = '1.2.8'
+    chuck = '1.1.0'
+    cupboard = '2.2.0'
+    ijkplayer = '0.8.0'
+    ioSocket = '0.8.3'
+    glideTransformations = '2.0.1'
+    alicloudReport = '1.0.2'
+    statusbarutil = '1.4.0'
+    packerNg = '1.1.6'
+    youzan = '6.2.0@aar'
+    permissionsdispatcher = '3.1.0'
+    photoview = "2.0.0"
+    dagger = '2.11'
+
+    dependencies = [
+            constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
+            v4                            : "com.android.support:support-v4:${supportVersion}",
+            v7                            : "com.android.support:appcompat-v7:${supportVersion}",
+            design                        : "com.android.support:design:${supportVersion}",
+            annotations                   : "com.android.support:support-annotations:${supportVersion}",
+            recyclerview                  : "com.android.support:recyclerview-v7:${supportVersion}",
+            cardview                      : "com.android.support:cardview-v7:${supportVersion}",
+            exifinterface                 : "com.android.support:exifinterface:${supportVersion}",
+            media                         : "com.android.support:support-media-compat:${supportVersion}",
+
+            eventbus                      : "org.greenrobot:eventbus:${eventbus}",
+
+            gson                          : "com.google.code.gson:gson:${gson}",//json解析
+
+            butterknife                   : "com.jakewharton:butterknife:${butterknife}",//注解
+
+            butterknifeCompiler           : "com.jakewharton:butterknife-compiler:${butterknifeCompiler}",
+
+            rxandroid                     : "io.reactivex.rxjava2:rxandroid:${rxandroid}",
+
+            rxjava                        : "io.reactivex.rxjava2:rxjava:${rxjava}",
+
+            retrofit2AdapterRxJava        : "com.squareup.retrofit2:adapter-rxjava2:${retrofit2AdapterRxJava}",
+
+            retrofitConverterGson         : "com.squareup.retrofit2:converter-gson:${retrofitConverterGson}",
+
+            retrofit2                     : "com.squareup.retrofit2:retrofit:${retrofit2}",
+
+            getui                         : "com.getui:sdk:${getui}",
+
+            greendao                      : "org.greenrobot:greendao:${greendao}",
+
+            utdid                         : "com.alibaba.sdk.android.plugins.jar:alisdk-utdid:${utdid}",
+
+            aliyunUtils                   : "com.aliyun.ams:alicloud-android-utils:${aliyunUtils}",
+
+            pili                          : "com.qiniu.pili:pili-android-qos:${pili}",
+
+            okhttp3                       : "com.squareup.okhttp3:okhttp:${okhttp3}",
+
+            okio                          : "com.squareup.okio:okio:${okio}",
+
+            alicloudReport                : "com.taobao.android:alicloud-report:${alicloudReport}",
+
+
+            sensorsdata                   : "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:${sensorsdata}",
+
+            reactNative                   : "com.facebook.react:react-native:${reactNative}",
+
+            fresco                        : "com.facebook.fresco:fresco:${fresco}",
+            frescoImagePipeline           : "com.facebook.fresco:imagepipeline-okhttp3:${fresco}",
+
+            leakcanary                    : "com.squareup.leakcanary:leakcanary-android:${leakcanary}",
+
+            leakcanaryNoOp                : "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary}",
+
+            multidex                      : "com.android.support:multidex:${multidex}",
+
+            wechat                        : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:${wechat}",
+
+            bugly                         : "com.tencent.bugly:crashreport_upgrade:${bugly}",
+            buglyNative                   : "com.tencent.bugly:nativecrashreport:${buglyNative}",
+
+            umeng                         : "com.umeng.analytics:analytics:${umeng}",
+
+            hotfix                        : "com.taobao.android:alisdk-hotfix:${hotfix}",
+
+            kotlin                        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+
+            cropper                       : "com.theartofdev.edmodo:android-image-cropper:$cropper",
+
+            gif                           : "pl.droidsonroids.gif:android-gif-drawable:$gif",
+
+            chuckDebugApi                 : "com.readystatesoftware.chuck:library:$chuck",
+            chuckReleaseApi               : "com.readystatesoftware.chuck:library-no-op:$chuck",
+
+            cupboard                      : "nl.qbusict:cupboard:$cupboard",
+
+            ijkplayerExo                  : "tv.danmaku.ijk.media:ijkplayer-exo:$ijkplayer",
+            ijkplayerJava                 : "tv.danmaku.ijk.media:ijkplayer-java:$ijkplayer",
+
+            ioSocket                      : "io.socket:socket.io-client:$ioSocket",
+
+            glideTransformations          : "jp.wasabeef:glide-transformations:$glideTransformations",
+
+            kotlinReflect                 : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+            statusbarutil                 : "com.jaeger.statusbarutil:library:${statusbarutil}",
+
+            packerNg                      : "com.meituan.android.walle:library:${packerNg}",
+
+            youzan                        : "com.youzanyun.open.mobile:hybrid:${youzan}",
+            youzanBasic                   : "com.youzanyun.open.mobile:basic:${youzan}",
+
+            permissionsdispatcher         : "com.github.hotchemi:permissionsdispatcher:${permissionsdispatcher}",
+            permissionsdispatcherProcessor: "com.github.hotchemi:permissionsdispatcher-processor:${permissionsdispatcher}",
+
+            photoview                     : "com.github.chrisbanes:PhotoView:${photoview}",
+
+            daggerCompiler                : "com.google.dagger:dagger-compiler:${dagger}",
+
+            dagger                        : "com.google.dagger:dagger:${dagger}",
+
+            daggerAndroid                 : "com.google.dagger:dagger-android:${dagger}",
+
+            daggerAndroidSupport          : "com.google.dagger:dagger-android-support:${dagger}"
+    ]
+}

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:id="@+id/tableApp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="0"
+        android:stretchColumns="0" >
+
+        <TableRow
+            android:id="@+id/rowSignin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/tvSignin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="10dp"
+                android:text="Signin" />
+
+            <Button
+                android:id="@+id/btnSigninCfg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="config" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowChoice"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tvChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_marginStart="10dp"
+                android:text="Choice" />
+
+            <Button
+                android:id="@+id/btnChoiceCfg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="config" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowQuiz"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tvQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_marginStart="10dp"
+                android:text="Quiz" />
+
+            <Button
+                android:id="@+id/btnQuizCfg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="config" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowExam"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tvExam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_marginStart="10dp"
+                android:text="Examination" />
+
+            <Button
+                android:id="@+id/btnExamCfg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="config" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnStopAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="10dp"
+        android:text="Stop answer" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Start Mode" />
+
+        <Spinner
+            android:id="@+id/spAppStartmode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:entries="@array/start_modes" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnStartVote"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:text="Start" />
+
+        <Button
+            android:id="@+id/btnStopVote"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="10dp"
+            android:text="Stop" />
+
+        <Button
+            android:id="@+id/btnAppClear"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:text="Clear" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#EEEEEE"
+        android:orientation="horizontal" >
+
+        <ScrollView
+            android:id="@+id/scvApp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="false"
+            android:padding="5dp"
+            android:scrollbars="vertical" >
+
+            <TextView
+                android:id="@+id/txtAppLog"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:minLines="6" />
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

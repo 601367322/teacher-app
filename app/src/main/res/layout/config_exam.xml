@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Exam name" />
+
+        <EditText
+            android:id="@+id/edtExamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="8 charasters max" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/tvExamNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Question numbers" />
+
+        <EditText
+            android:id="@+id/edtExamQuestionNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="1-30" />
+
+        <Button
+            android:id="@+id/btnQuestionConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question config" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Exam mode" />
+
+        <Spinner
+            android:id="@+id/spCfgExamMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:entries="@array/exam_modes" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Report status" />
+
+        <Spinner
+            android:id="@+id/spCfgExamReportStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:entries="@array/exam_report_modes" />
+    </LinearLayout>
+    
+    
+    
+    
+     
+    
+
+    <Button
+        android:id="@+id/btnExamConfigOk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="OK" />
+
+</LinearLayout>
