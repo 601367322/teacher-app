@@ -31,7 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_layout)
+        setContentView(layoutId())
         setSupportActionBar(toolbar)
         addFragment(savedInstanceState)
     }
@@ -43,8 +43,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun addFragment(savedInstanceState: Bundle?) =
-            savedInstanceState ?: supportFragmentManager.inTransaction { add(
-                    R.id.fragmentContainer, fragment()) }
+            savedInstanceState ?: supportFragmentManager.inTransaction {
+                add(R.id.fragmentContainer, fragment())
+            }
 
     abstract fun fragment(): BaseFragment
+
+    open fun layoutId(): Int = R.layout.activity_layout
 }

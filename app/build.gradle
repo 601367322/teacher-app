@@ -78,6 +78,7 @@ dependencies {
     debugImplementation dependencies.chuckDebugApi
 
     implementation project(":lib.base")
+    implementation project(":lib.sunvote")
 }
 repositories {
     mavenCentral()

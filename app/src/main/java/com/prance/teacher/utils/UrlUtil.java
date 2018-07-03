@@ -131,7 +131,7 @@ public class UrlUtil {
      * @return
      */
     public static String getPathName() {
-        return "prance.properties";
+        return "config.properties";
     }
 
     /**

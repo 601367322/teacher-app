@@ -2,7 +2,7 @@ package com.shuangshi.lib.base.core.di
 
 import android.content.Context
 import com.google.gson.*
-import com.tengyue.teacher.BuildConfig
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.TeacherApplication
 import dagger.Module
 import dagger.Provides

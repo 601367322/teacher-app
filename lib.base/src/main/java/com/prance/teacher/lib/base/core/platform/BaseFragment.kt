@@ -39,8 +39,6 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun layoutId(): Int
 
-
-
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
