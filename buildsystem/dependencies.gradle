@@ -31,7 +31,7 @@ ext {
     utdid = '0.0.1'
     aliyunUtils = '1.1.1'
     pili = '0.8.+'
-    okhttp3 = '3.6.0'
+    okhttp3 = '3.8.1'
     okio = "1.13.0"
     sensorsdata = '1.8.9'
     reactNative = '0.54.2'
@@ -57,6 +57,9 @@ ext {
     permissionsdispatcher = '3.1.0'
     photoview = "2.0.0"
     dagger = '2.11'
+    utilcode = '1.17.0'
+    kotlin_coroutines_version = '0.22.1'
+    archComponents_version = '1.1.1'
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -68,6 +71,8 @@ ext {
             cardview                      : "com.android.support:cardview-v7:${supportVersion}",
             exifinterface                 : "com.android.support:exifinterface:${supportVersion}",
             media                         : "com.android.support:support-media-compat:${supportVersion}",
+            archComponents                : "android.arch.lifecycle:extensions:$archComponents_version",
+            archComponentsCompiler        : "android.arch.lifecycle:compiler:$archComponents_version",
 
             eventbus                      : "org.greenrobot:eventbus:${eventbus}",
 
@@ -126,7 +131,9 @@ ext {
 
             hotfix                        : "com.taobao.android:alisdk-hotfix:${hotfix}",
 
-            kotlin                        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            kotlin                        : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            kotlinCoroutines              : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version",
+            kotlinCoroutinesAndroid       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version",
 
             cropper                       : "com.theartofdev.edmodo:android-image-cropper:$cropper",
 
@@ -144,7 +151,6 @@ ext {
 
             glideTransformations          : "jp.wasabeef:glide-transformations:$glideTransformations",
 
-            kotlinReflect                 : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
             statusbarutil                 : "com.jaeger.statusbarutil:library:${statusbarutil}",
 
             packerNg                      : "com.meituan.android.walle:library:${packerNg}",
@@ -163,6 +169,8 @@ ext {
 
             daggerAndroid                 : "com.google.dagger:dagger-android:${dagger}",
 
-            daggerAndroidSupport          : "com.google.dagger:dagger-android-support:${dagger}"
+            daggerAndroidSupport          : "com.google.dagger:dagger-android-support:${dagger}",
+
+            utilcode                      : "com.blankj:utilcode:${utilcode}"
     ]
 }

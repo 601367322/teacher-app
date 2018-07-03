@@ -58,6 +58,11 @@
             android:name="cn.sunars.sdk.RBLService"
             android:enabled="true" />
 
+        <!-- 设置IP测试入口 open close-->
+        <meta-data
+            android:name="TEST_SETTING"
+            android:value="${TEST_SETTING}"></meta-data>
+
         <!--  <service android:name="cn.sunars.sdk.SunARS"/>   -->
     </application>
 

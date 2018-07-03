@@ -4,6 +4,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 
+def Test_Setting_close = 'close'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -17,6 +19,9 @@ android {
 
         //只有中文
         resConfigs "zh"
+
+        // 测试开关
+        manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_close")
     }
 
     buildTypes {
@@ -33,14 +38,29 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     kapt dependencies.daggerCompiler
+    kapt dependencies.archComponentsCompiler
 
     implementation dependencies.kotlin
-    implementation dependencies.kotlinReflect
+    implementation dependencies.kotlinCoroutines
+    implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.v4
     implementation dependencies.v7
+    implementation dependencies.recyclerview
+    implementation dependencies.design
     implementation dependencies.dagger
     implementation dependencies.daggerAndroidSupport
     implementation dependencies.daggerAndroid
+    implementation dependencies.retrofit2
+    implementation dependencies.retrofit2AdapterRxJava
+    implementation dependencies.retrofitConverterGson
+    implementation dependencies.okhttp3
+    implementation dependencies.gson
+    implementation dependencies.utilcode
+    implementation dependencies.constraintLayout
+    implementation dependencies.archComponents
+
+    releaseImplementation dependencies.chuckReleaseApi
+    debugImplementation dependencies.chuckDebugApi
 }
 repositories {
     mavenCentral()
