@@ -11,7 +11,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.tengyue.teacher"
+        applicationId "com.prance.teacher"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -30,10 +30,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    flavorDimensions("normal")
+
+    //渠道列表
+    productFlavors {
+
+        dev {
+            manifestPlaceholders.put("TEST_SETTING", "true")
+            dimension "normal"
+        }
+
+        prod {
+            dimension "normal"
+        }
+    }
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     def dependencies = rootProject.ext.dependencies
 
@@ -61,6 +76,8 @@ dependencies {
 
     releaseImplementation dependencies.chuckReleaseApi
     debugImplementation dependencies.chuckDebugApi
+
+    implementation project(":lib.base")
 }
 repositories {
     mavenCentral()
