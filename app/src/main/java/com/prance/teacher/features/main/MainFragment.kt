@@ -8,34 +8,34 @@ import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.prance.teacher.R
 import com.prance.teacher.core.platform.BaseFragment
-import com.prance.teacher.features.main.sun.DataReceiverThread
-import com.prance.teacher.features.main.sun.MySunARSListener
-import com.prance.teacher.features.main.sun.UsbReceiver
 import cn.sunars.sdk.SunARS
+import com.prance.teacher.features.main.sun.*
 
 class MainFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_main
 
-    private var mUsbThread: DataReceiverThread? = null
-    private var mUsbReceiver: UsbReceiver? = null
-    private var mSunARSListener: MySunARSListener? = null
-
+    private lateinit var mUsbThread: DataReceiverThread
+    private lateinit var mUsbReceiver: UsbReceiver
+    private lateinit var mSunARSListener: MySunARSListener
+    private lateinit var mUsbManagerImpl: IUsbManagerInterface
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mUsbManagerImpl = UsbManagerImpl()
+
         //注册设备连接广播
-        mUsbReceiver = UsbReceiver()
+        mUsbReceiver = UsbReceiver(mUsbManagerImpl)
         registerUsbBroadcastReceiver()
 
         //开启Usb读取线程
-        mUsbThread = DataReceiverThread(mUsbReceiver)
-        mUsbThread?.start()
+        mUsbThread = DataReceiverThread(mUsbManagerImpl)
+        mUsbThread.start()
 
         //开启基站监听
         try {
-            mSunARSListener = MySunARSListener(mUsbReceiver!!)
+            mSunARSListener = MySunARSListener(mUsbManagerImpl)
             SunARS.setListener(mSunARSListener)
             val r = SunARS.license(1, "SUNARS2013")
             SunARS.setLogOn(0)
@@ -48,14 +48,14 @@ class MainFragment : BaseFragment() {
         }
 
         //链接USB
-        mUsbReceiver?.checkUsbDevice(activity)
+        mUsbManagerImpl.checkUsbDevice(activity)
     }
 
     private fun registerUsbBroadcastReceiver() {
         val filter = IntentFilter()
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
-        filter.addAction(UsbReceiver.ACTION_USB_PERMISSION)
+        filter.addAction(UsbManagerImpl.ACTION_USB_PERMISSION)
         activity?.run { registerReceiver(mUsbReceiver, filter) }
     }
 

@@ -1,5 +1,6 @@
 package com.prance.teacher.features.main.sun
 
+import android.content.Context
 import android.hardware.usb.UsbDevice
 import java.util.HashMap
 
@@ -11,5 +12,11 @@ interface IUsbManagerInterface {
 
     fun sendDataBulkTransfer(sendData: ByteArray)
 
-    fun recvUsbData(): ByteArray?
+    fun receiveUsbData(): ByteArray?
+
+    fun checkUsbDevice(context: Context?)
+
+    fun openUsbDevice(): Boolean
+
+    fun getUsbDevice(): UsbDevice?
 }

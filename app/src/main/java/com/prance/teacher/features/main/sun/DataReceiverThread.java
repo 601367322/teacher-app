@@ -22,7 +22,7 @@ public class DataReceiverThread extends Thread {
     public void run() {
         super.run();
         while (!isInterrupted()) {
-            final byte[] buffer = mUsbManagerInterface.recvUsbData(); // receiveUsbRequestData();
+            final byte[] buffer = mUsbManagerInterface.receiveUsbData(); // receiveUsbRequestData();
             if (buffer != null) {
                 onDataReceived(buffer);
             }
