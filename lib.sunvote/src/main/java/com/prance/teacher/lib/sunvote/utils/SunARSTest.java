@@ -1,7 +1,7 @@
 package com.prance.teacher.lib.sunvote.utils;
 
-import com.prance.teacher.lib.sunvote.core.SunARS;
-import com.prance.teacher.lib.sunvote.core.SunARS.SunARSListener;
+import cn.sunars.sdk.SunARS;
+import cn.sunars.sdk.SunARS.SunARSListener;
 
 /**
  * 

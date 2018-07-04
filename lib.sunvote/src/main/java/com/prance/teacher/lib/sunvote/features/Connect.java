@@ -11,7 +11,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
@@ -43,7 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prance.teacher.lib.sunvote.R;
-import com.prance.teacher.lib.sunvote.core.SunARS;
+import cn.sunars.sdk.SunARS;
 
 
 public class Connect extends Fragment {

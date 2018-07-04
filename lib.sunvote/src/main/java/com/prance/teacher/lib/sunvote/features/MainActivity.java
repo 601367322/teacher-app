@@ -46,7 +46,7 @@ import android.widget.Toast;
 import com.prance.teacher.lib.sunvote.R;
 import com.prance.teacher.lib.sunvote.utils.DataUtil;
 import com.prance.teacher.lib.sunvote.utils.LogUtil;
-import com.prance.teacher.lib.sunvote.core.SunARS;
+import cn.sunars.sdk.SunARS;
 
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
@@ -598,7 +598,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 						originCrcValue |= SerDataRx[rxDataLen - 1] & 0xff;
 
 						if (crcValue != originCrcValue) {
-							System.out.println("recv package crc error!\n");
+//							System.out.println("recv package crc error!\n");
 							// System.out.println("keyData:", SerDataRx
 							// , pack.len);
 							// for(int k=3;k<8;k++){

@@ -22,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.prance.teacher.lib.sunvote.R;
-import com.prance.teacher.lib.sunvote.core.SunARS;
+import cn.sunars.sdk.SunARS;
 
 
 public class Application extends Fragment {

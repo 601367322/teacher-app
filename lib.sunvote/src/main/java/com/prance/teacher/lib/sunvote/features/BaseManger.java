@@ -21,7 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.prance.teacher.lib.sunvote.R;
-import com.prance.teacher.lib.sunvote.core.SunARS;
+import cn.sunars.sdk.SunARS;
 
 public class BaseManger extends Fragment {
     private View contentView;

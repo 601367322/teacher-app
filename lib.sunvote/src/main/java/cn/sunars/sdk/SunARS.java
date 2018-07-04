@@ -1,4 +1,4 @@
-package com.prance.teacher.lib.sunvote.core;
+package cn.sunars.sdk;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
@@ -317,6 +317,10 @@ public class SunARS extends Service{
 
 	public static void setListener(SunARSListener al) {
 		SunARS.al = al;
+	}
+
+	public static void clearListener(){
+		SunARS.al = null;
 	}
 	
 	public static int DataRx(byte[] recvData,int dataLen){
