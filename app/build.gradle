@@ -5,6 +5,11 @@ apply plugin: 'kotlin-android-extensions'
 
 
 def Test_Setting_close = 'close'
+def Test_Setting_open = 'open'
+
+//读取签名配置文件
+Properties props = new Properties()
+props.load(new FileInputStream(file("../buildsystem/signing.properties")))
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -22,12 +27,47 @@ android {
 
         // 测试开关
         manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_close")
+        //Bugly
+        manifestPlaceholders.put("BUGLY_APPID", "c3f5c89f7c")
     }
 
-    buildTypes {
+    signingConfigs {
+
         release {
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+
+    buildTypes {
+
+        debug {
             minifyEnabled false
+
+//            ndk {
+//                abiFilters "armeabi-v7a", 'x86'
+//            }
+
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
+        }
+
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+//            ndk {
+//                abiFilters "armeabi-v7a", 'x86'
+//            }
+
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
         }
     }
 
@@ -37,12 +77,23 @@ android {
     productFlavors {
 
         dev {
-            manifestPlaceholders.put("TEST_SETTING", "true")
+            manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_open")
             dimension "normal"
         }
 
         prod {
             dimension "normal"
+        }
+    }
+
+    applicationVariants.all { variant ->
+
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = "app-release.apk"
+                outputFileName = new File(fileName)
+            }
         }
     }
 }
@@ -54,6 +105,7 @@ dependencies {
 
     kapt dependencies.daggerCompiler
     kapt dependencies.archComponentsCompiler
+    kapt dependencies.permissionsdispatcherProcessor
 
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
@@ -65,23 +117,22 @@ dependencies {
     implementation dependencies.dagger
     implementation dependencies.daggerAndroidSupport
     implementation dependencies.daggerAndroid
-    implementation dependencies.retrofit2
-    implementation dependencies.retrofit2AdapterRxJava
-    implementation dependencies.retrofitConverterGson
     implementation dependencies.okhttp3
     implementation dependencies.gson
     implementation dependencies.utilcode
     implementation dependencies.constraintLayout
     implementation dependencies.archComponents
-
-    releaseImplementation dependencies.chuckReleaseApi
-    debugImplementation dependencies.chuckDebugApi
-
-    debugImplementation dependencies.leakcanary
-    releaseImplementation dependencies.leakcanaryNoOp
+    implementation(dependencies.permissionsdispatcher) {
+        exclude group: 'com.android.support'
+    }
 
     implementation project(":lib.base")
+    implementation project(":lib.teacher.base")
+    implementation project(":lib.test.setting")
     implementation project(":lib.sunvote")
+    implementation project(":lib.bugly")
+    implementation project(":lib.common")
+    implementation project(":lib.database")
 }
 repositories {
     mavenCentral()

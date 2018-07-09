@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.prance.lib.test.setting">
+
+    <application>
+        <activity android:name=".features.TestSettingActivity" />
+    </application>
+</manifest>

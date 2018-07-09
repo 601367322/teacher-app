@@ -4,7 +4,7 @@ import android.os.Handler;
 
 import cn.sunars.sdk.SunARS;
 
-import com.prance.teacher.lib.sunvote.utils.DataUtil;
+import com.prance.lib.sunvote.utils.DataUtil;
 
 
 public class DataReceiverThread extends Thread {
@@ -22,7 +22,8 @@ public class DataReceiverThread extends Thread {
     public void run() {
         super.run();
         while (!isInterrupted()) {
-            final byte[] buffer = mUsbManagerInterface.receiveUsbData(); // receiveUsbRequestData();
+            // receiveUsbRequestData();
+            final byte[] buffer = mUsbManagerInterface.receiveUsbData();
             if (buffer != null) {
                 onDataReceived(buffer);
             }
@@ -69,7 +70,8 @@ public class DataReceiverThread extends Thread {
         int rxDataLen = 0;
         for (int i = 0; i < recvLen; i++) {
             int dd = DataUtil.getUnsignedByte(recvBuf[i]);
-            SerDataRx[iSerRxN] = recvBuf[i];// 先保存数据
+            // 先保存数据
+            SerDataRx[iSerRxN] = recvBuf[i];
             switch (iSerRxN) {
                 case 0:
                     if (dd == 0xF5) {
@@ -77,46 +79,45 @@ public class DataReceiverThread extends Thread {
                     }
                     break;
                 case 1:
-                    if (dd == 0xAA)
+                    if (dd == 0xAA) {
                         iSerRxN++;
-                    else {
-                        if (dd == 0xF5)
+                    } else {
+                        if (dd == 0xF5) {
                             iSerRxN = 1;
-                        else
+                        } else {
                             iSerRxN = 0;
+                        }
                     }
                     break;
                 case 2:
-                    if (dd == 0xAA)
+                    if (dd == 0xAA) {
                         iSerRxN++;
-                    else {
-                        if (dd == 0xF5)
+                    } else {
+                        if (dd == 0xF5) {
                             iSerRxN = 1;
-                        else
+                        } else {
                             iSerRxN = 0;
+                        }
                     }
                     break;
-                case 3:// len
-                    if (dd > 128) // C_SERMAXN
+                case 3:
+                    // C_SERMAXN
+                    if (dd > 128){
                         iSerRxN = 0;
-                    else {
+                    } else {
                         iSerRxN++;
                     }
                     break;
                 default:
                     iSerRxN++;
-                    rxDataLen = SerDataRx[3] + 4;// len
-                    if (rxDataLen <= 3)
+                    rxDataLen = SerDataRx[3] + 4;
+                    if (rxDataLen <= 3) {
                         break;
-                    // System.out.println(String.format("iSerRxN:%d",iSerRxN));
-                    // printDataBuf(SerDataRx,"readed");
+                    }
                     if (iSerRxN == rxDataLen) {
                         // 数据接收完整
 
                         if (DataUtil.checkPack(SerDataRx)) {
-
-                            //DataUtil.printDataBuf(SerDataRx, "recv");
-                            // System.out.println("rxDataLen:"+rxDataLen);
                             int crcValue = DataUtil.getUnsignedShort(DataUtil.Crc16(SerDataRx, rxDataLen - 4 - 2));
                             int originCrcValue = 0;
                             originCrcValue |= (SerDataRx[rxDataLen - 2] & 0xff) << 8;
@@ -131,7 +132,6 @@ public class DataReceiverThread extends Thread {
                                 // }
                                 // addLog("CRC error");
                             }
-                            // addLog("getData:"+ rxDataLen);
 
                             SunARS.DataRx(SerDataRx, rxDataLen);
 

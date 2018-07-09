@@ -7,9 +7,10 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.prance.teacher.R
-import com.prance.teacher.core.platform.BaseFragment
+import com.prance.lib.teacher.base.core.platform.BaseFragment
 import cn.sunars.sdk.SunARS
 import com.prance.teacher.features.main.sun.*
+import javax.inject.Inject
 
 class MainFragment : BaseFragment() {
 
@@ -18,12 +19,17 @@ class MainFragment : BaseFragment() {
     private lateinit var mUsbThread: DataReceiverThread
     private lateinit var mUsbReceiver: UsbReceiver
     private lateinit var mSunARSListener: MySunARSListener
-    private lateinit var mUsbManagerImpl: IUsbManagerInterface
+
+//    private lateinit var mMainViewModel: MainViewModel
+
+    @Inject
+    lateinit var mUsbManagerImpl: UsbManagerImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mUsbManagerImpl = UsbManagerImpl()
+
+        DaggerMainComponent.create().inject(this)
 
         //注册设备连接广播
         mUsbReceiver = UsbReceiver(mUsbManagerImpl)

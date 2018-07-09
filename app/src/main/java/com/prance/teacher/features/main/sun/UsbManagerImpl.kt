@@ -10,8 +10,10 @@ import android.os.Message
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import java.util.*
+import javax.inject.Inject
 
-class UsbManagerImpl :IUsbManagerInterface{
+
+class UsbManagerImpl @Inject constructor() : IUsbManagerInterface {
 
     private var mUsbManager: UsbManager? = null
     private var mUsbDevice: UsbDevice? = null

@@ -1,6 +1,6 @@
 package com.prance.teacher.features.login
 
-import com.prance.teacher.core.platform.BaseFragment
+import com.prance.lib.teacher.base.core.platform.BaseFragment
 
 
 class LoginFragment : BaseFragment() {

@@ -4,7 +4,7 @@
     android:orientation="vertical" > 
     
   
-    <com.prance.teacher.lib.sunvote.features.NavigationView
+    <com.prance.lib.sunvote.features.NavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/navMain"

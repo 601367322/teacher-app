@@ -17,7 +17,7 @@
 #}
 
 ####应用内混淆#####
-
+-keep class com.prance.third.impl.**{*;}
 
 -assumenosideeffects class android.util.Log {
     public static *** v(...);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <AutoCompleteTextView
+        android:id="@+id/scheme"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="协议：http/https" />
+
+    <AutoCompleteTextView
+        android:id="@+id/hosts"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="域名：api.tengyue360.com" />
+
+    <AutoCompleteTextView
+        android:id="@+id/port"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="端口号：80" />
+</LinearLayout>
