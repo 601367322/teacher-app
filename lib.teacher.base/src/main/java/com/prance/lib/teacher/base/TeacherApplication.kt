@@ -12,7 +12,11 @@ import com.prance.lib.third.inter.PluginsManager
 import com.squareup.leakcanary.LeakCanary
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
+import com.prance.lib.common.utils.ImageLoaderFactory
 import com.prance.lib.common.utils.ModelUtil
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import javax.inject.Inject
 
 
 class TeacherApplication : Application() {
@@ -24,6 +28,11 @@ class TeacherApplication : Application() {
                 .build()
     }
 
+    @Inject
+    lateinit var mRetrofit: Retrofit
+
+    @Inject
+    lateinit var mOkHttpClient: OkHttpClient
 
     @SuppressLint("MissingPermission")
     override fun onCreate() {
@@ -59,6 +68,11 @@ class TeacherApplication : Application() {
          * Bugly初始化
          */
         PluginsManager.bugly?.init()
+
+        /**
+         * 初始化图片加载器
+         */
+        ImageLoaderFactory.mOkHttpClient = mOkHttpClient
     }
 
 }

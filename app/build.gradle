@@ -125,6 +125,9 @@ dependencies {
     implementation(dependencies.permissionsdispatcher) {
         exclude group: 'com.android.support'
     }
+    implementation(dependencies.glide) {
+        exclude group: "com.android.support"
+    }
 
     implementation project(":lib.base")
     implementation project(":lib.teacher.base")

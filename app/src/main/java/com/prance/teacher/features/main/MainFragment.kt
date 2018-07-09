@@ -9,7 +9,11 @@ import com.blankj.utilcode.util.LogUtils
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import cn.sunars.sdk.SunARS
+import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.ImageConfig
+import com.prance.lib.common.utils.ImageLoaderFactory
 import com.prance.teacher.features.main.sun.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
 class MainFragment : BaseFragment() {
@@ -79,6 +83,8 @@ class MainFragment : BaseFragment() {
         }
 
         SunARS.clearListener()
+
+        ImageLoaderFactory.clearData()
     }
 
 

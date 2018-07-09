@@ -20,24 +20,25 @@ class ApplicationModule(private val application: TeacherApplication) {
     @Singleton
     fun provideApplicationContext(): Context = application
 
-    @Provides @Singleton fun provideRetrofit(): Retrofit {
-
-        val gson = GsonBuilder().registerTypeAdapter(Double::class.java, JsonSerializer<Double> { src, typeOfSrc, context -> if (src == src!!.toDouble()) JsonPrimitive(src.toLong()) else JsonPrimitive(src) }).create()
-
-
-        return Retrofit.Builder()
-                .baseUrl(UrlUtil.getUrl())
-                .client(createClient())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-    }
-
-    private fun createClient(): OkHttpClient {
+    @Provides
+    @Singleton
+    fun provideClient(): OkHttpClient {
         val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         if (ModelUtil.isTestModel) {
             okHttpClientBuilder.addInterceptor(ChuckInterceptor(application))
         }
         return okHttpClientBuilder.build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        val mGson = GsonBuilder().registerTypeAdapter(Double::class.java, JsonSerializer<Double> { src, _, _ -> if (src == src!!.toDouble()) JsonPrimitive(src.toLong()) else JsonPrimitive(src) }).create()
+        return Retrofit.Builder()
+                .baseUrl(UrlUtil.getUrl())
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(mGson))
+                .build()
     }
 
 }

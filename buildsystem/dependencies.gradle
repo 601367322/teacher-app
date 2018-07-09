@@ -48,7 +48,8 @@ ext {
     cupboard = '2.2.0'
     ijkplayer = '0.8.0'
     ioSocket = '0.8.3'
-    glideTransformations = '2.0.1'
+    glideTransformations = '3.3.0'
+    glideTransformationsGPU = '1.4.1'
     alicloudReport = '1.0.2'
     statusbarutil = '1.4.0'
     packerNg = '1.1.6'
@@ -59,6 +60,8 @@ ext {
     utilcode = '1.17.0'
     kotlin_coroutines_version = '0.22.1'
     archComponents_version = '1.1.1'
+    glide = "4.7.1"
+    glideOkHttp = "4.7.1"
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -149,6 +152,7 @@ ext {
             ioSocket                      : "io.socket:socket.io-client:$ioSocket",
 
             glideTransformations          : "jp.wasabeef:glide-transformations:$glideTransformations",
+            glideTransformationsGPU       : "jp.co.cyberagent.android.gpuimage:gpuimage-library:${glideTransformationsGPU}",
 
             statusbarutil                 : "com.jaeger.statusbarutil:library:${statusbarutil}",
 
@@ -170,6 +174,10 @@ ext {
 
             daggerAndroidSupport          : "com.google.dagger:dagger-android-support:${dagger}",
 
-            utilcode                      : "com.blankj:utilcode:${utilcode}"
+            utilcode                      : "com.blankj:utilcode:${utilcode}",
+
+            glide                         : "com.github.bumptech.glide:glide:${glide}",
+            glideCompiler                 : "com.github.bumptech.glide:compiler:${glide}",
+            glideOkHttp                   : "com.github.bumptech.glide:okhttp3-integration:${glideOkHttp}"
     ]
 }

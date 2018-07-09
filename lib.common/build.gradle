@@ -29,9 +29,20 @@ dependencies {
 
     def dependencies = rootProject.ext.dependencies
 
+    implementation dependencies.v4
     implementation dependencies.v7
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
+    implementation dependencies.okhttp3
+    implementation(dependencies.glide) {
+        exclude group: "com.android.support"
+    }
+    implementation(dependencies.glideOkHttp) {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation dependencies.glideTransformations
+    implementation dependencies.glideTransformationsGPU
+    kapt dependencies.glideCompiler
 }
