@@ -1,7 +1,10 @@
-include ':app', ':lib.common', ':lib.database',
+include ':app', ':lib.qrcode', ':lib.socket',
+        ':lib.common',
+        ':lib.database',
         ':lib.base',
         ':lib.sunvote',
         ':lib.test.setting',
         ':lib.teacher.base',
         ':lib.interfaces',
-        ':lib.bugly'
+        ':lib.bugly',
+        ':lib.sharedpreferences'

@@ -9,4 +9,7 @@ object Constants {
 
     const val BUGLY_APPID = "BUGLY_APPID"
 
+    const val SOCKET_HOST = "socket_host"
+
+    const val SOCKET_PORT = "socket_port"
 }

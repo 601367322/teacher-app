@@ -72,7 +72,7 @@ class TeacherApplication : Application() {
         /**
          * 初始化图片加载器
          */
-        ImageLoaderFactory.mOkHttpClient = mOkHttpClient
+        ImageLoaderFactory.init(mOkHttpClient)
     }
 
 }

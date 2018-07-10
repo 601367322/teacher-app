@@ -9,11 +9,12 @@ import com.blankj.utilcode.util.LogUtils
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import cn.sunars.sdk.SunARS
-import com.prance.lib.common.utils.GlideApp
-import com.prance.lib.common.utils.ImageConfig
-import com.prance.lib.common.utils.ImageLoaderFactory
+import com.prance.lib.base.exception.Failure
+import com.prance.lib.base.extension.failure
+import com.prance.lib.base.extension.observe
+import com.prance.lib.base.extension.viewModel
+import com.prance.lib.database.UserEntity
 import com.prance.teacher.features.main.sun.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
 class MainFragment : BaseFragment() {
@@ -24,7 +25,7 @@ class MainFragment : BaseFragment() {
     private lateinit var mUsbReceiver: UsbReceiver
     private lateinit var mSunARSListener: MySunARSListener
 
-//    private lateinit var mMainViewModel: MainViewModel
+    private lateinit var mMainViewModel: MainViewModel
 
     @Inject
     lateinit var mUsbManagerImpl: UsbManagerImpl
@@ -32,8 +33,12 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         DaggerMainComponent.create().inject(this)
+
+        mMainViewModel = viewModel(viewModelFactory) {
+            observe(movieDetails, ::renderMovieDetails)
+            failure(failureData, ::handleFailure)
+        }
 
         //注册设备连接广播
         mUsbReceiver = UsbReceiver(mUsbManagerImpl)
@@ -61,6 +66,16 @@ class MainFragment : BaseFragment() {
         mUsbManagerImpl.checkUsbDevice(activity)
     }
 
+    private fun renderMovieDetails(userEntity: UserEntity?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun handleFailure(failure: Failure?) {
+        when (failure) {
+
+        }
+    }
+
     private fun registerUsbBroadcastReceiver() {
         val filter = IntentFilter()
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
@@ -73,7 +88,7 @@ class MainFragment : BaseFragment() {
         super.onDestroy()
 
         //关闭Usb读取线程
-        mUsbThread?.let {
+        mUsbThread.let {
             it.interrupt()
         }
 
@@ -83,8 +98,6 @@ class MainFragment : BaseFragment() {
         }
 
         SunARS.clearListener()
-
-        ImageLoaderFactory.clearData()
     }
 
 

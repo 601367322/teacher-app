@@ -62,6 +62,7 @@ ext {
     archComponents_version = '1.1.1'
     glide = "4.7.1"
     glideOkHttp = "4.7.1"
+    netty = '4.1.25.Final'
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -178,6 +179,8 @@ ext {
 
             glide                         : "com.github.bumptech.glide:glide:${glide}",
             glideCompiler                 : "com.github.bumptech.glide:compiler:${glide}",
-            glideOkHttp                   : "com.github.bumptech.glide:okhttp3-integration:${glideOkHttp}"
+            glideOkHttp                   : "com.github.bumptech.glide:okhttp3-integration:${glideOkHttp}",
+
+            netty                         : "io.netty:netty-all:${netty}"
     ]
 }

@@ -119,6 +119,7 @@
 
 -dontwarn org.greenrobot.greendao.database.**
 -dontwarn org.greenrobot.greendao.rx.**
+-dontwarn org.greenrobot.greendao.query.**
 #####################
 
 #okio

@@ -27,9 +27,9 @@ import com.prance.lib.base.exception.Failure
  */
 abstract class BaseViewModel : ViewModel() {
 
-    var failure: MutableLiveData<Failure> = MutableLiveData()
+    var failureData: MutableLiveData<Failure> = MutableLiveData()
 
     protected fun handleFailure(failure: Failure) {
-        this.failure.value = failure
+        this.failureData.value = failure
     }
 }

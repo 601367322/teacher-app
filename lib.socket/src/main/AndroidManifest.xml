@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.prance.lib.socket">
+
+    <application>
+        <service android:name=".PushService">
+            <intent-filter>
+                <action android:name="com.prance.lib.socket.PushService" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

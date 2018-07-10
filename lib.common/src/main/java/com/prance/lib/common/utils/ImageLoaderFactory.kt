@@ -37,37 +37,11 @@ import okhttp3.OkHttpClient
 @GlideModule
 class ImageLoaderFactory : AppGlideModule() {
 
-    fun with(activity: Activity): ImageLoader {
-        return ImageLoader(activity)
-    }
-
-    fun with(context: Context): ImageLoader {
-        return ImageLoader(context)
-    }
-
-    fun with(fragment: Fragment): ImageLoader {
-        return ImageLoader(fragment)
-    }
-
-
-    class ImageLoader {
-
-        internal var mGlide: RequestManager
-
-        constructor(activity: Activity) {
-            mGlide = Glide.with(activity)
-        }
-
-        constructor(context: Context) {
-            mGlide = Glide.with(context)
-        }
-
-        constructor(fragment: Fragment) {
-            mGlide = Glide.with(fragment)
-        }
-    }
-
     companion object {
+
+        fun init(mOkHttpClient: OkHttpClient) {
+            this.mOkHttpClient = mOkHttpClient
+        }
 
         var mOkHttpClient: OkHttpClient? = null
 

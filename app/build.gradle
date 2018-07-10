@@ -60,7 +60,7 @@ android {
 
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
 //            ndk {
 //                abiFilters "armeabi-v7a", 'x86'
@@ -79,6 +79,7 @@ android {
         dev {
             manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_open")
             dimension "normal"
+            minSdkVersion 21
         }
 
         prod {
@@ -136,6 +137,9 @@ dependencies {
     implementation project(":lib.bugly")
     implementation project(":lib.common")
     implementation project(":lib.database")
+    implementation project(":lib.qrcode")
+    implementation project(":lib.socket")
+    implementation project(":lib.sharedpreferences")
 }
 repositories {
     mavenCentral()
