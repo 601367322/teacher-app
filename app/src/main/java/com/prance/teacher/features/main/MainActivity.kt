@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
+import android.content.Intent.ACTION_CLOSE_SYSTEM_DIALOGS
 import android.content.Intent.ACTION_MAIN
 
 
@@ -18,10 +19,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackKeyEvent(): Boolean {
-        val home = Intent(Intent.ACTION_MAIN)
-        home.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        home.addCategory(Intent.CATEGORY_HOME)
-        startActivity(home)
+        val home = Intent(ACTION_CLOSE_SYSTEM_DIALOGS)
+        home.putExtra(SYSTEM_DIALOG_REASON_KEY, SYSTEM_DIALOG_REASON_HOME_KEY)
+        sendBroadcast(home)
         return true
     }
 

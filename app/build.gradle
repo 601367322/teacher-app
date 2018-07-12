@@ -140,6 +140,7 @@ dependencies {
     implementation project(":lib.qrcode")
     implementation project(":lib.socket")
     implementation project(":lib.sharedpreferences")
+    implementation project(":lib.dimens")
 }
 repositories {
     mavenCentral()

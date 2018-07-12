@@ -197,23 +197,28 @@ abstract class BaseActivity : BaseActivity() {
         unRegisterHomeMenuBroadcastReceiver()
     }
 
-    inner class HomeMenuBroadcastReceiver : BroadcastReceiver() {
+    open inner class HomeMenuBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(p0: Context?, intent: Intent?) {
+            LogUtils.d(intent?.action)
             intent?.let {
                 val action = intent.action
                 if (action == Intent.ACTION_CLOSE_SYSTEM_DIALOGS) {
 
                     val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
-                    if (SYSTEM_DIALOG_REASON_HOME_KEY.equals(reason)) {
-                        if (onHomeKeyEvent())
+                    if (SYSTEM_DIALOG_REASON_HOME_KEY == reason) {
+                        if (onHomeKeyEvent()) {
+                            LogUtils.d("abortBroadcast")
                             abortBroadcast
+                        }
                     }
                 }
             }
         }
+    }
 
-        private val SYSTEM_DIALOG_REASON_KEY = "reason"
-        private val SYSTEM_DIALOG_REASON_HOME_KEY = "homekey"
+    companion object {
+        const val SYSTEM_DIALOG_REASON_KEY = "reason"
+        const val SYSTEM_DIALOG_REASON_HOME_KEY = "homekey"
     }
 }
