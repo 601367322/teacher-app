@@ -121,7 +121,6 @@ dependencies {
     implementation dependencies.okhttp3
     implementation dependencies.gson
     implementation dependencies.utilcode
-    implementation dependencies.constraintLayout
     implementation dependencies.archComponents
     implementation(dependencies.permissionsdispatcher) {
         exclude group: 'com.android.support'

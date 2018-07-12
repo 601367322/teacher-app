@@ -16,7 +16,7 @@ public class DimenTool {
     public static void gen() {
         //以此文件夹下的dimens.xml文件内容为初始值参照
         String parentPath = "./lib.dimens/src/main/res/";
-        File file = new File(parentPath + "values/dimens.xml");
+        File file = new File(parentPath + "values-w1920dp/dimens.xml");
         BufferedReader reader = null;
         StringBuilder w1920 = new StringBuilder();
         try {
@@ -32,13 +32,13 @@ public class DimenTool {
                             (tempString.substring(tempString.indexOf(">") + 1,
                                     tempString.indexOf("</dimen>") - 2));
                     //根据不同的尺寸，计算新的值，拼接新的字符串，并且结尾处换行。
-                    w1920.append(start).append(num * 2).append(end).append("\r\n");
+                    w1920.append(start).append(num / 2).append(end).append("\r\n");
                 } else {
-                    w1920.append(tempString).append("");
+                    w1920.append(tempString).append("\r\n");
                 }
             }
             reader.close();
-            String w1920file = parentPath + "values-w1920dp/dimens.xml";
+            String w1920file = parentPath + "values/dimens.xml";
             //将新的内容，写入到指定的文件中去  
             writeFile(w1920file, w1920.toString());
         } catch (IOException e) {
@@ -51,6 +51,15 @@ public class DimenTool {
                     e1.printStackTrace();
                 }
             }
+        }
+    }
+
+    public static void gen2() {
+        StringBuilder w1920 = new StringBuilder();
+        float i =0;
+        while (i<2000){
+            i++;
+            System.out.println("<dimen name=\"m" + i + "\">" + i + "dp</dimen>");
         }
     }
 
