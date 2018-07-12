@@ -1,4 +1,4 @@
-package com.prance.teacher.features.main.sun
+package com.prance.lib.sunvote.platform
 
 import android.content.Context
 import android.hardware.usb.UsbDevice

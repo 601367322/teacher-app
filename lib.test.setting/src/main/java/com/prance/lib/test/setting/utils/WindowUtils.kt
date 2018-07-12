@@ -1,7 +1,9 @@
 package com.prance.lib.test.setting.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,6 +15,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.test.setting.R
 import com.prance.lib.test.setting.features.TestSettingActivity
 
+@SuppressLint("StaticFieldLeak")
 /**
  * 弹窗辅助类
  *
@@ -20,7 +23,6 @@ import com.prance.lib.test.setting.features.TestSettingActivity
  */
 object WindowUtils {
 
-    private val LOG_TAG = "WindowUtils"
     private var mView: View? = null
     private var mWindowManager: WindowManager? = null
     private var mContext: Context? = null
@@ -43,8 +45,12 @@ object WindowUtils {
                     .getSystemService(Context.WINDOW_SERVICE) as WindowManager
             mView = setUpView(context)
             val params = LayoutParams()
-
-            params.type = LayoutParams.TYPE_SYSTEM_ALERT     // 系统提示类型,重要
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> params.type = LayoutParams.TYPE_APPLICATION_OVERLAY
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.N -> params.type = LayoutParams.TYPE_TOAST
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1 -> params.type = LayoutParams.TYPE_PHONE
+                else -> params.type = LayoutParams.TYPE_SYSTEM_ALERT
+            }
             params.format = 1
             params.flags = LayoutParams.FLAG_NOT_FOCUSABLE // 不能抢占聚焦点
             params.flags = params.flags or LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH

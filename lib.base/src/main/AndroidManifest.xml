@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- Service 弹出Dialog -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <!-- 获取使用Wi-Fi等WLAN无线网络 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 

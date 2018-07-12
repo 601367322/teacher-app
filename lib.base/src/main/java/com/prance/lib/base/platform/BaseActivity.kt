@@ -16,10 +16,10 @@
 package com.prance.lib.base.platform
 
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import com.prance.lib.base.R
 import com.prance.lib.base.extension.inTransaction
-import kotlinx.android.synthetic.main.toolbar.*
 
 /**
  * Base Activity class with helper methods for handling fragment transactions and back button
@@ -27,12 +27,11 @@ import kotlinx.android.synthetic.main.toolbar.*
  *
  * @see AppCompatActivity
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
-        setSupportActionBar(toolbar)
         addFragment(savedInstanceState)
     }
 

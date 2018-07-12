@@ -1,4 +1,4 @@
-package com.prance.teacher.features.main.sun
+package com.prance.lib.sunvote.platform
 
 import com.blankj.utilcode.util.LogUtils
 import cn.sunars.sdk.SunARS

@@ -79,7 +79,6 @@ android {
         dev {
             manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_open")
             dimension "normal"
-            minSdkVersion 21
         }
 
         prod {
@@ -108,6 +107,7 @@ dependencies {
     kapt dependencies.archComponentsCompiler
     kapt dependencies.permissionsdispatcherProcessor
 
+    implementation dependencies.leanback
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid

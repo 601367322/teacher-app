@@ -8,6 +8,10 @@ import io.netty.channel.ChannelPipeline
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory
 import io.netty.handler.ssl.SslContextBuilder
 import io.netty.handler.ssl.SslContext
+import io.netty.handler.codec.string.StringEncoder
+import io.netty.handler.codec.string.StringDecoder
+import io.netty.handler.timeout.IdleStateHandler
+import java.util.concurrent.TimeUnit
 
 
 class NettyClientInitializer(private var listener: NettyListener) : ChannelInitializer<SocketChannel>() {
@@ -22,10 +26,20 @@ class NettyClientInitializer(private var listener: NettyListener) : ChannelIniti
                 .trustManager(InsecureTrustManagerFactory.INSTANCE).build()
 
         val pipeline = ch.pipeline()
-        pipeline.addLast(sslCtx.newHandler(ch.alloc()))    // 开启SSL
-        pipeline.addLast(LoggingHandler(LogLevel.INFO))    // 开启日志，可以设置日志等级
-        //        pipeline.addLast(new IdleStateHandler(30, 60, 100));
-        listener?.let { pipeline.addLast(NettyClientHandler(it)) }
+        // 开启SSL
+        pipeline.addLast(sslCtx.newHandler(ch.alloc()))
+        // 开启日志，可以设置日志等级
+        pipeline.addLast(LoggingHandler(LogLevel.INFO))
+        //设置心跳
+        pipeline.addLast(IdleStateHandler(0, 30, 0, TimeUnit.SECONDS))
+        //字符串解码器
+        pipeline.addLast(StringDecoder())
+        //字符串编码器
+        pipeline?.addLast(StringEncoder())
+        //心跳检测
+        pipeline.addLast(HeartBeatServerHandler())
+
+        listener.let { pipeline.addLast(NettyClientHandler(it)) }
 
     }
 }

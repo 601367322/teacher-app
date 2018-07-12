@@ -27,7 +27,6 @@ import android.view.ViewGroup
 import com.prance.lib.base.R
 import com.prance.lib.base.extension.appContext
 import com.prance.lib.base.extension.viewContainer
-import kotlinx.android.synthetic.main.toolbar.progress
 import javax.inject.Inject
 
 /**
@@ -48,12 +47,12 @@ abstract class BaseFragment : Fragment() {
 
     internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
-    internal fun showProgress() = progressStatus(View.VISIBLE)
+//    internal fun showProgress() = progressStatus(View.VISIBLE)
+//
+//    internal fun hideProgress() = progressStatus(View.GONE)
 
-    internal fun hideProgress() = progressStatus(View.GONE)
-
-    private fun progressStatus(viewStatus: Int) =
-            with(activity) { if (this is BaseActivity) this.progress.visibility = viewStatus }
+//    private fun progressStatus(viewStatus: Int) =
+//            with(activity) { if (this is BaseActivity) this.progress.visibility = viewStatus }
 
     internal fun notify(@StringRes message: Int) =
             Snackbar.make(viewContainer, message, Snackbar.LENGTH_SHORT).show()

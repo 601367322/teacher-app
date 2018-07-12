@@ -1,4 +1,4 @@
-include ':app', ':lib.qrcode', ':lib.socket',
+include ':app', ':lib.qrcode', ':lib.socket', ':app.tv',
         ':lib.common',
         ':lib.database',
         ':lib.base',

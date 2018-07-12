@@ -61,7 +61,7 @@ class PushService : Service(), NettyListener {
                     Bootstrap().group(mEventLoopGroup)
                             .option(ChannelOption.SO_KEEPALIVE, true)
                             .channel(NioSocketChannel::class.java)
-                            .handler(NettyClientHandler(nettyListener))
+                            .handler(NettyClientInitializer(nettyListener))
             mChannel =
                     bootstrap
                             .connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT) as Int)

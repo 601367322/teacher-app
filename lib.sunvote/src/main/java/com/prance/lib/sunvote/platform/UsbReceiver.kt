@@ -1,4 +1,4 @@
-package com.prance.teacher.features.main.sun
+package com.prance.lib.sunvote.platform
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,7 +9,7 @@ import android.os.Handler
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import cn.sunars.sdk.SunARS
-import com.prance.teacher.features.main.sun.UsbManagerImpl.Companion.ACTION_USB_PERMISSION
+import com.prance.lib.sunvote.platform.UsbManagerImpl.Companion.ACTION_USB_PERMISSION
 
 class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : BroadcastReceiver() {
 
