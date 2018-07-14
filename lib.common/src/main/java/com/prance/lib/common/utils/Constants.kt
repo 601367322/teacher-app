@@ -9,6 +9,8 @@ object Constants {
 
     const val BUGLY_APPID = "BUGLY_APPID"
 
+    const val APP_CHANNEL = "APP_CHANNEL"
+
     const val SOCKET_HOST = "socket_host"
 
     const val SOCKET_PORT = "socket_port"

@@ -26,9 +26,9 @@ import android.hardware.usb.UsbRequest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -49,7 +49,7 @@ import com.prance.lib.sunvote.utils.LogUtil;
 import cn.sunars.sdk.SunARS;
 
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends FragmentActivity implements OnClickListener {
 	private final static String TAG = MainActivity.class.getSimpleName();
 	
 	public static ProgressDialog progressDialog;

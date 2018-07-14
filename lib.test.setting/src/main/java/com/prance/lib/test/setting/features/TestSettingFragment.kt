@@ -30,7 +30,7 @@ class TestSettingFragment : BaseFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun initView(rootView: View, savedInstanceState: Bundle?) {
         initTextView(mScheme, scheme)
         initTextView(mHost, hosts)
         initTextView(mPort, port)

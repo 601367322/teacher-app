@@ -12,7 +12,6 @@ import com.prance.lib.sunvote.platform.DataReceiverThread
 import com.prance.lib.sunvote.platform.MySunARSListener
 import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.lib.sunvote.platform.UsbReceiver
-import javax.inject.Inject
 
 class SunVoteService : Service() {
 
@@ -20,8 +19,7 @@ class SunVoteService : Service() {
     private lateinit var mUsbReceiver: UsbReceiver
     private lateinit var mSunARSListener: MySunARSListener
 
-    @Inject
-    lateinit var mUsbManagerImpl: UsbManagerImpl
+    var mUsbManagerImpl: UsbManagerImpl = UsbManagerImpl()
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -29,8 +27,6 @@ class SunVoteService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-
-        DaggerSunVoteServiceComponent.create().inject(this)
 
         //注册设备连接广播
         mUsbReceiver = UsbReceiver(mUsbManagerImpl)

@@ -22,7 +22,9 @@ public class UserEntityDao extends AbstractDao<UserEntity, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "Id", true, "_id");
+        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Phone = new Property(2, String.class, "phone", false, "PHONE");
     }
 
 
@@ -38,7 +40,9 @@ public class UserEntityDao extends AbstractDao<UserEntity, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"user_table\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL );"); // 0: Id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"NAME\" TEXT," + // 1: name
+                "\"PHONE\" TEXT);"); // 2: phone
     }
 
     /** Drops the underlying database table. */
@@ -51,12 +55,32 @@ public class UserEntityDao extends AbstractDao<UserEntity, Long> {
     protected final void bindValues(DatabaseStatement stmt, UserEntity entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
+        }
+ 
+        String phone = entity.getPhone();
+        if (phone != null) {
+            stmt.bindString(3, phone);
+        }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, UserEntity entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
+        }
+ 
+        String phone = entity.getPhone();
+        if (phone != null) {
+            stmt.bindString(3, phone);
+        }
     }
 
     @Override
@@ -67,7 +91,9 @@ public class UserEntityDao extends AbstractDao<UserEntity, Long> {
     @Override
     public UserEntity readEntity(Cursor cursor, int offset) {
         UserEntity entity = new UserEntity( //
-            cursor.getLong(offset + 0) // Id
+            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // phone
         );
         return entity;
     }
@@ -75,6 +101,8 @@ public class UserEntityDao extends AbstractDao<UserEntity, Long> {
     @Override
     public void readEntity(Cursor cursor, UserEntity entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setPhone(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     @Override

@@ -10,10 +10,9 @@ import android.os.Message
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import java.util.*
-import javax.inject.Inject
 
 
-class UsbManagerImpl @Inject constructor() : IUsbManagerInterface {
+class UsbManagerImpl : IUsbManagerInterface {
 
     private var mUsbManager: UsbManager? = null
     private var mUsbDevice: UsbDevice? = null
@@ -47,9 +46,20 @@ class UsbManagerImpl @Inject constructor() : IUsbManagerInterface {
                         || device.vendorId == VendorID_2 && device.productId == ProductID_2
                         || device.vendorId == VendorID_3 && device.productId == ProductID_3) {
 
-                    LogUtils.d("找到基站")
-
                     mUsbDevice = device
+
+                    LogUtils.d("找到基站\t\n"
+                            + mUsbDevice?.deviceId + "\n"
+                            + mUsbDevice?.deviceName + "\n"
+                            + mUsbDevice?.deviceClass + "\n"
+                            + mUsbDevice?.deviceProtocol + "\n"
+                            + mUsbDevice?.deviceSubclass + "\n"
+                            + mUsbDevice?.productId + "\n"
+                            + mUsbDevice?.productName + "\n"
+                            + mUsbDevice?.manufacturerName + "\n"
+                            + mUsbDevice?.vendorId + "\n"
+                            + mUsbDevice?.serialNumber + "\n"
+                    )
 
                     //申请授权
                     if (!mUsbManager!!.hasPermission(device)) {

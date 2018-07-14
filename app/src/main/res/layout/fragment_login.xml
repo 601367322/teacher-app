@@ -5,10 +5,11 @@
     android:orientation="vertical">
 
 
-    <View
-        android:id="@+id/imageView"
+    <ImageView
+        android:id="@+id/qrCode"
         android:layout_width="@dimen/m300.0"
         android:layout_height="@dimen/m300.0"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/m100.0"
         android:background="#fff" />
 
@@ -32,7 +33,14 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m20.0"
         android:layout_marginStart="@dimen/m48.0"
+        android:layout_marginTop="@dimen/m20.0"
         android:text="2.只有助教身份能成功扫码" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="返回上一层" />
 </LinearLayout>

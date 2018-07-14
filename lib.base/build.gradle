@@ -30,13 +30,13 @@ dependencies {
 
     def dependencies = rootProject.ext.dependencies
     implementation dependencies.v4
-    implementation dependencies.v7
-    implementation dependencies.dagger
-    implementation dependencies.daggerAndroidSupport
-    implementation dependencies.daggerAndroid
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
-    implementation dependencies.archComponents
     implementation dependencies.design
+    implementation dependencies.rxjava
+    implementation dependencies.rxandroid
+    implementation dependencies.retrofit2AdapterRxJava
+
+    implementation project(":lib.common")
 }

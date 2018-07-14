@@ -78,11 +78,13 @@ android {
 
         dev {
             manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_open")
+            manifestPlaceholders.put("APP_CHANNEL", "dev")
             dimension "normal"
         }
 
         prod {
             dimension "normal"
+            manifestPlaceholders.put("APP_CHANNEL", "prod")
         }
     }
 
@@ -103,8 +105,6 @@ dependencies {
 
     def dependencies = rootProject.ext.dependencies
 
-    kapt dependencies.daggerCompiler
-    kapt dependencies.archComponentsCompiler
     kapt dependencies.permissionsdispatcherProcessor
 
     implementation dependencies.leanback
@@ -112,16 +112,19 @@ dependencies {
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.v4
-    implementation dependencies.v7
     implementation dependencies.recyclerview
     implementation dependencies.design
-    implementation dependencies.dagger
-    implementation dependencies.daggerAndroidSupport
-    implementation dependencies.daggerAndroid
     implementation dependencies.okhttp3
+    implementation dependencies.rxjava
+    implementation dependencies.rxandroid
+    implementation (dependencies.retrofit2AdapterRxJava) {
+        exclude group: 'com.squareup.okhttp3'
+    }
     implementation dependencies.gson
     implementation dependencies.utilcode
-    implementation dependencies.archComponents
+    implementation (dependencies.retrofit2) {
+        exclude group: 'com.squareup.okhttp3'
+    }
     implementation(dependencies.permissionsdispatcher) {
         exclude group: 'com.android.support'
     }
@@ -137,7 +140,7 @@ dependencies {
     implementation project(":lib.common")
     implementation project(":lib.database")
     implementation project(":lib.qrcode")
-    implementation project(":lib.socket")
+//    implementation project(":lib.socket")
     implementation project(":lib.sharedpreferences")
     implementation project(":lib.dimens")
 }

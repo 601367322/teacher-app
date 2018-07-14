@@ -48,6 +48,10 @@
         <meta-data
             android:name="BUGLY_APPID"
             android:value="${BUGLY_APPID}" />
+        <!-- 渠道 -->
+        <meta-data
+            android:name="APP_CHANNEL"
+            android:value="${APP_CHANNEL}" />
     </application>
 
 </manifest>

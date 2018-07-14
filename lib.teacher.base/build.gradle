@@ -29,34 +29,24 @@ dependencies {
 
     def dependencies = rootProject.ext.dependencies
 
-    kapt dependencies.daggerCompiler
-    kapt dependencies.archComponentsCompiler
-
     implementation dependencies.v4
-    implementation dependencies.v7
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.design
-    implementation dependencies.dagger
-    implementation dependencies.daggerAndroidSupport
-    implementation dependencies.daggerAndroid
     implementation dependencies.utilcode
     implementation dependencies.okhttp3
+    implementation dependencies.okhttp3LoggingInterceptor
+    implementation dependencies.rxjava
+    implementation dependencies.rxandroid
+    implementation dependencies.retrofit2AdapterRxJava
     implementation (dependencies.retrofit2) {
         exclude group: 'com.squareup.okhttp3'
     }
-    implementation (dependencies.retrofitConverterGson) {
-        exclude group: 'com.google.code.gson'
-        exclude group: 'com.squareup.retrofit2'
-    }
-
-    releaseImplementation (dependencies.chuckReleaseApi){
-        exclude group: 'com.squareup.okhttp3'
-    }
-    debugImplementation (dependencies.chuckDebugApi){
-        exclude group: 'com.squareup.okhttp3'
-    }
+//    implementation (dependencies.retrofitConverterGson) {
+//        exclude group: 'com.google.code.gson'
+//        exclude group: 'com.squareup.retrofit2'
+//    }
 
     debugImplementation dependencies.leakcanary
     releaseImplementation dependencies.leakcanaryNoOp
@@ -64,4 +54,5 @@ dependencies {
     implementation project(":lib.base")
     implementation project(":lib.common")
     implementation project(":lib.interfaces")
+    implementation project(":lib.database")
 }

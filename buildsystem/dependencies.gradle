@@ -21,8 +21,8 @@ ext {
     gson = '2.8.0'//json解析
     butterknife = '9.0.0-SNAPSHOT'//注解
     butterknifeCompiler = '9.0.0-20180416.155025-37'
-    rxjava = '2.1.0'
-    rxandroid = '2.0.1'
+    rxjava = '2.1.16'
+    rxandroid = '2.0.2'
     retrofit2AdapterRxJava = '2.3.0'
     retrofit2 = '2.3.0'
     retrofitConverterGson = '2.3.0'
@@ -107,6 +107,7 @@ ext {
             pili                          : "com.qiniu.pili:pili-android-qos:${pili}",
 
             okhttp3                       : "com.squareup.okhttp3:okhttp:${okhttp3}",
+            okhttp3LoggingInterceptor     : "com.squareup.okhttp3:logging-interceptor:${okhttp3}",
 
             okio                          : "com.squareup.okio:okio:${okio}",
 

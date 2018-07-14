@@ -37,7 +37,6 @@ dependencies {
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
-    implementation dependencies.v7
     implementation dependencies.leanback
     implementation 'com.github.bumptech.glide:glide:3.8.0'
 

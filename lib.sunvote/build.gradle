@@ -29,15 +29,9 @@ dependencies {
 
     def dependencies = rootProject.ext.dependencies
 
-    kapt dependencies.daggerCompiler
-
     implementation dependencies.v4
-    implementation dependencies.v7
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
-    implementation dependencies.dagger
-    implementation dependencies.daggerAndroidSupport
-    implementation dependencies.daggerAndroid
 }

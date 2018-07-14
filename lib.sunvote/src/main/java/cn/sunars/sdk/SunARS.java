@@ -479,4 +479,11 @@ public class SunARS {
         }
         return "" + i;
     }
+
+    /**
+     * 检测答题器
+     */
+    public static void checkKeyPad() {
+        voteStart(VoteType_KeyPadTest, "1,0,0");
+    }
 }

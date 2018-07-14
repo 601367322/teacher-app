@@ -24,6 +24,10 @@ import android.support.v4.app.Fragment
 import android.view.KeyEvent
 import com.prance.lib.base.platform.BaseActivity
 import com.blankj.utilcode.util.LogUtils
+import com.prance.lib.base.mvp.ITopView
+import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.ModelUtil
+import com.prance.lib.third.inter.PluginsManager
 
 
 /**
@@ -58,7 +62,9 @@ abstract class BaseActivity : BaseActivity() {
         //向上键
             KeyEvent.KEYCODE_DPAD_UP -> {
                 LogUtils.d("up--->")
-                return onUpKeyEvent()
+                if (!onUpKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //向下键
             KeyEvent.KEYCODE_DPAD_DOWN ->
@@ -67,92 +73,128 @@ abstract class BaseActivity : BaseActivity() {
                  */
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     LogUtils.d("down--->")
-                    return onDownKeyEvent()
+                    if (!onDownKeyEvent()) {
+                        return super.onKeyDown(keyCode, event)
+                    }
                 }
         //向左键
             KeyEvent.KEYCODE_DPAD_LEFT -> {
                 LogUtils.d("left--->")
-                return onLeftKeyEvent()
+                if (!onLeftKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //向右键
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
                 LogUtils.d("right--->")
-                return onRightKeyEvent()
+                if (!onRightKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //OK确认
             KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
                 LogUtils.d("enter--->")
-                return onOkKeyEvent()
+                if (!onOkKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //返回键
             KeyEvent.KEYCODE_BACK -> {
                 LogUtils.d("back--->")
-                return onBackKeyEvent()
+                if (!onBackKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //菜单键
             KeyEvent.KEYCODE_MENU -> {
                 LogUtils.d("menu--->")
-                return onMenuKeyEvent()
+                if (!onMenuKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键1
             KeyEvent.KEYCODE_1 -> {
                 LogUtils.d("1--->")
-                return onNumberKeyEvent(1)
+                if (!onNumberKeyEvent(1)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键2
             KeyEvent.KEYCODE_2 -> {
                 LogUtils.d("2--->")
-                return onNumberKeyEvent(2)
+                if (!onNumberKeyEvent(2)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键3
             KeyEvent.KEYCODE_3 -> {
                 LogUtils.d("3--->")
-                return onNumberKeyEvent(3)
+                if (!onNumberKeyEvent(3)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键4
             KeyEvent.KEYCODE_4 -> {
                 LogUtils.d("4--->")
-                return onNumberKeyEvent(4)
+                if (!onNumberKeyEvent(4)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键5
             KeyEvent.KEYCODE_5 -> {
                 LogUtils.d("5--->")
-                return onNumberKeyEvent(5)
+                if (!onNumberKeyEvent(5)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键6
             KeyEvent.KEYCODE_6 -> {
                 LogUtils.d("6--->")
-                return onNumberKeyEvent(6)
+                if (!onNumberKeyEvent(6)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键7
             KeyEvent.KEYCODE_7 -> {
                 LogUtils.d("7--->")
-                return onNumberKeyEvent(7)
+                if (!onNumberKeyEvent(7)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键8
             KeyEvent.KEYCODE_8 -> {
                 LogUtils.d("8--->")
-                return onNumberKeyEvent(8)
+                if (!onNumberKeyEvent(8)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键9
             KeyEvent.KEYCODE_9 -> {
                 LogUtils.d("9--->")
-                return onNumberKeyEvent(9)
+                if (!onNumberKeyEvent(9)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //数字键0
             KeyEvent.KEYCODE_0 -> {
                 LogUtils.d("0--->")
-                return onNumberKeyEvent(0)
+                if (!onNumberKeyEvent(0)) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //星号键
             KeyEvent.KEYCODE_STAR -> {
                 LogUtils.d("星号键--->")
-                return onStarKeyEvent()
+                if (!onStarKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
         //井号键
             KeyEvent.KEYCODE_POUND -> {
                 LogUtils.d("井号键--->")
-                return onPoundKeyEvent()
+                if (!onPoundKeyEvent()) {
+                    return super.onKeyDown(keyCode, event)
+                }
             }
             else -> {
             }
@@ -174,7 +216,13 @@ abstract class BaseActivity : BaseActivity() {
 
     protected open fun onDownKeyEvent(): Boolean = false
 
-    protected open fun onMenuKeyEvent(): Boolean = false
+    protected open fun onMenuKeyEvent(): Boolean {
+        if (ModelUtil.isTestModel) {
+            startActivity(PluginsManager.testSetting?.callingTestIntent(this))
+            return true
+        }
+        return false
+    }
 
     protected open fun onNumberKeyEvent(number: Int): Boolean = false
 

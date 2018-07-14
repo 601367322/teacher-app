@@ -1,5 +1,6 @@
 package com.prance.teacher.features.main
 
+import android.content.Context
 import android.os.Bundle
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
@@ -18,13 +19,12 @@ class MainActivity : BaseActivity() {
 
     }
 
-    override fun onBackKeyEvent(): Boolean {
-        val home = Intent(ACTION_CLOSE_SYSTEM_DIALOGS)
-        home.putExtra(SYSTEM_DIALOG_REASON_KEY, SYSTEM_DIALOG_REASON_HOME_KEY)
-        sendBroadcast(home)
-        return true
-    }
+    companion object {
 
+        fun callingIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
+    }
 
 //    private var requestPermissionFlag = AtomicBoolean(false)
 //

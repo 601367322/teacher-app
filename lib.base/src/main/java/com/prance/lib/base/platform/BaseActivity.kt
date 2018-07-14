@@ -17,17 +17,15 @@ package com.prance.lib.base.platform
 
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.support.v7.app.AppCompatActivity
 import com.prance.lib.base.R
 import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.common.utils.weight.LoadingDialog
 
-/**
- * Base Activity class with helper methods for handling fragment transactions and back button
- * events.
- *
- * @see AppCompatActivity
- */
 abstract class BaseActivity : FragmentActivity() {
+
+    val progress by lazy(mode = LazyThreadSafetyMode.NONE) {
+        LoadingDialog(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
