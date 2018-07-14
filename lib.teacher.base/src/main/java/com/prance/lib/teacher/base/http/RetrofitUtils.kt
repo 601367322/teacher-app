@@ -10,19 +10,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 class RetrofitUtils private constructor() {
 
     var mRetrofit: Retrofit
-    var mTestRetrofit: Retrofit
 
     init {
         val mGson = GsonBuilder().registerTypeAdapter(Double::class.java, JsonSerializer<Double> { src, _, _ -> if (src == src!!.toDouble()) JsonPrimitive(src.toLong()) else JsonPrimitive(src) }).create()
         mRetrofit = Retrofit.Builder()
-                .baseUrl(UrlUtil.getUrl())
-                .client(OkHttpUtils.instance.mOkHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(mGson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-
-        mTestRetrofit = Retrofit.Builder()
-                .baseUrl("http://mock.eolinker.com/")
+                .baseUrl("http://api-shuangshi.dev.tengyue360.com/")
                 .client(OkHttpUtils.instance.mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(mGson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

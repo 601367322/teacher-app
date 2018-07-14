@@ -31,7 +31,7 @@ internal class GsonResponseBodyConverter<T>(private val gson: Gson, private val 
             val resultStr = value.string()
             val result = gson.fromJson(resultStr, CallBackResult::class.java)
 
-            return if (result.status == ErrnoConstant.SUCCESS) {
+            return if (result.status == StatusConstant.SUCCESS) {
                 adapter.fromJson(gson.toJson(result.data))
             } else {
                 throw ResultException(result.status, result.msg)

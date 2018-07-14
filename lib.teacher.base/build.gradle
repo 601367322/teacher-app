@@ -44,10 +44,12 @@ dependencies {
     implementation (dependencies.retrofit2) {
         exclude group: 'com.squareup.okhttp3'
     }
-//    implementation (dependencies.retrofitConverterGson) {
-//        exclude group: 'com.google.code.gson'
-//        exclude group: 'com.squareup.retrofit2'
-//    }
+    releaseImplementation (dependencies.chuckReleaseApi){
+        exclude group: 'com.squareup.okhttp3'
+    }
+    debugImplementation (dependencies.chuckDebugApi){
+        exclude group: 'com.squareup.okhttp3'
+    }
 
     debugImplementation dependencies.leakcanary
     releaseImplementation dependencies.leakcanaryNoOp

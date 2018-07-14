@@ -4,6 +4,7 @@ import com.blankj.utilcode.util.Utils
 import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.teacher.base.http.cookie.CookieJarImpl
 import com.prance.lib.teacher.base.http.cookie.store.PersistentCookieStore
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -29,6 +30,9 @@ class OkHttpUtils private constructor() {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
             mBuilder.addInterceptor(logging)
+
+//            if (ModelUtil.isTestModel)
+//                utils.addInterceptor(ChuckInterceptor(this))
         }
 
         mOkHttpClient = mBuilder.build()

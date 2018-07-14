@@ -31,7 +31,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_login
 
-    private val CHECK_INTERVAL = 1
+    private val CHECK_INTERVAL = 2
     private val CHECK_MSG_WHAT = 10
     private val RESET_QRCODE_WHAT = 11
 
@@ -122,17 +122,24 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
     override fun checkQrCodeFailCallBack(it: Throwable) {
 
         if (it is ResultException) {
-
+            when (it.status) {
+                "40015", "40017", "40004", "40005" -> {
+                    //重新获取二维码
+                    mHandler.removeMessages(RESET_QRCODE_WHAT)
+                    startCheckQrCode(0)
+                    return
+                }
+            }
         }
 
         //没有被扫过
         //计算请求时间差
         var delay = System.currentTimeMillis() - mCheckTimeTemp
-        delay = mCheckTimeTemp - delay
+        delay = CHECK_INTERVAL * 1000 - delay
         delay = if (delay < 0) 0 else delay
 
         //开启定时检查二维码有效性
-        startCheckQrCode(delay)
+        startCheckQrCode(delay / 1000)
     }
 
     override fun onDestroy() {

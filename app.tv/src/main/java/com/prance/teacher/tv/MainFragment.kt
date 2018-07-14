@@ -26,16 +26,7 @@ import android.os.Handler
 import android.support.v17.leanback.app.BackgroundManager
 import android.support.v17.leanback.app.BrowseFragment
 import android.support.v17.leanback.app.BrowseSupportFragment
-import android.support.v17.leanback.widget.ArrayObjectAdapter
-import android.support.v17.leanback.widget.HeaderItem
-import android.support.v17.leanback.widget.ImageCardView
-import android.support.v17.leanback.widget.ListRow
-import android.support.v17.leanback.widget.ListRowPresenter
-import android.support.v17.leanback.widget.OnItemViewClickedListener
-import android.support.v17.leanback.widget.OnItemViewSelectedListener
-import android.support.v17.leanback.widget.Presenter
-import android.support.v17.leanback.widget.Row
-import android.support.v17.leanback.widget.RowPresenter
+import android.support.v17.leanback.widget.*
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
@@ -105,7 +96,7 @@ class MainFragment : BrowseSupportFragment() {
     private fun loadRows() {
         val list = MovieList.list
 
-        val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
+        val rowsAdapter = ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
         val cardPresenter = CardPresenter()
 
         for (i in 0 until NUM_ROWS) {
