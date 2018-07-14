@@ -33,10 +33,8 @@ dependencies {
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
-    implementation dependencies.design
     implementation dependencies.rxjava
     implementation dependencies.rxandroid
-    implementation dependencies.retrofit2AdapterRxJava
 
     implementation project(":lib.common")
 }

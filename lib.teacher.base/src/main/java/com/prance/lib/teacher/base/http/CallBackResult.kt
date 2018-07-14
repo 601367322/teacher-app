@@ -1,4 +1,4 @@
-package com.prance.lib.teacher.base.core.di
+package com.prance.lib.teacher.base.http
 
 /**
  * Created by shenbingbing on 16/4/22.

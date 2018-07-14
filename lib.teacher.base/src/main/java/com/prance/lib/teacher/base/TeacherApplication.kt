@@ -12,7 +12,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.ImageLoaderFactory
 import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.database.UserEntity
-import com.prance.lib.teacher.base.core.di.OkHttpUtils
+import com.prance.lib.teacher.base.http.OkHttpUtils
 
 
 class TeacherApplication : Application() {

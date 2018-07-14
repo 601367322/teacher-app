@@ -2,8 +2,8 @@ package com.prance.teacher.features.login.presenter
 
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.teacher.base.core.di.mySubscribe
-import com.prance.lib.teacher.base.core.di.onError
+import com.prance.lib.teacher.base.http.mySubscribe
+import com.prance.lib.teacher.base.http.onError
 import com.prance.teacher.features.login.QrCode
 import com.prance.teacher.features.login.model.LoginModel
 

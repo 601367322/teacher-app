@@ -1,9 +1,8 @@
-package com.prance.lib.teacher.base.core.di
+package com.prance.lib.teacher.base.http
 
 import java.io.IOException
 
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 
 /**

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.prance.lib.teacher.base.core.di
+package com.prance.lib.teacher.base.http
 
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter

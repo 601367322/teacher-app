@@ -11,5 +11,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/util_code_provider_paths" />
         </provider>
+
+        <provider
+            android:name=".http.cookie.CookieProvider"
+            android:authorities="com.prance.teacher"
+            android:multiprocess="false"/>
     </application>
 </manifest>

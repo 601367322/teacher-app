@@ -32,7 +32,6 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     def dependencies = rootProject.ext.dependencies
     api dependencies.kotlin
-    api dependencies.v7
     api dependencies.gson
 }
 repositories {

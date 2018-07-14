@@ -1,12 +1,9 @@
-package com.prance.lib.teacher.base.core.di
+package com.prance.lib.teacher.base.http
 
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.google.gson.Gson
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subscribers.DefaultSubscriber
 
 /**
  * Description :

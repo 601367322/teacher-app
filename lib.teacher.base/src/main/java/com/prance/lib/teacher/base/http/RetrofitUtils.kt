@@ -1,4 +1,4 @@
-package com.prance.lib.teacher.base.core.di
+package com.prance.lib.teacher.base.http
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonPrimitive

@@ -3,7 +3,7 @@ package com.prance.teacher.features.login.model
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.base.mvp.BaseModelKt
 import com.prance.lib.database.UserEntity
-import com.prance.lib.teacher.base.core.di.RetrofitUtils
+import com.prance.lib.teacher.base.http.RetrofitUtils
 import com.prance.teacher.features.login.LoginApiService
 import com.prance.teacher.features.login.QrCode
 import io.reactivex.Flowable

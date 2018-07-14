@@ -8,7 +8,7 @@ import android.view.View
 import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
-import com.prance.lib.teacher.base.core.di.ResultException
+import com.prance.lib.teacher.base.http.ResultException
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
