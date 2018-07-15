@@ -15,7 +15,6 @@ class RetrofitUtils private constructor() {
         val mGson = GsonBuilder().registerTypeAdapter(Double::class.java, JsonSerializer<Double> { src, _, _ -> if (src == src!!.toDouble()) JsonPrimitive(src.toLong()) else JsonPrimitive(src) }).create()
         mRetrofit = Retrofit.Builder()
                 .baseUrl(UrlUtil.getUrl())
-//                .baseUrl("http://api-shuangshi.dev.tengyue360.com/")
                 .client(OkHttpUtils.instance.mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(mGson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -12,33 +12,32 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 
 /**
- * Created by shenbingbing on 16/4/22.
+ *
+ * @author shenbingbing
+ * @date 16/4/22
  */
-public class CookieJarImpl implements CookieJar, HasCookieStore
-{
+public class CookieJarImpl implements CookieJar, HasCookieStore {
     private CookieStore cookieStore;
 
-    public CookieJarImpl(CookieStore cookieStore)
-    {
-        if (cookieStore == null) Exceptions.illegalArgument("cookieStore can not be null.");
+    public CookieJarImpl(CookieStore cookieStore) {
+        if (cookieStore == null) {
+            Exceptions.INSTANCE.illegalArgument("cookieStore can not be null.");
+        }
         this.cookieStore = cookieStore;
     }
 
     @Override
-    public void saveFromResponse(HttpUrl url, List<Cookie> cookies)
-    {
+    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
         cookieStore.add(url, cookies);
     }
 
     @Override
-    public List<Cookie> loadForRequest(HttpUrl url)
-    {
+    public List<Cookie> loadForRequest(HttpUrl url) {
         return cookieStore.get(url);
     }
 
     @Override
-    public CookieStore getCookieStore()
-    {
+    public CookieStore getCookieStore() {
         return cookieStore;
     }
 }

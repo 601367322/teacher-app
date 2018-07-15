@@ -1,10 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lb_tv_white">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
-</LinearLayout>
+
+    <com.prance.teacher.weight.FocusRelativeLayout
+        android:id="@+id/startLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m190.0"
+        android:layout_marginTop="@dimen/m138.0"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/m520.0"
+            android:layout_height="@dimen/m710.0"
+            android:background="#4d3b21" />
+
+        <requestFocus />
+    </com.prance.teacher.weight.FocusRelativeLayout>
+
+
+    <com.prance.teacher.weight.FocusRelativeLayout
+        android:id="@+id/checkKeyPad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m50.0"
+        android:focusable="true"
+        android:nextFocusDown="@id/matchKeyPad"
+        app:layout_constraintStart_toEndOf="@+id/startLesson"
+        app:layout_constraintTop_toTopOf="@+id/startLesson">
+
+        <ImageView
+            android:layout_width="@dimen/m960.0"
+            android:layout_height="@dimen/m330.0"
+            android:background="#0026ff" />
+    </com.prance.teacher.weight.FocusRelativeLayout>
+
+
+    <com.prance.teacher.weight.FocusRelativeLayout
+        android:id="@+id/matchKeyPad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m50.0"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="@+id/checkKeyPad"
+        app:layout_constraintTop_toBottomOf="@+id/checkKeyPad">
+
+        <ImageView
+            android:layout_width="@dimen/m455.0"
+            android:layout_height="@dimen/m330.0"
+            android:background="#880c67" />
+    </com.prance.teacher.weight.FocusRelativeLayout>
+
+
+    <com.prance.teacher.weight.FocusRelativeLayout
+        android:id="@+id/bindKeyPad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m50.0"
+        android:focusable="true"
+        app:layout_constraintStart_toEndOf="@+id/matchKeyPad"
+        app:layout_constraintTop_toTopOf="@+id/matchKeyPad">
+
+        <ImageView
+            android:layout_width="@dimen/m455.0"
+            android:layout_height="@dimen/m330.0"
+            android:background="#ff9800" />
+    </com.prance.teacher.weight.FocusRelativeLayout>
+
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:text="返回"
+        app:layout_constraintStart_toStartOf="@+id/startLesson"
+        app:layout_constraintTop_toBottomOf="@+id/startLesson" />
+
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="500dp"
+        android:text="退出"
+        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintTop_toTopOf="@+id/back" />
+</android.support.constraint.ConstraintLayout>

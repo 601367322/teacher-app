@@ -107,6 +107,7 @@ dependencies {
 
     kapt dependencies.permissionsdispatcherProcessor
 
+    implementation dependencies.constraintLayout
     implementation dependencies.leanback
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
