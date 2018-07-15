@@ -2,8 +2,7 @@ package com.prance.teacher.features.login.presenter
 
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.teacher.base.http.mySubscribe
-import com.prance.lib.teacher.base.http.onError
+import com.prance.lib.base.mvp.mySubscribe
 import com.prance.teacher.features.login.QrCode
 import com.prance.teacher.features.login.model.LoginModel
 
@@ -20,7 +19,7 @@ class LoginPresenter : BasePresenterKt<ILoginContract.View>(), ILoginContract.Pr
         get() = LoginModel()
 
     override fun loadQrCodeDetail() {
-        mModel.loadQrCodeDetail().mySubscribe(onError, { mView?.renderQrCode(it) })
+        mModel.loadQrCodeDetail().mySubscribe(onSubscribeError, { mView?.renderQrCode(it) })
     }
 
     override fun checkQrCode(mQrCode: QrCode?) {

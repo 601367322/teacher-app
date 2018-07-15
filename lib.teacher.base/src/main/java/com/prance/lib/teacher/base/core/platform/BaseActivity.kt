@@ -24,8 +24,6 @@ import android.support.v4.app.Fragment
 import android.view.KeyEvent
 import com.prance.lib.base.platform.BaseActivity
 import com.blankj.utilcode.util.LogUtils
-import com.prance.lib.base.mvp.ITopView
-import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.third.inter.PluginsManager
 

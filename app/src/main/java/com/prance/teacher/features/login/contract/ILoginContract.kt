@@ -4,7 +4,6 @@ import com.prance.lib.base.mvp.*
 import com.prance.lib.database.UserEntity
 import com.prance.teacher.features.login.QrCode
 import io.reactivex.Flowable
-import io.reactivex.Observable
 
 /**
  * Description :

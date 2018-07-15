@@ -4,7 +4,6 @@ import com.blankj.utilcode.util.Utils
 import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.teacher.base.http.cookie.CookieJarImpl
 import com.prance.lib.teacher.base.http.cookie.store.PersistentCookieStore
-import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -13,7 +12,7 @@ class OkHttpUtils private constructor() {
     var mOkHttpClient: OkHttpClient
 
     init {
-        val mBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+        var mBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
 
         //公共参数
         mBuilder.addInterceptor(CommonParamsInterceptor())

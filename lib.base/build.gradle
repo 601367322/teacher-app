@@ -35,6 +35,7 @@ dependencies {
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.rxjava
     implementation dependencies.rxandroid
+    implementation dependencies.utilcode
 
     implementation project(":lib.common")
 }

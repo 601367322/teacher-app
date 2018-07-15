@@ -16,8 +16,6 @@
 package com.prance.lib.teacher.base.core.platform
 
 import android.support.v4.app.Fragment
-import com.blankj.utilcode.util.ToastUtils
-import com.prance.lib.base.mvp.ITopView
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.TeacherApplication
 

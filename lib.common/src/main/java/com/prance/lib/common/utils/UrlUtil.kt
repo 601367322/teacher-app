@@ -37,7 +37,7 @@ object UrlUtil {
     }
 
     fun getUrl(): String {
-        return """${getScheme()}://${getHost()}:${getPort()}"""
+        return """${getScheme()}://${getHost()}"""
     }
 
     /**

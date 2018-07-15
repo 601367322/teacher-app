@@ -8,7 +8,8 @@ import android.view.View
 import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
-import com.prance.lib.teacher.base.http.ResultException
+import com.prance.lib.base.http.ResultException
+import com.prance.lib.base.mvp.defaultOnNetworkError
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -147,6 +148,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         mHandler.removeMessages(CHECK_MSG_WHAT)
         mHandler.removeMessages(RESET_QRCODE_WHAT)
+    }
+
+    override fun onNetworkError(throwable: Throwable): Boolean {
+        hideProgress()
+        return false
     }
 }
 

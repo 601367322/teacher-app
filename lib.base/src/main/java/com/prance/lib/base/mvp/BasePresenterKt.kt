@@ -7,4 +7,9 @@ package com.prance.lib.base.mvp
  */
 open class BasePresenterKt<V : ITopView> {
     var mView: V? = null
+
+    var onSubscribeError: (Throwable) -> Unit = {
+        if (mView?.onNetworkError(it) == false)
+            defaultOnNetworkError(it)
+    }
 }

@@ -10,13 +10,15 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
-import com.prance.lib.base.exception.Failure
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 interface ITopView : LifecycleOwner {
     fun getContext(): Context?
-    fun inited(){}
+
+    fun inited() {}
+
+    fun onNetworkError(throwable: Throwable): Boolean = false
 }
 
 interface ITopPresenter : LifecycleObserver {
@@ -33,10 +35,10 @@ interface ITopModel {
 
 interface IView<P : ITopPresenter> : ITopView {
     var mPresenter: P
+
     override fun inited() {
         mPresenter.attachView(this)
     }
-
 }
 
 interface IPresenter<V : ITopView, M : IModel> : ITopPresenter {

@@ -1,4 +1,4 @@
-package com.prance.lib.teacher.base.http
+package com.prance.lib.base.http
 
 import java.io.IOException
 
