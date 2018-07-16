@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.sunvote.service.SunVoteService
+import com.prance.teacher.features.exit.ExitActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment() {
@@ -43,7 +44,9 @@ class MainFragment : BaseFragment() {
         }
 
         exit.setOnClickListener {
-            activity?.finish()
+            context?.let {
+                startActivity(ExitActivity.callingIntent(it))
+            }
         }
     }
 
