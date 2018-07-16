@@ -2,6 +2,7 @@ package com.prance.teacher.features.login.view
 
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils

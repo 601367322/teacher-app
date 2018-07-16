@@ -15,6 +15,7 @@
  */
 package com.prance.lib.teacher.base.http
 
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
 import com.prance.lib.base.http.ResultException
