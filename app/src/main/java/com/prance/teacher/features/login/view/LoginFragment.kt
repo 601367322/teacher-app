@@ -1,9 +1,6 @@
 package com.prance.teacher.features.login.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.view.View
 import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.database.UserEntity
@@ -18,7 +15,6 @@ import com.prance.teacher.features.main.MainActivity
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.concurrent.TimeUnit
 
@@ -36,16 +32,14 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_login
 
-    private val CHECK_INTERVAL = 2000
-    private val CHECK_MSG_WHAT = 10
-    private val RESET_QRCODE_WHAT = 11
+    private val CHECK_INTERVAL: Long = 2000
 
     var mGetNewQrCodeDisposable: Disposable? = null
     var mStartCheckQrCodeDisposable: Disposable? = null
 
     var mQrCode: QrCode? = null
 
-    var mCheckTimeTemp: Long = 0.toLong()
+    var mCheckTimeTemp: Long = 0
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -77,7 +71,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         qrCode.setImageBitmap(QrCodeUtils.createQRImage(obj.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
 
         //开启定时检查二维码有效性
-        startCheckQrCode(CHECK_INTERVAL.toLong())
+        startCheckQrCode(CHECK_INTERVAL)
     }
 
     /**
