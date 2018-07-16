@@ -18,24 +18,25 @@ import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.lib.sunvote.service.SunVoteService.MyBinder
+import com.prance.teacher.core.di.IServiceBinder
+import com.prance.teacher.core.di.MyServiceConnection
 import com.prance.teacher.features.bind.BindKeyPadActivity
 import com.prance.teacher.features.main.CheckKeyPadTipActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 
 
-class MainFragment : BaseFragment(), IMainContract.View {
+class MainFragment : BaseFragment(), IMainContract.View ,IServiceBinder{
 
     override var mPresenter: IMainContract.Presenter = MainPresenter()
 
     override fun layoutId(): Int = R.layout.fragment_main
 
-    var mSunVoteService: SunVoteService? = null
+    override var mSunVoteService: SunVoteService? = null
 
-    private var mServiceConnection: MyServiceConnection? = null
+    override var mServiceConnection: MyServiceConnection = MyServiceConnection(this)
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         activity?.run {
-            mServiceConnection = MyServiceConnection()
             startService(SunVoteService.callingIntent(this))
             bindService(SunVoteService.callingIntent(this), mServiceConnection, Service.BIND_AUTO_CREATE)
         }
@@ -77,8 +78,15 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         matchKeyPad.setOnClickListener {
             LogUtils.d("答题器配对")
-            context?.let {
-                startActivity(MatchKeyPadActivity.callingIntent(it))
+            mSunVoteService?.let {
+                val usbDevice = it.mUsbManagerImpl.getUsbDevice()
+                if (usbDevice != null) {
+                    context?.let {
+                        startActivity(MatchKeyPadActivity.callingIntent(it))
+                    }
+                } else {
+                    ToastUtils.showShort("请先连接基站")
+                }
             }
         }
 
@@ -101,17 +109,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         activity?.run {
             unbindService(mServiceConnection)
-        }
-    }
-
-    inner class MyServiceConnection : ServiceConnection {
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-        }
-
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val myBinder = service as MyBinder
-            mSunVoteService = myBinder.service
         }
     }
 

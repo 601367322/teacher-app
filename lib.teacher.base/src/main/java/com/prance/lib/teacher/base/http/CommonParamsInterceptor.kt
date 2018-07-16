@@ -2,6 +2,7 @@ package com.prance.lib.teacher.base.http
 
 import android.annotation.SuppressLint
 import com.blankj.utilcode.util.*
+import com.prance.lib.common.utils.DeviceUuidFactory
 import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -23,7 +24,7 @@ class CommonParamsInterceptor : BaseInterceptor() {
                 .newBuilder()
                 .scheme(oldRequest.url().scheme())
                 .host(oldRequest.url().host())
-                .addQueryParameter("equipmentId", PhoneUtils.getDeviceId())
+                .addQueryParameter("equipmentId", DeviceUuidFactory(Utils.getApp()).deviceUuid.toString())
                 .addQueryParameter("os_version", DeviceUtils.getSDKVersionCode().toString())
                 .addQueryParameter("version", AppUtils.getAppVersionCode().toString())
                 .addQueryParameter("app_version_name", AppUtils.getAppVersionName())
