@@ -9,14 +9,18 @@ import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
 import com.prance.lib.base.http.ResultException
-import com.prance.lib.base.mvp.defaultOnNetworkError
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.login.QrCode
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_login.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Description :
@@ -32,9 +36,12 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_login
 
-    private val CHECK_INTERVAL = 2
+    private val CHECK_INTERVAL = 2000
     private val CHECK_MSG_WHAT = 10
     private val RESET_QRCODE_WHAT = 11
+
+    var mGetNewQrCodeDisposable: Disposable? = null
+    var mStartCheckQrCodeDisposable: Disposable? = null
 
     var mQrCode: QrCode? = null
 
@@ -54,11 +61,14 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         getNewQrCode(0)
     }
 
+    /**
+     * 渲染二维码
+     */
     override fun renderQrCode(obj: QrCode) {
         mQrCode = obj
 
         //过期后重置二维码
-        getNewQrCode(obj.expireTime.toLong() - 2)
+        getNewQrCode(obj.expireTime.toLong() * 1000 - 2)
 
         //隐藏loading
         hideProgress()
@@ -74,8 +84,21 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
      * 获取二维码
      */
     private fun getNewQrCode(delay: Long) {
-        mHandler.run {
-            sendMessageDelayed(obtainMessage(RESET_QRCODE_WHAT), delay * 1000)
+        mGetNewQrCodeDisposable = Flowable.timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
+                    stopStartCheckQrCode()
+                    mPresenter.loadQrCodeDetail()
+                }
+    }
+
+    /**
+     * 停止获取二维码的计时
+     */
+    private fun stopGetNewQrCode() {
+        mGetNewQrCodeDisposable?.let {
+            if (!it.isDisposed) {
+                it.dispose()
+            }
         }
     }
 
@@ -83,24 +106,20 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
      * 检查二维码
      */
     private fun startCheckQrCode(delay: Long) {
-        mHandler.run {
-            sendMessageDelayed(obtainMessage(CHECK_MSG_WHAT), delay * 1000)
-        }
-    }
-
-    private var mHandler: Handler = @SuppressLint("HandlerLeak")
-    object : Handler() {
-
-        override fun handleMessage(msg: Message?) {
-            when (msg?.what) {
-                CHECK_MSG_WHAT -> {
+        mStartCheckQrCodeDisposable = Flowable.timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
                     mCheckTimeTemp = System.currentTimeMillis()
                     mPresenter.checkQrCode(mQrCode)
                 }
-                RESET_QRCODE_WHAT -> {
-                    removeMessages(CHECK_MSG_WHAT)
-                    mPresenter.loadQrCodeDetail()
-                }
+    }
+
+    /**
+     * 停止检查二维码的计时
+     */
+    private fun stopStartCheckQrCode() {
+        mStartCheckQrCodeDisposable?.let {
+            if (!it.isDisposed) {
+                it.dispose()
             }
         }
     }
@@ -120,14 +139,16 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         }
     }
 
+    /**
+     * 检查二维码没有登录成功
+     */
     override fun checkQrCodeFailCallBack(it: Throwable) {
 
         if (it is ResultException) {
             when (it.status) {
                 "40015", "40017", "40004", "40005" -> {
                     //重新获取二维码
-                    mHandler.removeMessages(RESET_QRCODE_WHAT)
-                    startCheckQrCode(0)
+                    getNewQrCode(0)
                     return
                 }
             }
@@ -136,18 +157,18 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         //没有被扫过
         //计算请求时间差
         var delay = System.currentTimeMillis() - mCheckTimeTemp
-        delay = CHECK_INTERVAL * 1000 - delay
+        delay = CHECK_INTERVAL - delay
         delay = if (delay < 0) 0 else delay
 
         //开启定时检查二维码有效性
-        startCheckQrCode(delay / 1000)
+        startCheckQrCode(delay)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        mHandler.removeMessages(CHECK_MSG_WHAT)
-        mHandler.removeMessages(RESET_QRCODE_WHAT)
+        stopGetNewQrCode()
+        stopStartCheckQrCode()
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {
