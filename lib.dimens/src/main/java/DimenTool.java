@@ -36,7 +36,7 @@ public class DimenTool {
                     //根据不同的尺寸，计算新的值，拼接新的字符串，并且结尾处换行。
                     hdpi.append(start).append(num / 2).append(end).append("\r\n");
                     xhdpi.append(start).append(num / 2).append(end).append("\r\n");
-                    xxhdpi.append(start).append(num / 2.5).append(end).append("\r\n");
+                    xxhdpi.append(start).append(num / 2.8).append(end).append("\r\n");
                 } else {
                     hdpi.append(tempString).append("\r\n");
                     xhdpi.append(tempString).append("\r\n");

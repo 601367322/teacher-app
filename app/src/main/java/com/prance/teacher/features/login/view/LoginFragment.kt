@@ -10,6 +10,7 @@ import com.prance.lib.qrcode.QrCodeUtils
 import com.prance.lib.base.http.ResultException
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.login.QrCode
 import com.prance.teacher.features.login.presenter.LoginPresenter
@@ -59,9 +60,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 
         //启动主页
-//        context?.let { startActivity(MainActivity.callingIntent(it)) }
-//
-//        activity?.finish()
+        if(BuildConfig.DEBUG) {
+            context?.let { startActivity(MainActivity.callingIntent(it)) }
+
+            activity?.finish()
+        }
     }
 
     /**
