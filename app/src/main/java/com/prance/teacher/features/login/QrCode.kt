@@ -6,6 +6,10 @@ import java.io.Serializable
 
 class QrCode constructor(val signal: String, val token: String, val timestamp: Long, val expireTime: String) : Serializable {
 
+    fun getExpireTime(): Long {
+        return expireTime.toLong() * 1000
+    }
+
     companion object {
         fun empty() = QrCode(String.empty(), String.empty(), 0, String.empty())
     }

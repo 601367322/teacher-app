@@ -71,7 +71,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         mQrCode = obj
 
         //过期后重置二维码
-        getNewQrCode(obj.expireTime.toLong() * 1000 - 2)
+        getNewQrCode(obj.getExpireTime() - 2)
 
         //隐藏loading
         hideProgress()
