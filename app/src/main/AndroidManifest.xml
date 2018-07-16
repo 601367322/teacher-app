@@ -19,17 +19,16 @@
 
         <activity
             android:name=".features.main.MainActivity"
-            android:screenOrientation="landscape"
-            />
+            android:screenOrientation="landscape" />
 
-        <activity android:name=".features.login.LoginActivity"
+        <activity
+            android:name=".features.login.LoginActivity"
             android:banner="@drawable/ic_launcher"
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
-            android:screenOrientation="landscape"
             android:launchMode="singleInstance"
             android:logo="@drawable/ic_launcher"
-            >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,9 +36,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".features.exit.ExitActivity"
-            android:screenOrientation="landscape"
-            />
+        <activity
+            android:name=".features.exit.ExitActivity"
+            android:screenOrientation="landscape" />
 
         <!-- 设置IP测试入口 open close-->
         <meta-data
