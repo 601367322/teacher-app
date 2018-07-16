@@ -41,4 +41,5 @@ dependencies {
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
+    implementation dependencies.utilcode
 }

@@ -15,9 +15,9 @@ class MySunARSListener(private val mUsbManagerInterface: IUsbManagerInterface) :
             //自由链接模式
             writeHDParam(iBaseID, SunARS.KeyPad_WorkingMode, "2")
             //键盘识别模式为ID
-            writeHDParam(0, KeyPad_IdentificationMode, "0")
+            writeHDParam(iBaseID, KeyPad_IdentificationMode, "0")
             //中文模式
-            writeHDParam(0, KeyPad_Config, "0,10,1,0,0,0,1")
+            writeHDParam(iBaseID, KeyPad_Config, "0,10,1,0,0,0,1")
 
             SunARS.checkKeyPad()
         } else {

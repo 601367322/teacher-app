@@ -22,6 +22,12 @@
             android:layout_height="@dimen/m710.0"
             android:background="#4d3b21" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="上课"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
+
         <requestFocus />
     </com.prance.teacher.weight.FocusRelativeLayout>
 
@@ -41,6 +47,12 @@
             android:layout_width="@dimen/m960.0"
             android:layout_height="@dimen/m330.0"
             android:background="#0026ff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="答题器检测"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
     </com.prance.teacher.weight.FocusRelativeLayout>
 
 
@@ -58,6 +70,12 @@
             android:layout_width="@dimen/m455.0"
             android:layout_height="@dimen/m330.0"
             android:background="#880c67" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="答题器配对"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
     </com.prance.teacher.weight.FocusRelativeLayout>
 
 
@@ -75,6 +93,12 @@
             android:layout_width="@dimen/m455.0"
             android:layout_height="@dimen/m330.0"
             android:background="#ff9800" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="答题器绑定"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
     </com.prance.teacher.weight.FocusRelativeLayout>
 
 
