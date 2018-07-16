@@ -43,7 +43,7 @@ class BuglyImpl : IBugly {
         Beta.upgradeStateListener = object : UpgradeStateListener {
 
             override fun onDownloadCompleted(p0: Boolean) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onUpgradeSuccess(isManual: Boolean) {

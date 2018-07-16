@@ -53,6 +53,12 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //获取二维码
         getNewQrCode(0)
+
+
+        //启动主页
+//        context?.let { startActivity(MainActivity.callingIntent(it)) }
+//
+//        activity?.finish()
     }
 
     /**

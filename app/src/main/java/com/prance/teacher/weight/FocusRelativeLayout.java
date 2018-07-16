@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -97,7 +98,7 @@ public class FocusRelativeLayout extends RelativeLayout {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    setZ(defaultZ);
+                    setElevation(0);
                 }
 
                 @Override
@@ -113,7 +114,7 @@ public class FocusRelativeLayout extends RelativeLayout {
      * 放倒动画
      */
     private void zoomOut() {
-        setZ(1000);
+        setElevation(getResources().getDimensionPixelOffset(R.dimen.m20_0));
         if (scaleBigAnimation == null) {
             scaleBigAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.anim_scale_big);
         }

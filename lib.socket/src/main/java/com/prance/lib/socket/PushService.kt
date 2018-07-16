@@ -46,11 +46,11 @@ class PushService : Service(), NettyListener {
     }
 
     override fun onMessageResponse(byteBuf: ByteBuf?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onServiceStatusConnectChanged(statusCode: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     internal inner class SocketThread(private val nettyListener: NettyListener) : Thread() {

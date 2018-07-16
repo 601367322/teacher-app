@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lb_tv_white">
+    android:background="#FFF">
 
 
     <com.prance.teacher.weight.FocusRelativeLayout
         android:id="@+id/startLesson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#000"
         android:layout_marginStart="@dimen/m190.0"
         android:layout_marginTop="@dimen/m138.0"
         android:focusable="true"
@@ -30,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m50.0"
+        android:background="#000"
         android:focusable="true"
         android:nextFocusDown="@id/matchKeyPad"
         app:layout_constraintStart_toEndOf="@+id/startLesson"
@@ -46,6 +48,7 @@
         android:id="@+id/matchKeyPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#000"
         android:layout_marginTop="@dimen/m50.0"
         android:focusable="true"
         app:layout_constraintStart_toStartOf="@+id/checkKeyPad"
@@ -62,6 +65,7 @@
         android:id="@+id/bindKeyPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#000"
         android:layout_marginStart="@dimen/m50.0"
         android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/matchKeyPad"
