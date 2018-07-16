@@ -106,8 +106,8 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="@dimen/m48.0"
+        android:layout_marginTop="@dimen/m50.0"
         android:text="返回"
         app:layout_constraintStart_toStartOf="@+id/startLesson"
         app:layout_constraintTop_toBottomOf="@+id/startLesson" />
@@ -117,7 +117,7 @@
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="500dp"
+        android:layout_marginStart="@dimen/m1000.0"
         android:text="退出"
         app:layout_constraintStart_toEndOf="@+id/back"
         app:layout_constraintTop_toTopOf="@+id/back" />

@@ -2,6 +2,8 @@ package com.prance.teacher.features.login.view
 
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
@@ -43,6 +45,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
+        LogUtils.d(ScreenUtils.getScreenWidth())
+        LogUtils.d(ScreenUtils.getScreenHeight())
+        LogUtils.d(ScreenUtils.getScreenDensity())
+        LogUtils.d(ScreenUtils.getScreenDensityDpi())
+
         //返回按钮
         back.setOnClickListener {
             activity?.finish()
@@ -56,9 +63,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 
         //启动主页
-//        context?.let { startActivity(MainActivity.callingIntent(it)) }
-//
-//        activity?.finish()
+        context?.let { startActivity(MainActivity.callingIntent(it)) }
+
+        activity?.finish()
     }
 
     /**

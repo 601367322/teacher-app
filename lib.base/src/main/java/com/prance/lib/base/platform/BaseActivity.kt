@@ -17,9 +17,15 @@ package com.prance.lib.base.platform
 
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.view.View
 import com.prance.lib.base.R
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.common.utils.weight.LoadingDialog
+import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+
 
 abstract class BaseActivity : FragmentActivity() {
 
@@ -29,6 +35,13 @@ abstract class BaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //隐藏虚拟按键
+        val decorView = window.decorView
+        val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN)
+        decorView.systemUiVisibility = uiOptions
+
         setContentView(layoutId())
         addFragment(savedInstanceState)
     }

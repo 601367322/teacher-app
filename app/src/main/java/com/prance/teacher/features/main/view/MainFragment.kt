@@ -6,8 +6,11 @@ import android.content.ServiceConnection
 import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
+import android.support.constraint.ConstraintLayout
 import android.support.v17.leanback.app.BackgroundManager
 import android.view.View
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -35,7 +38,14 @@ class MainFragment : BaseFragment(), IMainContract.View {
             bindService(SunVoteService.callingIntent(this), mServiceConnection, Service.BIND_AUTO_CREATE)
         }
 
-        BackgroundManager.getInstance(activity).color = Color.WHITE
+        /**
+         * 整体居中
+         */
+        val marginStart = (ScreenUtils.getScreenWidth() - (resources.getDimensionPixelOffset(R.dimen.m520_0) +
+                resources.getDimensionPixelOffset(R.dimen.m50_0) +
+                resources.getDimensionPixelOffset(R.dimen.m960_0))) / 2
+        (startLesson.layoutParams as ConstraintLayout.LayoutParams).marginStart = marginStart
+
 
         startLesson.setOnClickListener {
             ToastUtils.showShort("开始上课")

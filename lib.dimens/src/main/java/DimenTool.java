@@ -18,7 +18,10 @@ public class DimenTool {
         String parentPath = "./lib.dimens/src/main/res/";
         File file = new File(parentPath + "values-w1920dp/dimens.xml");
         BufferedReader reader = null;
-        StringBuilder w1920 = new StringBuilder();
+        StringBuilder defaultV = new StringBuilder();
+        StringBuilder hdpi = new StringBuilder();
+        StringBuilder xhdpi = new StringBuilder();
+        StringBuilder xxhdpi = new StringBuilder();
         try {
             System.out.println("生成不同分辨率：");
             reader = new BufferedReader(new FileReader(file));
@@ -32,15 +35,28 @@ public class DimenTool {
                             (tempString.substring(tempString.indexOf(">") + 1,
                                     tempString.indexOf("</dimen>") - 2));
                     //根据不同的尺寸，计算新的值，拼接新的字符串，并且结尾处换行。
-                    w1920.append(start).append(num / 2).append(end).append("\r\n");
+                    defaultV.append(start).append(num / 2).append(end).append("\r\n");
+                    hdpi.append(start).append(num / 1.5).append(end).append("\r\n");
+                    xhdpi.append(start).append(num / 2).append(end).append("\r\n");
+                    xxhdpi.append(start).append(num / 3).append(end).append("\r\n");
                 } else {
-                    w1920.append(tempString).append("\r\n");
+                    defaultV.append(tempString).append("\r\n");
+                    hdpi.append(tempString).append("\r\n");
+                    xhdpi.append(tempString).append("\r\n");
+                    xxhdpi.append(tempString).append("\r\n");
                 }
             }
             reader.close();
-            String w1920file = parentPath + "values/dimens.xml";
+            String defaultVfile = parentPath + "values/dimens.xml";
+            String hdpifile = parentPath + "values-hdpi/dimens.xml";
+            String xhdpifile = parentPath + "values-xhdpi/dimens.xml";
+            String xxhdpifile = parentPath + "values-xxhdpi/dimens.xml";
+
             //将新的内容，写入到指定的文件中去  
-            writeFile(w1920file, w1920.toString());
+            writeFile(defaultVfile, defaultV.toString());
+            writeFile(hdpifile, hdpi.toString());
+            writeFile(xhdpifile, xhdpi.toString());
+            writeFile(xxhdpifile, xxhdpi.toString());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
