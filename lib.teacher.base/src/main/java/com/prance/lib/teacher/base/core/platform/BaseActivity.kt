@@ -22,6 +22,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.KeyEvent
+import android.view.View
 import com.prance.lib.base.platform.BaseActivity
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.ModelUtil
@@ -42,6 +43,10 @@ abstract class BaseActivity : BaseActivity() {
 
         //注册遥控器home键广播
         registerHomeMenuBroadcastReceiver()
+    }
+
+    fun onBackBtnClick(view: View) {
+        finish()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

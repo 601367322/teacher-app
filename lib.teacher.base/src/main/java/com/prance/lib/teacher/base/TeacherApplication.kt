@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.ImageLoaderFactory
 import com.prance.lib.common.utils.ModelUtil
+import com.prance.lib.database.DaoManager
 import com.prance.lib.database.UserEntity
 import com.prance.lib.teacher.base.http.OkHttpUtils
 
@@ -56,6 +57,11 @@ class TeacherApplication : Application() {
          * 初始化图片加载器
          */
         ImageLoaderFactory.init(OkHttpUtils.instance.mOkHttpClient)
+
+        /**
+         * 初始化数据库
+         */
+        DaoManager.init(this)
     }
 
 }

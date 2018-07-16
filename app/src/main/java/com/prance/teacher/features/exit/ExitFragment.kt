@@ -14,10 +14,6 @@ class ExitFragment : BaseFragment() {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
-        back.setOnClickListener {
-            activity?.finish()
-        }
-
         exit.setOnClickListener {
             AlertDialog.Builder(context)
                     .setMessage("确定退出答题器程序？")

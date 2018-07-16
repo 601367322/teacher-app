@@ -14,10 +14,10 @@ import io.reactivex.Flowable
 interface IMainContract {
     interface View : IView<Presenter> {}
     interface Presenter : IPresenter<View, Model> {
-        fun checkIfKeyPadAlreadyMatched(serialNumber: String?)
+        fun checkIfKeyPadAlreadyMatched(serialNumber: String, matched: () -> Unit, unMatch: () -> Unit)
     }
 
     interface Model : IModel {
-        fun getAllKeyPadByBaseStationSN(serialNumber: String?): Flowable<List<KeyPadEntity>>
+        fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>?
     }
 }

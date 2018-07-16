@@ -3,11 +3,9 @@ package com.prance.teacher.features.main.view
 import android.app.Service
 import android.content.ComponentName
 import android.content.ServiceConnection
-import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.support.constraint.ConstraintLayout
-import android.support.v17.leanback.app.BackgroundManager
 import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -20,6 +18,9 @@ import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.lib.sunvote.service.SunVoteService.MyBinder
+import com.prance.teacher.features.bind.BindKeyPadActivity
+import com.prance.teacher.features.main.CheckKeyPadTipActivity
+import com.prance.teacher.features.match.MatchKeyPadActivity
 
 
 class MainFragment : BaseFragment(), IMainContract.View {
@@ -35,6 +36,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         activity?.run {
             mServiceConnection = MyServiceConnection()
+            startService(SunVoteService.callingIntent(this))
             bindService(SunVoteService.callingIntent(this), mServiceConnection, Service.BIND_AUTO_CREATE)
         }
 
@@ -48,27 +50,43 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 
         startLesson.setOnClickListener {
-            ToastUtils.showShort("开始上课")
+            LogUtils.d("开始上课")
 
-            mSunVoteService?.let {
-                mPresenter.checkIfKeyPadAlreadyMatched(it.mUsbManagerImpl.getUsbDevice()?.serialNumber)
+            context?.let {
+                startActivity(CheckKeyPadTipActivity.callingIntent(it))
             }
         }
 
         checkKeyPad.setOnClickListener {
-            ToastUtils.showShort("答题器检测")
+            LogUtils.d("答题器检测")
+
+            mSunVoteService?.let {
+                val usbDevice = it.mUsbManagerImpl.getUsbDevice()
+                if (usbDevice != null) {
+                    mPresenter.checkIfKeyPadAlreadyMatched(usbDevice.serialNumber, {
+                        context?.let {
+                            startActivity(CheckKeyPadTipActivity.callingIntent(it))
+                        }
+                    }, { ToastUtils.showShort("请先进行答题器配对") }
+                    )
+                } else {
+                    ToastUtils.showShort("请先连接基站")
+                }
+            }
         }
 
         matchKeyPad.setOnClickListener {
-            ToastUtils.showShort("答题器配对")
+            LogUtils.d("答题器配对")
+            context?.let {
+                startActivity(MatchKeyPadActivity.callingIntent(it))
+            }
         }
 
         bindKeyPad.setOnClickListener {
-            ToastUtils.showShort("答题器绑定")
-        }
-
-        back.setOnClickListener {
-            activity?.finish()
+            LogUtils.d("答题器绑定")
+            context?.let {
+                startActivity(BindKeyPadActivity.callingIntent(it))
+            }
         }
 
         exit.setOnClickListener {

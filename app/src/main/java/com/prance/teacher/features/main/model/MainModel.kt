@@ -2,6 +2,7 @@ package com.prance.teacher.features.main.model
 
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.lib.base.mvp.BaseModelKt
+import com.prance.lib.database.KeyPadDaoUtils
 import com.prance.lib.database.KeyPadEntity
 import io.reactivex.Flowable
 
@@ -12,17 +13,12 @@ import io.reactivex.Flowable
  * 								 - generate by MvpAutoCodePlus plugin.
  */
 
-class MainModel : BaseModelKt, IMainContract.Model {
+class MainModel : BaseModelKt(), IMainContract.Model {
 
+    private var mKeyPadDaoUtils: KeyPadDaoUtils = KeyPadDaoUtils()
 
-
-    constructor() : super() {
-
-    }
-
-
-    override fun getAllKeyPadByBaseStationSN(serialNumber: String?): Flowable<List<KeyPadEntity>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
+        return mKeyPadDaoUtils.getAllKeyPadByBaseStationSN(serialNumber)
     }
 }
 

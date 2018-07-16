@@ -9,9 +9,6 @@ public class UserDaoUtils {
     private UserEntityDao mDao;
 
     public UserDaoUtils(Context context){
-        mManager = DaoManager.getInstance();
-        mManager.init(context);
-        mDao = mManager.getDaoSession().getUserEntityDao();
     }
 
 }

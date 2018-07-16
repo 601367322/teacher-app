@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF">
@@ -106,9 +107,10 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onBackBtnClick"
         android:layout_marginStart="@dimen/m48.0"
         android:layout_marginTop="@dimen/m50.0"
-        android:text="返回"
+        android:text="返回上一层"
         app:layout_constraintStart_toStartOf="@+id/startLesson"
         app:layout_constraintTop_toBottomOf="@+id/startLesson" />
 
@@ -117,8 +119,8 @@
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m1000.0"
+        android:layout_marginEnd="@dimen/m48.0"
         android:text="退出"
-        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="@+id/bindKeyPad"
         app:layout_constraintTop_toTopOf="@+id/back" />
 </android.support.constraint.ConstraintLayout>

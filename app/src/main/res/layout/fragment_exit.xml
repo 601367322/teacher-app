@@ -9,8 +9,8 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginStart="@dimen/m240.0"
+        android:layout_marginTop="@dimen/m248.0"
         android:text="提示："
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +19,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/m16.0"
         android:text="1.无课时可退出程序"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -28,7 +28,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/m16.0"
         android:text="2.退出程序后不能进行课中数据传输"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -37,7 +37,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/m16.0"
         android:text="3.退出程序后，请上课前及时用助教小程序进行扫码登录"
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -46,8 +46,9 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="@dimen/m72.0"
         android:text="返回上一层"
+        android:onClick="onBackBtnClick"
         app:layout_constraintStart_toEndOf="@+id/exit"
         app:layout_constraintTop_toTopOf="@+id/exit" />
 
@@ -56,8 +57,8 @@
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="500dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginStart="@dimen/m1000.0"
+        android:layout_marginTop="@dimen/m280.0"
         android:text="退出程序"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />

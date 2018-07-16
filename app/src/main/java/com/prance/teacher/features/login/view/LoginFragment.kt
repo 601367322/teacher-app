@@ -50,10 +50,6 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         LogUtils.d(ScreenUtils.getScreenDensity())
         LogUtils.d(ScreenUtils.getScreenDensityDpi())
 
-        //返回按钮
-        back.setOnClickListener {
-            activity?.finish()
-        }
 
         //显示loading
         showProgress()
@@ -63,9 +59,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 
         //启动主页
-        context?.let { startActivity(MainActivity.callingIntent(it)) }
-
-        activity?.finish()
+//        context?.let { startActivity(MainActivity.callingIntent(it)) }
+//
+//        activity?.finish()
     }
 
     /**

@@ -40,6 +40,19 @@
             android:name=".features.exit.ExitActivity"
             android:screenOrientation="landscape" />
 
+        <activity
+            android:name=".features.main.CheckKeyPadTipActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".features.check.CheckKeyPadActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".features.bind.BindKeyPadActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".features.match.MatchKeyPadActivity"
+            android:screenOrientation="landscape" />
+
         <!-- 设置IP测试入口 open close-->
         <meta-data
             android:name="TEST_SETTING"

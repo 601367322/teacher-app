@@ -16,7 +16,7 @@ public class DimenTool {
     public static void gen() {
         //以此文件夹下的dimens.xml文件内容为初始值参照
         String parentPath = "./lib.dimens/src/main/res/";
-        File file = new File(parentPath + "values-w1920dp/dimens.xml");
+        File file = new File(parentPath + "values-mdpi/dimens.xml");
         BufferedReader reader = null;
         StringBuilder defaultV = new StringBuilder();
         StringBuilder hdpi = new StringBuilder();
