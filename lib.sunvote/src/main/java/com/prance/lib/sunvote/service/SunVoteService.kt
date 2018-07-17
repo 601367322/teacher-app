@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.ServiceConnection
 import android.hardware.usb.UsbManager
 import android.os.Binder
 import android.os.IBinder
@@ -16,7 +15,7 @@ class SunVoteService : Service() {
 
     private lateinit var mUsbThread: DataReceiverThread
     private lateinit var mUsbReceiver: UsbReceiver
-    private lateinit var mSunARSListener: MySunARSListener
+    private lateinit var mSunARSListener: DefaultSunARSListener
 
     private var mUsbManagerImpl: UsbManagerImpl = UsbManagerImpl()
 
@@ -46,8 +45,8 @@ class SunVoteService : Service() {
 
         //开启基站监听
         try {
-            mSunARSListener = MySunARSListener(mUsbManagerImpl)
-            SunARS.setListener(mSunARSListener)
+            mSunARSListener = DefaultSunARSListener(mUsbManagerImpl)
+            SunARS.addListener(mSunARSListener)
             val r = SunARS.license(1, "SUNARS2013")
             SunARS.setLogOn(0)
             val filePath = applicationContext?.filesDir

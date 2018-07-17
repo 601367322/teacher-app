@@ -284,7 +284,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			}
 			Log.e("tag", String.format("当前进程名为：%s进程pid为：%s", processName, pid + ""));
 
-			SunARS.setListener(al);
+			SunARS.addListener(al);
 			int r = SunARS.license(1, "SUNARS2013");
 			SunARS.setLogOn(0);
 			File fpath = this.getApplicationContext().getFilesDir();

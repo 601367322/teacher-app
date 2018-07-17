@@ -63,6 +63,7 @@ ext {
     glide = "4.7.1"
     glideOkHttp = "4.7.1"
     netty = '4.1.25.Final'
+    observablesscrollview = '1.6.0'
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -183,6 +184,8 @@ ext {
             glideCompiler                 : "com.github.bumptech.glide:compiler:${glide}",
             glideOkHttp                   : "com.github.bumptech.glide:okhttp3-integration:${glideOkHttp}",
 
-            netty                         : "io.netty:netty-all:${netty}"
+            netty                         : "io.netty:netty-all:${netty}",
+
+            observablesscrollview:"com.github.ksoichiro:android-observablescrollview:${observablesscrollview}"
     ]
 }

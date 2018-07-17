@@ -59,7 +59,7 @@ public class SunARSTest {
 	};
 
 	public static void main(String[] args) throws Exception {
-		SunARS.setListener(al);
+		SunARS.addListener(al);
 		int r = SunARS.license(1, "SUNARS2013");
 		System.out.println(r);
 

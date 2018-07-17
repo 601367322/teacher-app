@@ -2,17 +2,28 @@ package cn.sunars.sdk;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.prance.lib.sunvote.utils.LogUtil;
+
+/**
+ * @author bingbing
+ */
 public class SunARS {
 
-    public final static int BaseStation_RFPower = 1; // 基站功率
+    // 基站功率
+    public final static int BaseStation_RFPower = 1;
+    // 基站功率
+    public final static String BaseStation_Connected = "1";
     public final static int BaseStation_Channel = 2; // ; 基站主信道
     public final static int BaseStation_CommunicationChannels = 3; // 通讯通道：是否中继，通道数，通道1，通道2，通道3，通道4
     public final static int BaseStation_IP = 4; // IP
@@ -137,21 +148,21 @@ public class SunARS {
     }
 
     public interface SunARSListener {
-        public void onConnectEventCallBack(int iBaseID, int iMode, String sInfo);
+        void onConnectEventCallBack(int iBaseID, int iMode, String sInfo);
 
-        public void onHDParamCallBack(int iBaseID, int iMode, String sInfo);
+        void onHDParamCallBack(int iBaseID, int iMode, String sInfo);
 
-        public void onHDParamBySnCallBack(String KeySn, int iMode, String sInfo);
+        void onHDParamBySnCallBack(String KeySn, int iMode, String sInfo);
 
-        public void onVoteEventCallBack(int iBaseID, int iMode, String sInfo);
+        void onVoteEventCallBack(int iBaseID, int iMode, String sInfo);
 
-        public void onKeyEventCallBack(String KeyID, int iMode, float Time, String sInfo);
+        void onKeyEventCallBack(String KeyID, int iMode, float Time, String sInfo);
 
-        public void onStaEventCallBack(String sInfo);
+        void onStaEventCallBack(String sInfo);
 
-        public void onLogEventCallBack(String sInfo);
+        void onLogEventCallBack(String sInfo);
 
-        public void onDataTxEventCallBack(byte[] sendData, int dataLen);
+        void onDataTxEventCallBack(byte[] sendData, int dataLen);
 
     }
 
@@ -161,55 +172,61 @@ public class SunARS {
     private static String r_onHDParamCallBack;
 
     private static void onConnectEventCallBack(int iBaseID, int iMode, byte[] sInfo) {
-
-        if (al != null) {
-            al.onConnectEventCallBack(iBaseID, iMode, bytesToString(sInfo));
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onConnectEventCallBack(iBaseID, iMode, bytesToString(sInfo));
         }
     }
 
     private static void onHDParamCallBack(int iBaseID, int iMode, byte[] sInfo) {
         r_onHDParamCallBack = bytesToString(sInfo);
-        if (al != null) {
-            al.onHDParamCallBack(iBaseID, iMode, r_onHDParamCallBack);
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onHDParamCallBack(iBaseID, iMode, r_onHDParamCallBack);
         }
     }
 
     private static void onHDParamBySnCallBack(byte[] keySn, int iMode, byte[] sInfo) {
         r_onHDParamCallBack = bytesToString(sInfo);
-        if (al != null) {
-            al.onHDParamBySnCallBack(bytesToString(keySn), iMode, r_onHDParamCallBack);
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onHDParamBySnCallBack(bytesToString(keySn), iMode, r_onHDParamCallBack);
         }
     }
 
     private static void onVoteEventCallBack(int iBaseID, int iMode, byte[] sInfo) {
         r_onHDParamCallBack = bytesToString(sInfo);
-        if (al != null) {
-            al.onVoteEventCallBack(iBaseID, iMode, r_onHDParamCallBack);
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onVoteEventCallBack(iBaseID, iMode, r_onHDParamCallBack);
         }
     }
 
     private static void onStaEventCallBack(byte[] sInfo) {
-        if (al != null) {
-            al.onStaEventCallBack(bytesToString(sInfo));
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onStaEventCallBack(bytesToString(sInfo));
         }
     }
 
     private static void onKeyEventCallBack(byte[] KeyID, int iMode, float Time, byte[] sInfo) {
-        if (al != null) {
-            al.onKeyEventCallBack(bytesToString(KeyID), iMode, (float) Time, bytesToString(sInfo));
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onKeyEventCallBack(bytesToString(KeyID), iMode, (float) Time, bytesToString(sInfo));
         }
     }
 
     private static void onLogEventCallBack(byte[] sInfo) {
-        if (al != null) {
-            al.onLogEventCallBack(bytesToString(sInfo));
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onLogEventCallBack(bytesToString(sInfo));
         }
     }
 
     private static void onDataTxEventCallBack(byte[] sendData, int dataLen) {
-
-        if (al != null) {
-            al.onDataTxEventCallBack(sendData, dataLen);
+        for (int i = 0; i < listeners.size(); i++) {
+            SunARSListener listener = listeners.get(i);
+            listener.onDataTxEventCallBack(sendData, dataLen);
         }
     }
 
@@ -313,14 +330,18 @@ public class SunARS {
         return license0(Mode, stringToBytes(sInfo));
     }
 
-    private static SunARSListener al;
+    private static List<SunARSListener> listeners = new ArrayList<>();
 
-    public static void setListener(SunARSListener al) {
-        SunARS.al = al;
+    public static void addListener(SunARSListener al) {
+        listeners.add(al);
+    }
+
+    public static void removeListener(SunARSListener al) {
+        listeners.remove(al);
     }
 
     public static void clearListener() {
-        SunARS.al = null;
+        listeners.clear();
     }
 
     public static int DataRx(byte[] recvData, int dataLen) {

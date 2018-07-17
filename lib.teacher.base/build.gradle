@@ -39,6 +39,7 @@ dependencies {
     implementation dependencies.okhttp3LoggingInterceptor
     implementation dependencies.rxjava
     implementation dependencies.rxandroid
+    implementation dependencies.observablesscrollview
     implementation (dependencies.retrofit2AdapterRxJava) {
         exclude group: 'com.squareup.okhttp3'
     }
@@ -53,4 +54,5 @@ dependencies {
     implementation project(":lib.common")
     implementation project(":lib.interfaces")
     implementation project(":lib.database")
+    implementation project(":lib.sunvote")
 }

@@ -15,6 +15,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.login.QrCode
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
+import com.prance.teacher.features.match.MatchKeyPadActivity
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -51,17 +52,15 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         LogUtils.d(ScreenUtils.getScreenDensity())
         LogUtils.d(ScreenUtils.getScreenDensityDpi())
 
-
         //显示loading
         showProgress()
 
         //获取二维码
         getNewQrCode(0)
 
-
         //启动主页
         if(BuildConfig.DEBUG) {
-            context?.let { startActivity(MainActivity.callingIntent(it)) }
+            context?.let { startActivity(MatchKeyPadActivity.callingIntent(it)) }
 
             activity?.finish()
         }
@@ -136,7 +135,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
     override fun checkQrCodeSuccessCallBack(it: UserEntity?) {
         it?.let {
             //设置全局用户信息
-            application.userInfo = it
+            application.mUserInfo = it
 
             //启动主页
             context?.let { startActivity(MainActivity.callingIntent(it)) }

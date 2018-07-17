@@ -92,4 +92,10 @@ abstract class BaseFragment : Fragment(), ITopView {
      * mFragmentView创建完成后,初始化具体的view 只会调用一次
      */
     protected abstract fun initView(rootView: View, savedInstanceState: Bundle?)
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        hideProgress()
+    }
 }

@@ -4,7 +4,7 @@ import com.blankj.utilcode.util.LogUtils
 import cn.sunars.sdk.SunARS
 import cn.sunars.sdk.SunARS.*
 
-class MySunARSListener(private val mUsbManagerInterface: IUsbManagerInterface) : SunARS.SunARSListener {
+class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterface) : SunARS.SunARSListener {
 
 
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
@@ -18,8 +18,6 @@ class MySunARSListener(private val mUsbManagerInterface: IUsbManagerInterface) :
             writeHDParam(iBaseID, KeyPad_IdentificationMode, "0")
             //中文模式
             writeHDParam(iBaseID, KeyPad_Config, "0,10,1,0,0,0,1")
-
-            SunARS.checkKeyPad()
         } else {
             if (iMode == 5) {
                 val map = mUsbManagerInterface.getDeviceList()
@@ -42,8 +40,11 @@ class MySunARSListener(private val mUsbManagerInterface: IUsbManagerInterface) :
      */
     override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
         LogUtils.d("onHDParamCallBack>>$iBaseID $iMode $sInfo")
-        if (iMode == SunARS.KeyPad_IdentificationMode) {
+        when (iMode) {
+        //基站主信道
+            SunARS.BaseStation_Channel -> {
 
+            }
         }
     }
 

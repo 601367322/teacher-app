@@ -1,4 +1,4 @@
-package com.prance.teacher.core.di
+package com.prance.lib.teacher.base.core.di
 
 import android.content.ComponentName
 import android.content.ServiceConnection
