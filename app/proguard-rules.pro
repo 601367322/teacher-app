@@ -27,6 +27,8 @@
     public static *** e(...);
 }
 
+-keep class cn.sunars.sdk.**{*;}
+
 #-dontshrink
 #指定重新打包,所有包重命名,这个选项会进一步模糊包名，将包里的类混淆成n个再重新打包到一个个的package中
 -flattenpackagehierarchy
