@@ -202,7 +202,7 @@ abstract class BaseActivity : BaseActivity() {
             else -> {
             }
         }
-        return super.onKeyDown(keyCode, event)
+        return true
     }
 
     protected open fun onHomeKeyEvent(): Boolean = false

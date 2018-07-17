@@ -2,6 +2,7 @@ package com.prance.lib.teacher.base
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.database.sqlite.SQLiteQueryBuilder
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.CrashUtils
 import com.blankj.utilcode.util.Utils
@@ -16,6 +17,7 @@ import com.prance.lib.database.BaseStationEntity
 import com.prance.lib.database.DaoManager
 import com.prance.lib.database.UserEntity
 import com.prance.lib.teacher.base.http.OkHttpUtils
+import org.greenrobot.greendao.query.QueryBuilder
 
 
 class TeacherApplication : Application(), SunARS.SunARSListener {
@@ -71,6 +73,11 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
          * 基站监控
          */
         SunARS.addListener(this)
+
+        if (ModelUtil.isTestModel) {
+            QueryBuilder.LOG_SQL = true
+            QueryBuilder.LOG_VALUES = true
+        }
     }
 
 

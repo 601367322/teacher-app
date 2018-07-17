@@ -1,14 +1,15 @@
 package com.prance.teacher.features.main.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.teacher.features.exit.ExitActivity
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -82,10 +83,16 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         exit.setOnClickListener {
-            context?.let {
-                startActivity(ExitActivity.callingIntent(it))
-            }
+            AlertDialog.Builder(context)
+                    .setTitle("提示")
+                    .setMessage("1、退出程序后不能进行课中数据传输\n2、退出程序后，请扫码登录")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确定", { _, _ ->
+                        AppUtils.exitApp()
+                    })
+                    .show()
         }
     }
 
+    override fun needSunVoteService(): Boolean = true
 }

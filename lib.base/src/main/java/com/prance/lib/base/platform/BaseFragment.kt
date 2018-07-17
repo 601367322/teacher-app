@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.prance.lib.base.mvp.ITopView
+import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
 
 /**
@@ -55,6 +56,11 @@ abstract class BaseFragment : Fragment(), ITopView {
             val rootView = mRootView!!.get()
             rootView?.let {
                 initView(it, savedInstanceState)
+
+                if (needEventBus()) {
+                    EventBus.getDefault().register(this)
+                }
+
                 inited()
                 inited = true
             }
@@ -88,6 +94,8 @@ abstract class BaseFragment : Fragment(), ITopView {
         }
     }
 
+    open fun needEventBus(): Boolean = false
+
     /**
      * mFragmentView创建完成后,初始化具体的view 只会调用一次
      */
@@ -95,6 +103,9 @@ abstract class BaseFragment : Fragment(), ITopView {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        if (needEventBus())
+            EventBus.getDefault().unregister(this)
 
         hideProgress()
     }

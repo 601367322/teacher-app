@@ -37,10 +37,6 @@
         </activity>
 
         <activity
-            android:name=".features.exit.ExitActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
             android:name=".features.main.CheckKeyPadTipActivity"
             android:screenOrientation="landscape" />
         <activity

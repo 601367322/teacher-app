@@ -38,6 +38,7 @@ dependencies {
     implementation dependencies.okhttp3
     implementation dependencies.okhttp3LoggingInterceptor
     implementation dependencies.rxjava
+    implementation dependencies.greendao
     implementation dependencies.rxandroid
     implementation dependencies.observablesscrollview
     implementation (dependencies.retrofit2AdapterRxJava) {

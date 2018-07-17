@@ -13,5 +13,6 @@ class MyServiceConnection(private val serviceBinder: IServiceBinder) : ServiceCo
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         val myBinder = service as SunVoteService.MyBinder
         serviceBinder.mSunVoteService = myBinder.service
+        serviceBinder.onServiceConnected()
     }
 }

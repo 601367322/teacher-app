@@ -13,9 +13,16 @@ import com.prance.lib.database.KeyPadEntity
 interface IMatchKeyPadContract {
     interface View : IView<Presenter> {
         fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>)
+        fun onSaveKeyPadSuccess()
     }
+
     interface Presenter : IPresenter<View, Model> {
         fun getMatchedKeyPadByBaseStationId(serialNumber: String)
+        fun saveAllMatchedKeyPad(serialNumber: String, data: List<KeyPadEntity>)
     }
-    interface Model : IModel {}
+
+    interface Model : IModel {
+        fun saveAllMatchedKeyPad(data: List<KeyPadEntity>): Boolean
+        fun deleteKeyPad(serialNumber: String): Boolean
+    }
 }

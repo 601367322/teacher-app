@@ -53,7 +53,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         LogUtils.d(ScreenUtils.getScreenDensity())
         LogUtils.d(ScreenUtils.getScreenDensityDpi())
 
-        PluginsManager.bugly?.checkUpdate()
+        //检查更新
+        if (!BuildConfig.DEBUG)
+            PluginsManager.bugly?.checkUpdate()
 
         //显示loading
         showProgress()

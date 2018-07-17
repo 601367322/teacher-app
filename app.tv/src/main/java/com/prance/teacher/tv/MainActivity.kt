@@ -28,4 +28,6 @@ class MainActivity : FragmentActivity() {
 
         supportFragmentManager.beginTransaction().replace(R.id.main_browse_fragment,MainFragment()).commitAllowingStateLoss()
     }
+
+
 }

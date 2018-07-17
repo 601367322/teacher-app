@@ -36,6 +36,7 @@ dependencies {
     implementation dependencies.rxjava
     implementation dependencies.rxandroid
     implementation dependencies.utilcode
+    implementation dependencies.eventbus
 
     implementation project(":lib.common")
 }

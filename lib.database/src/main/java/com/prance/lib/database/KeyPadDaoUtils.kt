@@ -10,4 +10,27 @@ class KeyPadDaoUtils {
                 .where(KeyPadEntityDao.Properties.BaseStationSN.eq(serialNumber))
                 .list()
     }
+
+    fun saveKeyPad(data: List<KeyPadEntity>): Boolean {
+        try {
+            for (keyPad in data) {
+                mDao.insert(keyPad)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
+
+    fun deleteKeyPad(serialNumber: String):Boolean {
+        try {
+            val builder = mDao.queryBuilder().where(KeyPadEntityDao.Properties.BaseStationSN.eq(serialNumber)).buildDelete()
+            builder.executeDeleteWithoutDetachingEntities()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
 }

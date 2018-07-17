@@ -7,13 +7,13 @@ import com.prance.lib.teacher.base.ui.BaseLoadMoreAdapter
 
 class MatchedKeyPadAdapter : BaseLoadMoreAdapter<KeyPadEntity, MatchedKeyPadHolder>() {
 
+    var isDeleteState: Boolean = false
+
     override fun onBind(viewHolder: MatchedKeyPadHolder?, position: Int, data: KeyPadEntity?) {
-        LogUtils.d("onBind(viewHolder: MatchedKeyPadHolder?, position: I")
         viewHolder?.onBind(data)
     }
 
     override fun onCreate(parent: ViewGroup, viewType: Int): MatchedKeyPadHolder {
-        LogUtils.d("onCreate(parent: ViewGroup, viewType: Int)")
         return MatchedKeyPadHolder(parent)
     }
 }

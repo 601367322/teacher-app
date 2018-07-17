@@ -5,6 +5,7 @@ import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
 import com.prance.teacher.features.main.view.MainFragment
+import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -17,4 +18,12 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onBackKeyEvent(): Boolean {
+        supportFragmentManager.fragments?.let {
+            if(!it.isEmpty()){
+                (it[0] as MainFragment).exit.performClick()
+            }
+        }
+        return true
+    }
 }

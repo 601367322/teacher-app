@@ -9,7 +9,6 @@ import com.prance.teacher.features.main.model.MainModel
 import com.prance.teacher.features.match.model.MatchKeyPadModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import java.util.*
 
 /**
  * Description :
@@ -35,6 +34,16 @@ class MatchKeyPadPresenter : BasePresenterKt<IMatchKeyPadContract.View>(), IMatc
                     mView?.renderKeyPadItemFromDatabase(it)
                 }
 
+    }
+
+    override fun saveAllMatchedKeyPad(serialNumber: String, data: List<KeyPadEntity>) {
+        Flowable.create<Boolean>({
+            mModel.deleteKeyPad(serialNumber)
+            if (mModel.saveAllMatchedKeyPad(data)) {
+                it.onNext(true)
+            }
+        }, BackpressureStrategy.BUFFER)
+                .mySubscribe { mView?.onSaveKeyPadSuccess() }
     }
 }
 

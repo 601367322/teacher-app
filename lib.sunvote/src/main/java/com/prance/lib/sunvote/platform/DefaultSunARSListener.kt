@@ -12,6 +12,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
 
         SunARS.isConnected = sInfo == "1"
         if (sInfo == "1") {
+            SunARS.voteStop()
             //自由链接模式
             writeHDParam(iBaseID, SunARS.KeyPad_WorkingMode, "2")
             //键盘识别模式为ID

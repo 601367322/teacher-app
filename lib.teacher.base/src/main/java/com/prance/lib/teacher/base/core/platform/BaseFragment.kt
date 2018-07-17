@@ -43,13 +43,15 @@ abstract class BaseFragment : BaseFragment(), SunARS.SunARSListener, IServiceBin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //绑定Service
-        activity?.run {
-            startService(SunVoteService.callingIntent(this))
-            bindService(SunVoteService.callingIntent(this), mServiceConnection, Service.BIND_AUTO_CREATE)
-        }
+        if (needSunVoteService()) {
+            //绑定Service
+            activity?.run {
+                startService(SunVoteService.callingIntent(this))
+                bindService(SunVoteService.callingIntent(this), mServiceConnection, Service.BIND_AUTO_CREATE)
+            }
 
-        SunARS.addListener(this)
+            SunARS.addListener(this)
+        }
     }
 
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
@@ -89,17 +91,17 @@ abstract class BaseFragment : BaseFragment(), SunARS.SunARSListener, IServiceBin
     override fun onDataTxEventCallBack(sendData: ByteArray?, dataLen: Int) {
     }
 
-    override fun onServiceConnected() {
-        super.onServiceConnected()
-    }
+    open fun needSunVoteService(): Boolean = false
 
     override fun onDestroy() {
         super.onDestroy()
 
-        SunARS.removeListener(this)
+        if(needSunVoteService()) {
+            SunARS.removeListener(this)
 
-        activity?.run {
-            unbindService(mServiceConnection)
+            activity?.run {
+                unbindService(mServiceConnection)
+            }
         }
     }
 }
