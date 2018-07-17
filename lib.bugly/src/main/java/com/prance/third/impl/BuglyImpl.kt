@@ -14,6 +14,7 @@ import com.tencent.bugly.Bugly
 import com.tencent.bugly.crashreport.CrashReport
 import android.widget.Toast
 import android.content.Intent
+import com.blankj.utilcode.util.LogUtils
 import com.tencent.bugly.beta.Beta
 import com.tencent.bugly.beta.UpgradeInfo
 import com.tencent.bugly.beta.upgrade.UpgradeListener
@@ -43,23 +44,23 @@ class BuglyImpl : IBugly {
         Beta.upgradeStateListener = object : UpgradeStateListener {
 
             override fun onDownloadCompleted(p0: Boolean) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                LogUtils.d("onDownloadCompleted")
             }
 
             override fun onUpgradeSuccess(isManual: Boolean) {
-//                Toast.makeText(getApplicationContext(), "UPGRADE_SUCCESS", Toast.LENGTH_SHORT).show()
+                LogUtils.d("onUpgradeSuccess")
             }
 
             override fun onUpgradeFailed(isManual: Boolean) {
-//                Toast.makeText(getApplicationContext(、、), "UPGRADE_FAILED", Toast.LENGTH_SHORT).show()
+                LogUtils.d("onUpgradeFailed")
             }
 
             override fun onUpgrading(isManual: Boolean) {
-//                Toast.makeText(getApplicationContext(), "UPGRADE_CHECKING", Toast.LENGTH_SHORT).show()
+                LogUtils.d("onUpgrading")
             }
 
             override fun onUpgradeNoVersion(isManual: Boolean) {
-//                Toast.makeText(getApplicationContext(), "UPGRADE_NO_VERSION", Toast.LENGTH_SHORT).show()
+                LogUtils.d("onUpgradeNoVersion")
             }
         }
 
