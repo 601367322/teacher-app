@@ -10,6 +10,8 @@ import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
 class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View {
 
@@ -70,7 +72,10 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View {
     override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
         when (iMode) {
             SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
-                mAdapter.addData(KeyPadEntity(application.mBaseStation.sn,KeyID))
+                launch(UI) {
+                    mAdapter.addData(KeyPadEntity(application.mBaseStation.sn,KeyID))
+                    mAdapter.notifyDataSetChanged()
+                }
             }
         }
     }
