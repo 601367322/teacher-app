@@ -132,6 +132,7 @@ dependencies {
     implementation project(":lib.base")
     implementation project(":lib.teacher.base")
     implementation project(":lib.test.setting")
+    implementation project(":lib.interfaces")
     implementation project(":lib.sunvote")
     implementation project(":lib.bugly")
     implementation project(":lib.common")

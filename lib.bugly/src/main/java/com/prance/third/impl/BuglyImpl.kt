@@ -75,5 +75,7 @@ class BuglyImpl : IBugly {
         Bugly.init(Utils.getApp(), MetaDataUtil.getMetaDataInApp(BUGLY_APPID), ModelUtil.isTestModel, strategy)
     }
 
-
+    override fun checkUpdate() {
+        Beta.checkUpgrade()
+    }
 }

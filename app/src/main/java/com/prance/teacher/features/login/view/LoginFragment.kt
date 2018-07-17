@@ -10,6 +10,7 @@ import com.prance.lib.qrcode.QrCodeUtils
 import com.prance.lib.base.http.ResultException
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.lib.third.inter.PluginsManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.login.QrCode
@@ -51,6 +52,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         LogUtils.d(ScreenUtils.getScreenHeight())
         LogUtils.d(ScreenUtils.getScreenDensity())
         LogUtils.d(ScreenUtils.getScreenDensityDpi())
+
+        PluginsManager.bugly?.checkUpdate()
 
         //显示loading
         showProgress()

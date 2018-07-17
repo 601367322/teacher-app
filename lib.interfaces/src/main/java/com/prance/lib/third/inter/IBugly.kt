@@ -14,4 +14,6 @@ interface IBugly {
      * 初始化Bugly
      */
     fun init()
+
+    fun checkUpdate()
 }
