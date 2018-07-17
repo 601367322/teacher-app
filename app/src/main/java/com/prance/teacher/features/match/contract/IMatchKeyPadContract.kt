@@ -1,6 +1,7 @@
 package com.prance.teacher.features.match.contract
 
 import com.prance.lib.base.mvp.*
+import com.prance.lib.database.KeyPadEntity
 
 /**
  * Description :
@@ -10,7 +11,11 @@ import com.prance.lib.base.mvp.*
  */
 
 interface IMatchKeyPadContract {
-    interface View : IView<Presenter> {}
-    interface Presenter : IPresenter<View, Model> {}
+    interface View : IView<Presenter> {
+        fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>)
+    }
+    interface Presenter : IPresenter<View, Model> {
+        fun getMatchedKeyPadByBaseStationId(serialNumber: String)
+    }
     interface Model : IModel {}
 }

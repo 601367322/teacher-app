@@ -62,7 +62,7 @@ class MainFragment : BaseFragment(), IMainContract.View ,IServiceBinder{
             LogUtils.d("答题器检测")
 
             mSunVoteService?.let {
-                val usbDevice = it.mUsbManagerImpl.getUsbDevice()
+                val usbDevice = it.getUserManager().getUsbDevice()
                 if (usbDevice != null) {
                     mPresenter.checkIfKeyPadAlreadyMatched(usbDevice.serialNumber, {
                         context?.let {
@@ -79,7 +79,7 @@ class MainFragment : BaseFragment(), IMainContract.View ,IServiceBinder{
         matchKeyPad.setOnClickListener {
             LogUtils.d("答题器配对")
             mSunVoteService?.let {
-                val usbDevice = it.mUsbManagerImpl.getUsbDevice()
+                val usbDevice = it.getUserManager().getUsbDevice()
                 if (usbDevice != null) {
                     context?.let {
                         startActivity(MatchKeyPadActivity.callingIntent(it))

@@ -10,10 +10,7 @@ import android.os.Binder
 import android.os.IBinder
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
-import com.prance.lib.sunvote.platform.DataReceiverThread
-import com.prance.lib.sunvote.platform.MySunARSListener
-import com.prance.lib.sunvote.platform.UsbManagerImpl
-import com.prance.lib.sunvote.platform.UsbReceiver
+import com.prance.lib.sunvote.platform.*
 
 class SunVoteService : Service() {
 
@@ -21,7 +18,7 @@ class SunVoteService : Service() {
     private lateinit var mUsbReceiver: UsbReceiver
     private lateinit var mSunARSListener: MySunARSListener
 
-    public var mUsbManagerImpl: UsbManagerImpl = UsbManagerImpl()
+    private var mUsbManagerImpl: UsbManagerImpl = UsbManagerImpl()
 
     //用于和外界交互
     private val binder = MyBinder()
@@ -71,6 +68,10 @@ class SunVoteService : Service() {
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
         filter.addAction(UsbManagerImpl.ACTION_USB_PERMISSION)
         registerReceiver(mUsbReceiver, filter)
+    }
+
+    fun getUserManager(): IUsbManagerInterface {
+        return mUsbManagerImpl
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

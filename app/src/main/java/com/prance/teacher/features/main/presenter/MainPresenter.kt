@@ -23,7 +23,7 @@ class MainPresenter : BasePresenterKt<IMainContract.View>(), IMainContract.Prese
         Flowable
                 .create<MutableList<KeyPadEntity>>({ subscriber ->
                     var list = mModel.getAllKeyPadByBaseStationSN(serialNumber)
-                    if (list != null && list.size > 0) {
+                    if (list?.isNotEmpty()!!) {
                         subscriber.onNext(list)
                     } else {
                         subscriber.onError(Throwable(""))
