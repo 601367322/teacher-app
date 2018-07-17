@@ -7,7 +7,7 @@ class KeyPadDaoUtils {
 
     fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
         return mDao.queryBuilder()
-                .where(KeyPadEntityDao.Properties.BaseStationId.eq(serialNumber))
+                .where(KeyPadEntityDao.Properties.BaseStationSN.eq(serialNumber))
                 .list()
     }
 }

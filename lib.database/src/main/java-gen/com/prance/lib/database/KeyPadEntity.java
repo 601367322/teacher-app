@@ -2,6 +2,7 @@ package com.prance.lib.database;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
@@ -17,19 +18,24 @@ public class KeyPadEntity {
     private long id;
 
     @NotNull
-    private long baseStationId;
+    private String baseStationSN;
 
     private String keyId;
 
-    @Generated(hash = 1914328320)
-    public KeyPadEntity(long id, long baseStationId, String keyId) {
-        this.id = id;
-        this.baseStationId = baseStationId;
+    public KeyPadEntity(String baseStationSN, String keyId) {
+        this.baseStationSN = baseStationSN;
         this.keyId = keyId;
     }
 
-    @Generated(hash = 1655136874)
+    @Keep
     public KeyPadEntity() {
+    }
+
+    @Keep
+    public KeyPadEntity(long id, String baseStationSN, String keyId) {
+        this.id = id;
+        this.baseStationSN = baseStationSN;
+        this.keyId = keyId;
     }
 
     public long getId() {
@@ -40,12 +46,12 @@ public class KeyPadEntity {
         this.id = id;
     }
 
-    public long getBaseStationId() {
-        return this.baseStationId;
+    public String getBaseStationSN() {
+        return baseStationSN;
     }
 
-    public void setBaseStationId(long baseStationId) {
-        this.baseStationId = baseStationId;
+    public void setBaseStationSN(String baseStationSN) {
+        this.baseStationSN = baseStationSN;
     }
 
     public String getKeyId() {

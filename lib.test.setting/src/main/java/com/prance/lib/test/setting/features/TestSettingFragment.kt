@@ -1,6 +1,8 @@
 package com.prance.lib.test.setting.features
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -38,6 +40,10 @@ class TestSettingFragment : BaseFragment() {
         scheme.setText(UrlUtil.getScheme())
         hosts.setText(UrlUtil.getHost())
         port.setText(UrlUtil.getPort())
+
+        systemSettingBtn.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_SETTINGS))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

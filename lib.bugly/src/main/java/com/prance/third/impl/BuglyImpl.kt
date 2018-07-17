@@ -29,15 +29,15 @@ class BuglyImpl : IBugly {
 
     override fun init() {
 
-        Beta.upgradeListener = UpgradeListener { ret, strategy, isManual, isSilence ->
-            if (strategy != null) {
+//        Beta.upgradeListener = UpgradeListener { ret, strategy, isManual, isSilence ->
+//            if (strategy != null) {
                 //有更新
 //                val i = Intent()
 //                i.setClass(getApplicationContext(), UpgradeActivity::class.java!!)
 //                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                startActivity(i)
-            }
-        }
+//            }
+//        }
 
         /* 设置更新状态回调接口 */
         Beta.upgradeStateListener = object : UpgradeStateListener {

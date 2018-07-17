@@ -23,7 +23,7 @@ public class KeyPadEntityDao extends AbstractDao<KeyPadEntity, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property BaseStationId = new Property(1, long.class, "baseStationId", false, "BASE_STATION_ID");
+        public final static Property BaseStationSN = new Property(1, String.class, "baseStationSN", false, "BASE_STATION_SN");
         public final static Property KeyId = new Property(2, String.class, "keyId", false, "KEY_ID");
     }
 
@@ -41,7 +41,7 @@ public class KeyPadEntityDao extends AbstractDao<KeyPadEntity, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"keypad_table\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "\"BASE_STATION_ID\" INTEGER NOT NULL ," + // 1: baseStationId
+                "\"BASE_STATION_SN\" TEXT NOT NULL ," + // 1: baseStationSN
                 "\"KEY_ID\" TEXT);"); // 2: keyId
     }
 
@@ -55,7 +55,7 @@ public class KeyPadEntityDao extends AbstractDao<KeyPadEntity, Long> {
     protected final void bindValues(DatabaseStatement stmt, KeyPadEntity entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.getBaseStationId());
+        stmt.bindString(2, entity.getBaseStationSN());
  
         String keyId = entity.getKeyId();
         if (keyId != null) {
@@ -67,7 +67,7 @@ public class KeyPadEntityDao extends AbstractDao<KeyPadEntity, Long> {
     protected final void bindValues(SQLiteStatement stmt, KeyPadEntity entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.getBaseStationId());
+        stmt.bindString(2, entity.getBaseStationSN());
  
         String keyId = entity.getKeyId();
         if (keyId != null) {
@@ -84,7 +84,7 @@ public class KeyPadEntityDao extends AbstractDao<KeyPadEntity, Long> {
     public KeyPadEntity readEntity(Cursor cursor, int offset) {
         KeyPadEntity entity = new KeyPadEntity( //
             cursor.getLong(offset + 0), // id
-            cursor.getLong(offset + 1), // baseStationId
+            cursor.getString(offset + 1), // baseStationSN
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // keyId
         );
         return entity;
@@ -93,7 +93,7 @@ public class KeyPadEntityDao extends AbstractDao<KeyPadEntity, Long> {
     @Override
     public void readEntity(Cursor cursor, KeyPadEntity entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
-        entity.setBaseStationId(cursor.getLong(offset + 1));
+        entity.setBaseStationSN(cursor.getString(offset + 1));
         entity.setKeyId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     

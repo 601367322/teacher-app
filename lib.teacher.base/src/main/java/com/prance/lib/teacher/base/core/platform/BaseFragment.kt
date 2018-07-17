@@ -53,6 +53,13 @@ abstract class BaseFragment : BaseFragment(), SunARS.SunARSListener, IServiceBin
     }
 
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
+        if (sInfo == SunARS.BaseStation_Connected) {
+            //设置基站的唯一SN编码
+            mSunVoteService?.let {
+                application.mBaseStation.sn = it.getUserManager().getUsbDevice()?.serialNumber
+            }
+
+        }
     }
 
     override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {

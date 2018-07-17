@@ -95,27 +95,21 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
     }
 
     override fun onHDParamBySnCallBack(KeySn: String?, iMode: Int, sInfo: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onVoteEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onStaEventCallBack(sInfo: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onLogEventCallBack(sInfo: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDataTxEventCallBack(sendData: ByteArray?, dataLen: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

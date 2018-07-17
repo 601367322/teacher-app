@@ -3,6 +3,7 @@ package com.prance.teacher.features.match.view
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
+import cn.sunars.sdk.SunARS
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -20,6 +21,16 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
+        setTip()
+
+    }
+
+    private fun setTip() {
+        mRootView?.get()?.post {
+            application.mBaseStation.let {
+                tip.text = """${it?.stationId}\t${it?.stationChannel}\t+${it?.sn}"""
+            }
+        }
     }
 
     /**
@@ -46,5 +57,22 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View {
         }
     }
 
+    override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
+        when (iMode) {
+        //基站主信道
+            SunARS.BaseStation_Channel -> {
+                application.mBaseStation.stationChannel = sInfo?.toLong()
+                setTip()
+            }
+        }
+    }
+
+    override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
+        when (iMode) {
+            SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
+                mAdapter.addData(KeyPadEntity(application.mBaseStation.sn,KeyID))
+            }
+        }
+    }
 
 }
