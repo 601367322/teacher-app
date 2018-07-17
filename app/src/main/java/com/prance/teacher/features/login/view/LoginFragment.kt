@@ -62,11 +62,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         getNewQrCode(0)
 
         //启动主页
-        if(BuildConfig.DEBUG) {
-            context?.let { startActivity(MatchKeyPadActivity.callingIntent(it)) }
-
-            activity?.finish()
-        }
+//        if(BuildConfig.DEBUG) {
+//            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//
+//            activity?.finish()
+//        }
     }
 
     /**

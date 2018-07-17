@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -70,9 +71,11 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View {
     }
 
     override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
+        LogUtils.d("onKeyEventCallBack")
         when (iMode) {
             SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
                 launch(UI) {
+                    LogUtils.d("notifyDataSetChanged")
                     mAdapter.addData(KeyPadEntity(application.mBaseStation.sn,KeyID))
                     mAdapter.notifyDataSetChanged()
                 }
