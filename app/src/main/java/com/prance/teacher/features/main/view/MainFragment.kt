@@ -14,7 +14,7 @@ import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.bind.BindKeyPadActivity
-import com.prance.teacher.features.main.CheckKeyPadTipActivity
+import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 
 
@@ -39,11 +39,11 @@ class MainFragment : BaseFragment(), IMainContract.View {
             LogUtils.d("开始上课")
 
             context?.let {
-                startActivity(CheckKeyPadTipActivity.callingIntent(it))
+                startActivity(CheckKeyPadActivity.callingIntent(it))
             }
         }
 
-        checkKeyPad.setOnClickListener {
+        check.setOnClickListener {
             LogUtils.d("答题器检测")
 
             mSunVoteService?.let {
@@ -51,7 +51,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
                 if (usbDevice != null) {
                     mPresenter.checkIfKeyPadAlreadyMatched(usbDevice.serialNumber, {
                         context?.let {
-                            startActivity(CheckKeyPadTipActivity.callingIntent(it))
+                            startActivity(CheckKeyPadActivity.callingIntent(it))
                         }
                     }, { ToastUtils.showShort("请先进行答题器配对") }
                     )

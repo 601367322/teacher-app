@@ -1,12 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
-        android:text="返回上一层"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m48.0"
         android:onClick="onBackBtnClick"
-        android:layout_height="wrap_content" />
+        android:text="返回上一层"
+        app:layout_constraintBottom_toBottomOf="@+id/jump"
+        app:layout_constraintStart_toEndOf="@+id/jump"
+        app:layout_constraintTop_toTopOf="@+id/jump"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/jump"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m8.0"
+        android:text="跳过"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m48.0"
+        android:text="检测答题器"
+        app:layout_constraintBottom_toBottomOf="@+id/jump"
+        app:layout_constraintEnd_toStartOf="@+id/jump"
+        app:layout_constraintTop_toTopOf="@+id/jump"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="40dp"
+        android:text="提示："
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="1.以答题器配对信息为校准标准"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2.检测内容为已配对答题器是否在线（在线为与接收器相连接）、电量是否充足"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="3.检测过程不可中断"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 </android.support.constraint.ConstraintLayout>
