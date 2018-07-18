@@ -7,6 +7,7 @@ import cn.sunars.sdk.SunARS
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.R.id.*
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import kotlinx.android.synthetic.main.fragment_match_keypad.*

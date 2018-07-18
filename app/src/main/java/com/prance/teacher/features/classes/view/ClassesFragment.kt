@@ -36,7 +36,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
 
     private fun loadData() {
         showProgress()
-        mPresenter.getAllClasses()
+        mPresenter.getAllClasses(application.mUserInfo.id.toString())
     }
 
     override fun renderClasses(it: MutableList<ClassesEntity>) {

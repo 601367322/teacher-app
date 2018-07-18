@@ -10,6 +10,7 @@ class ClassesEntity : Serializable {
     class KlassEntity : Serializable {
         var id: String? = null
         var name: String? = null
+        var addr: String? = null
         var course: CourseEntity? = null
         var teacher: TeacherEntity? = null
         var startTime: String? = null

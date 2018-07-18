@@ -88,24 +88,9 @@ public class FocusRelativeLayout extends RelativeLayout {
      * 缩小动画
      */
     private void zoomIn() {
+        setElevation(0);
         if (scaleSmallAnimation == null) {
             scaleSmallAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.anim_scale_small);
-            scaleSmallAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    setElevation(0);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
         }
         startAnimation(scaleSmallAnimation);
     }

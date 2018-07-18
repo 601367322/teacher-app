@@ -16,8 +16,8 @@ import retrofit2.Retrofit
 
 class ClassesModel : BaseModelKt(), IClassesContract.Model {
 
-    override fun getAllClasses(): Flowable<ClassResponseBody> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).allClasses()
+    override fun getAllClasses(userId: String): Flowable<ClassResponseBody> {
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).allClasses(userId)
     }
 }
 

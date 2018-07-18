@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/m30.0"
+        android:layout_marginTop="8dp"
         android:clipToPadding="false"
+        android:padding="@dimen/m12.0"
         app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
         android:id="@+id/back"
@@ -36,4 +37,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/back"
         app:layout_constraintTop_toTopOf="@+id/back" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/m80.0"
+        android:background="#5a5a5a"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="点击&quot;开始绑定&quot;进行随机分配绑定"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/tip"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/m160.0"
+        android:layout_height="@dimen/m80.0"
         android:background="#5a5a5a"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/m12.0"

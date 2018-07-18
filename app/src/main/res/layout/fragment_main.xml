@@ -40,6 +40,7 @@
         android:layout_marginStart="@dimen/m50.0"
         android:background="#000"
         android:focusable="true"
+        android:nextFocusRight="@id/matchKeyPad"
         android:nextFocusDown="@id/matchKeyPad"
         app:layout_constraintStart_toEndOf="@+id/startLesson"
         app:layout_constraintTop_toTopOf="@+id/startLesson">
@@ -64,6 +65,7 @@
         android:background="#000"
         android:layout_marginTop="@dimen/m50.0"
         android:focusable="true"
+        android:nextFocusLeft="@id/check"
         app:layout_constraintStart_toStartOf="@+id/check"
         app:layout_constraintTop_toBottomOf="@+id/check">
 

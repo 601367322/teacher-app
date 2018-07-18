@@ -19,6 +19,6 @@ interface ApiService {
     @POST("backend/user/app/login")
     fun checkQrCode(@Query("timestamp") timestamp: Long, @Query("token") token: String): Flowable<UserEntity>
 
-    @GET("backend/course/app/classList?userId=1")
-    fun allClasses(): Flowable<ClassResponseBody>
+    @GET("backend/course/app/classList")
+    fun allClasses(@Query("userId") userId: String): Flowable<ClassResponseBody>
 }

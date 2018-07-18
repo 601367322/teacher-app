@@ -17,9 +17,9 @@ interface IClassesContract {
         fun renderClasses(it: MutableList<ClassesEntity>)
     }
     interface Presenter : IPresenter<View, Model> {
-        fun getAllClasses()
+        fun getAllClasses(userId:String)
     }
     interface Model : IModel {
-        fun getAllClasses(): Flowable<ClassResponseBody>
+        fun getAllClasses(userId:String): Flowable<ClassResponseBody>
     }
 }

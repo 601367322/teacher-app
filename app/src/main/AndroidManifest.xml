@@ -39,14 +39,21 @@
         <activity
             android:name=".features.check.CheckKeyPadActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".features.bind.BindKeyPadActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".features.match.MatchKeyPadActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".features.classes.ClassesActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".features.students.StudentsActivity"
             android:screenOrientation="landscape" />
 
         <!-- 设置IP测试入口 open close-->
