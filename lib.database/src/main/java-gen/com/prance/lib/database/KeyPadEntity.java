@@ -15,7 +15,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class KeyPadEntity {
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
 
     @NotNull
     private String baseStationSN;
@@ -32,17 +32,17 @@ public class KeyPadEntity {
     }
 
     @Keep
-    public KeyPadEntity(long id, String baseStationSN, String keyId) {
+    public KeyPadEntity(Long id, String baseStationSN, String keyId) {
         this.id = id;
         this.baseStationSN = baseStationSN;
         this.keyId = keyId;
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

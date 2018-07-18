@@ -15,6 +15,7 @@ import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.bind.BindKeyPadActivity
 import com.prance.teacher.features.check.CheckKeyPadActivity
+import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 
 
@@ -78,7 +79,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
         bindKeyPad.setOnClickListener {
             LogUtils.d("答题器绑定")
             context?.let {
-                startActivity(BindKeyPadActivity.callingIntent(it))
+                startActivity(ClassesActivity.callingIntent(it))
             }
         }
 

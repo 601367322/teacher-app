@@ -8,11 +8,11 @@ object StatusConstant {
     /**
      * 成功返回值
      */
-    val SUCCESS = "200"
+    val SUCCESS = 200
 
-    val QRCODE_TIMEOUT = "40004"
+    val QRCODE_TIMEOUT = 40004
 
-    val QRCODE_DEPRECATED = "40005"
+    val QRCODE_DEPRECATED = 40005
 
 
 //    200 操作成功

@@ -13,8 +13,8 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.third.inter.PluginsManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
-import com.prance.teacher.features.check.CheckKeyPadActivity
-import com.prance.teacher.features.login.QrCode
+import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
@@ -43,7 +43,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
     var mGetNewQrCodeDisposable: Disposable? = null
     var mStartCheckQrCodeDisposable: Disposable? = null
 
-    var mQrCode: QrCode? = null
+    var mQrCode: QrCodeEntity? = null
 
     var mCheckTimeTemp: Long = 0
 
@@ -65,17 +65,17 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         getNewQrCode(0)
 
         //启动主页
-//        if(BuildConfig.DEBUG) {
-//            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
-//
-//            activity?.finish()
-//        }
+        if(BuildConfig.DEBUG) {
+            context?.let { startActivity(MainActivity.callingIntent(it)) }
+
+            activity?.finish()
+        }
     }
 
     /**
      * 渲染二维码
      */
-    override fun renderQrCode(obj: QrCode) {
+    override fun renderQrCode(obj: QrCodeEntity) {
         mQrCode = obj
 
         //过期后重置二维码
@@ -157,7 +157,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         if (it is ResultException) {
             when (it.status) {
-                "40015", "40017", "40004", "40005" -> {
+                40015, 40017, 40004, 40005 -> {
                     //重新获取二维码
                     getNewQrCode(0)
                     return

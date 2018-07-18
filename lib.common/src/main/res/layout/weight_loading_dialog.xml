@@ -8,6 +8,10 @@
     android:orientation="vertical">
 
     <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar"
+        android:layout_width="@dimen/m40.0"
+        android:layout_height="@dimen/m40.0"
+        android:indeterminate="true"
+        android:visibility="visible" />
 </LinearLayout>

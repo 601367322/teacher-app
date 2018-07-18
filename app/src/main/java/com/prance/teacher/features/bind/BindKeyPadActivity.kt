@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.teacher.features.bind.view.BindKeyPadFragment
 
 class BindKeyPadActivity : BaseActivity() {
 
