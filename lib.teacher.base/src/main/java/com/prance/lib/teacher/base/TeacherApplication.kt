@@ -18,7 +18,7 @@ import org.greenrobot.greendao.query.QueryBuilder
 
 class TeacherApplication : Application(), SunARS.SunARSListener {
 
-    lateinit var mUserInfo: UserEntity
+    var mUserInfo: UserEntity? = null
 
     var mBaseStation: BaseStationEntity = BaseStationEntity()
 

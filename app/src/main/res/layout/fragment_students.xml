@@ -6,11 +6,15 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tip"
+        android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="@dimen/m80.0"
-        android:background="#5a5a5a"
-        android:text="点击&quot;开始绑定&quot;进行随机分配绑定"
+        android:background="#ff485061"
+        android:textSize="@dimen/m32.0"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:paddingLeft="@dimen/m12.0"
+        android:text="请点击&quot;开始绑定&quot;进行随机分配绑定"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
