@@ -41,7 +41,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     private fun setTip() {
         mRootView?.get()?.post {
             application.mBaseStation.let {
-                tip.text = """请长按答题器上“⬇️”键3秒后输入${it?.stationChannel}，再按Ok键进行配对，一个答题器配对完成后才可进行下一个的配对，信息自动保存。"""
+                tip.text = """请长按答题器上“⬇️”键3秒后输入${it?.stationChannel}，再按OK键进行配对，一个答题器配对完成后才可进行下一个的配对，信息自动保存。"""
             }
         }
     }
