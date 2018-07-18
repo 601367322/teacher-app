@@ -143,19 +143,20 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     @Subscribe
     fun onEvent(bean: DeleteKeyPadEntityEvent) {
-        //删除答题器
-        bean.keyPadEntity?.let {
-            if (mPresenter.deleteKeyPad(it)) {
-                ToastUtils.showShort("删除成功")
+        recycler.post {
+            //删除答题器
+            bean.keyPadEntity?.let {
+                if (mPresenter.deleteKeyPad(it)) {
+                    ToastUtils.showShort("删除成功")
+                }
+
+                //删除答题器
+                mAdapter.removeData(it)
+                mAdapter.notifyDataSetChanged()
             }
 
-            //删除答题器
-            mAdapter.removeData(it)
-            mAdapter.notifyDataSetChanged()
-        }
+            displayMoreBtn()
 
-        displayMoreBtn()
-        recycler.post{
             //最后一个答题器获取焦点
             recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
         }
