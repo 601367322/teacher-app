@@ -3,6 +3,7 @@ package com.prance.lib.sunvote.platform
 import com.blankj.utilcode.util.LogUtils
 import cn.sunars.sdk.SunARS
 import cn.sunars.sdk.SunARS.*
+import com.blankj.utilcode.util.Utils
 
 class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterface) : SunARS.SunARSListener {
 
@@ -26,6 +27,8 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
                 if (map?.size == 0) {
                     LogUtils.d("oncennect event: closeUsb")
                     mUsbManagerInterface.closeUsb()
+                }else{
+                    mUsbManagerInterface.checkUsbDevice(Utils.getApp())
                 }
             }
         }

@@ -130,9 +130,11 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 complete.isEnabled = false
                 delete.isEnabled = false
 
-                tip.text = "请用方向键选择，并按“OK”键进行删除，按“A1”键继续配对。"
-                //最后一个答题器获取焦点
-                recycler.getChildAt(mAdapter.data.size - 1).keyPadBtn.requestFocus()
+                tip.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
+                recycler.post {
+                    //最后一个答题器获取焦点
+                    recycler.getChildAt(mAdapter.data.size - 1).keyPadBtn.requestFocus()
+                }
             }
         }
     }
@@ -153,8 +155,10 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
 
         displayMoreBtn()
-        //最后一个答题器获取焦点
-        recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
+        recycler.post{
+            //最后一个答题器获取焦点
+            recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
+        }
     }
 
     class DeleteKeyPadEntityEvent(val keyPadEntity: KeyPadEntity?) : Serializable
