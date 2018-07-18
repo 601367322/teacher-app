@@ -14,6 +14,7 @@ fun <T> Flowable<T>.mySubscribe(onError: ((Throwable) -> Unit)? = null, onSucces
 }
 
 fun defaultOnNetworkError(throwable: Throwable) {
+    throwable.printStackTrace()
     if (throwable is ResultException) {
         ToastUtils.showShort(throwable.msg)
     } else {
