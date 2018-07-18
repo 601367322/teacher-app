@@ -2,6 +2,10 @@ package com.prance.teacher.features.students.model
 
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.base.mvp.BaseModelKt
+import com.prance.lib.teacher.base.http.ResponseBody
+import com.prance.lib.teacher.base.http.RetrofitUtils
+import com.prance.teacher.apis.ApiService
+import io.reactivex.Flowable
 
 /**
  * Description :
@@ -12,5 +16,8 @@ import com.prance.lib.base.mvp.BaseModelKt
 
 class StudentsModel : BaseModelKt(), IStudentsContract.Model {
 
+    override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>> {
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(id)
+    }
 }
 

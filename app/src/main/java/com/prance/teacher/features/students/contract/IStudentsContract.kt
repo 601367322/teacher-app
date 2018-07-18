@@ -1,6 +1,9 @@
 package com.prance.teacher.features.students.contract
 
 import com.prance.lib.base.mvp.*
+import com.prance.lib.teacher.base.http.ResponseBody
+import com.prance.teacher.features.students.model.StudentsEntity
+import io.reactivex.Flowable
 
 /**
  * Description :
@@ -10,7 +13,13 @@ import com.prance.lib.base.mvp.*
  */
 
 interface IStudentsContract {
-    interface View : IView<Presenter> {}
-    interface Presenter : IPresenter<View, Model> {}
-    interface Model : IModel {}
+    interface View : IView<Presenter> {
+        fun renderStudents(list: MutableList<StudentsEntity>)
+    }
+    interface Presenter : IPresenter<View, Model> {
+        fun getStudentsByClassesId(id: String)
+    }
+    interface Model : IModel {
+        fun getStudentsByClassesId(id: String):Flowable<ResponseBody<StudentsEntity>>
+    }
 }

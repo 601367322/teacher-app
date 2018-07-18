@@ -19,7 +19,7 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
     override fun getAllClasses(userId: String) {
         mModel.getAllClasses(userId)
                 .mySubscribe(onSubscribeError, {
-                    mView?.renderClasses(it.classVoList)
+                    mView?.renderClasses(it.list)
                 })
     }
 }

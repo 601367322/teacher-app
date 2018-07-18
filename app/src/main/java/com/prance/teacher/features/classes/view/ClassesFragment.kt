@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -24,7 +26,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
     var mAdapter: ClassesAdapter = ClassesAdapter()
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        recycler.layoutManager = GridLayoutManager(activity, 3)
+        recycler.layoutManager = FocusGridLayoutManager(activity, 3)
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {
@@ -36,7 +38,13 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
 
     private fun loadData() {
         showProgress()
-        mPresenter.getAllClasses(application.mUserInfo.id.toString())
+
+        if(BuildConfig.DEBUG){
+            mPresenter.getAllClasses("6")
+        }else{
+            mPresenter.getAllClasses(application.mUserInfo.id.toString())
+        }
+
     }
 
     override fun renderClasses(it: MutableList<ClassesEntity>) {

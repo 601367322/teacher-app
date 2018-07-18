@@ -23,5 +23,13 @@ class MatchKeyPadModel : BaseModelKt(), IMatchKeyPadContract.Model {
     override fun deleteKeyPad(serialNumber: String): Boolean {
         return mKeyPadDaoUtils.deleteKeyPad(serialNumber)
     }
+
+    override fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean {
+        return mKeyPadDaoUtils.deleteKeyPad(keyPadEntity)
+    }
+
+    override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
+        return mKeyPadDaoUtils.saveKeyPad(keyPadEntity)
+    }
 }
 

@@ -12,7 +12,18 @@ class RetrofitUtils private constructor() {
     var mRetrofit: Retrofit
 
     init {
-        val mGson = GsonBuilder().registerTypeAdapter(Double::class.java, JsonSerializer<Double> { src, _, _ -> if (src == src!!.toDouble()) JsonPrimitive(src.toLong()) else JsonPrimitive(src) }).create()
+        val mGson =
+                GsonBuilder()
+                        .registerTypeAdapter(
+                                Double::class.java,
+                                JsonSerializer<Double> { src, _, _ ->
+                                    if (src == src!!.toDouble())
+                                        JsonPrimitive(src.toLong())
+                                    else
+                                        JsonPrimitive(src)
+                                }
+                        )
+                        .create()
         mRetrofit = Retrofit.Builder()
                 .baseUrl(UrlUtil.getUrl())
                 .client(OkHttpUtils.instance.mOkHttpClient)

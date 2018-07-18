@@ -10,15 +10,19 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/m36.0"
         android:background="@drawable/weight_loading_dialog_bg">
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/m12.0"
-            android:layout_marginTop="@dimen/m12.0"
             android:text="2017年一年级语文暑假配有班"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ellipsize="end"
+            android:textColor="#51B7FF"
+            android:textSize="@dimen/m30.0"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +30,11 @@
             android:id="@+id/secondTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/m8.0"
+            android:layout_marginTop="@dimen/m32.0"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#BFC0C2"
+            android:textSize="@dimen/m26.0"
             android:text="北京学而思xxxx班"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -35,7 +43,13 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/m8.0"
+            android:layout_marginTop="@dimen/m31.0"
+            android:background="#374860"
+            android:height="@dimen/m37.0"
+            android:textColor="#fff"
+            android:textSize="@dimen/m24.0"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/m8.0"
             android:text="2018.02.02-2018.03.04"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/secondTitle" />
@@ -44,7 +58,9 @@
             android:id="@+id/teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/m36.0"
+            android:layout_marginTop="@dimen/m35.0"
+            android:textSize="@dimen/m26.0"
+            android:textColor="#BFC0C2"
             android:text="阿穆老师"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/date" />
@@ -63,8 +79,8 @@
             android:id="@+id/bindStateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/m12.0"
-            android:layout_marginEnd="@dimen/m12.0"
+            android:textSize="@dimen/m26.0"
+            android:textColor="#BFC0C2"
             android:text="未绑定"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

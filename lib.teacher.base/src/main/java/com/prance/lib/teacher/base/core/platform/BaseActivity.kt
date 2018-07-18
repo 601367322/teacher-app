@@ -64,7 +64,6 @@ abstract class BaseActivity : BaseActivity() {
             KeyEvent.KEYCODE_ZOOM_OUT -> LogUtils.d("缩小--->")
         //向上键
             KeyEvent.KEYCODE_DPAD_UP -> {
-                LogUtils.d("up--->")
                 if (!onUpKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
@@ -75,126 +74,108 @@ abstract class BaseActivity : BaseActivity() {
                  *    exp:KeyEvent.ACTION_UP
                  */
                 if (event.action == KeyEvent.ACTION_DOWN) {
-                    LogUtils.d("down--->")
                     if (!onDownKeyEvent()) {
                         return super.onKeyDown(keyCode, event)
                     }
                 }
         //向左键
             KeyEvent.KEYCODE_DPAD_LEFT -> {
-                LogUtils.d("left--->")
                 if (!onLeftKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //向右键
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                LogUtils.d("right--->")
                 if (!onRightKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //OK确认
             KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
-                LogUtils.d("enter--->")
                 if (!onOkKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //返回键
             KeyEvent.KEYCODE_BACK -> {
-                LogUtils.d("back--->")
                 if (!onBackKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //菜单键
             KeyEvent.KEYCODE_MENU -> {
-                LogUtils.d("menu--->")
                 if (!onMenuKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键1
             KeyEvent.KEYCODE_1 -> {
-                LogUtils.d("1--->")
                 if (!onNumberKeyEvent(1)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键2
             KeyEvent.KEYCODE_2 -> {
-                LogUtils.d("2--->")
                 if (!onNumberKeyEvent(2)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键3
             KeyEvent.KEYCODE_3 -> {
-                LogUtils.d("3--->")
                 if (!onNumberKeyEvent(3)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键4
             KeyEvent.KEYCODE_4 -> {
-                LogUtils.d("4--->")
                 if (!onNumberKeyEvent(4)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键5
             KeyEvent.KEYCODE_5 -> {
-                LogUtils.d("5--->")
                 if (!onNumberKeyEvent(5)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键6
             KeyEvent.KEYCODE_6 -> {
-                LogUtils.d("6--->")
                 if (!onNumberKeyEvent(6)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键7
             KeyEvent.KEYCODE_7 -> {
-                LogUtils.d("7--->")
                 if (!onNumberKeyEvent(7)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键8
             KeyEvent.KEYCODE_8 -> {
-                LogUtils.d("8--->")
                 if (!onNumberKeyEvent(8)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键9
             KeyEvent.KEYCODE_9 -> {
-                LogUtils.d("9--->")
                 if (!onNumberKeyEvent(9)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //数字键0
             KeyEvent.KEYCODE_0 -> {
-                LogUtils.d("0--->")
                 if (!onNumberKeyEvent(0)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //星号键
             KeyEvent.KEYCODE_STAR -> {
-                LogUtils.d("星号键--->")
                 if (!onStarKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
         //井号键
             KeyEvent.KEYCODE_POUND -> {
-                LogUtils.d("井号键--->")
                 if (!onPoundKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }

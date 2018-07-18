@@ -1,9 +1,10 @@
 package com.prance.teacher.apis
 
 import com.prance.lib.database.UserEntity
-import com.prance.teacher.features.classes.model.ClassResponseBody
+import com.prance.lib.teacher.base.http.ResponseBody
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
+import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -20,5 +21,8 @@ interface ApiService {
     fun checkQrCode(@Query("timestamp") timestamp: Long, @Query("token") token: String): Flowable<UserEntity>
 
     @GET("backend/course/app/classList")
-    fun allClasses(@Query("userId") userId: String): Flowable<ClassResponseBody>
+    fun allClasses(@Query("userId") userId: String): Flowable<ResponseBody<ClassesEntity>>
+
+    @GET("backend/course/app/studentList")
+    fun studentsForClasses(@Query("classId") classId: String): Flowable<ResponseBody<StudentsEntity>>
 }

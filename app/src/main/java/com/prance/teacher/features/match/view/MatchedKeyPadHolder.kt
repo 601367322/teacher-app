@@ -29,11 +29,7 @@ class MatchedKeyPadHolder(itemView: View) :
                                 .setMessage("确定删除此答题器配对信息？")
                                 .setNegativeButton("取消", null)
                                 .setPositiveButton("确定", { _, _ ->
-                                    //删除答题器
-                                    adapter.removeData(v.getTag(R.id.tag_data))
-                                    adapter.notifyDataSetChanged()
-
-                                    EventBus.getDefault().post(MatchKeyPadFragment.RefreshMatchedKeyPadFragment())
+                                    EventBus.getDefault().post(MatchKeyPadFragment.DeleteKeyPadEntityEvent(v.getTag(R.id.tag_data) as KeyPadEntity))
                                 })
                                 .show()
                     }

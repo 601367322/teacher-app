@@ -1,5 +1,7 @@
 package com.prance.lib.database
 
+import android.provider.SyncStateContract.Helpers.insert
+
 
 class KeyPadDaoUtils {
 
@@ -23,10 +25,30 @@ class KeyPadDaoUtils {
         return true
     }
 
-    fun deleteKeyPad(serialNumber: String):Boolean {
+    fun saveKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
+        try {
+            keyPadEntity.id = mDao.insert(keyPadEntity)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+        return keyPadEntity
+    }
+
+    fun deleteKeyPad(serialNumber: String): Boolean {
         try {
             val builder = mDao.queryBuilder().where(KeyPadEntityDao.Properties.BaseStationSN.eq(serialNumber)).buildDelete()
             builder.executeDeleteWithoutDetachingEntities()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
+
+    fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean {
+        try {
+            mDao.delete(keyPadEntity)
         } catch (e: Exception) {
             e.printStackTrace()
             return false

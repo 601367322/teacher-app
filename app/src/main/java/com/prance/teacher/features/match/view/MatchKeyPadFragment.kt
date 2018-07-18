@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.blankj.utilcode.util.ToastUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
-import com.prance.teacher.R.id.*
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
@@ -101,10 +101,15 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
                 launch(UI) {
                     if (!isExists(KeyID)) {
-                        mAdapter.addData(KeyPadEntity(application.mBaseStation.sn, KeyID))
-                        mAdapter.notifyDataSetChanged()
+                        //保存答题器
+                        val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(application.mBaseStation.sn, KeyID))
 
-                        displayMoreBtn()
+                        keyPadEntity?.let {
+                            mAdapter.addData(it)
+                            mAdapter.notifyDataSetChanged()
+
+                            displayMoreBtn()
+                        }
                     }
                 }
             }
@@ -116,7 +121,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun onClick(v: View?) {
         when (v) {
             complete -> {
-                mPresenter.saveAllMatchedKeyPad(application.mBaseStation.sn, mAdapter.data)
+                activity?.finish()
             }
             delete -> {
                 //删除状态
@@ -135,13 +140,24 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun needEventBus(): Boolean = true
 
     @Subscribe
-    fun onEvent(bean: RefreshMatchedKeyPadFragment) {
+    fun onEvent(bean: DeleteKeyPadEntityEvent) {
+        //删除答题器
+        bean.keyPadEntity?.let {
+            if (mPresenter.deleteKeyPad(it)) {
+                ToastUtils.showShort("删除成功")
+            }
+
+            //删除答题器
+            mAdapter.removeData(it)
+            mAdapter.notifyDataSetChanged()
+        }
+
         displayMoreBtn()
         //最后一个答题器获取焦点
         recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
     }
 
-    class RefreshMatchedKeyPadFragment : Serializable
+    class DeleteKeyPadEntityEvent(val keyPadEntity: KeyPadEntity?) : Serializable
 
     override fun onSaveKeyPadSuccess() {
         activity?.finish()

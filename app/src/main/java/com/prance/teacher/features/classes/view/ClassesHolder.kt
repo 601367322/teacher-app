@@ -1,6 +1,7 @@
 package com.prance.teacher.features.classes.view
 
 import android.content.Context
+import android.text.Html
 import android.view.View
 import com.prance.lib.common.utils.getInflate
 import com.prance.lib.teacher.base.ui.BaseRecyclerHolder
@@ -29,7 +30,7 @@ class ClassesHolder(parent: View) : BaseRecyclerHolder<ClassesEntity>(getInflate
 
             if (binding > 0) {
                 itemView.bindStateIcon.setImageResource(android.R.drawable.presence_away)
-                itemView.bindStateText.text = "已绑定"
+                itemView.bindStateText.text = Html.fromHtml("""已绑定<font color="#27BAFF"> ${bean.binding} </font>人""")
             } else {
                 itemView.bindStateIcon.setImageResource(android.R.drawable.presence_busy)
                 itemView.bindStateText.text = "未绑定"

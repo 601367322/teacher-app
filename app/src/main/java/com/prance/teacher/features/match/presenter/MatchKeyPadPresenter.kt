@@ -45,5 +45,13 @@ class MatchKeyPadPresenter : BasePresenterKt<IMatchKeyPadContract.View>(), IMatc
         }, BackpressureStrategy.BUFFER)
                 .mySubscribe { mView?.onSaveKeyPadSuccess() }
     }
+
+    override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
+        return mModel.saveMatchedKeyPad(keyPadEntity)
+    }
+
+    override fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean {
+        return mModel.deleteKeyPad(keyPadEntity)
+    }
 }
 

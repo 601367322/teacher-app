@@ -8,7 +8,7 @@ class ClassesEntity : Serializable {
     var klass: KlassEntity? = null
 
     class KlassEntity : Serializable {
-        var id: String? = null
+        var id: Int? = null
         var name: String? = null
         var addr: String? = null
         var course: CourseEntity? = null

@@ -12,7 +12,7 @@ class ResponseBody<T> : Serializable {
     @SerializedName("pageInfo")
     var page: PageBean? = null
 
-    var list: List<T> = mutableListOf()
+    var list: MutableList<T> = mutableListOf()
 
     class PageBean : Serializable {
         @SerializedName("pn")
@@ -31,7 +31,7 @@ class ResponseBody<T> : Serializable {
 
     constructor() {}
 
-    constructor(pageBean: PageBean, list: List<T>) {
+    constructor(pageBean: PageBean, list: MutableList<T>) {
         this.page = pageBean
         this.list = list
     }
