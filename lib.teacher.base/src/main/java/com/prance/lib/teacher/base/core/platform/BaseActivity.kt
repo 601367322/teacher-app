@@ -45,12 +45,11 @@ abstract class BaseActivity : BaseActivity() {
         registerHomeMenuBroadcastReceiver()
     }
 
-    fun onBackBtnClick(view: View) {
+    open fun onBackBtnClick(view: View?) {
         finish()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        LogUtils.d(keyCode)
         when (keyCode) {
         //调大声音键
             KeyEvent.KEYCODE_VOLUME_UP -> LogUtils.d("voice up--->")

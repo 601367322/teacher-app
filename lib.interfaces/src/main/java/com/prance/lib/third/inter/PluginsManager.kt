@@ -8,11 +8,13 @@ class PluginsManager {
 
     internal var mTestSetting: ITestSetting? = null
     internal var mBugly: IBugly? = null
+    internal var mTeacher: ITeacher? = null
 
     init {
         try {
             mTestSetting = getImpl<ITestSetting>("com.prance.third.impl.TestSettingImpl")
             mBugly = getImpl<IBugly>("com.prance.third.impl.BuglyImpl")
+            mTeacher = getImpl<ITeacher>("com.prance.third.impl.TeacherImpl")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -51,5 +53,7 @@ class PluginsManager {
 
         val bugly: IBugly?
             get() = instance.mBugly
+        val teacher: ITeacher?
+            get() = instance.mTeacher
     }
 }

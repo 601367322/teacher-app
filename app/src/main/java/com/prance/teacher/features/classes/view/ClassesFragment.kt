@@ -39,11 +39,11 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
     private fun loadData() {
         showProgress()
 
-        if(BuildConfig.DEBUG){
-            mPresenter.getAllClasses("6")
-        }else{
+//        if(BuildConfig.DEBUG){
+//            mPresenter.getAllClasses("6")
+//        }else{
             mPresenter.getAllClasses(application.mUserInfo.id.toString())
-        }
+//        }
 
     }
 
