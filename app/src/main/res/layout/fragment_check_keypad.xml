@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="@+id/tip">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/classTip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -61,6 +61,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:paddingTop="@dimen/m40.0"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/m120.0"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +102,35 @@
             android:layout_marginEnd="@dimen/m120.0"
             android:onClick="onBackBtnClick"
             android:text="返回上一层" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/checkCompleteGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/m80.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionGroup">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/m179.0"
+            android:layout_height="@dimen/m179.0"
+            android:scaleType="centerCrop"
+            android:src="@drawable/check_complete" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/m40.0"
+            android:textColor="#fff"
+            android:layout_marginTop="@dimen/m36.0"
+            android:text="检测完成：未发现异常"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

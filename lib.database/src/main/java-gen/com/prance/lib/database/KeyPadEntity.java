@@ -7,13 +7,17 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Transient;
 
+import java.io.Serializable;
+
 /**
  * 答题器
  *
  * @author bingbing
  */
 @Entity(nameInDb = "keypad_table")
-public class KeyPadEntity {
+public class KeyPadEntity implements Serializable {
+
+    static final long serialVersionUID = -1;
 
     @Id(autoincrement = true)
     private Long id;
@@ -31,6 +35,15 @@ public class KeyPadEntity {
 
     @Transient
     private Float battery;
+
+    /**
+     * 答题器状态 -1：未在线 -2：电量不足
+     */
+    @Transient
+    private Integer status;
+
+    public static final int OFFLINE = -1;
+    public static final int BATTERY = -2;
 
     public KeyPadEntity(String baseStationSN, String keyId) {
         this.baseStationSN = baseStationSN;
@@ -83,5 +96,13 @@ public class KeyPadEntity {
 
     public void setKeyId(String keyId) {
         this.keyId = keyId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

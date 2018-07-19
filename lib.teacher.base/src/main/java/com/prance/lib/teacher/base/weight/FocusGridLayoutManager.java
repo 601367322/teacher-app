@@ -129,13 +129,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
         View nextFocus = super.onFocusSearchFailed(focused, focusDirection, recycler, state);
  
         if (nextFocus == null) {
-            int fromPos = getPosition(focused);
-            /**
-             * 获取我们希望的下一个焦点的位置
-             */
-            int nextPos = getNextViewPos(fromPos, focusDirection);
-
-            return findViewByPosition(nextPos);
+           return null;
         }
         /**
          * 获取当前焦点的位置

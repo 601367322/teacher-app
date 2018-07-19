@@ -37,16 +37,12 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 
         startLesson.setOnClickListener {
-            LogUtils.d("开始上课")
-
             context?.let {
                 startActivity(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
             }
         }
 
         check.setOnClickListener {
-            LogUtils.d("答题器检测")
-
             if (application.mBaseStation.sn == null) {
                 ToastUtils.showShort("请先连接基站")
             } else {
@@ -60,7 +56,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         matchKeyPad.setOnClickListener {
-            LogUtils.d("答题器配对")
             mSunVoteService?.let {
                 val usbDevice = it.getUserManager().getUsbDevice()
                 if (usbDevice != null) {
@@ -74,7 +69,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         bindKeyPad.setOnClickListener {
-            LogUtils.d("答题器绑定")
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it))
             }
