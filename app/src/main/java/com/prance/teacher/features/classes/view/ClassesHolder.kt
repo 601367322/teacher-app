@@ -1,6 +1,5 @@
 package com.prance.teacher.features.classes.view
 
-import android.content.Context
 import android.text.Html
 import android.view.View
 import com.prance.lib.common.utils.getInflate
@@ -21,7 +20,6 @@ class ClassesHolder(parent: View) : BaseRecyclerHolder<ClassesEntity>(getInflate
     }
 
     override fun onBind(bean: ClassesEntity?) {
-        var holder = this
         bean?.run {
             itemView.title.text = klass?.name
             itemView.secondTitle.text = klass?.addr

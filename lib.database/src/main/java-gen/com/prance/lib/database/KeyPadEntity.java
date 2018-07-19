@@ -17,9 +17,15 @@ public class KeyPadEntity {
     @Id(autoincrement = true)
     private Long id;
 
+    /**
+     * 基站编号
+     */
     @NotNull
     private String baseStationSN;
 
+    /**
+     * 答题器编号
+     */
     private String keyId;
 
     public KeyPadEntity(String baseStationSN, String keyId) {

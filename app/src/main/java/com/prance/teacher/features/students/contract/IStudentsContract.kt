@@ -15,11 +15,16 @@ import io.reactivex.Flowable
 interface IStudentsContract {
     interface View : IView<Presenter> {
         fun renderStudents(list: MutableList<StudentsEntity>)
+        fun checkMatch()
+        fun bindFail()
     }
     interface Presenter : IPresenter<View, Model> {
         fun getStudentsByClassesId(id: String)
+        fun startBind(classesId: String,serialNumber: String)
     }
     interface Model : IModel {
         fun getStudentsByClassesId(id: String):Flowable<ResponseBody<StudentsEntity>>
+
+        fun startBind(classesId: String,keyPadIds: MutableList<String>): Flowable<ResponseBody<StudentsEntity>>
     }
 }

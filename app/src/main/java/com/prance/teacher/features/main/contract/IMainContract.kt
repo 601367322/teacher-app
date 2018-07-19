@@ -18,6 +18,6 @@ interface IMainContract {
     }
 
     interface Model : IModel {
-        fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>?
+
     }
 }

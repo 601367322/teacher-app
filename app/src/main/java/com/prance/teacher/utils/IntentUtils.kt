@@ -31,7 +31,7 @@ class IntentUtils {
          */
         fun callingTVHome(): Intent {
             val mHomeIntent = Intent(Intent.ACTION_MAIN)
-            mHomeIntent.addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER)
+            mHomeIntent.addCategory(Intent.CATEGORY_HOME)
             mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
             return mHomeIntent
         }

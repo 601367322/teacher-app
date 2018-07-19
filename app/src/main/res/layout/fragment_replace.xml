@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m210.0"
+        android:text="更改答题器"
+        android:textColor="#fff5f5f5"
+        android:textSize="@dimen/m40.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m24.0"
+        android:text="弃用答题器"
+        android:textColor="#fff5f5f5"
+        android:textSize="@dimen/m40.0"
+        app:layout_constraintBottom_toBottomOf="@+id/oldKeyPad"
+        app:layout_constraintEnd_toStartOf="@+id/oldKeyPad"
+        app:layout_constraintTop_toTopOf="@+id/oldKeyPad" />
+
+    <EditText
+        android:id="@+id/oldKeyPad"
+        android:layout_width="@dimen/m686.0"
+        android:layout_height="@dimen/m80.0"
+        android:layout_marginStart="@dimen/m731.0"
+        android:layout_marginTop="@dimen/m79.0"
+        android:ems="10"
+        android:hint="请输入将弃用的答题器编号"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:nextFocusForward="@id/newKeyPad"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m24.0"
+        android:text="替换答题器"
+        android:textColor="#fff5f5f5"
+        android:textSize="@dimen/m40.0"
+        app:layout_constraintBottom_toBottomOf="@+id/newKeyPad"
+        app:layout_constraintEnd_toStartOf="@+id/newKeyPad"
+        app:layout_constraintTop_toTopOf="@+id/newKeyPad" />
+
+    <EditText
+        android:id="@+id/newKeyPad"
+        android:layout_width="@dimen/m686.0"
+        android:layout_height="@dimen/m80.0"
+        android:layout_marginTop="@dimen/m40.0"
+        android:ems="10"
+        android:hint="请输入替换答题器编号"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/oldKeyPad"
+        app:layout_constraintStart_toStartOf="@+id/oldKeyPad"
+        app:layout_constraintTop_toBottomOf="@+id/oldKeyPad" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m25.0"
+        android:layout_marginStart="@dimen/m118.0"
+        android:text="提示："
+        android:textColor="#fff5f5f5"
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintBottom_toTopOf="@+id/textView13"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m25.0"
+        android:text="1.请分别正确输入弃用答题器编号和替换答题器编号"
+        android:textColor="#fff5f5f5"
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintBottom_toTopOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m87.0"
+        android:text="2.替换成功后学员绑定关系自动转至替换答题器"
+        android:textColor="#fff5f5f5"
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView13" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:onClick="onBackBtnClick"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m87.0"
+        android:layout_marginEnd="@dimen/m120.0"
+        android:text="返回上一页"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m32.0"
+        android:text="替换答题器"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintEnd_toStartOf="@+id/back"
+        app:layout_constraintTop_toTopOf="@+id/back" />
+</android.support.constraint.ConstraintLayout>

@@ -5,6 +5,7 @@ import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.base.mvp.mySubscribe
 import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.main.model.MainModel
+import com.prance.teacher.features.match.model.MatchKeyPadModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 
@@ -19,10 +20,12 @@ class MainPresenter : BasePresenterKt<IMainContract.View>(), IMainContract.Prese
 
     override val mModel: IMainContract.Model = MainModel()
 
+    val mMatchKeyPadModel = MatchKeyPadModel()
+
     override fun checkIfKeyPadAlreadyMatched(serialNumber: String, matched: () -> Unit, unMatch: () -> Unit) {
         Flowable
                 .create<MutableList<KeyPadEntity>>({ subscriber ->
-                    var list = mModel.getAllKeyPadByBaseStationSN(serialNumber)
+                    var list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
                     if (list?.isNotEmpty()!!) {
                         subscriber.onNext(list)
                     } else {

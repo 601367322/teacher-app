@@ -32,15 +32,12 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".features.check.CheckKeyPadActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
-            android:name=".features.bind.BindKeyPadActivity"
             android:screenOrientation="landscape" />
 
         <activity
@@ -53,6 +50,10 @@
 
         <activity
             android:name=".features.students.StudentsActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".features.replacekeypad.ReplaceKeyPadActivity"
             android:screenOrientation="landscape" />
 
         <!-- 设置IP测试入口 open close-->

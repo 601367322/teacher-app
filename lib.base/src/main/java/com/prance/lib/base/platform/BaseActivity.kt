@@ -26,7 +26,6 @@ import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
 
-
 abstract class BaseActivity : FragmentActivity() {
 
     val progress by lazy(mode = LazyThreadSafetyMode.NONE) {
@@ -35,7 +34,10 @@ abstract class BaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initView(savedInstanceState)
+    }
 
+    open fun initView(savedInstanceState: Bundle?) {
         //隐藏虚拟按键
         val decorView = window.decorView
         val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

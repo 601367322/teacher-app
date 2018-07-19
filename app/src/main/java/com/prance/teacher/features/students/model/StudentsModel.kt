@@ -19,5 +19,9 @@ class StudentsModel : BaseModelKt(), IStudentsContract.Model {
     override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>> {
         return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(id)
     }
+
+    override fun startBind(classesId: String, keyPadIds: MutableList<String>): Flowable<ResponseBody<StudentsEntity>> {
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).bindKeyPad(classesId,keyPadIds )
+    }
 }
 

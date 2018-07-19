@@ -5,7 +5,6 @@ import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.teacher.base.http.cookie.CookieJarImpl
 import com.prance.lib.teacher.base.http.cookie.store.PersistentCookieStore
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 
 class OkHttpUtils private constructor() {
 

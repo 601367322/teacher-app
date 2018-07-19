@@ -16,8 +16,8 @@ import io.reactivex.Flowable
 
 class ClassesModel : BaseModelKt(), IClassesContract.Model {
 
-    override fun getAllClasses(userId: String): Flowable<ResponseBody<ClassesEntity>> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).allClasses(userId)
+    override fun getAllClasses(): Flowable<ResponseBody<ClassesEntity>> {
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).allClasses()
     }
 }
 

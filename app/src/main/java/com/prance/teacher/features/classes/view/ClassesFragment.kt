@@ -1,11 +1,9 @@
 package com.prance.teacher.features.classes.view
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
-import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -39,14 +37,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
     private fun loadData() {
         showProgress()
 
-        if (BuildConfig.DEBUG) {
-            mPresenter.getAllClasses("6")
-        } else {
-            application.mUserInfo?.let {
-                mPresenter.getAllClasses(it.id.toString())
-            }
-        }
-
+        mPresenter.getAllClasses()
     }
 
     override fun renderClasses(it: MutableList<ClassesEntity>) {

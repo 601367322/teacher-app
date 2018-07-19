@@ -16,8 +16,8 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
 
     override val mModel: IClassesContract.Model = ClassesModel()
 
-    override fun getAllClasses(userId: String) {
-        mModel.getAllClasses(userId)
+    override fun getAllClasses() {
+        mModel.getAllClasses()
                 .mySubscribe(onSubscribeError, {
                     mView?.renderClasses(it.list)
                 })

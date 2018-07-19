@@ -100,15 +100,18 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         when (iMode) {
             SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
                 launch(UI) {
-                    if (!isExists(KeyID)) {
-                        //保存答题器
-                        val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(application.mBaseStation.sn, KeyID))
+                    KeyID?.let {
+                        val keyId = generateKeyPadId(it)
+                        if (!isExists(keyId)) {
+                            //保存答题器
+                            val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(application.mBaseStation.sn, keyId))
 
-                        keyPadEntity?.let {
-                            mAdapter.addData(it)
-                            mAdapter.notifyDataSetChanged()
+                            keyPadEntity?.let {
+                                mAdapter.addData(it)
+                                mAdapter.notifyDataSetChanged()
 
-                            displayMoreBtn()
+                                displayMoreBtn()
+                            }
                         }
                     }
                 }
@@ -157,8 +160,10 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
             displayMoreBtn()
 
-            //最后一个答题器获取焦点
-            recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
+            recycler.post {
+                //最后一个答题器获取焦点
+                recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
+            }
         }
     }
 

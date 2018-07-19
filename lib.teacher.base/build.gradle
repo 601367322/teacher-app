@@ -36,7 +36,6 @@ dependencies {
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
     implementation dependencies.okhttp3
-    implementation dependencies.okhttp3LoggingInterceptor
     implementation dependencies.rxjava
     implementation dependencies.greendao
     implementation dependencies.rxandroid

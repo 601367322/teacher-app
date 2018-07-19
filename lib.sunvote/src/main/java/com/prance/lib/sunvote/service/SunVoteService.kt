@@ -28,13 +28,11 @@ class SunVoteService : Service() {
     }
 
     override fun onBind(p0: Intent?): IBinder? {
-        LogUtils.d("onBind")
         return binder
     }
 
     override fun onCreate() {
         super.onCreate()
-        LogUtils.d("onCreate")
         //注册设备连接广播
         mUsbReceiver = UsbReceiver(mUsbManagerImpl)
         registerUsbBroadcastReceiver()
@@ -51,7 +49,6 @@ class SunVoteService : Service() {
             SunARS.setLogOn(0)
             val filePath = applicationContext?.filesDir
             SunARS.setArchiveDir(filePath.toString())
-            LogUtils.d("license:$r")
         } catch (e: Throwable) {
             LogUtils.d(e.message)
             LogUtils.d("loadLibrary Error")
@@ -74,19 +71,15 @@ class SunVoteService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        LogUtils.d("onStartCommand")
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        LogUtils.d("onUnbind")
         return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        LogUtils.d("onDestroy")
 
         //关闭Usb读取线程
         mUsbThread.let {

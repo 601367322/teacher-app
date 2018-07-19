@@ -28,5 +28,7 @@ interface IMatchKeyPadContract {
         fun deleteKeyPad(serialNumber: String): Boolean
         fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity?
         fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean
+
+        fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>?
     }
 }

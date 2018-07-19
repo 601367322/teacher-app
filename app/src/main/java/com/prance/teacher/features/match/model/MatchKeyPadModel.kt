@@ -31,5 +31,9 @@ class MatchKeyPadModel : BaseModelKt(), IMatchKeyPadContract.Model {
     override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
         return mKeyPadDaoUtils.saveKeyPad(keyPadEntity)
     }
+
+    override fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
+        return mKeyPadDaoUtils.getAllKeyPadByBaseStationSN(serialNumber)
+    }
 }
 

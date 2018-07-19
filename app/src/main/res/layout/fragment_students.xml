@@ -47,6 +47,7 @@
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/m8.0"
             android:text="开始绑定">
 

@@ -40,7 +40,7 @@ class UsbManagerImpl : IUsbManagerInterface {
         val map = mUsbManager?.deviceList
         map?.let {
             for (device in map.values) {
-                LogUtils.d("checkDevice", "找到基站: Vid:" + device.vendorId + "  Pid:" + device.productId)
+//                LogUtils.d("checkDevice", "找到基站: Vid:" + device.vendorId + "  Pid:" + device.productId)
 
                 if (device.vendorId == VendorID && device.productId == ProductID
                         || device.vendorId == VendorID_2 && device.productId == ProductID_2
@@ -92,7 +92,6 @@ class UsbManagerImpl : IUsbManagerInterface {
             setEndpoint(mUsbInterface)
 
             mUsbConnection = mUsbManager!!.openDevice(it)
-            LogUtils.d("打开连接：$mUsbConnection")
 
             mUsbConnection?.let {
                 val ret = it.claimInterface(mUsbInterface, true)
@@ -133,7 +132,6 @@ class UsbManagerImpl : IUsbManagerInterface {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MSG_USB_CONNECTED -> {
-                    LogUtils.d("handleMessage:usb connect")
                     SunARS.connect(5, "usb")
                 }
                 else -> {

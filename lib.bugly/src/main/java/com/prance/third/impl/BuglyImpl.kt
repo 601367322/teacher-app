@@ -46,7 +46,6 @@ class BuglyImpl : IBugly {
             }
 
             override fun onUpgradeSuccess(isManual: Boolean) {
-                LogUtils.d("onUpgradeSuccess")
             }
 
             override fun onUpgradeFailed(isManual: Boolean) {

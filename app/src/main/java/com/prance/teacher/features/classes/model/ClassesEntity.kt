@@ -7,6 +7,12 @@ class ClassesEntity : Serializable {
     var binding: Int = 0
     var klass: KlassEntity? = null
 
+    constructor(id: Int) {
+        klass = KlassEntity()
+        klass!!.id = id
+    }
+
+
     class KlassEntity : Serializable {
         var id: Int? = null
         var name: String? = null

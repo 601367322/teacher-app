@@ -14,10 +14,12 @@ import com.prance.lib.third.inter.PluginsManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -49,11 +51,6 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
-        LogUtils.d(ScreenUtils.getScreenWidth())
-        LogUtils.d(ScreenUtils.getScreenHeight())
-        LogUtils.d(ScreenUtils.getScreenDensity())
-        LogUtils.d(ScreenUtils.getScreenDensityDpi())
-
         //检查更新
         if (!BuildConfig.DEBUG)
             PluginsManager.bugly?.checkUpdate()
@@ -67,6 +64,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         //启动主页
         if(BuildConfig.DEBUG) {
             context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
 
             activity?.finish()
         }

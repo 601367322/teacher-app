@@ -15,10 +15,6 @@ import io.reactivex.Flowable
 
 class MainModel : BaseModelKt(), IMainContract.Model {
 
-    private var mKeyPadDaoUtils: KeyPadDaoUtils = KeyPadDaoUtils()
 
-    override fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
-        return mKeyPadDaoUtils.getAllKeyPadByBaseStationSN(serialNumber)
-    }
 }
 

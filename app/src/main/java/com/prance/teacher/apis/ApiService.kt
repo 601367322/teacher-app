@@ -20,9 +20,15 @@ interface ApiService {
     @POST("backend/user/app/login")
     fun checkQrCode(@Query("timestamp") timestamp: Long, @Query("token") token: String): Flowable<UserEntity>
 
-    @GET("backend/course/app/classList")
-    fun allClasses(@Query("userId") userId: String): Flowable<ResponseBody<ClassesEntity>>
+    @GET("backend/course/app/classList?userId=6")
+    fun allClasses(): Flowable<ResponseBody<ClassesEntity>>
 
     @GET("backend/course/app/studentList")
     fun studentsForClasses(@Query("classId") classId: String): Flowable<ResponseBody<StudentsEntity>>
+
+    @GET("backend/course/app/binding")
+    fun bindKeyPad(@Query("classId") classId: String, @Query("clickerNums") clickerNums: MutableList<String>): Flowable<ResponseBody<StudentsEntity>>
+
+    @POST("backend/course/app/replace")
+    fun replaceKeyPad(@Query("classId") classId: String, @Query("oldClikerNum") oldKeyPadId: String, @Query("newClikerNum") newKeyPadId: String): Flowable<Any>
 }
