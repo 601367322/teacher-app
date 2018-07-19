@@ -22,8 +22,13 @@ public class SunARS {
 
     // 基站功率
     public final static int BaseStation_RFPower = 1;
+    public final static int BaseStation_Connected_Model = 5;
+
+    public final static float MAX_BATTERY = 2.92f;
+
     // 基站功率
     public final static String BaseStation_Connected = "1";
+    public final static String BaseStation_DisConnected = "2";
     public final static int BaseStation_Channel = 2; // ; 基站主信道
     public final static int BaseStation_CommunicationChannels = 3; // 通讯通道：是否中继，通道数，通道1，通道2，通道3，通道4
     public final static int BaseStation_IP = 4; // IP

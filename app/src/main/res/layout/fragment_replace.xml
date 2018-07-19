@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/m210.0"
         android:text="更改答题器"
-        android:textColor="#fff5f5f5"
         android:textSize="@dimen/m40.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m24.0"
         android:text="弃用答题器"
-        android:textColor="#fff5f5f5"
         android:textSize="@dimen/m40.0"
         app:layout_constraintBottom_toBottomOf="@+id/oldKeyPad"
         app:layout_constraintEnd_toStartOf="@+id/oldKeyPad"
@@ -50,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m24.0"
         android:text="替换答题器"
-        android:textColor="#fff5f5f5"
         android:textSize="@dimen/m40.0"
         app:layout_constraintBottom_toBottomOf="@+id/newKeyPad"
         app:layout_constraintEnd_toStartOf="@+id/newKeyPad"
@@ -75,7 +72,6 @@
         android:layout_marginBottom="@dimen/m25.0"
         android:layout_marginStart="@dimen/m118.0"
         android:text="提示："
-        android:textColor="#fff5f5f5"
         android:textSize="@dimen/m32.0"
         app:layout_constraintBottom_toTopOf="@+id/textView13"
         app:layout_constraintStart_toStartOf="parent" />
@@ -86,7 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/m25.0"
         android:text="1.请分别正确输入弃用答题器编号和替换答题器编号"
-        android:textColor="#fff5f5f5"
         android:textSize="@dimen/m32.0"
         app:layout_constraintBottom_toTopOf="@+id/textView14"
         app:layout_constraintStart_toStartOf="@+id/textView12" />
@@ -97,7 +92,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/m87.0"
         android:text="2.替换成功后学员绑定关系自动转至替换答题器"
-        android:textColor="#fff5f5f5"
         android:textSize="@dimen/m32.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView13" />

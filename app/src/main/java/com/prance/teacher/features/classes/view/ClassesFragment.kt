@@ -23,6 +23,22 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
 
     var mAdapter: ClassesAdapter = ClassesAdapter()
 
+    companion object {
+        const val ACTION = "action"
+        const val ACTION_TO_CLASS = 0
+        const val ACTION_TO_BIND = 1
+
+        fun forAction(action: Int?): ClassesFragment {
+            val fragment = ClassesFragment()
+            action?.let {
+                val arguments = Bundle()
+                arguments.putInt(ACTION, action)
+                fragment.arguments = arguments
+            }
+            return fragment
+        }
+    }
+
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         recycler.layoutManager = FocusGridLayoutManager(activity, 3)
         recycler.adapter = mAdapter

@@ -15,8 +15,8 @@ import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
-import com.prance.teacher.utils.IntentUtils
 
 
 class MainFragment : BaseFragment(), IMainContract.View {
@@ -40,25 +40,22 @@ class MainFragment : BaseFragment(), IMainContract.View {
             LogUtils.d("开始上课")
 
             context?.let {
-                startActivity(CheckKeyPadActivity.callingIntent(it))
+                startActivity(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
             }
         }
 
         check.setOnClickListener {
             LogUtils.d("答题器检测")
 
-            mSunVoteService?.let {
-                val usbDevice = it.getUserManager().getUsbDevice()
-                if (usbDevice != null) {
-                    mPresenter.checkIfKeyPadAlreadyMatched(usbDevice.serialNumber, {
-                        context?.let {
-                            startActivity(CheckKeyPadActivity.callingIntent(it))
-                        }
-                    }, { ToastUtils.showShort("请先进行答题器配对") }
-                    )
-                } else {
-                    ToastUtils.showShort("请先连接基站")
-                }
+            if (application.mBaseStation.sn == null) {
+                ToastUtils.showShort("请先连接基站")
+            } else {
+                mPresenter.checkIfKeyPadAlreadyMatched(application.mBaseStation.sn, {
+                    context?.let {
+                        startActivity(CheckKeyPadActivity.callingIntent(it))
+                    }
+                }, { ToastUtils.showShort("请先进行答题器配对") }
+                )
             }
         }
 

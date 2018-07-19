@@ -29,7 +29,11 @@ class MainActivity : BaseActivity() {
             startActivity(IntentUtils.callingTVHome())
         } catch (e: Exception) {
             e.printStackTrace()
-            startActivity(IntentUtils.callingXYHome())
+            try {
+                startActivity(IntentUtils.callingXYHome())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

@@ -79,7 +79,7 @@ abstract class BaseFragment : BaseFragment(), SunARS.SunARSListener, IServiceBin
     override fun onVoteEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
     }
 
-    override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
+    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
     }
 
     override fun onStaEventCallBack(sInfo: String?) {

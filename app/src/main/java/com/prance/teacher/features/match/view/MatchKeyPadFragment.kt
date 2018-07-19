@@ -96,7 +96,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         count.text = """已配对成功${mAdapter.data.size}个答题器"""
     }
 
-    override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
+    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
         when (iMode) {
             SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
                 launch(UI) {

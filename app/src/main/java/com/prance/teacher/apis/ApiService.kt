@@ -20,7 +20,7 @@ interface ApiService {
     @POST("backend/user/app/login")
     fun checkQrCode(@Query("timestamp") timestamp: Long, @Query("token") token: String): Flowable<UserEntity>
 
-    @GET("backend/course/app/classList?userId=6")
+    @GET("backend/course/app/classList")
     fun allClasses(): Flowable<ResponseBody<ClassesEntity>>
 
     @GET("backend/course/app/studentList")

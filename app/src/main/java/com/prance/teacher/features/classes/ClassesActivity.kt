@@ -10,8 +10,15 @@ import com.prance.teacher.features.match.MatchKeyPadActivity
 class ClassesActivity : BaseActivity() {
 
     companion object {
+
         fun callingIntent(context: Context) = Intent(context, ClassesActivity::class.java)
+
+        fun callingIntent(context: Context, action: Int): Intent {
+            val intent = Intent(context, ClassesActivity::class.java)
+            intent.putExtra(ClassesFragment.ACTION, action)
+            return intent
+        }
     }
 
-    override fun fragment(): BaseFragment = ClassesFragment()
+    override fun fragment(): BaseFragment = ClassesFragment.forAction(intent?.getIntExtra(ClassesFragment.ACTION, ClassesFragment.ACTION_TO_CLASS))
 }

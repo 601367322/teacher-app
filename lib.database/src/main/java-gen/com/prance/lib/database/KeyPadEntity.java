@@ -5,6 +5,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * 答题器
@@ -28,6 +29,9 @@ public class KeyPadEntity {
      */
     private String keyId;
 
+    @Transient
+    private Float battery;
+
     public KeyPadEntity(String baseStationSN, String keyId) {
         this.baseStationSN = baseStationSN;
         this.keyId = keyId;
@@ -42,6 +46,19 @@ public class KeyPadEntity {
         this.id = id;
         this.baseStationSN = baseStationSN;
         this.keyId = keyId;
+    }
+
+    public KeyPadEntity(String keyId, Float battery) {
+        this.keyId = keyId;
+        this.battery = battery;
+    }
+
+    public Float getBattery() {
+        return battery;
+    }
+
+    public void setBattery(Float battery) {
+        this.battery = battery;
     }
 
     public Long getId() {

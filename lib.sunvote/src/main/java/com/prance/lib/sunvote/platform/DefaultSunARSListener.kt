@@ -11,29 +11,27 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
         LogUtils.d("onConnectEventCallBack>>$iBaseID $iMode $sInfo")
 
-        SunARS.isConnected = sInfo == "1"
-        if (sInfo == "1") {
-            SunARS.voteStop()
-            //自由链接模式
-            writeHDParam(iBaseID, SunARS.KeyPad_WorkingMode, "2")
-            //键盘识别模式为ID
-            writeHDParam(iBaseID, KeyPad_IdentificationMode, "0")
-            //中文模式
-            writeHDParam(iBaseID, KeyPad_Config, "0,10,1,0,0,0,1")
-        } else {
-            if (iMode == 5) {
-                val map = mUsbManagerInterface.getDeviceList()
-                LogUtils.d("devicelist cont:" + map?.size)
-                if (map?.size == 0) {
-                    LogUtils.d("oncennect event: closeUsb")
-                    mUsbManagerInterface.closeUsb()
-                }else{
-                    mUsbManagerInterface.checkUsbDevice(Utils.getApp())
+        when (iMode) {
+            SunARS.BaseStation_Connected_Model -> {
+                SunARS.isConnected = sInfo == SunARS.BaseStation_Connected
+                when (sInfo) {
+                    SunARS.BaseStation_Connected -> {
+                        SunARS.voteStop()
+                        //自由链接模式
+                        writeHDParam(iBaseID, SunARS.KeyPad_WorkingMode, "2")
+                        //键盘识别模式为ID
+                        writeHDParam(iBaseID, KeyPad_IdentificationMode, "0")
+                        //中文模式
+                        writeHDParam(iBaseID, KeyPad_Config, "0,10,1,0,0,0,1")
+                    }
+                    SunARS.BaseStation_DisConnected -> {
+                        //关闭连接
+                        //断开引用
+                        mUsbManagerInterface.closeUsb()
+                    }
                 }
             }
         }
-
-
     }
 
 
@@ -76,14 +74,6 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
         LogUtils.d("onKeyEventCallBack>>$KeyID $iMode $Time $sInfo")
 
         when (iMode) {
-        //键盘输入频道与基站进行配对
-            SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
-
-            }
-        //键盘检测结果
-            SunARS.KeyResult_status -> {
-
-            }
         //答题结果
             SunARS.KeyResult_info -> {
 

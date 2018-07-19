@@ -3,6 +3,7 @@ package com.prance.lib.teacher.base
 import android.annotation.SuppressLint
 import android.app.Application
 import cn.sunars.sdk.SunARS
+import cn.sunars.sdk.SunARS.BaseStation_Connected_Model
 import com.blankj.utilcode.util.*
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.third.inter.PluginsManager
@@ -80,11 +81,20 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
 
 
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
-        if (sInfo == SunARS.BaseStation_Connected) {
-            //基站识别ID
-            SunARS.readHDParam(0, SunARS.BaseStation_ID)
-            //读取基站信息
-            SunARS.readHDParam(0, SunARS.BaseStation_Channel)
+        when (iMode) {
+            SunARS.BaseStation_Connected_Model -> {
+                when (sInfo) {
+                    SunARS.BaseStation_Connected -> {
+                        //基站识别ID
+                        SunARS.readHDParam(0, SunARS.BaseStation_ID)
+                        //读取基站信息
+                        SunARS.readHDParam(0, SunARS.BaseStation_Channel)
+                    }
+                    SunARS.BaseStation_DisConnected -> {
+                        mBaseStation = BaseStationEntity()
+                    }
+                }
+            }
         }
     }
 
@@ -105,7 +115,7 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
     override fun onVoteEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
     }
 
-    override fun onKeyEventCallBack(KeyID: String?, iMode: Int, Time: Float, sInfo: String?) {
+    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
     }
 
     override fun onStaEventCallBack(sInfo: String?) {
