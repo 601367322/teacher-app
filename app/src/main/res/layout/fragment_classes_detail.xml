@@ -1,59 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button2"
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/back"
         android:layout_width="wrap_content"
+        android:onClick="onBackBtnClick"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Button"
+        android:layout_marginBottom="@dimen/m90.0"
+        android:layout_marginEnd="@dimen/m120.0"
+        app:text="返回上一层"
+        app:icon="@drawable/icon_back_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/button3"
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/endClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="@+id/button2" />
+        android:layout_marginEnd="@dimen/m40.0"
+        app:text="结束上课"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintEnd_toStartOf="@+id/back"
+        app:layout_constraintTop_toTopOf="@+id/back" />
 
-    <Button
-        android:id="@+id/button4"
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/readyClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3" />
+        android:layout_marginEnd="@dimen/m40.0"
+        app:text="准备就绪"
+        app:layout_constraintBottom_toBottomOf="@+id/endClass"
+        app:layout_constraintEnd_toStartOf="@+id/endClass"
+        app:layout_constraintTop_toTopOf="@+id/endClass" />
 
     <View
         android:id="@+id/view"
         android:layout_width="@dimen/m933.0"
         android:layout_height="@dimen/m520.0"
         android:layout_marginTop="@dimen/m267.0"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/button_background"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/classesTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m140.0"
         android:layout_marginStart="@dimen/m140.0"
+        android:layout_marginTop="@dimen/m158.0"
+        android:gravity="center"
+        android:shadowColor="#2F66BC"
+        android:shadowDx="1"
+        android:shadowDy="1"
         android:text="TextView"
+        android:textColor="#fff"
+        android:textSize="@dimen/m40.0"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/classesSubTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m49.0"
+        android:gravity="center"
+        android:text="TextView"
+        android:shadowColor="#2F66BC"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:textColor="#fff"
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintEnd_toEndOf="@+id/classesTitle"
+        app:layout_constraintStart_toStartOf="@+id/classesTitle"
+        app:layout_constraintTop_toBottomOf="@+id/classesTitle" />
+
+    <TextView
+        android:id="@+id/classesDate"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/m77.0"
+        android:layout_marginTop="@dimen/m39.0"
+        android:text="TextView"
+        android:background="@drawable/classes_date_background"
+        android:gravity="center"
+        android:textSize="@dimen/m32.0"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="@+id/classesSubTitle"
+        app:layout_constraintStart_toStartOf="@+id/classesSubTitle"
+        app:layout_constraintTop_toBottomOf="@+id/classesSubTitle" />
 </android.support.constraint.ConstraintLayout>

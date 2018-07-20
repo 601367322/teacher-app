@@ -14,6 +14,7 @@ import com.prance.lib.third.inter.PluginsManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
@@ -63,7 +64,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //启动主页
 //        if(BuildConfig.DEBUG) {
-//            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it)) }
 ////            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
 //
 //            activity?.finish()

@@ -36,7 +36,7 @@ class ClassesActivity : BaseActivity() {
     fun toNext(classesEntity: ClassesEntity) {
         when (mAction) {
             ClassesFragment.ACTION_TO_CLASS -> {
-
+                startActivity(ClassesDetailActivity.callingIntent(this, classesEntity))
             }
             ClassesFragment.ACTION_TO_BIND -> {
                 startActivity(StudentsActivity.callingIntent(this, classesEntity))

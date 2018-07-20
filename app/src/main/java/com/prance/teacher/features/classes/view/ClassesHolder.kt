@@ -18,7 +18,6 @@ class ClassesHolder(parent: View) : BaseRecyclerHolder<ClassesEntity>(getInflate
                 if(v.context is ClassesActivity){
                     (v.context as ClassesActivity).toNext(v.getTag(R.id.tag_data) as ClassesEntity)
                 }
-
             }
         }
     }

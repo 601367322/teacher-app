@@ -17,6 +17,7 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.students.view.StudentsFragment
 
 
 class MainFragment : BaseFragment(), IMainContract.View {
@@ -70,7 +71,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         bindKeyPad.setOnClickListener {
             context?.let {
-                startActivity(ClassesActivity.callingIntent(it))
+                startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_BIND))
             }
         }
 
