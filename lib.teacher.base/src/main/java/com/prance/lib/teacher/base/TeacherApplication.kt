@@ -101,7 +101,7 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
     override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
         when (iMode) {
             SunARS.BaseStation_ID -> {
-                mBaseStation.stationId = sInfo?.toInt()
+                mBaseStation.sn = sInfo
             }
             SunARS.BaseStation_Channel -> {
                 mBaseStation.stationChannel = sInfo?.toLong()

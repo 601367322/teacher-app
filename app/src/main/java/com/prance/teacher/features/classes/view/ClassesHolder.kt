@@ -5,6 +5,7 @@ import android.view.View
 import com.prance.lib.common.utils.getInflate
 import com.prance.lib.teacher.base.ui.BaseRecyclerHolder
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.students.StudentsActivity
 import kotlinx.android.synthetic.main.item_classes.view.*
@@ -14,7 +15,10 @@ class ClassesHolder(parent: View) : BaseRecyclerHolder<ClassesEntity>(getInflate
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.container -> {
-                v.context.startActivity(StudentsActivity.callingIntent(v.context, v.getTag(R.id.tag_data) as ClassesEntity))
+                if(v.context is ClassesActivity){
+                    (v.context as ClassesActivity).toNext(v.getTag(R.id.tag_data) as ClassesEntity)
+                }
+
             }
         }
     }

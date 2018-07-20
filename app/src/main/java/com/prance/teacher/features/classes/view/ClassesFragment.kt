@@ -40,7 +40,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        recycler.layoutManager = FocusGridLayoutManager(activity, 3)
+        recycler.layoutManager = FocusGridLayoutManager(activity, 2)
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {
