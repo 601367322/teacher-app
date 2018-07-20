@@ -28,6 +28,9 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
                         //关闭连接
                         //断开引用
                         mUsbManagerInterface.closeUsb()
+
+                        //重连
+                        mUsbManagerInterface.checkUsbDevice(Utils.getApp())
                     }
                 }
             }
