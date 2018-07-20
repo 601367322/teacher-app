@@ -71,17 +71,19 @@ abstract class BaseFragment : Fragment(), ITopView {
 
     protected fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
-    protected fun showProgress() = progressStatus(View.VISIBLE)
+    protected fun showProgress() = progressStatus(View.VISIBLE, null)
 
-    protected fun hideProgress() = progressStatus(View.GONE)
+    protected fun showProgress(str: String?) = progressStatus(View.VISIBLE, str)
 
-    private fun progressStatus(viewStatus: Int) {
+    protected fun hideProgress() = progressStatus(View.GONE, null)
+
+    private fun progressStatus(viewStatus: Int, str: String?) {
         with(activity) {
             if (this is BaseActivity) {
                 when (viewStatus) {
                     View.VISIBLE -> {
                         if (!this.progress.isShowing) {
-                            this.progress.show()
+                            this.progress.show(str)
                         }
                     }
                     View.GONE -> {

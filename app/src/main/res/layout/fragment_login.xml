@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,38 +11,45 @@
         android:layout_width="@dimen/m300.0"
         android:layout_height="@dimen/m300.0"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/m100.0"
-        android:background="#fff" />
+        android:layout_marginTop="@dimen/m51.0"
+        android:scaleType="centerCrop"
+        android:background="@drawable/qrcode_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m48.0"
-        android:layout_marginTop="@dimen/m36.0"
-        android:text="提示：" />
+        android:layout_marginTop="@dimen/m204.0"
+        android:text="扫码登录"
+        android:textSize="@dimen/m48.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m48.0"
-        android:layout_marginTop="@dimen/m28.0"
-        android:text="1.请用小程序扫码登录" />
+        android:layout_marginStart="@dimen/m118.0"
+        android:text="提示：请用小程序扫码登录"
+        android:textSize="@dimen/m40.0"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/back" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m48.0"
-        android:layout_marginTop="@dimen/m20.0"
-        android:text="2.只有助教身份能成功扫码" />
-
-    <Button
+    <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onBackBtnClick"
         android:layout_gravity="center"
-        android:text="返回上一层" />
-</LinearLayout>
+        android:layout_marginBottom="@dimen/m85.0"
+        android:layout_marginEnd="@dimen/m113.0"
+        android:onClick="onBackBtnClick"
+        app:icon="@drawable/icon_back_button"
+        app:text="返回上一层"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

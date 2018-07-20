@@ -3,17 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFF">
+    android:layout_height="match_parent">
 
 
-    <com.prance.teacher.weight.FocusRelativeLayout
+    <com.prance.lib.teacher.base.weight.FocusRelativeLayout
         android:id="@+id/startLesson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#000"
         android:layout_marginStart="@dimen/m190.0"
         android:layout_marginTop="@dimen/m138.0"
+        android:background="#000"
         android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,23 +24,23 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="上课"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content" />
+            android:text="上课" />
 
         <requestFocus />
-    </com.prance.teacher.weight.FocusRelativeLayout>
+    </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
-    <com.prance.teacher.weight.FocusRelativeLayout
+    <com.prance.lib.teacher.base.weight.FocusRelativeLayout
         android:id="@+id/check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m50.0"
         android:background="#000"
         android:focusable="true"
-        android:nextFocusRight="@id/matchKeyPad"
         android:nextFocusDown="@id/matchKeyPad"
+        android:nextFocusRight="@id/matchKeyPad"
         app:layout_constraintStart_toEndOf="@+id/startLesson"
         app:layout_constraintTop_toTopOf="@+id/startLesson">
 
@@ -52,18 +51,18 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="答题器检测"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content" />
-    </com.prance.teacher.weight.FocusRelativeLayout>
+            android:text="答题器检测" />
+    </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
-    <com.prance.teacher.weight.FocusRelativeLayout
+    <com.prance.lib.teacher.base.weight.FocusRelativeLayout
         android:id="@+id/matchKeyPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#000"
         android:layout_marginTop="@dimen/m50.0"
+        android:background="#000"
         android:focusable="true"
         android:nextFocusLeft="@id/check"
         app:layout_constraintStart_toStartOf="@+id/check"
@@ -76,18 +75,18 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="答题器配对"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content" />
-    </com.prance.teacher.weight.FocusRelativeLayout>
+            android:text="答题器配对" />
+    </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
-    <com.prance.teacher.weight.FocusRelativeLayout
+    <com.prance.lib.teacher.base.weight.FocusRelativeLayout
         android:id="@+id/bindKeyPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#000"
         android:layout_marginStart="@dimen/m50.0"
+        android:background="#000"
         android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/matchKeyPad"
         app:layout_constraintTop_toTopOf="@+id/matchKeyPad">
@@ -99,30 +98,30 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="答题器绑定"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content" />
-    </com.prance.teacher.weight.FocusRelativeLayout>
+            android:text="答题器绑定" />
+    </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
-    <Button
+    <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onBackBtnClick"
-        android:layout_marginStart="@dimen/m48.0"
         android:layout_marginTop="@dimen/m50.0"
-        android:text="返回上一层"
+        android:onClick="onBackBtnClick"
+        app:icon="@drawable/icon_back_button"
         app:layout_constraintStart_toStartOf="@+id/startLesson"
-        app:layout_constraintTop_toBottomOf="@+id/startLesson" />
+        app:layout_constraintTop_toBottomOf="@+id/startLesson"
+        app:text="返回上一层" />
 
 
-    <Button
+    <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/m48.0"
-        android:text="退出"
+        app:icon="@drawable/icon_exit_button"
         app:layout_constraintEnd_toEndOf="@+id/bindKeyPad"
-        app:layout_constraintTop_toTopOf="@+id/back" />
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="退出" />
 </android.support.constraint.ConstraintLayout>

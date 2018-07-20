@@ -71,6 +71,7 @@ public class DimenTool {
         while (i<2000){
             i++;
             System.out.println("<dimen name=\"m" + i + "\">" + i + "dp</dimen>");
+            System.out.println("<dimen name=\"fm" + i + "\">" + (-i) + "dp</dimen>");
         }
     }
 

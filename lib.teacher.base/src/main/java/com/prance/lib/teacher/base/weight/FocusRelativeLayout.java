@@ -1,16 +1,16 @@
-package com.prance.teacher.weight;
+package com.prance.lib.teacher.base.weight;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
-import com.prance.teacher.R;
+import com.prance.lib.teacher.base.R;
+
 
 public class FocusRelativeLayout extends RelativeLayout {
 

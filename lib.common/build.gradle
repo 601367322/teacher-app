@@ -30,6 +30,7 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     implementation dependencies.v4
+    implementation dependencies.constraintLayout
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid

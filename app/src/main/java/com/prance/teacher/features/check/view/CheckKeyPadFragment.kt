@@ -81,7 +81,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
                 ToastUtils.showShort("请先链接基站")
                 return@setOnClickListener
             }
-            showProgress()
+            showProgress("正在进行检测")
 
             descriptionGroup.visibility = View.VISIBLE
             tip.visibility = View.GONE
