@@ -41,7 +41,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        recycler.layoutManager = GridLayoutManager(activity, 2)
+        recycler.layoutManager = FocusGridLayoutManager(activity, 2)
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {
@@ -59,6 +59,20 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
 
     override fun renderClasses(it: MutableList<ClassesEntity>) {
         hideProgress()
+        val list = mutableListOf<ClassesEntity>()
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
+        list.addAll(it)
         mAdapter.data = it
         mAdapter.notifyDataSetChanged()
     }
