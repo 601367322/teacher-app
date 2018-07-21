@@ -53,7 +53,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         }
 
         recycler.adapter = mAdapter
-        val layoutManager = FocusGridLayoutManager(context, 7)
+        val layoutManager = GridLayoutManager(context, 7)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 if (position < mAdapter.data.size) {

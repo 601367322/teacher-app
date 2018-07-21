@@ -6,7 +6,6 @@ import com.prance.lib.common.utils.getInflate
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.ui.BaseRecyclerHolder
 import com.prance.teacher.R
-import kotlinx.android.synthetic.main.item_check_key_pad.view.*
 import kotlinx.android.synthetic.main.item_match_key_pad.view.*
 import org.greenrobot.eventbus.EventBus
 

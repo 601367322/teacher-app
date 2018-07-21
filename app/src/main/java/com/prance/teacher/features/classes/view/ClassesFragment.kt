@@ -1,6 +1,7 @@
 package com.prance.teacher.features.classes.view
 
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
@@ -40,7 +41,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        recycler.layoutManager = FocusGridLayoutManager(activity, 2)
+        recycler.layoutManager = GridLayoutManager(activity, 2)
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {

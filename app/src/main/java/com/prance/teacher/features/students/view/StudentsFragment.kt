@@ -46,7 +46,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
-        recycler.layoutManager = FocusGridLayoutManager(activity, 10)
+        recycler.layoutManager = GridLayoutManager(activity, 10)
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {
