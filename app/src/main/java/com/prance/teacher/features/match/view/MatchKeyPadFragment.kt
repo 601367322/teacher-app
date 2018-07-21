@@ -68,28 +68,51 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>) {
 
         val list1 = mutableListOf<KeyPadEntity>()
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
-        list1.addAll(list)
+
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+        list1.add(KeyPadEntity("2017090817","0004"))
+        list1.add(KeyPadEntity("2017090817","0003"))
+        list1.add(KeyPadEntity("2017090817","0001"))
+
+
 
         mAdapter.data = list
         mAdapter.notifyDataSetChanged()
@@ -147,7 +170,10 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                             keyPadEntity?.let {
                                 mAdapter.addData(it)
                                 mAdapter.notifyDataSetChanged()
-
+                                recycler.post {
+                                    //最后一个答题器获取焦点
+                                    recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
+                                }
                                 displayMoreBtn()
                             }
                         }
@@ -168,17 +194,17 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 //删除状态
                 mAdapter.isDeleteState = !mAdapter.isDeleteState
 
-                complete.isEnabled = false
-                delete.isEnabled = false
 
                 tip1.visibility = View.GONE
                 tip2.visibility = View.VISIBLE
 
                 tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
                 recycler.post {
-                    recycler.smoothScrollToPosition(mAdapter.data.size - 1)
                     //最后一个答题器获取焦点
-                    recycler.getChildAt(recycler.childCount - 1).keyPadBtn.requestFocus()
+                    recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).keyPadBtn.requestFocus()
+
+                    complete.isEnabled = false
+                    delete.isEnabled = false
                 }
             }
         }
@@ -195,17 +221,23 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                     ToastUtils.showShort("删除成功")
                 }
 
+                var pos = mAdapter.indexOfData(it)
+
                 //删除答题器
                 mAdapter.removeData(it)
                 mAdapter.notifyDataSetChanged()
+
+                if (pos >= mAdapter.data.size) {
+                    pos -= 1
+                }
+                if (pos >= 0) {
+                    recycler.post {
+                        recycler.layoutManager.findViewByPosition(pos).keyPadBtn.requestFocus()
+                    }
+                }
             }
 
             displayMoreBtn()
-
-            recycler.post {
-                //最后一个答题器获取焦点
-                recycler.getChildAt(mAdapter.data.size - 1)?.keyPadBtn?.requestFocus()
-            }
         }
     }
 

@@ -66,11 +66,11 @@ class MyButton : FocusRelativeLayout {
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
 
+        isFocusable = enabled
         if (enabled) {
             mIcon?.run {
                 icon.setImageResource(this)
             }
-
         } else {
             mDisableIcon?.run {
                 icon.setImageResource(this)

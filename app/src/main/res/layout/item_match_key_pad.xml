@@ -31,6 +31,5 @@
             android:textColor="#fff"
             android:textSize="@dimen/m48.0" />
 
-
     </RelativeLayout>
 </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
