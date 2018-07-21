@@ -19,6 +19,7 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
+import com.prance.teacher.features.main.view.MainFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
 import io.reactivex.Flowable
@@ -63,12 +64,12 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         getNewQrCode(0)
 
         //启动主页
-//        if(BuildConfig.DEBUG) {
-//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it)) }
-////            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
-//
-//            activity?.finish()
-//        }
+        if(BuildConfig.DEBUG) {
+            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
+
+            activity?.finish()
+        }
     }
 
     /**

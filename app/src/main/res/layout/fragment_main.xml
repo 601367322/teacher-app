@@ -12,21 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m190.0"
         android:layout_marginTop="@dimen/m138.0"
-        android:background="#000"
         android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="@dimen/m520.0"
-            android:layout_height="@dimen/m710.0"
-            android:background="#4d3b21" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="上课" />
+            android:layout_height="@dimen/m708.0"
+            android:background="@drawable/home_focus_background"
+            android:duplicateParentState="true"
+            android:src="@drawable/home_start_icon"
+            android:padding="@dimen/m7.0"
+            android:scaleType="fitXY"/>
 
         <requestFocus />
     </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
@@ -36,8 +33,7 @@
         android:id="@+id/check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m50.0"
-        android:background="#000"
+        android:layout_marginStart="@dimen/m48.0"
         android:focusable="true"
         android:nextFocusDown="@id/matchKeyPad"
         android:nextFocusRight="@id/matchKeyPad"
@@ -47,13 +43,12 @@
         <ImageView
             android:layout_width="@dimen/m960.0"
             android:layout_height="@dimen/m330.0"
-            android:background="#0026ff" />
+            android:background="@drawable/home_focus_background"
+            android:duplicateParentState="true"
+            android:scaleType="fitXY"
+            android:padding="@dimen/m7.0"
+            android:src="@drawable/home_check_icon" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="答题器检测" />
     </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
@@ -61,23 +56,21 @@
         android:id="@+id/matchKeyPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m50.0"
-        android:background="#000"
+        android:layout_marginTop="@dimen/m48.0"
         android:focusable="true"
         android:nextFocusLeft="@id/check"
         app:layout_constraintStart_toStartOf="@+id/check"
         app:layout_constraintTop_toBottomOf="@+id/check">
 
         <ImageView
-            android:layout_width="@dimen/m455.0"
+            android:layout_width="@dimen/m456.0"
             android:layout_height="@dimen/m330.0"
-            android:background="#880c67" />
+            android:scaleType="fitXY"
+            android:background="@drawable/home_focus_background"
+            android:duplicateParentState="true"
+            android:padding="@dimen/m7.0"
+            android:src="@drawable/home_match_icon" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="答题器配对" />
     </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
@@ -85,22 +78,20 @@
         android:id="@+id/bindKeyPad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m50.0"
-        android:background="#000"
+        android:layout_marginStart="@dimen/m48.0"
         android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/matchKeyPad"
         app:layout_constraintTop_toTopOf="@+id/matchKeyPad">
 
         <ImageView
-            android:layout_width="@dimen/m455.0"
+            android:layout_width="@dimen/m456.0"
+            android:scaleType="fitXY"
             android:layout_height="@dimen/m330.0"
-            android:background="#ff9800" />
+            android:background="@drawable/home_focus_background"
+            android:duplicateParentState="true"
+            android:padding="@dimen/m7.0"
+            android:src="@drawable/home_bind_icon" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="答题器绑定" />
     </com.prance.lib.teacher.base.weight.FocusRelativeLayout>
 
 
@@ -108,7 +99,7 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m50.0"
+        android:layout_marginTop="@dimen/m71.0"
         android:onClick="onBackBtnClick"
         app:icon="@drawable/icon_back_button"
         app:layout_constraintStart_toStartOf="@+id/startLesson"

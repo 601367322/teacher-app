@@ -2,9 +2,14 @@ package com.prance.teacher.features.match.view
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.text.Html
 import android.view.View
 import cn.sunars.sdk.SunARS
-import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.Glide
+import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.ImageConfig
+import com.prance.lib.common.utils.ImageLoaderFactory
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -37,12 +42,19 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
         complete.setOnClickListener(this)
         delete.setOnClickListener(this)
+
+        GlideApp.with(this)
+                .asGif()
+                .load(R.drawable.match_loading)
+                .into(loadingImg)
     }
 
     private fun setTip() {
         mRootView?.get()?.post {
             application.mBaseStation.let {
-                tip.text = """请长按答题器上“⬇️”键3秒后输入${it?.stationChannel}，再按OK键进行配对，一个答题器配对完成后才可进行下一个的配对，信息自动保存。"""
+                tip1.visibility = View.VISIBLE
+                tip2.visibility = View.GONE
+                tip_text2.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
             }
         }
     }
@@ -93,7 +105,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             complete.visibility = View.VISIBLE
             delete.visibility = View.VISIBLE
         }
-        count.text = """已配对成功${mAdapter.data.size}个答题器"""
+        count.text = Html.fromHtml("""已配对成功<font color="#3AF0EE">${mAdapter.data.size}</font>个答题器""")
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
@@ -133,7 +145,10 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 complete.isEnabled = false
                 delete.isEnabled = false
 
-                tip.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
+                tip1.visibility = View.GONE
+                tip2.visibility = View.VISIBLE
+
+                tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
                 recycler.post {
                     //最后一个答题器获取焦点
                     recycler.getChildAt(mAdapter.data.size - 1).keyPadBtn.requestFocus()
@@ -178,6 +193,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             mAdapter.isDeleteState = false
             complete.isEnabled = true
             delete.isEnabled = true
+
+            setTip()
             return true
         }
         return false

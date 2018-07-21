@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.http.ResultException
 import com.prance.teacher.features.replacekeypad.contract.IReplaceKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment

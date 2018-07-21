@@ -6,17 +6,18 @@ import com.prance.lib.common.utils.getInflate
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.ui.BaseRecyclerHolder
 import com.prance.teacher.R
+import kotlinx.android.synthetic.main.item_check_key_pad.view.*
 import kotlinx.android.synthetic.main.item_match_key_pad.view.*
 import org.greenrobot.eventbus.EventBus
 
-class MatchedKeyPadHolder(itemView: View) :
-        BaseRecyclerHolder<KeyPadEntity>(getInflate(itemView, R.layout.item_match_key_pad)), View.OnClickListener {
+class MatchedKeyPadHolder(parent: View) :
+        BaseRecyclerHolder<KeyPadEntity>(getInflate(parent, R.layout.item_match_key_pad)), View.OnClickListener {
 
     override fun onBind(bean: KeyPadEntity?) {
-        itemView.keyPadBtn.text = """答题器编号${bean?.keyId}"""
+        itemView.keyNumber.text = """${bean?.keyId}"""
 
-        itemView.keyPadBtn.setTag(R.id.tag_data, bean)
-        itemView.keyPadBtn.setOnClickListener(this)
+        itemView.keyNumber.setTag(R.id.tag_data, bean)
+        itemView.keyNumber.setOnClickListener(this)
 
     }
 

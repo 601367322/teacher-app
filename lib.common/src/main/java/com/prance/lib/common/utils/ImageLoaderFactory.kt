@@ -2,6 +2,7 @@ package com.prance.lib.common.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.View
@@ -64,7 +65,13 @@ class ImageLoaderFactory : AppGlideModule() {
                 GlideApp.with(it)
             }
 
-            val requestBuilder = mGlideRequests?.load(config.mUrl)
+            var requestBuilder: GlideRequest<*>?
+
+            if (config.mIsGif) {
+                requestBuilder = mGlideRequests?.asGif()
+            }
+
+            requestBuilder = mGlideRequests?.load(config.mUrl)
 
             config.mBitmapTypes.forEach({ i ->
                 run {

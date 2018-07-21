@@ -3,7 +3,7 @@ package com.prance.teacher.features.students
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.TeacherApplication
 import com.prance.lib.teacher.base.core.platform.BaseActivity

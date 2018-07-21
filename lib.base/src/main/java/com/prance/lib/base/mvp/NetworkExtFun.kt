@@ -1,6 +1,6 @@
 package com.prance.lib.base.mvp
 
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.http.ResultException
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

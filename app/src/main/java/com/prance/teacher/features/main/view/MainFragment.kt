@@ -6,7 +6,7 @@ import android.support.constraint.ConstraintLayout
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.sunvote.service.SunVoteService
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment

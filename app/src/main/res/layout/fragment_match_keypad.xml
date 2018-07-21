@@ -5,28 +5,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/tip"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/m80.0"
-        android:background="#5a5a5a"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/m12.0"
-        android:text="请按答题器上“A1键进行配对”，一个答题器配对完成后才可进行下一个的配对，信息自动保存。"
+        android:layout_height="@dimen/m92.0"
+        android:background="@drawable/match_keypad_tip_background"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="98dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m48.0"
-        android:layout_marginEnd="@dimen/m48.0"
-        android:onClick="onBackBtnClick"
-        android:text="返回上一层"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <LinearLayout
+            android:id="@+id/tip1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tip_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="请逐个长按答题器上“"
+                android:textColor="#fff"
+                android:textSize="@dimen/m32.0" />
+
+            <ImageView
+                android:layout_width="@dimen/m44.0"
+                android:layout_height="@dimen/m44.0"
+                android:src="@drawable/icon_match_down" />
+
+            <TextView
+                android:id="@+id/tip_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="”键3秒后输入"
+                android:textColor="#fff"
+                android:textSize="@dimen/m32.0" />
+
+            <TextView
+                android:id="@+id/tip_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="#fff"
+                android:textSize="@dimen/m32.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tip2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tip_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="#fff"
+                android:textSize="@dimen/m32.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="@dimen/m122.0"
+        android:paddingTop="@dimen/m40.0"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tip" />
+
 
     <TextView
         android:id="@+id/count"
@@ -34,38 +92,57 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m48.0"
         android:text="已配对成功0个答题器"
+        android:textColor="#fff"
+        android:textSize="@dimen/m40.0"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/back" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tip" />
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m32.0"
+        android:visibility="gone"
+        app:icon="@drawable/icon_delete_button"
+        app:disable_icon="@drawable/icon_delete_button_disable"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintEnd_toStartOf="@+id/complete"
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="删除配对" />
 
-    <Button
+    <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m32.0"
         android:visibility="gone"
-        android:layout_marginEnd="@dimen/m12.0"
-        android:text="完成配对"
+        app:disable_icon="@drawable/icon_complete_match_button_disable"
+        app:icon="@drawable/icon_complete_match_button"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/back"
-        app:layout_constraintTop_toTopOf="@+id/back" />
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="完成配对" />
 
-    <Button
-        android:id="@+id/delete"
-        android:visibility="gone"
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="删除配对"
-        app:layout_constraintBottom_toBottomOf="@+id/back"
-        app:layout_constraintEnd_toStartOf="@+id/complete"
-        app:layout_constraintTop_toTopOf="@+id/back" />
+        android:layout_marginBottom="@dimen/m48.0"
+        android:layout_marginEnd="@dimen/m48.0"
+        android:onClick="onBackBtnClick"
+        app:icon="@drawable/icon_back_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:text="返回上一层" />
+
+    <ImageView
+        android:id="@+id/loadingImg"
+        android:layout_width="@dimen/m64.0"
+        android:layout_height="@dimen/m64.0"
+        android:layout_marginStart="@dimen/m17.0"
+        android:src="@drawable/match_loading"
+        app:layout_constraintBottom_toBottomOf="@+id/count"
+        app:layout_constraintStart_toEndOf="@+id/count"
+        app:layout_constraintTop_toTopOf="@+id/count" />
 </android.support.constraint.ConstraintLayout>

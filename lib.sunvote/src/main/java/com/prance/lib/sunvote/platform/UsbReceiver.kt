@@ -7,7 +7,7 @@ import android.hardware.input.InputManager
 import android.hardware.usb.*
 import android.os.Handler
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import cn.sunars.sdk.SunARS
 import com.prance.lib.sunvote.platform.UsbManagerImpl.Companion.ACTION_USB_PERMISSION
 
@@ -48,7 +48,7 @@ class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : Broa
                                 }
                             } else {
                                 // 授权失败
-                                ToastUtils.showLong("授权失败!")
+                                ToastUtils.showShort("授权失败!")
                             }
                         }
                     }

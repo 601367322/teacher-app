@@ -9,7 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.test.setting.R

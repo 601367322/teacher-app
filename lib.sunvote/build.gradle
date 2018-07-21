@@ -34,4 +34,6 @@ dependencies {
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
+
+    implementation project(":lib.common")
 }

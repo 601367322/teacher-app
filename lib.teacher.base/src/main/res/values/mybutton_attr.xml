@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="MyButton">
         <attr name="icon" format="reference" />
+        <attr name="disable_icon" format="reference" />
         <attr name="text" format="string"/>
     </declare-styleable>
 </resources>

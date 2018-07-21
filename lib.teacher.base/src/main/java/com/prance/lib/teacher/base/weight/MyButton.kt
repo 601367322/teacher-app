@@ -18,16 +18,19 @@ class MyButton : FocusRelativeLayout {
 
     private var mShadowWidth: Float = 0F
     private var mRadius: Float = 0F
+    private var mDisableIcon: Int? = -1
+    private var mIcon: Int? = -1
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         addView(getInflate(this, R.layout.weight_my_button))
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MyButton)
         try {
-            val iconId = a.getResourceId(R.styleable.MyButton_icon, -1)
-            if (iconId != -1) {
-                icon.setImageResource(iconId)
+            mIcon = a.getResourceId(R.styleable.MyButton_icon, -1)
+            if (mIcon != -1) {
+                icon.setImageResource(mIcon!!)
             }
+            mDisableIcon = a.getResourceId(R.styleable.MyButton_disable_icon, -1)
             val textStr = a.getString(R.styleable.MyButton_text)
             if (textStr.isNotEmpty()) {
                 text.text = textStr
@@ -60,4 +63,18 @@ class MyButton : FocusRelativeLayout {
 
     }
 
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+
+        if (enabled) {
+            mIcon?.run {
+                icon.setImageResource(this)
+            }
+
+        } else {
+            mDisableIcon?.run {
+                icon.setImageResource(this)
+            }
+        }
+    }
 }

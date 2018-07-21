@@ -2,7 +2,7 @@ package com.prance.teacher.features.classes.view
 
 import android.os.Bundle
 import android.view.View
-import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity

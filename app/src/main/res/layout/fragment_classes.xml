@@ -16,23 +16,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m8.0"
-        android:layout_marginEnd="@dimen/m8.0"
+        android:layout_marginBottom="@dimen/m90.0"
+        android:layout_marginEnd="@dimen/m120.0"
         android:onClick="onBackBtnClick"
-        android:text="返回上一层"
+        app:text="返回上一层"
+        app:icon="@drawable/icon_back_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/m8.0"
-        android:text="数据刷新"
+        android:layout_marginEnd="@dimen/m32.0"
+        app:text="数据刷新"
+        app:icon="@drawable/icon_refresh_button"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/back"
         app:layout_constraintTop_toTopOf="@+id/back" />
