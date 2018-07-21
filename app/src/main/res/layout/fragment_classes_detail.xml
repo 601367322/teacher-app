@@ -5,37 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.prance.lib.teacher.base.weight.MyButton
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:onClick="onBackBtnClick"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m90.0"
-        android:layout_marginEnd="@dimen/m120.0"
-        app:text="返回上一层"
-        app:icon="@drawable/icon_back_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.prance.lib.teacher.base.weight.MyButton
-        android:id="@+id/endClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/m40.0"
-        app:text="结束上课"
-        app:layout_constraintBottom_toBottomOf="@+id/back"
-        app:layout_constraintEnd_toStartOf="@+id/back"
-        app:layout_constraintTop_toTopOf="@+id/back" />
 
     <com.prance.lib.teacher.base.weight.MyButton
         android:id="@+id/readyClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m40.0"
-        app:text="准备就绪"
         app:layout_constraintBottom_toBottomOf="@+id/endClass"
         app:layout_constraintEnd_toStartOf="@+id/endClass"
-        app:layout_constraintTop_toTopOf="@+id/endClass" />
+        app:layout_constraintTop_toTopOf="@+id/endClass"
+        app:text="准备就绪">
+
+    </com.prance.lib.teacher.base.weight.MyButton>
+
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/endClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m40.0"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintEnd_toStartOf="@+id/back"
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="结束上课" />
+
+    <com.prance.lib.teacher.base.weight.MyButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m90.0"
+        android:layout_marginEnd="@dimen/m120.0"
+        android:onClick="onBackBtnClick"
+        app:icon="@drawable/icon_back_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:text="返回上一层">
+
+    </com.prance.lib.teacher.base.weight.MyButton>
 
     <View
         android:id="@+id/view"
@@ -71,10 +76,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/m49.0"
         android:gravity="center"
-        android:text="TextView"
         android:shadowColor="#2F66BC"
         android:shadowDx="1"
         android:shadowDy="1"
+        android:text="TextView"
         android:textColor="#fff"
         android:textSize="@dimen/m32.0"
         app:layout_constraintEnd_toEndOf="@+id/classesTitle"
@@ -86,11 +91,11 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/m77.0"
         android:layout_marginTop="@dimen/m39.0"
-        android:text="TextView"
         android:background="@drawable/classes_date_background"
         android:gravity="center"
-        android:textSize="@dimen/m32.0"
+        android:text="TextView"
         android:textColor="#fff"
+        android:textSize="@dimen/m32.0"
         app:layout_constraintEnd_toEndOf="@+id/classesSubTitle"
         app:layout_constraintStart_toStartOf="@+id/classesSubTitle"
         app:layout_constraintTop_toBottomOf="@+id/classesSubTitle" />

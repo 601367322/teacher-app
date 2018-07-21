@@ -60,10 +60,10 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
-        android:paddingTop="@dimen/m40.0"
         android:clipToPadding="false"
         android:paddingLeft="@dimen/m120.0"
+        android:paddingTop="@dimen/m40.0"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,45 +75,51 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:paddingLeft="@dimen/m20.0"
+        android:paddingTop="@dimen/m20.0"
+        android:clipToPadding="false"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
+        <com.prance.lib.teacher.base.weight.MyButton
             android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m40.0"
-            android:text="检测答题器" />
+            app:icon="@drawable/icon_check_button"
+            app:text="检测答题器" />
 
-        <Button
+        <com.prance.lib.teacher.base.weight.MyButton
             android:id="@+id/jump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m40.0"
-            android:text="跳过"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:icon="@drawable/icon_jump_button"
+            app:text="跳过" />
 
-        <Button
+        <com.prance.lib.teacher.base.weight.MyButton
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/m90.0"
             android:layout_marginEnd="@dimen/m120.0"
             android:onClick="onBackBtnClick"
-            android:text="返回上一层" />
+            app:icon="@drawable/icon_back_button"
+            app:text="返回上一层" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/checkCompleteGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/m80.0"
-        app:layout_constraintStart_toStartOf="parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionGroup">
 
         <ImageView
@@ -127,10 +133,10 @@
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/m40.0"
-            android:textColor="#fff"
             android:layout_marginTop="@dimen/m36.0"
-            android:text="检测完成：未发现异常"/>
+            android:text="检测完成：未发现异常"
+            android:textColor="#fff"
+            android:textSize="@dimen/m40.0" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

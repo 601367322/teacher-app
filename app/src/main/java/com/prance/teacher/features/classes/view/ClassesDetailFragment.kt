@@ -2,6 +2,7 @@ package com.prance.teacher.features.classes.view
 
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -30,7 +31,12 @@ class ClassesDetailFragment : BaseFragment() {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
         readyClass.setOnClickListener {
-            IntentUtils.callingXYDial()
+            try {
+                startActivity(IntentUtils.callingXYDial())
+            } catch (e: Exception) {
+                e.printStackTrace()
+                ToastUtils.showShort("请使用小鱼易联")
+            }
         }
 
         endClass.setOnClickListener { activity?.finish() }
