@@ -59,20 +59,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View {
 
     override fun renderClasses(it: MutableList<ClassesEntity>) {
         hideProgress()
-        val list = mutableListOf<ClassesEntity>()
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
-        list.addAll(it)
         mAdapter.data = it
         mAdapter.notifyDataSetChanged()
     }

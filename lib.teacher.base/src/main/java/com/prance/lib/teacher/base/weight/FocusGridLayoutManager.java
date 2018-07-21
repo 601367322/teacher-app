@@ -124,7 +124,39 @@ public class FocusGridLayoutManager extends GridLayoutManager {
      */
     @Override
     public View onFocusSearchFailed(View focused, int focusDirection, RecyclerView.Recycler recycler, RecyclerView.State state) {
- 
+
+//        View next = super.onFocusSearchFailed(focused, focusDirection, recycler, state);
+//        if(selectPosition!=oldSelectPosition){
+//            oldSelectPosition = selectPosition;
+//            if (focusDirection == View.FOCUS_RIGHT) {
+//                mChildSelectedListener.onFocusFailedRight();
+//                if(!canMove)
+//                    return null;
+//                if(findViewByPosition(selectPosition+1)!=null)
+//                    findFailView(selectPosition+1);
+//                else {
+//                    View view = super.onFocusSearchFailed(focused, View.FOCUS_DOWN, recycler, state);
+//                    if(view!=null){
+//                        findFailView(getPosition(view)-getSpanCount()+1);
+//                    }
+//                }
+//            } else if (focusDirection == View.FOCUS_LEFT) {
+//                mChildSelectedListener.onFocusFailedLeft();
+//                if(!canMove)
+//                    return null;
+//                if(findViewByPosition(selectPosition-1)!=null)
+//                    findFailView(selectPosition-1);
+//                else {
+//                    View view = super.onFocusSearchFailed(focused, View.FOCUS_UP, recycler, state);
+//                    if(view!=null){
+//                        findFailView(getPosition(view)+getSpanCount()-1);
+//);
+//                    }
+//                }
+//            }
+//        }
+
+
         // Need to be called in order to layout new row/column
         View nextFocus = super.onFocusSearchFailed(focused, focusDirection, recycler, state);
  
@@ -141,7 +173,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
         int nextPos = getNextViewPos(fromPos, focusDirection);
  
         return findViewByPosition(nextPos);
- 
+
     }
  
     /**
