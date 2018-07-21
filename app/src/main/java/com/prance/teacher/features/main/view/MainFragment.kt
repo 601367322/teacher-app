@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.prance.lib.sunvote.service.SunVoteService
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.main.contract.IMainContract
@@ -17,7 +17,6 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
-import com.prance.teacher.features.students.view.StudentsFragment
 
 
 class MainFragment : BaseFragment(), IMainContract.View {
@@ -57,14 +56,11 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         matchKeyPad.setOnClickListener {
-            mSunVoteService?.let {
-                val usbDevice = it.getUserManager().getUsbDevice()
-                if (usbDevice != null) {
-                    context?.let {
-                        startActivity(MatchKeyPadActivity.callingIntent(it))
-                    }
-                } else {
-                    ToastUtils.showShort("请先连接基站")
+            if (application.mBaseStation.sn == null) {
+                ToastUtils.showShort("请先连接基站")
+            } else {
+                context?.let {
+                    startActivity(MatchKeyPadActivity.callingIntent(it))
                 }
             }
         }
@@ -81,7 +77,10 @@ class MainFragment : BaseFragment(), IMainContract.View {
                     .setMessage("1、退出程序后不能进行课中数据传输\n2、退出程序后，请扫码登录")
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定", { _, _ ->
-                        AppUtils.exitApp()
+                        //停止基站服务
+                        activity?.stopService(SunVoteService.callingIntent(context!!))
+                        //关闭界面
+                        activity?.finish()
                     })
                     .show()
         }

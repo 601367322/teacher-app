@@ -70,15 +70,13 @@ class SunVoteService : Service() {
         return mUsbManagerImpl
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
-    }
-
     override fun onUnbind(intent: Intent?): Boolean {
+        LogUtils.d("onUnbind")
         return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
+        LogUtils.d("onDestroy")
         super.onDestroy()
 
         //关闭Usb读取线程
