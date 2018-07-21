@@ -81,6 +81,15 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         list1.addAll(list)
         list1.addAll(list)
         list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
 
         mAdapter.data = list
         mAdapter.notifyDataSetChanged()

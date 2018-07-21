@@ -1,7 +1,6 @@
 package com.prance.lib.teacher.base.weight;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -141,16 +140,28 @@ public class FocusGridLayoutManager extends GridLayoutManager {
 
             View nextView = null;
             int offset = calcOffsetToNextView(focusDirection);
+            int nextPos = 0;
+            int nextLinePos = 0;
             switch (offset) {
                 case 1:
-                    nextView = findViewByPosition(fromPos + 1);
+                    nextPos = fromPos + 1;
+                    nextLinePos = nextPos + getSpanCount();
                     break;
                 case -1:
-                    nextView = findViewByPosition(fromPos - 1);
+                    nextPos = fromPos - 1;
+                    nextLinePos = nextPos - getSpanCount();
+                    if (nextLinePos < 0) {
+                        nextLinePos = 0;
+                    }
                     break;
             }
+            nextView = findViewByPosition(nextPos);
             if (nextView != null) {
                 nextView.requestFocus();
+
+                if (findViewByPosition(nextLinePos) == null) {
+                    smoothScrollToPosition((RecyclerView) nextView.getParent(), null, nextLinePos);
+                }
             }
             return null;
         }
@@ -166,6 +177,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
         return findViewByPosition(nextPos);
 
     }
+
 
     /**
      * Manually detect next view to focus.

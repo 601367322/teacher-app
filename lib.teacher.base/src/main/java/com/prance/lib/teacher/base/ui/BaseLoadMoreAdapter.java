@@ -20,7 +20,6 @@ public abstract class BaseLoadMoreAdapter<T, H extends BaseRecyclerHolder> exten
 
     public static final int TYPE_NORMAL = 0;
 
-    FooterHolder footerHolder;
 
     /**
      * 添加数据
@@ -30,12 +29,10 @@ public abstract class BaseLoadMoreAdapter<T, H extends BaseRecyclerHolder> exten
      */
     public void addDatas(List<T> data, boolean hasMoreData) {
         addData(data);
-        setFooterVisibility(hasMoreData);
     }
 
     public void setDatas(List<T> data, boolean hasMoreData) {
         setData(data);
-        setFooterVisibility(hasMoreData);
     }
 
     /**
@@ -45,7 +42,7 @@ public abstract class BaseLoadMoreAdapter<T, H extends BaseRecyclerHolder> exten
      */
     @Override
     public int getItemCount() {
-        return mData.size() + 1;
+        return mData.size();
     }
 
     /**
@@ -75,12 +72,6 @@ public abstract class BaseLoadMoreAdapter<T, H extends BaseRecyclerHolder> exten
 
     @Override
     public BaseRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_FOOTER) {
-            //初始化Footer
-            footerHolder = new FooterHolder(parent);
-            footerHolder.setLoadMoreListener(loadMoreListener);
-            return footerHolder;
-        }
         return onCreate(parent, viewType);
     }
 
@@ -146,119 +137,12 @@ public abstract class BaseLoadMoreAdapter<T, H extends BaseRecyclerHolder> exten
         return 1;
     }
 
-    public void setLoading(boolean loading) {
-        if (footerHolder != null) {
-            footerHolder.setLoading(loading);
-        }
-    }
-
-    /**
-     * 是否显示更多数据
-     *
-     * @param visibility
-     */
-    public void setFooterVisibility(boolean visibility) {
-        if (footerHolder != null) {
-            footerHolder.setVisibility(visibility);
-        }
-    }
-
-    LoadMoreRecyclerView.ILoadListener loadMoreListener;
-
-    /**
-     * 设置加载更多监听
-     * @param loadMoreListener
-     */
-    public void setLoadMoreListener(LoadMoreRecyclerView.ILoadListener loadMoreListener) {
-        this.loadMoreListener = loadMoreListener;
-    }
 
     @Override
     public void clearData() {
         super.clearData();
-        setFooterVisibility(false);
         notifyDataSetChanged();
     }
 
 
-    class FooterHolder extends BaseRecyclerHolder {
-
-        LoadMoreListViewFooter mFooterRefreshView;
-
-        private LoadMoreRecyclerView.ILoadListener loadListener;
-
-        //是否有更多数据可供加载，用来判断是否“显示”加载更多view
-        private boolean visibility = false;
-
-        private boolean loading = false;
-
-        public FooterHolder(View parent) {
-            super(new LoadMoreListViewFooter(parent.getContext()));
-            mFooterRefreshView = (LoadMoreListViewFooter) itemView;
-            mFooterRefreshView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            mFooterRefreshView.setOnClickListener(loadMoreClick);
-        }
-
-        @Override
-        public void onBind(Object bean) {
-
-            setLoading(isLoading());
-            setVisibility(isVisibility());
-        }
-
-        View.OnClickListener loadMoreClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (loadListener != null)
-                    loadListener.onLoadMore();
-            }
-        };
-
-        /**
-         * 用来控制loadMore视图显示的内容
-         *
-         * @param loading
-         */
-        public void setLoading(boolean loading) {
-            this.loading = loading;
-
-            if (mFooterRefreshView != null) {
-                if (isLoading()) {
-                    mFooterRefreshView.loading();
-                } else {
-                    mFooterRefreshView.normal();
-                }
-            }
-        }
-
-        /**
-         * 是否显示更多数据
-         * 用来控制是否显示整个loadMore视图
-         *
-         * @param hasMoreData
-         */
-        public void setVisibility(boolean hasMoreData) {
-            this.visibility = hasMoreData;
-
-            if (mFooterRefreshView != null) {
-                if (isVisibility()) {
-                    mFooterRefreshView.show();
-                } else {
-                    mFooterRefreshView.hide();
-                }
-            }
-        }
-
-        public boolean isVisibility() {
-            return visibility;
-        }
-
-        public boolean isLoading() {
-            return loading;
-        }
-
-        public void setLoadMoreListener(LoadMoreRecyclerView.ILoadListener loadMoreListener) {
-            this.loadListener = loadMoreListener;
-        }
-    }
 }

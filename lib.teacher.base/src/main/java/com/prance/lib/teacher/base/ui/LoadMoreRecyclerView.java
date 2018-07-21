@@ -37,79 +37,9 @@ public class LoadMoreRecyclerView extends ObservableRecyclerView {
 
     public void init() {
 
-        //加载更多监听
-        addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
-                int totalItemCount = getLayoutManager().getItemCount();
-                if (lastVisibleItem >= totalItemCount - 1 && dy > 0) {
-                    if (!isLoadingMore) {
-                        isLoadingMore = true;
-                        if (loadListener != null) {
-                            loadListener.onLoadMore();
-                        }
-                    }
-                }
-            }
-        });
-
-        setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-
-            //只发一遍广播
-            boolean sendListener = false;
-
-            @Override
-            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-                if (sendListener) {
-                    sendListener = false;
-                    Intent intent = new Intent("com.prance.lib.music.ui.MediaFloatButtonFragment.ScrollSwipeBroadcastReceiver");
-                    if (get(this,"mScrollState") == ScrollState.UP) {
-                        intent.putExtra("swipeUp", true);
-                    } else {
-                        intent.putExtra("swipeUp", false);
-                    }
-                    getContext().sendBroadcast(intent);
-                }
-            }
-
-            @Override
-            public void onDownMotionEvent() {
-                this.sendListener = true;
-            }
-
-            @Override
-            public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-
-            }
-        });
-
         setVerticalScrollBarEnabled(true);
     }
 
-    public boolean isLoadingMore() {
-        return isLoadingMore;
-    }
-
-    public void setLoadingMore(boolean loadingMore) {
-        isLoadingMore = loadingMore;
-    }
-
-    public ILoadListener loadListener;
-
-    public void setLoadListener(ILoadListener loadListener) {
-        this.loadListener = loadListener;
-        if (getAdapter() != null && getAdapter() instanceof BaseLoadMoreAdapter) {
-            ((BaseLoadMoreAdapter) getAdapter()).setLoadMoreListener(loadListener);
-        }
-    }
 
     public interface ILoadListener {
         void onLoadMore();
