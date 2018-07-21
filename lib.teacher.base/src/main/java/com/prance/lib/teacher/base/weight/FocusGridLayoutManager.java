@@ -1,18 +1,20 @@
 package com.prance.lib.teacher.base.weight;
- 
+
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
- 
+
+
 /**
  * 自定义GridLayoutManager，修改RecyelerView焦点乱跳的BUG
  * Created by Danxingxi on 2016/4/1.
  */
 public class FocusGridLayoutManager extends GridLayoutManager {
- 
- 
+
+
     /**
      * Constructor used when layout manager is set in XML by RecyclerView attribute
      * "layoutManager". If spanCount is not specified in the XML, it defaults to a
@@ -27,7 +29,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public FocusGridLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
- 
+
     /**
      * Creates a vertical GridLayoutManager
      *
@@ -37,7 +39,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public FocusGridLayoutManager(Context context, int spanCount) {
         super(context, spanCount);
     }
- 
+
     /**
      * @param context       Current context, will be used to access resources.
      * @param spanCount     The number of columns or rows in the grid
@@ -48,7 +50,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public FocusGridLayoutManager(Context context, int spanCount, int orientation, boolean reverseLayout) {
         super(context, spanCount, orientation, reverseLayout);
     }
- 
+
     /**
      * Return the current number of child views attached to the parent RecyclerView.
      * This does not include child views that were temporarily detached and/or scrapped.
@@ -59,7 +61,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public int getChildCount() {
         return super.getChildCount();
     }
- 
+
     /**
      * Return the child view at the given index
      *
@@ -70,16 +72,17 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public View getChildAt(int index) {
         return super.getChildAt(index);
     }
- 
+
     /**
      * Returns the number of items in the adapter bound to the parent RecyclerView.
+     *
      * @return The number of items in the bound adapter
      */
     @Override
     public int getItemCount() {
         return super.getItemCount();
     }
- 
+
     /**
      * Returns the item View which has or contains focus.
      *
@@ -89,7 +92,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public View getFocusedChild() {
         return super.getFocusedChild();
     }
- 
+
     /**
      * Returns the adapter position of the item represented by the given View. This does not
      * contain any adapter changes that might have happened after the last layout.
@@ -101,21 +104,23 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     public int getPosition(View view) {
         return super.getPosition(view);
     }
- 
+
     /**
      * 获取列数
+     *
      * @return
      */
     @Override
     public int getSpanCount() {
         return super.getSpanCount();
     }
- 
+
     /**
      * Called when searching for a focusable view in the given direction has failed for the current content of the RecyclerView.
      * This is the LayoutManager's opportunity to populate views in the given direction to fulfill the request if it can.
      * The LayoutManager should attach and return the view to be focused. The default implementation returns null.
      * 防止当recyclerview上下滚动的时候焦点乱跳
+     *
      * @param focused
      * @param focusDirection
      * @param recycler
@@ -125,43 +130,29 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     @Override
     public View onFocusSearchFailed(View focused, int focusDirection, RecyclerView.Recycler recycler, RecyclerView.State state) {
 
-//        View next = super.onFocusSearchFailed(focused, focusDirection, recycler, state);
-//        if(selectPosition!=oldSelectPosition){
-//            oldSelectPosition = selectPosition;
-//            if (focusDirection == View.FOCUS_RIGHT) {
-//                mChildSelectedListener.onFocusFailedRight();
-//                if(!canMove)
-//                    return null;
-//                if(findViewByPosition(selectPosition+1)!=null)
-//                    findFailView(selectPosition+1);
-//                else {
-//                    View view = super.onFocusSearchFailed(focused, View.FOCUS_DOWN, recycler, state);
-//                    if(view!=null){
-//                        findFailView(getPosition(view)-getSpanCount()+1);
-//                    }
-//                }
-//            } else if (focusDirection == View.FOCUS_LEFT) {
-//                mChildSelectedListener.onFocusFailedLeft();
-//                if(!canMove)
-//                    return null;
-//                if(findViewByPosition(selectPosition-1)!=null)
-//                    findFailView(selectPosition-1);
-//                else {
-//                    View view = super.onFocusSearchFailed(focused, View.FOCUS_UP, recycler, state);
-//                    if(view!=null){
-//                        findFailView(getPosition(view)+getSpanCount()-1);
-//);
-//                    }
-//                }
-//            }
-//        }
-
-
         // Need to be called in order to layout new row/column
         View nextFocus = super.onFocusSearchFailed(focused, focusDirection, recycler, state);
- 
+
         if (nextFocus == null) {
-           return null;
+            /**
+             * 获取当前焦点的位置
+             */
+            int fromPos = getPosition(focused);
+
+            View nextView = null;
+            int offset = calcOffsetToNextView(focusDirection);
+            switch (offset) {
+                case 1:
+                    nextView = findViewByPosition(fromPos + 1);
+                    break;
+                case -1:
+                    nextView = findViewByPosition(fromPos - 1);
+                    break;
+            }
+            if (nextView != null) {
+                nextView.requestFocus();
+            }
+            return null;
         }
         /**
          * 获取当前焦点的位置
@@ -171,28 +162,28 @@ public class FocusGridLayoutManager extends GridLayoutManager {
          * 获取我们希望的下一个焦点的位置
          */
         int nextPos = getNextViewPos(fromPos, focusDirection);
- 
+
         return findViewByPosition(nextPos);
 
     }
- 
+
     /**
      * Manually detect next view to focus.
      *
-     * @param fromPos from what position start to seek.
+     * @param fromPos   from what position start to seek.
      * @param direction in what direction start to seek. Your regular {@code View.FOCUS_*}.
      * @return adapter position of next view to focus. May be equal to {@code fromPos}.
      */
     protected int getNextViewPos(int fromPos, int direction) {
         int offset = calcOffsetToNextView(direction);
- 
+
         if (hitBorder(fromPos, offset)) {
             return fromPos;
         }
- 
+
         return fromPos + offset;
     }
- 
+
     /**
      * Calculates position offset.
      *
@@ -202,7 +193,7 @@ public class FocusGridLayoutManager extends GridLayoutManager {
     protected int calcOffsetToNextView(int direction) {
         int spanCount = getSpanCount();
         int orientation = getOrientation();
- 
+
         if (orientation == VERTICAL) {
             switch (direction) {
                 case View.FOCUS_DOWN:
@@ -226,20 +217,20 @@ public class FocusGridLayoutManager extends GridLayoutManager {
                     return -spanCount;
             }
         }
- 
+
         return 0;
     }
- 
+
     /**
      * Checks if we hit borders.
      *
-     * @param from from what position.
+     * @param from   from what position.
      * @param offset offset to new position.
      * @return {@code true} if we hit border.
      */
     private boolean hitBorder(int from, int offset) {
         int spanCount = getSpanCount();
- 
+
         if (Math.abs(offset) == 1) {
             int spanIndex = from % spanCount;
             int newSpanIndex = spanIndex + offset;

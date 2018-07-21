@@ -84,6 +84,11 @@ public class FocusRelativeLayout extends RelativeLayout {
         }
     }
 
+    @Override
+    public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+        return super.requestFocus(direction, previouslyFocusedRect);
+    }
+
     /**
      * 缩小动画
      */

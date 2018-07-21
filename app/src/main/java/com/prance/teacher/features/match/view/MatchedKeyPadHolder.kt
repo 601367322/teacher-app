@@ -15,8 +15,8 @@ class MatchedKeyPadHolder(parent: View) :
     override fun onBind(bean: KeyPadEntity?) {
         itemView.keyNumber.text = """${bean?.keyId}"""
 
-        itemView.keyNumber.setTag(R.id.tag_data, bean)
-        itemView.keyNumber.setOnClickListener(this)
+        itemView.keyPadBtn.setTag(R.id.tag_data, bean)
+        itemView.keyPadBtn.setOnClickListener(this)
 
     }
 

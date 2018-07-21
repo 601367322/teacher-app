@@ -12,6 +12,7 @@ import com.prance.lib.common.utils.ImageLoaderFactory
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
@@ -36,7 +37,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         setTip()
 
         //设置显示格式
-        recycler.layoutManager = GridLayoutManager(context!!, 6)
+        recycler.layoutManager = FocusGridLayoutManager(context!!, 6)
         //添加数据源
         recycler.adapter = mAdapter
 
@@ -65,6 +66,22 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
      * list 绑定过的答题器列表
      */
     override fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>) {
+
+        val list1 = mutableListOf<KeyPadEntity>()
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+        list1.addAll(list)
+
         mAdapter.data = list
         mAdapter.notifyDataSetChanged()
 
@@ -150,8 +167,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
                 tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
                 recycler.post {
+                    recycler.smoothScrollToPosition(mAdapter.data.size - 1)
                     //最后一个答题器获取焦点
-                    recycler.getChildAt(mAdapter.data.size - 1).keyPadBtn.requestFocus()
+                    recycler.getChildAt(recycler.childCount - 1).keyPadBtn.requestFocus()
                 }
             }
         }
