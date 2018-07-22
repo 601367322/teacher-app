@@ -13,6 +13,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.third.inter.PluginsManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -65,7 +66,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //启动主页
         if(BuildConfig.DEBUG) {
-            context?.let { startActivity(MatchKeyPadActivity.callingIntent(it)) }
+            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
 
             activity?.finish()

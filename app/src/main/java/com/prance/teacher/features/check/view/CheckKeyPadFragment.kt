@@ -1,13 +1,14 @@
 package com.prance.teacher.features.check.view
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.teacher.features.check.model.CheckKeyPadGroupTitle
@@ -54,6 +55,11 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         recycler.adapter = mAdapter
         val layoutManager = GridLayoutManager(context, 7)
+        recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
+                outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m48_0)
+            }
+        })
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 if (position < mAdapter.data.size) {
