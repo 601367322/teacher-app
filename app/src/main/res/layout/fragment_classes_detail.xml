@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <com.prance.lib.teacher.base.weight.MyButton
+    <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/readyClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,9 +16,9 @@
         app:layout_constraintTop_toTopOf="@+id/endClass"
         app:text="准备就绪">
 
-    </com.prance.lib.teacher.base.weight.MyButton>
+    </com.prance.lib.common.utils.weight.MyButton>
 
-    <com.prance.lib.teacher.base.weight.MyButton
+    <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/endClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/back"
         app:text="结束上课" />
 
-    <com.prance.lib.teacher.base.weight.MyButton
+    <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:text="返回上一层">
 
-    </com.prance.lib.teacher.base.weight.MyButton>
+    </com.prance.lib.common.utils.weight.MyButton>
 
     <View
         android:id="@+id/view"

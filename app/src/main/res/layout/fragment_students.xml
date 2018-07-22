@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/m80.0"
         android:background="#ff485061"
-        android:textSize="@dimen/m32.0"
-        android:textColor="#fff"
         android:gravity="center"
         android:paddingLeft="@dimen/m12.0"
         android:text="请点击&quot;开始绑定&quot;进行随机分配绑定"
+        android:textColor="#fff"
+        android:textSize="@dimen/m32.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,7 @@
         android:gravity="right"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/m90.0"
-        android:paddingRight="@dimen/m127.0"
+        android:paddingRight="@dimen/m120.0"
         android:paddingTop="@dimen/m90.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,44 +47,46 @@
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginEnd="@dimen/m8.0"
-            android:text="开始绑定">
+            android:text="开始绑定"
+            android:visibility="gone">
 
             <requestFocus />
         </Button>
 
-        <Button
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m8.0"
-            android:text="完成绑定"
-            android:visibility="gone" />
+            android:layout_marginEnd="@dimen/m32.0"
+            android:visibility="gone"
+            app:icon="@drawable/icon_complete_bind_button"
+            app:text="完成绑定" />
 
-        <Button
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/replace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m8.0"
-            android:text="替换答题器"
-            android:visibility="gone" />
+            android:layout_marginEnd="@dimen/m32.0"
+            android:visibility="gone"
+            app:icon="@drawable/icon_replace_button"
+            app:text="替换答题器" />
 
-        <Button
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m8.0"
-            android:text="数据刷新" />
+            android:layout_marginEnd="@dimen/m32.0"
+            app:icon="@drawable/icon_refresh_button"
+            app:text="数据刷新" />
 
-        <Button
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/m8.0"
-            android:layout_marginEnd="@dimen/m8.0"
             android:onClick="onBackBtnClick"
-            android:text="返回上一层" />
+            app:icon="@drawable/icon_back_button"
+            app:text="返回上一层" />
 
 
     </LinearLayout>

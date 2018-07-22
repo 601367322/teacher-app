@@ -4,5 +4,6 @@
         <attr name="icon" format="reference" />
         <attr name="disable_icon" format="reference" />
         <attr name="text" format="string"/>
+        <attr name="layoutRes" format="reference"/>
     </declare-styleable>
 </resources>

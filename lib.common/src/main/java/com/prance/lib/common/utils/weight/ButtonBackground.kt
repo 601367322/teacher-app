@@ -1,4 +1,4 @@
-package com.prance.lib.teacher.base.weight
+package com.prance.lib.common.utils.weight
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.view.View
-import com.prance.lib.teacher.base.R
+import com.prance.lib.common.R
 
 class ButtonBackground : View {
 

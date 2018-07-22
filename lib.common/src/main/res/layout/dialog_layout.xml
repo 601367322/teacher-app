@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/m759.0"
+    android:layout_height="wrap_content"
+    android:background="@drawable/toast_background"
+    android:elevation="@dimen/m10.0"
+    android:paddingHorizontal="@dimen/m124.0"
+    android:paddingVertical="@dimen/m85.0">
+
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#fff"
+        android:textSize="@dimen/m40.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m30.0"
+        android:layout_marginTop="@dimen/m50.0"
+        app:text="确定"
+        app:layoutRes="@layout/weight_my_button"
+        app:layout_constraintStart_toStartOf="@+id/message"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
+
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m30.0"
+        android:layout_marginTop="@dimen/m50.0"
+        app:layoutRes="@layout/weight_my_button"
+        app:text="取消"
+        app:layout_constraintEnd_toEndOf="@+id/message"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
+
+
+</android.support.constraint.ConstraintLayout>

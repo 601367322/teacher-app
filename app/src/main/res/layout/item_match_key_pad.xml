@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.prance.lib.teacher.base.weight.FocusRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<com.prance.lib.common.utils.weight.FocusRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyPadBtn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:focusable="true">
 
     <RelativeLayout
         android:layout_width="@dimen/m250.0"
         android:layout_height="@dimen/m108.0"
-        android:layout_marginBottom="@dimen/m36.0"
-        android:layout_marginRight="@dimen/m36.0"
+        android:layout_centerInParent="true"
         android:background="@drawable/match_keypad_focus_background"
-        android:duplicateParentState="true"
-        android:focusable="true">
+        android:duplicateParentState="true">
 
         <ImageView
             android:layout_width="@dimen/m246.0"
@@ -32,4 +30,4 @@
             android:textSize="@dimen/m48.0" />
 
     </RelativeLayout>
-</com.prance.lib.teacher.base.weight.FocusRelativeLayout>
+</com.prance.lib.common.utils.weight.FocusRelativeLayout>

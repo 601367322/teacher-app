@@ -30,21 +30,12 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         /**
          * LeakCanary初始化
          */
-        if (BuildConfig.DEBUG) LeakCanary.install(this)
+//        if (BuildConfig.DEBUG) LeakCanary.install(this)
 
         /**
          * 工具初始化
          */
         Utils.init(this)
-
-        /**
-         * 测试模式下，抓崩溃日志
-         */
-        if (!BuildConfig.DEBUG && ModelUtil.isTestModel)
-            CrashUtils.init(UrlUtil.getBaseCrashDir()) { crashInfo, e ->
-                LogUtils.e(crashInfo)
-                AppUtils.relaunchApp()
-            }
 
         /**
          * 测试开关生命周期
@@ -54,7 +45,8 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         /**
          * Bugly初始化
          */
-        PluginsManager.bugly?.init()
+        if (!BuildConfig.DEBUG)
+            PluginsManager.bugly?.init()
 
         /**
          * 初始化图片加载器

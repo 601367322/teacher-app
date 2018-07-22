@@ -1,4 +1,4 @@
-package com.prance.lib.teacher.base.weight;
+package com.prance.lib.common.utils.weight;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,8 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
-import com.prance.lib.teacher.base.R;
-
+import com.prance.lib.common.R;
 
 public class FocusRelativeLayout extends RelativeLayout {
 

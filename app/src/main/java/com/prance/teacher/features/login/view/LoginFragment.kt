@@ -65,7 +65,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //启动主页
         if(BuildConfig.DEBUG) {
-            context?.let { startActivity(MainActivity.callingIntent(it)) }
+            context?.let { startActivity(MatchKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
 
             activity?.finish()

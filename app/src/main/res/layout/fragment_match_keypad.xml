@@ -73,13 +73,56 @@
     </LinearLayout>
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m32.0"
+        android:visibility="gone"
+        app:disable_icon="@drawable/icon_complete_match_button_disable"
+        app:icon="@drawable/icon_complete_match_button"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintEnd_toStartOf="@+id/back"
+        android:nextFocusLeft="@id/delete"
+        android:nextFocusRight="@id/back"
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="完成配对" />
+
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m32.0"
+        android:visibility="gone"
+        android:nextFocusRight="@id/complete"
+        app:icon="@drawable/icon_delete_button"
+        app:disable_icon="@drawable/icon_delete_button_disable"
+        app:layout_constraintBottom_toBottomOf="@+id/back"
+        app:layout_constraintEnd_toStartOf="@+id/complete"
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="删除配对" />
+
+
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m48.0"
+        android:layout_marginEnd="@dimen/m48.0"
+        android:onClick="onBackBtnClick"
+        android:nextFocusLeft="@id/complete"
+        app:icon="@drawable/icon_back_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:text="返回上一层" />
+
+    <com.prance.lib.teacher.base.weight.TvRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingLeft="@dimen/m122.0"
-        android:paddingTop="@dimen/m40.0"
         android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/m85.0"
+        android:paddingTop="@dimen/m40.0"
         app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,45 +141,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/back" />
 
-    <com.prance.lib.teacher.base.weight.MyButton
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/m32.0"
-        android:nextFocusForward="@id/back"
-        android:nextClusterForward="@id/back"
-        android:visibility="gone"
-        app:icon="@drawable/icon_delete_button"
-        app:disable_icon="@drawable/icon_delete_button_disable"
-        app:layout_constraintBottom_toBottomOf="@+id/back"
-        app:layout_constraintEnd_toStartOf="@+id/complete"
-        app:layout_constraintTop_toTopOf="@+id/back"
-        app:text="删除配对" />
 
-    <com.prance.lib.teacher.base.weight.MyButton
-        android:id="@+id/complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/m32.0"
-        android:visibility="gone"
-        app:disable_icon="@drawable/icon_complete_match_button_disable"
-        app:icon="@drawable/icon_complete_match_button"
-        app:layout_constraintBottom_toBottomOf="@+id/back"
-        app:layout_constraintEnd_toStartOf="@+id/back"
-        app:layout_constraintTop_toTopOf="@+id/back"
-        app:text="完成配对" />
-
-    <com.prance.lib.teacher.base.weight.MyButton
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m48.0"
-        android:layout_marginEnd="@dimen/m48.0"
-        android:onClick="onBackBtnClick"
-        app:icon="@drawable/icon_back_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:text="返回上一层" />
 
     <ImageView
         android:id="@+id/loadingImg"

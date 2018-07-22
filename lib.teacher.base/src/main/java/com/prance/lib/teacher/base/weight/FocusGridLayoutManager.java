@@ -2,6 +2,7 @@ package com.prance.lib.teacher.base.weight;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -101,7 +102,12 @@ public class FocusGridLayoutManager extends GridLayoutManager {
      */
     @Override
     public int getPosition(View view) {
-        return super.getPosition(view);
+        try {
+            return super.getPosition(view);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     /**
@@ -136,33 +142,6 @@ public class FocusGridLayoutManager extends GridLayoutManager {
             /**
              * 获取当前焦点的位置
              */
-            int fromPos = getPosition(focused);
-
-            View nextView = null;
-            int offset = calcOffsetToNextView(focusDirection);
-            int nextPos = 0;
-            int nextLinePos = 0;
-            switch (offset) {
-                case 1:
-                    nextPos = fromPos + 1;
-                    nextLinePos = nextPos + getSpanCount();
-                    break;
-                case -1:
-                    nextPos = fromPos - 1;
-                    nextLinePos = nextPos - getSpanCount();
-                    if (nextLinePos < 0) {
-                        nextLinePos = 0;
-                    }
-                    break;
-            }
-            nextView = findViewByPosition(nextPos);
-            if (nextView != null) {
-                nextView.requestFocus();
-
-                if (findViewByPosition(nextLinePos) == null) {
-                    smoothScrollToPosition((RecyclerView) nextView.getParent(), null, nextLinePos);
-                }
-            }
             return null;
         }
         /**

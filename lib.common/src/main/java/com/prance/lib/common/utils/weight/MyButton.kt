@@ -1,17 +1,13 @@
-package com.prance.lib.teacher.base.weight
+package com.prance.lib.common.utils.weight
 
 import android.content.Context
-import android.graphics.Rect
 import android.util.AttributeSet
+import android.view.View
 import com.prance.lib.common.utils.getInflate
-import com.prance.lib.teacher.base.R
-import kotlinx.android.synthetic.main.weight_my_button.view.*
 import android.widget.RelativeLayout
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils.addOnGlobalLayoutListener
-import android.view.ViewTreeObserver
+import com.prance.lib.common.R
+import kotlinx.android.synthetic.main.weight_my_button_with_icon.view.*
 
 
 class MyButton : FocusRelativeLayout {
@@ -22,13 +18,18 @@ class MyButton : FocusRelativeLayout {
     private var mIcon: Int? = -1
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        addView(getInflate(this, R.layout.weight_my_button))
+
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MyButton)
         try {
+            val layout = a.getResourceId(R.styleable.MyButton_layoutRes, R.layout.weight_my_button_with_icon)
+            addView(getInflate(this, layout))
+
             mIcon = a.getResourceId(R.styleable.MyButton_icon, -1)
             if (mIcon != -1) {
-                icon.setImageResource(mIcon!!)
+                icon?.setImageResource(mIcon!!)
+            } else {
+                icon?.visibility = View.GONE
             }
             mDisableIcon = a.getResourceId(R.styleable.MyButton_disable_icon, -1)
             val textStr = a.getString(R.styleable.MyButton_text)
@@ -61,6 +62,10 @@ class MyButton : FocusRelativeLayout {
                     }
                 })
 
+    }
+
+    fun setText(str: String) {
+        text.text = str
     }
 
     override fun setEnabled(enabled: Boolean) {

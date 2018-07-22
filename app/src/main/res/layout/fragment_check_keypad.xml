@@ -73,38 +73,36 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:paddingLeft="@dimen/m20.0"
         android:paddingTop="@dimen/m20.0"
         android:clipToPadding="false"
+        android:layout_marginBottom="@dimen/m90.0"
+        android:layout_marginEnd="@dimen/m120.0"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <com.prance.lib.teacher.base.weight.MyButton
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m40.0"
+            android:layout_marginEnd="@dimen/m32.0"
             app:icon="@drawable/icon_check_button"
             app:text="检测答题器" />
 
-        <com.prance.lib.teacher.base.weight.MyButton
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/jump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m40.0"
+            android:layout_marginEnd="@dimen/m32.0"
             android:visibility="gone"
             app:icon="@drawable/icon_jump_button"
             app:text="跳过" />
 
-        <com.prance.lib.teacher.base.weight.MyButton
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/m90.0"
-            android:layout_marginEnd="@dimen/m120.0"
             android:onClick="onBackBtnClick"
             app:icon="@drawable/icon_back_button"
             app:text="返回上一层" />

@@ -1,15 +1,14 @@
 package com.prance.teacher.features.main.view
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.sunvote.service.SunVoteService
+import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.lib.test.setting.features.TestSettingActivity
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -17,6 +16,7 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.utils.IntentUtils
 
 
 class MainFragment : BaseFragment(), IMainContract.View {
@@ -72,15 +72,11 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         exit.setOnClickListener {
-            AlertDialog.Builder(context)
-                    .setTitle("提示")
+            AlertDialog(context!!)
                     .setMessage("1、退出程序后不能进行课中数据传输\n2、退出程序后，请扫码登录")
-                    .setNegativeButton("取消", null)
-                    .setPositiveButton("确定", { _, _ ->
-                        //停止基站服务
-                        activity?.stopService(SunVoteService.callingIntent(context!!))
-                        //关闭界面
-                        activity?.finish()
+                    .setCancelButton("取消", null)
+                    .setConfirmButton("确定", {
+
                     })
                     .show()
         }
