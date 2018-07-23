@@ -45,8 +45,7 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         /**
          * Bugly初始化
          */
-        if (!BuildConfig.DEBUG)
-            PluginsManager.bugly?.init()
+        PluginsManager.bugly?.init()
 
         /**
          * 初始化图片加载器
