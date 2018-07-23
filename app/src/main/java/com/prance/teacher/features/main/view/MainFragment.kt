@@ -6,6 +6,7 @@ import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.weight.AlertDialog
+import com.prance.lib.sunvote.service.SunVoteService
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.test.setting.features.TestSettingActivity
@@ -76,7 +77,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
                     .setMessage("1、退出程序后不能进行课中数据传输\n2、退出程序后，请扫码登录")
                     .setCancelButton("取消", null)
                     .setConfirmButton("确定", {
-
+                        activity?.finish()
+                        activity?.stopService(SunVoteService.callingIntent(context!!))
                     })
                     .show()
         }

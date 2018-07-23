@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/m24.0"
@@ -8,36 +9,45 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="@dimen/m120.0"
-        android:layout_height="@dimen/m120.0"
-        android:src="@drawable/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/m88.0"
+        android:layout_height="@dimen/m88.0"
+        android:background="@drawable/student_avatar_background"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_avatar_boy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m23.0"
-        android:text="TextView"
+        android:layout_marginStart="@dimen/m18.0"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@+id/avatar" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar">
 
-    <TextView
-        android:id="@+id/keyPadId"
-        android:layout_width="@dimen/m91.0"
-        android:layout_height="@dimen/m35.0"
-        android:layout_marginTop="@dimen/m8.0"
-        android:background="@drawable/students_keypad_id_background"
-        android:textSize="@dimen/m22.0"
-        android:textColor="#3E4554"
-        android:text="TextView"
-        android:visibility="invisible"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:text="TextView"
+            android:textColor="#fff"
+            android:textSize="@dimen/m28.0" />
+
+        <TextView
+            android:id="@+id/keyPadId"
+            android:layout_width="@dimen/m91.0"
+            android:layout_height="@dimen/m35.0"
+            android:layout_marginTop="@dimen/m12.0"
+            android:background="@drawable/students_keypad_id_background"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#fff"
+            android:textSize="@dimen/m22.0" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
