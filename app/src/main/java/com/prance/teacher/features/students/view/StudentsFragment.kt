@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.text.Html
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.teacher.features.students.contract.IStudentsContract
@@ -46,7 +47,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
-        recycler.layoutManager = GridLayoutManager(activity, 10)
+        recycler.layoutManager = GridLayoutManager(activity, 7)
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {
@@ -83,6 +84,8 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         hideProgress()
         mAdapter.data = list
         mAdapter.notifyDataSetChanged()
+
+        calculateBindStudent()
 
         displayBtn(mClassesEntity)
     }
@@ -121,6 +124,16 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
                 refresh.performClick()
             }
         }
+    }
+
+    private fun calculateBindStudent() {
+        var count = 0
+        for (student in mAdapter.data) {
+            if (student.clickers != null) {
+                count++
+            }
+        }
+        bindStudentCount.text = Html.fromHtml("""已绑定 <font color="#3AF0EE">$count</font> 名学生""")
     }
 
     override fun checkMatch() {

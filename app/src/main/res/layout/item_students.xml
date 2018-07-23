@@ -11,9 +11,7 @@
         android:id="@+id/avatar"
         android:layout_width="@dimen/m88.0"
         android:layout_height="@dimen/m88.0"
-        android:background="@drawable/student_avatar_background"
         android:scaleType="fitXY"
-        android:src="@drawable/default_avatar_boy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

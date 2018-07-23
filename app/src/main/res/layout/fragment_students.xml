@@ -8,16 +8,27 @@
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/m80.0"
+        android:layout_height="@dimen/m94.0"
         android:background="@drawable/match_keypad_tip_background"
         android:gravity="center"
-        android:paddingLeft="@dimen/m12.0"
         android:text="请点击&quot;开始绑定&quot;进行随机分配绑定"
         android:textColor="#fff"
         android:textSize="@dimen/m32.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/bindStudentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m120.0"
+        android:text="TextView"
+        android:textSize="@dimen/m40.0"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler" />
 
     <LinearLayout
         android:id="@+id/btnLayout"
@@ -39,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
             app:text="开始绑定"
+            android:visibility="gone"
             app:icon="@drawable/icon_start_bind_button"/>
 
 
@@ -47,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
+            android:visibility="gone"
             app:icon="@drawable/icon_complete_bind_button"
             app:text="完成绑定" />
 
@@ -55,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
+            android:visibility="gone"
             app:icon="@drawable/icon_replace_button"
             app:text="替换答题器" />
 
@@ -82,6 +96,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingRight="@dimen/m85.0"
         android:clipToPadding="false"
         android:paddingLeft="@dimen/m120.0"
         android:paddingTop="@dimen/m132.0"
