@@ -61,7 +61,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
                 val position = layoutManager.getPosition(view!!)
                 if ((position + 1) % 2 == 1) {
                     outRect?.left = resources.getDimensionPixelOffset(R.dimen.m120_0)
-                }else{
+                } else {
                     outRect?.left = resources.getDimensionPixelOffset(R.dimen.m20_0)
                 }
             }
@@ -89,6 +89,17 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
     override fun onPageSelect(pageIndex: Int) {
         pageIndicatorView.setSelected(pageIndex)
+
+        if (pageIndex < pageIndicatorView.count - 1) {
+            rightArrow.visibility = View.VISIBLE
+        }else{
+            rightArrow.visibility = View.GONE
+        }
+        if (pageIndex > 0) {
+            leftArrow.visibility = View.VISIBLE
+        }else{
+            rightArrow.visibility = View.GONE
+        }
     }
 
 

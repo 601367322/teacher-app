@@ -53,6 +53,7 @@
         android:id="@+id/leftArrow"
         android:layout_width="@dimen/m42.0"
         android:layout_height="@dimen/m74.0"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/m45.0"
         android:layout_marginTop="@dimen/m426.0"
         android:src="@drawable/icon_classes_left_arrow"
