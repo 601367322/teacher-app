@@ -46,10 +46,6 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
-        start.visibility = View.GONE
-        replace.visibility = View.GONE
-        complete.visibility = View.GONE
-
         recycler.layoutManager = GridLayoutManager(activity, 10)
         recycler.adapter = mAdapter
 
