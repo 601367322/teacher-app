@@ -113,7 +113,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             complete.visibility = View.VISIBLE
             delete.visibility = View.VISIBLE
         }
-        count.text = Html.fromHtml("""已配对成功<font color="#3AF0EE">${mAdapter.data.size}</font>个答题器""")
+        count.text = Html.fromHtml("""已配对成功 <font color="#3AF0EE">${mAdapter.data.size}</font> 个答题器""")
         displayEmptyView()
     }
 
