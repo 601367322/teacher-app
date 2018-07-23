@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/m24.0"
-    android:layout_marginRight="@dimen/m53.0">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/avatar"

@@ -2,8 +2,10 @@ package com.prance.teacher.features.students.view
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
@@ -48,6 +50,14 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
         recycler.layoutManager = GridLayoutManager(activity, 7)
+
+        recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
+                super.getItemOffsets(outRect, view, parent, state)
+                outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m48_0)
+            }
+        })
+
         recycler.adapter = mAdapter
 
         refresh.setOnClickListener {
