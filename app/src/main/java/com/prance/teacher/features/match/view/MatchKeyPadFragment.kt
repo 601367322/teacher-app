@@ -155,7 +155,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 //删除状态
                 mAdapter.isDeleteState = !mAdapter.isDeleteState
 
-
                 tip1.visibility = View.GONE
                 tip2.visibility = View.VISIBLE
 
@@ -163,19 +162,27 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 recycler.post {
                     setLastItemRequestFocus()
 
-                    complete.isEnabled = false
-                    delete.isEnabled = false
+                    recycler.post {
+                        complete.isEnabled = false
+                        delete.isEnabled = false
+                    }
                 }
             }
         }
     }
 
     private fun setLastItemRequestFocus() {
-        recycler.smoothScrollToPosition(mAdapter.data.size - 1)
-        recycler.postDelayed({
-            //最后一个答题器获取焦点
-            recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).requestFocus()
-        }, 250)
+        val lastItem = recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1);
+        if (lastItem == null) {
+            recycler.smoothScrollToPosition(mAdapter.data.size - 1)
+
+            recycler.postDelayed({
+                //最后一个答题器获取焦点
+                recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).requestFocus()
+            }, 250)
+        } else {
+            lastItem.requestFocus()
+        }
     }
 
     override fun needEventBus(): Boolean = true

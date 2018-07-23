@@ -230,9 +230,20 @@ public class TvRecyclerView extends RecyclerView {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         boolean result = super.dispatchKeyEvent(event);
         View focusView = this.getFocusedChild();
+
+        switch (event.getKeyCode()) {
+            case KeyEvent.KEYCODE_BACK:
+                clearFocus();
+                return result;
+        }
 
         if (focusView == null) {
             return result;
@@ -304,7 +315,7 @@ public class TvRecyclerView extends RecyclerView {
 //                                requestNextLineFocus(nextView);
 //                                return true;
 //                            } else {
-                                return false;
+                            return false;
 //                            }
                         }
                     case KeyEvent.KEYCODE_DPAD_UP:

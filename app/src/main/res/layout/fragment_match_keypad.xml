@@ -78,13 +78,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m32.0"
+        android:nextFocusLeft="@id/delete"
+        android:nextFocusRight="@id/back"
         android:visibility="gone"
         app:disable_icon="@drawable/icon_complete_match_button_disable"
         app:icon="@drawable/icon_complete_match_button"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/back"
-        android:nextFocusLeft="@id/delete"
-        android:nextFocusRight="@id/back"
         app:layout_constraintTop_toTopOf="@+id/back"
         app:text="完成配对" />
 
@@ -93,10 +93,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m32.0"
-        android:visibility="gone"
         android:nextFocusRight="@id/complete"
-        app:icon="@drawable/icon_delete_button"
+        android:visibility="gone"
         app:disable_icon="@drawable/icon_delete_button_disable"
+        app:icon="@drawable/icon_delete_button"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/complete"
         app:layout_constraintTop_toTopOf="@+id/back"
@@ -109,8 +109,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/m48.0"
         android:layout_marginEnd="@dimen/m48.0"
-        android:onClick="onBackBtnClick"
         android:nextFocusLeft="@id/complete"
+        android:onClick="onBackBtnClick"
         app:icon="@drawable/icon_back_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +140,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/back" />
-
 
 
     <ImageView
