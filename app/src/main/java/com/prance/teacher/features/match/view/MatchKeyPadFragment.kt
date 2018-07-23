@@ -47,15 +47,18 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         complete.setOnClickListener(this)
         delete.setOnClickListener(this)
 
+        //雷达动图
         GlideApp.with(this)
                 .asGif()
                 .load(R.drawable.match_loading)
                 .into(loadingImg)
 
+        //按钮页面状态初始化
         displayMoreBtn()
     }
 
     private fun setTip() {
+        //设置顶部提示语
         mRootView?.get()?.post {
             application.mBaseStation.let {
                 tip1.visibility = View.VISIBLE
@@ -99,6 +102,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
     }
 
+    /**
+     * 检查去重配对
+     */
     private fun isExists(KeyID: String?): Boolean {
         for (keyPad in mAdapter.data) {
             if (keyPad.keyId == KeyID) {
@@ -163,6 +169,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
     }
 
+    /**
+     * 最后一个获取焦点
+     */
     private fun setLastItemRequestFocus() {
         val lastItem = recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1);
         if (lastItem == null) {
@@ -194,6 +203,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 mAdapter.removeData(it)
                 mAdapter.notifyDataSetChanged()
 
+                //当前位置项重新获取焦点
                 if (pos >= mAdapter.data.size) {
                     pos -= 1
                 }
@@ -222,6 +232,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         return false
     }
 
+    /**
+     * 切换删除状态时按钮
+     */
     private fun changeDeleteState(b: Boolean) {
         if (b) {
             //删除状态
@@ -240,10 +253,12 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
     }
 
+    /**
+     * 空状态展示
+     */
     private fun displayEmptyView() {
 
         if (mAdapter.data.isEmpty()) {
-
             tip3.visibility = View.VISIBLE
             emptyImage.visibility = View.VISIBLE
             recycler.visibility = View.GONE
