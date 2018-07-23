@@ -76,8 +76,8 @@
         android:paddingLeft="@dimen/m20.0"
         android:paddingTop="@dimen/m20.0"
         android:clipToPadding="false"
-        android:layout_marginBottom="@dimen/m90.0"
-        android:layout_marginEnd="@dimen/m120.0"
+        android:paddingBottom="@dimen/m90.0"
+        android:paddingEnd="@dimen/m120.0"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

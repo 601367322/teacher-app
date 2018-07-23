@@ -51,6 +51,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 .asGif()
                 .load(R.drawable.match_loading)
                 .into(loadingImg)
+
+        displayMoreBtn()
     }
 
     private fun setTip() {
@@ -59,6 +61,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 tip1.visibility = View.VISIBLE
                 tip2.visibility = View.GONE
                 tip_text2.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
+                tip_text7.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
             }
         }
     }
@@ -111,6 +114,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             delete.visibility = View.VISIBLE
         }
         count.text = Html.fromHtml("""已配对成功<font color="#3AF0EE">${mAdapter.data.size}</font>个答题器""")
+        displayEmptyView()
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
@@ -146,13 +150,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 activity?.finish()
             }
             delete -> {
-                //删除状态
-                mAdapter.isDeleteState = !mAdapter.isDeleteState
-
-                tip1.visibility = View.GONE
-                tip2.visibility = View.VISIBLE
-
-                tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
+                changeDeleteState(true)
                 recycler.post {
                     setLastItemRequestFocus()
 
@@ -218,14 +216,49 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     fun onBackKeyEvent(): Boolean {
         if (mAdapter.isDeleteState) {
+            changeDeleteState(false)
+            return true
+        }
+        return false
+    }
+
+    private fun changeDeleteState(b: Boolean) {
+        if (b) {
+            //删除状态
+            mAdapter.isDeleteState = true
+
+            tip1.visibility = View.GONE
+            tip2.visibility = View.VISIBLE
+
+            tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
+        } else {
             mAdapter.isDeleteState = false
             complete.isEnabled = true
             delete.isEnabled = true
 
             setTip()
-            return true
         }
-        return false
+    }
+
+    private fun displayEmptyView() {
+
+        if (mAdapter.data.isEmpty()) {
+
+            tip3.visibility = View.VISIBLE
+            emptyImage.visibility = View.VISIBLE
+            recycler.visibility = View.GONE
+            tip.visibility = View.GONE
+
+            GlideApp.with(this)
+                    .asGif()
+                    .load(R.drawable.match_empty_view)
+                    .into(emptyImage)
+        } else {
+            tip3.visibility = View.GONE
+            emptyImage.visibility = View.GONE
+            recycler.visibility = View.VISIBLE
+            tip.visibility = View.VISIBLE
+        }
     }
 
 }

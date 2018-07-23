@@ -1,11 +1,10 @@
 package com.prance.teacher.features.replacekeypad.view
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.base.http.ResultException
+import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.teacher.features.replacekeypad.contract.IReplaceKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -41,10 +40,10 @@ class ReplaceKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View {
         mClassesEntity = arguments?.getSerializable(StudentsFragment.CLASSES) as ClassesEntity
 
         complete.setOnClickListener {
-            AlertDialog.Builder(context)
+            AlertDialog(context!!)
                     .setMessage("是否确定进行替换？")
-                    .setNegativeButton("取消", null)
-                    .setPositiveButton("确定", { _, _ ->
+                    .setCancelButton("取消", null)
+                    .setConfirmButton("确定", { _ ->
                         showProgress()
                         application.mBaseStation.sn?.let {
                             mPresenter.replaceKeyPad(it, mClassesEntity.klass?.id.toString(), oldKeyPad.text.toString(), newKeyPad.text.toString())

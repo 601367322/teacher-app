@@ -36,12 +36,12 @@ class ReplaceKeyPadPresenter : BasePresenterKt<IReplaceKeyPadContract.View>(), I
                             }
                         }
                         if (existsKeyPad == null) {
-                            it.onError(ResultException(88002, "请先配对答题器"))
+                            it.onError(ResultException(88002, "请先进行答题器配对"))
                         } else {
                             it.onNext(list)
                         }
                     } else {
-                        it.onError(ResultException(88002, "请先配对答题器"))
+                        it.onError(ResultException(88002, "请先进行答题器配对"))
                     }
                 }, BackpressureStrategy.BUFFER)
                 .flatMap({
