@@ -38,7 +38,6 @@ class PageTvRecyclerView : RecyclerView {
         val result = super.dispatchKeyEvent(event)
 
         if (event.keyCode == KeyEvent.KEYCODE_BACK) {
-            clearFocus()
             return result
         }
 
