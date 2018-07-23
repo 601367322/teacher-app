@@ -8,6 +8,7 @@ import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
+import com.prance.lib.sunvote.features.Keypad
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
@@ -55,11 +56,19 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         recycler.adapter = mAdapter
         val layoutManager = GridLayoutManager(context, 7)
+
+        //设置行距
         recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-                outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m48_0)
+                val position = layoutManager.getPosition(view!!)
+                //如果不是分组标题
+                if (mAdapter.data[position] is KeyPadEntity) {
+                    outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m48_0)
+                }
             }
         })
+
+        //设置分组标题占据列宽
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 if (position < mAdapter.data.size) {
