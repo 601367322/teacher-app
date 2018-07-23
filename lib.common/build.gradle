@@ -33,6 +33,7 @@ dependencies {
     implementation dependencies.constraintLayout
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
+    implementation dependencies.recyclerview
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
     implementation dependencies.okhttp3

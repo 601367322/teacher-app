@@ -26,7 +26,6 @@ public class TvRecyclerView extends RecyclerView {
     private static final String TAG = "TvRecyclerView";
 
     private int mPosition;
-//    private BaseFragment mBindFragment;
 
     public TvRecyclerView(Context context) {
         this(context, null);
@@ -43,12 +42,7 @@ public class TvRecyclerView extends RecyclerView {
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
         initView();
-        //initAttr(context, attrs);
     }
-
-//    public void setBindFragment(BaseFragment fragment) {
-//        this.mBindFragment = fragment;
-//    }
 
     private void initView() {
         setDescendantFocusability(FOCUS_AFTER_DESCENDANTS);
@@ -542,7 +536,7 @@ public class TvRecyclerView extends RecyclerView {
      * @param recyclerView
      * @return
      */
-    private boolean isVisBottom(RecyclerView recyclerView) {
+    protected boolean isVisBottom(RecyclerView recyclerView) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
         int visibleItemCount = layoutManager.getChildCount();

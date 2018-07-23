@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.prance.lib.teacher.base.weight.PageTvRecyclerView
         android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="@dimen/m30.0"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/m928.0"
         android:clipToPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/back"
+        android:paddingBottom="@dimen/m50.0"
+        android:paddingTop="@dimen/m132.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,19 +23,59 @@
         android:layout_marginBottom="@dimen/m90.0"
         android:layout_marginEnd="@dimen/m120.0"
         android:onClick="onBackBtnClick"
-        app:text="返回上一层"
         app:icon="@drawable/icon_back_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:text="返回上一层" />
 
     <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m32.0"
-        app:text="数据刷新"
         app:icon="@drawable/icon_refresh_button"
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/back"
-        app:layout_constraintTop_toTopOf="@+id/back" />
+        app:layout_constraintTop_toTopOf="@+id/back"
+        app:text="数据刷新" />
+
+    <ImageView
+        android:id="@+id/rightArrow"
+        android:layout_width="@dimen/m42.0"
+        android:layout_height="@dimen/m74.0"
+        android:layout_marginEnd="@dimen/m45.0"
+        android:layout_marginTop="@dimen/m426.0"
+        android:src="@drawable/icon_classes_right_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/leftArrow"
+        android:layout_width="@dimen/m42.0"
+        android:layout_height="@dimen/m74.0"
+        android:layout_marginStart="@dimen/m45.0"
+        android:layout_marginTop="@dimen/m426.0"
+        android:src="@drawable/icon_classes_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/pageIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/m30.0"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/m2.0"
+        android:paddingLeft="@dimen/m2.0"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:piv_animationType="fill"
+        app:piv_dynamicCount="true"
+        app:piv_interactiveAnimation="true"
+        app:piv_padding="@dimen/m16.0"
+        app:piv_radius="@dimen/m12.0"
+        app:piv_strokeWidth="@dimen/m3.0"
+        app:piv_selectedColor="#3A81F0"
+        app:piv_unselectedColor="#FFFFFF" />
 </android.support.constraint.ConstraintLayout>

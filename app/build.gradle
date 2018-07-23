@@ -121,6 +121,7 @@ dependencies {
     implementation dependencies.gson
     implementation dependencies.utilcode
     implementation dependencies.eventbus
+    implementation dependencies.pageindicatorview
     implementation (dependencies.retrofit2) {
         exclude group: 'com.squareup.okhttp3'
     }

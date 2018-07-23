@@ -12,6 +12,10 @@ class ClassesEntity : Serializable {
         klass!!.id = id
     }
 
+    constructor(name: String) {
+        klass = KlassEntity()
+        klass!!.name = name
+    }
 
     class KlassEntity : Serializable {
         var id: Int? = null

@@ -43,16 +43,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m8.0"
-            android:text="开始绑定"
+            android:layout_marginEnd="@dimen/m32.0"
+            app:text="开始绑定"
+            app:icon="@drawable/icon_start_bind_button"
             android:visibility="gone">
 
             <requestFocus />
-        </Button>
+        </com.prance.lib.common.utils.weight.MyButton>
 
         <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/complete"

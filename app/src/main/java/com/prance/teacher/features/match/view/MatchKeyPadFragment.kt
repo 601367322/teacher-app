@@ -2,16 +2,11 @@ package com.prance.teacher.features.match.view
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearSnapHelper
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import cn.sunars.sdk.SunARS
-import com.bumptech.glide.Glide
 import com.prance.lib.common.utils.GlideApp
-import com.prance.lib.common.utils.ImageConfig
-import com.prance.lib.common.utils.ImageLoaderFactory
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -20,7 +15,6 @@ import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
-import kotlinx.android.synthetic.main.item_match_key_pad.view.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.greenrobot.eventbus.Subscribe
