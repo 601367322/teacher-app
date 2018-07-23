@@ -55,10 +55,6 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
-        //检查更新
-        if (!BuildConfig.DEBUG)
-            PluginsManager.bugly?.checkUpdate()
-
         //显示loading
         showProgress()
 

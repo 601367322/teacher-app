@@ -15,5 +15,4 @@ interface IBugly {
      */
     fun init()
 
-    fun checkUpdate()
 }
