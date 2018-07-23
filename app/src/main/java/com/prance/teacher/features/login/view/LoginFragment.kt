@@ -17,6 +17,7 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
@@ -65,8 +66,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         getNewQrCode(0)
 
         //启动主页
-        if(BuildConfig.DEBUG) {
-            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
+        if (BuildConfig.DEBUG) {
+            context?.let { startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_BIND)) }
 //            context?.let { startActivity(ClassesEntity.callingIntent(it, ClassesEntity(1))) }
 
             activity?.finish()

@@ -16,6 +16,7 @@ class MyButton : FocusRelativeLayout {
     private var mRadius: Float = 0F
     private var mDisableIcon: Int? = -1
     private var mIcon: Int? = -1
+    private var mInitShadow: Boolean = false
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
 
@@ -47,6 +48,21 @@ class MyButton : FocusRelativeLayout {
         mShadowWidth = resources.getDimensionPixelOffset(R.dimen.m8_0).toFloat()
         mRadius = resources.getDimensionPixelOffset(R.dimen.m4_0).toFloat()
 
+        if (visibility == View.VISIBLE) {
+            addShadow()
+        }
+    }
+
+    override fun setVisibility(visibility: Int) {
+        super.setVisibility(visibility)
+
+        if (visibility == View.VISIBLE && !mInitShadow) {
+            addShadow()
+        }
+    }
+
+    private fun addShadow() {
+        mInitShadow = true
         val viewTreeObserver = container.viewTreeObserver
         viewTreeObserver
                 .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
@@ -59,9 +75,9 @@ class MyButton : FocusRelativeLayout {
                         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
                         buttonBackground.layoutParams = layoutParams
                         ((container.parent) as RelativeLayout).addView(buttonBackground, 0)
+
                     }
                 })
-
     }
 
     fun setText(str: String) {

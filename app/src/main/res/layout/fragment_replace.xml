@@ -96,7 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView13" />
 
-    <Button
+    <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:onClick="onBackBtnClick"
@@ -107,7 +107,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

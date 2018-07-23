@@ -104,5 +104,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         hideProgress()
         return false
     }
+
+    override fun needSunVoteService(): Boolean = true
 }
 
