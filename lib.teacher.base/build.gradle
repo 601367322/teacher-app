@@ -39,6 +39,7 @@ dependencies {
     implementation dependencies.utilcode
     implementation dependencies.okhttp3
     implementation dependencies.rxjava
+    implementation dependencies.gson
     implementation dependencies.greendao
     implementation dependencies.rxandroid
     implementation dependencies.observablesscrollview

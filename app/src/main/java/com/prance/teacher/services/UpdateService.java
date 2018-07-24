@@ -1,26 +1,22 @@
 package com.prance.teacher.services;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SDCardUtils;
 import com.leo.download.DownloadError;
 import com.leo.download.DownloadListener;
 import com.leo.download.DownloadManager;
-import com.prance.lib.util.FileUtil;
-import com.prance.lib.util.LogUtil;
-import com.prance.teacher.R;
 
 import java.io.File;
 
@@ -35,9 +31,12 @@ public class UpdateService extends Service {
     public static final String DOWNLOAD_BROADCAST_INSTALL_ACTION = "com.prance.lib.update.UpdateService.DownloadBroadcast.install";
     private DownloadBroadcast broadcast;
     private String url;
-    private NotificationCompat.Builder cBuilder;
     private int notifyId = 20002;
     private File downloadFile = null;
+
+    public static final String DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS = "com.prance.lib.update.DownloadAlertActivity.dismiss";
+    public static final String DOWNLOAD_BROADCAST_ACTIVITY_ACTION_PROGRESS = "com.prance.lib.update.DownloadAlertActivity.progress";
+    public static final String DOWNLOAD_BROADCAST_ACTIVITY_ACTION_ERROR = "com.prance.lib.update.DownloadAlertActivity.error";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -65,24 +64,12 @@ public class UpdateService extends Service {
             registerReceiver(broadcast = new DownloadBroadcast(), filter);
         }
 
-        File parentFile = new File(FileUtil.getDiskFileDir(getApplicationContext())).getParentFile();
+        File parentFile = new File(SDCardUtils.getSDCardPathByEnvironment()).getParentFile();
         File updateDir = new File(parentFile, DIR);
 
         if (!updateDir.exists()) {
             updateDir.mkdirs();
         }
-
-        cBuilder = new NotificationCompat.Builder(getApplicationContext());
-        Intent cancelIntent = new Intent(DOWNLOAD_BROADCAST_CANCEL_ACTION);
-        PendingIntent viewPendingIntent = PendingIntent.getBroadcast(this, 1,
-                cancelIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        cBuilder.setContentIntent(viewPendingIntent);
-        cBuilder.setSmallIcon(android.R.drawable.stat_sys_download);// 设置顶部状态栏的小图标
-        cBuilder.setTicker("正在下载");// 在顶部状态栏中的提示信
-        cBuilder.setContentTitle("正在下载安装文件");// 设置通知中心的标题
-        cBuilder.setContentText("请稍后……");
-        cBuilder.setWhen(System.currentTimeMillis());
-        cBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
 
         DownloadManager.getInstance(getApplicationContext()).enquene(url, updateDir.getPath(), new DownloadListener() {
 
@@ -90,58 +77,42 @@ public class UpdateService extends Service {
 
             @Override
             public void onStart(int id, long size) {
-                LogUtil.d("onStart");
+                LogUtils.d("onStart");
                 currentTime = System.currentTimeMillis();
-                cBuilder.setContentText(null);
-                cBuilder.setContentText("点击取消");
-                cBuilder.setProgress((int) size, 0, false);
-                NotificationManagerCompat
-                        .from(getApplicationContext()).notify(notifyId, cBuilder.build());
 
-                Intent activityIntent = new Intent(UpdateService.this, DownloadAlertActivity.class);
-                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(activityIntent);
             }
 
             @Override
             public void onProgress(int id, long currSize, long totalSize) {
                 if (System.currentTimeMillis() - currentTime >= 1000) {
                     currentTime = System.currentTimeMillis();
-                    cBuilder.setProgress((int) totalSize, (int) currSize, false);
 
-                    Intent progressIntent = new Intent(DownloadAlertActivity.DOWNLOAD_BROADCAST_ACTIVITY_ACTION_PROGRESS);
-                    progressIntent.putExtra("max", totalSize);
-                    progressIntent.putExtra("progress", currSize);
-                    LocalBroadcastManager.getInstance(UpdateService.this).sendBroadcast(progressIntent);
 
-                    NotificationManagerCompat
-                            .from(getApplicationContext()).notify(notifyId, cBuilder.build());
                 }
             }
 
             @Override
             public void onRestart(int id, long currSize, long totalSize) {
-                LogUtil.d("onRestart");
+                LogUtils.d("onRestart");
             }
 
             @Override
             public void onPause(int id, long currSize) {
-                LogUtil.d("onPause");
+                LogUtils.d("onPause");
             }
 
             @Override
             public void onComplete(int id, String dir, String name) {
-                LogUtil.d("onComplete");
+                LogUtils.d("onComplete");
 
                 downloadFile = new File(dir, name);
                 url = null;
 
-                cBuilder.setAutoCancel(true);
 
                 NotificationManagerCompat
                         .from(getApplicationContext()).cancel(notifyId);
 
-                LocalBroadcastManager.getInstance(UpdateService.this).sendBroadcast(new Intent(DownloadAlertActivity.DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS));
+                LocalBroadcastManager.getInstance(UpdateService.this).sendBroadcast(new Intent(DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS));
 
                 Intent cancelIntent = new Intent(DOWNLOAD_BROADCAST_INSTALL_ACTION);
                 sendBroadcast(cancelIntent);
@@ -149,33 +120,27 @@ public class UpdateService extends Service {
 
             @Override
             public void onCancel(int id) {
-                LogUtil.d("onCancel");
+                LogUtils.d("onCancel");
             }
 
             @Override
             public void onError(int id, DownloadError error) {
-                LogUtil.d("onError");
+                LogUtils.d("onError");
                 url = null;
-                cBuilder.setAutoCancel(true);
-                cBuilder.setContentTitle("下载失败");
-                cBuilder.setContentText("请稍后重试");
-                cBuilder.setProgress(0, 0, false);
-                NotificationManagerCompat
-                        .from(getApplicationContext()).notify(notifyId, cBuilder.build());
 
-                Intent progressIntent = new Intent(DownloadAlertActivity.DOWNLOAD_BROADCAST_ACTIVITY_ACTION_ERROR);
+                Intent progressIntent = new Intent(DOWNLOAD_BROADCAST_ACTIVITY_ACTION_ERROR);
                 LocalBroadcastManager.getInstance(UpdateService.this).sendBroadcast(progressIntent);
             }
         });
 
-        return super.onStartCommand(intent, Service.START_REDELIVER_INTENT, startId);
+        return super.onStartCommand(intent, 0, startId);
     }
 
     class DownloadBroadcast extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtil.d(intent.getAction());
+            LogUtils.d(intent.getAction());
 
             try {
                 if (intent.getAction().equals(DOWNLOAD_BROADCAST_CANCEL_ACTION)) {
@@ -184,7 +149,7 @@ public class UpdateService extends Service {
                     NotificationManagerCompat
                             .from(getApplicationContext()).cancel(notifyId);
 
-                    LocalBroadcastManager.getInstance(UpdateService.this).sendBroadcast(new Intent(DownloadAlertActivity.DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS));
+                    LocalBroadcastManager.getInstance(UpdateService.this).sendBroadcast(new Intent(DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS));
 
                     stopSelf();
                 } else if (intent.getAction().equals(DOWNLOAD_BROADCAST_INSTALL_ACTION) && downloadFile != null) {
@@ -215,6 +180,6 @@ public class UpdateService extends Service {
         if (broadcast != null) {
             unregisterReceiver(broadcast);
         }
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DownloadAlertActivity.DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DOWNLOAD_BROADCAST_ACTIVITY_ACTION_DISMISS));
     }
 }

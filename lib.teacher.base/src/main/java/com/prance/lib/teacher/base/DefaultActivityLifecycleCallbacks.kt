@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.blankj.utilcode.util.LogUtils
+import com.prance.lib.teacher.base.utils.CleanLeakUtils
 
 class DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity?) {
@@ -20,6 +21,7 @@ class DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks
 
     override fun onActivityDestroyed(activity: Activity?) {
 //        LogUtils.d(activity?.componentName)
+        CleanLeakUtils.fixInputMethodManagerLeak(activity)
     }
 
     override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
