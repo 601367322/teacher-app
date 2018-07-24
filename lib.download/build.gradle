@@ -20,9 +20,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        abortOnError false
-    }
     packagingOptions {
         exclude 'typedefs.txt'
     }
@@ -30,9 +27,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     def dependencies = rootProject.ext.dependencies
     implementation dependencies.kotlin
-    implementation dependencies.gson
+    implementation dependencies.okhttp3
 }
 repositories {
     mavenCentral()
