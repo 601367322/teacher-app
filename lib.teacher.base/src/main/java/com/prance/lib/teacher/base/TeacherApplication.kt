@@ -30,7 +30,7 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         /**
          * LeakCanary初始化
          */
-//        if (BuildConfig.DEBUG) LeakCanary.install(this)
+        if (BuildConfig.DEBUG) LeakCanary.install(this)
 
         /**
          * 工具初始化
