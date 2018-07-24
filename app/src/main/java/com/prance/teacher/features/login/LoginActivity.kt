@@ -30,13 +30,4 @@ class LoginActivity : BaseActivity() {
 
     override fun fragment(): BaseFragment = LoginFragment()
 
-    override fun onOkKeyEvent(): Boolean {
-        startActivity(MainActivity.callingIntent(this))
-        finish()
-        return true
-    }
-
-    override fun onBackKeyEvent(): Boolean {
-        return true
-    }
 }

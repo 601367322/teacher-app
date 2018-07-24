@@ -52,8 +52,9 @@ public class PersistentCookieStore implements CookieStore {
                     if (encodedCookie != null) {
                         Cookie decodedCookie = decodeCookie(encodedCookie);
                         if (decodedCookie != null) {
-                            if (!cookies.containsKey(entry.getKey()))
+                            if (!cookies.containsKey(entry.getKey())) {
                                 cookies.put(entry.getKey(), new ConcurrentHashMap<String, Cookie>());
+                            }
                             cookies.get(entry.getKey()).put(name, decodedCookie);
                         }
                     }
