@@ -40,7 +40,7 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         /**
          * 测试开关生命周期
          */
-//        registerActivityLifecycleCallbacks(PluginsManager.testSetting?.testSettingActivityLifeManager)
+        registerActivityLifecycleCallbacks(PluginsManager.teacher?.getLifecycle())
 
         /**
          * Bugly初始化

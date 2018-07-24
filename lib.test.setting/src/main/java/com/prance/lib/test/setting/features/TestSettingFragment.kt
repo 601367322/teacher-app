@@ -35,7 +35,7 @@ class TestSettingFragment : BaseFragment() {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
-        current.text = UrlUtil.getHost()
+        current.text = "当前环境：\t" + UrlUtil.getHost()
 
         systemSettingBtn.setOnClickListener {
             startActivity(Intent(Settings.ACTION_SETTINGS))
