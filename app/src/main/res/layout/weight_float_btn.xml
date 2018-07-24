@@ -3,8 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:text="正在上课"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="@dimen/m80.0"
+        android:src="@drawable/icon_float_btn"
+        android:scaleType="fitXY"
+        android:layout_height="@dimen/m80.0" />
 </RelativeLayout>

@@ -8,5 +8,5 @@ interface ITeacher {
 
     fun getMainIntent(context: Context): Intent
 
-    fun getLifecycle(): Application.ActivityLifecycleCallbacks
+    fun getLifecycle(): MutableList<Application.ActivityLifecycleCallbacks>
 }
