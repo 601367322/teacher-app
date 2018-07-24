@@ -184,5 +184,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         hideProgress()
         return false
     }
+
+    override fun needSunVoteService(): Boolean = false
 }
 

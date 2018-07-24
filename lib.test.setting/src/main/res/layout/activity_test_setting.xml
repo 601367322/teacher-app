@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <AutoCompleteTextView
-        android:id="@+id/scheme"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/m48.0"
-        android:hint="协议：http/https" />
+    <TextView
+        android:id="@+id/current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <AutoCompleteTextView
-        android:id="@+id/hosts"
+    <Button
+        android:id="@+id/release"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/m48.0"
-        android:hint="域名：api.tengyue360.com" />
+        android:layout_height="wrap_content"
+        android:text="正式环境release" />
 
-    <AutoCompleteTextView
-        android:id="@+id/port"
+    <Button
+        android:id="@+id/test"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/m48.0"
-        android:hint="端口号：80" />
+        android:layout_height="wrap_content"
+        android:text="测试环境test" />
+
+    <Button
+        android:id="@+id/dev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开发环境dev" />
 
     <Button
         android:id="@+id/systemSettingBtn"
         android:layout_width="match_parent"
-        android:text="系统设置"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="系统设置" />
+
 </LinearLayout>

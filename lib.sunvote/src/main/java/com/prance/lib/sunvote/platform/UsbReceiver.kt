@@ -49,6 +49,7 @@ class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : Broa
                             } else {
                                 // 授权失败
                                 ToastUtils.showShort("授权失败!")
+                                mUsbManagerInterface.checkUsbDevice(context)
                             }
                         }
                     }
