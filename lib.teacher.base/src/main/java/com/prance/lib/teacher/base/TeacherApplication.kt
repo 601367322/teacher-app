@@ -43,7 +43,7 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
          */
         val lifes = PluginsManager.teacher?.getLifecycle()
         lifes?.let {
-            for(life in it){
+            for (life in it) {
                 registerActivityLifecycleCallbacks(life)
             }
         }
@@ -74,6 +74,9 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         }
 
         registerActivityLifecycleCallbacks(DefaultActivityLifecycleCallbacks())
+
+        if (BuildConfig.DEBUG)
+            mBaseStation = BaseStationEntity(0, "test")
     }
 
 
