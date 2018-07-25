@@ -3,6 +3,7 @@ package com.prance.teacher.features.classes.view
 import android.os.Bundle
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -31,11 +32,19 @@ class ClassesDetailFragment : BaseFragment() {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
         readyClass.setOnClickListener {
-            try {
-                startActivity(IntentUtils.callingXYDial())
-            } catch (e: Exception) {
-                e.printStackTrace()
-                ToastUtils.showShort("请使用小鱼易联")
+            context?.let {
+                AlertDialog(it)
+                        .setMessage("确定准备就绪？")
+                        .setConfirmButton("确定", {
+                            try {
+                                startActivity(IntentUtils.callingXYDial())
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                ToastUtils.showShort("请使用小鱼易联")
+                            }
+                        })
+                        .setCancelButton("取消", null)
+                        .show()
             }
         }
 
