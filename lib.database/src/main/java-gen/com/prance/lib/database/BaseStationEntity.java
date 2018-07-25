@@ -8,13 +8,15 @@ import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * 基站
  *
  * @author bingbing
  */
 @Entity(nameInDb = "base_station_table")
-public class BaseStationEntity {
+public class BaseStationEntity implements Serializable {
 
     static final long serialVersionUID = -1;
 

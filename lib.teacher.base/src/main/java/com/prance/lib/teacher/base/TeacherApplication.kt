@@ -14,6 +14,7 @@ import com.prance.lib.database.BaseStationEntity
 import com.prance.lib.database.DaoManager
 import com.prance.lib.database.UserEntity
 import com.prance.lib.teacher.base.http.OkHttpUtils
+import com.prance.lib.third.inter.PluginsManager.Companion.teacher
 import org.greenrobot.greendao.query.QueryBuilder
 
 
@@ -38,9 +39,14 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         Utils.init(this)
 
         /**
-         * 测试开关生命周期
+         * 注册生命周期
          */
-//        registerActivityLifecycleCallbacks(PluginsManager.testSetting?.testSettingActivityLifeManager)
+        val lifes = PluginsManager.teacher?.getLifecycle()
+        lifes?.let {
+            for (life in it) {
+                registerActivityLifecycleCallbacks(life)
+            }
+        }
 
         /**
          * Bugly初始化
@@ -68,6 +74,9 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         }
 
         registerActivityLifecycleCallbacks(DefaultActivityLifecycleCallbacks())
+
+        if (BuildConfig.DEBUG)
+            mBaseStation = BaseStationEntity(0, "test")
     }
 
 

@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import com.blankj.utilcode.util.AppUtils
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.UrlUtil
@@ -33,22 +34,24 @@ class TestSettingFragment : BaseFragment() {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        initTextView(mScheme, scheme)
-        initTextView(mHost, hosts)
-        initTextView(mPort, port)
 
-        scheme.setText(UrlUtil.getScheme())
-        hosts.setText(UrlUtil.getHost())
-        port.setText(UrlUtil.getPort())
+        current.text = "当前环境：\t" + UrlUtil.getHost()
 
         systemSettingBtn.setOnClickListener {
             startActivity(Intent(Settings.ACTION_SETTINGS))
         }
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_test_setting, menu)
+        release.setOnClickListener {
+            ok(mHost[0])
+        }
+
+        test.setOnClickListener {
+            ok(mHost[2])
+        }
+
+        dev.setOnClickListener {
+            ok(mHost[1])
+        }
     }
 
     private fun initTextView(data: Array<String>, view: AutoCompleteTextView) {
@@ -58,20 +61,10 @@ class TestSettingFragment : BaseFragment() {
         view.setOnClickListener({ view -> (view as AutoCompleteTextView).showDropDown() })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.ok -> ok()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    fun ok() {
+    fun ok(host: String) {
         val prop = Properties()
 
-        prop["scheme"] = scheme.text.toString()
-        prop["host"] = hosts.text.toString()
-        prop["port"] = port.text.toString()
-//        prop["log"] = mHost.getText().toString()
+        prop["host"] = host
 
         saveChangeData(prop)
     }
@@ -92,7 +85,7 @@ class TestSettingFragment : BaseFragment() {
             }
 
             //退出账号
-
+            AppUtils.relaunchApp()
         } else {
             ToastUtils.showShort("保存失败，无SD卡")
         }

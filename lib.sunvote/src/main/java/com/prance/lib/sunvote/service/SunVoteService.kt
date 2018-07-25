@@ -23,8 +23,10 @@ class SunVoteService : Service() {
     private val binder = MyBinder()
 
     inner class MyBinder : Binder() {
-        val service: SunVoteService
-            get() = this@SunVoteService
+        fun service(): SunVoteService {
+//            mUsbManagerImpl.checkUsbDevice(this@SunVoteService)
+            return this@SunVoteService
+        }
     }
 
     override fun onBind(p0: Intent?): IBinder? {
