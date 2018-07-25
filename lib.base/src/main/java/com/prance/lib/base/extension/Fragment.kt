@@ -25,7 +25,10 @@ import kotlinx.android.synthetic.main.activity_layout.*
 
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) =
-        beginTransaction().func().commit()
+        beginTransaction().func().commitAllowingStateLoss()
+
+inline fun FragmentManager.inTransactionBack(func: FragmentTransaction.() -> FragmentTransaction) =
+        beginTransaction().func().addToBackStack(null).commitAllowingStateLoss()
 
 
 fun BaseFragment.close() = fragmentManager?.popBackStack()

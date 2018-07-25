@@ -27,5 +27,10 @@ class LoginPresenter : BasePresenterKt<ILoginContract.View>(), ILoginContract.Pr
             mModel.checkQrCode(mQrCode).mySubscribe({ mView?.checkQrCodeFailCallBack(it) }, { mView?.checkQrCodeSuccessCallBack(it) })
         }
     }
+
+    override fun checkVersion() {
+        mModel.checkVersion()
+                .mySubscribe({ mView?.checkVersionCallBack(null) }, { mView?.checkVersionCallBack(it) })
+    }
 }
 

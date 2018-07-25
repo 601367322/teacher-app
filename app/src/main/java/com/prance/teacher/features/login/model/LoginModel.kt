@@ -23,5 +23,9 @@ class LoginModel : BaseModelKt(), ILoginContract.Model {
     override fun checkQrCode(qrCode: QrCodeEntity): Flowable<UserEntity> {
         return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).checkQrCode(qrCode.timestamp, qrCode.token)
     }
+
+    override fun checkVersion(): Flowable<VersionEntity> {
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).checkVersion()
+    }
 }
 

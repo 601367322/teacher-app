@@ -62,7 +62,7 @@ ext {
     archComponents_version = '1.1.1'
     glide = "4.7.1"
     glideOkHttp = "4.7.1"
-    netty = '4.1.25.Final'
+    netty = '5.0.0.Alpha2'
     observablesscrollview = '1.6.0'
     pageindicatorview='1.0.1'
 

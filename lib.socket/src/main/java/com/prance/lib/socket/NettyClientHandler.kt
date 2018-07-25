@@ -16,7 +16,7 @@ class NettyClientHandler(private val listener: NettyListener) : SimpleChannelInb
         listener.onServiceStatusConnectChanged(NettyListener.STATUS_CONNECT_CLOSED)
     }
 
-    override fun channelRead0(ctx: ChannelHandlerContext?, msg: String?) {
+    override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
             listener.onMessageResponse(it)
         }

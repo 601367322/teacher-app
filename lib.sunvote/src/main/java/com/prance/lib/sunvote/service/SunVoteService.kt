@@ -24,7 +24,6 @@ class SunVoteService : Service() {
 
     inner class MyBinder : Binder() {
         fun service(): SunVoteService {
-//            mUsbManagerImpl.checkUsbDevice(this@SunVoteService)
             return this@SunVoteService
         }
     }

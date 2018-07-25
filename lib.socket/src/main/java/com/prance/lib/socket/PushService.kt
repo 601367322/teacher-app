@@ -10,12 +10,9 @@ import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.socket.NettyListener.Companion.STATUS_CONNECT_CLOSED
 import com.prance.lib.socket.NettyListener.Companion.STATUS_CONNECT_SUCCESS
 import io.netty.bootstrap.Bootstrap
-import io.netty.channel.Channel
-import io.netty.channel.ChannelOption
-import io.netty.channel.EventLoopGroup
+import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
-import io.netty.channel.ChannelFutureListener
 import java.util.concurrent.TimeUnit
 
 
@@ -74,25 +71,33 @@ class PushService : Service() {
 
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
 
-            future.addListener(ChannelFutureListener { futureListener ->
-                if (futureListener.isSuccess) {
-                    mChannel = futureListener.channel()
-                    LogUtils.d("Connect to server successfully!")
-                } else {
-                    LogUtils.d("Failed to connect to server, try connect after 3s")
-                    futureListener.channel().eventLoop().schedule({ doConnect() }, 3, TimeUnit.SECONDS)
+            future.addListener(object : ChannelFutureListener {
+                override fun operationComplete(futureListener: ChannelFuture?) {
+                    futureListener?.run {
+                        if (isSuccess) {
+                            mChannel = channel()
+                            LogUtils.d("Connect to server successfully!")
+                        } else {
+                            LogUtils.d("Failed to connect to server, try connect after 3s")
+                            channel().eventLoop().schedule({ doConnect() }, 3, TimeUnit.SECONDS)
+                        }
+                    }
                 }
             })
         }
 
         override fun onMessageResponse(msg: String) {
+            LogUtils.d(msg)
+        }
 
+        public fun sendMessage(msg: String) {
+            mChannel?.writeAndFlush("$msg\n")
         }
 
         override fun onServiceStatusConnectChanged(statusCode: Int) {
             when (statusCode) {
                 STATUS_CONNECT_SUCCESS -> {
-                    mChannel?.writeAndFlush("链接成功\n")
+                    sendMessage("链接成功")
                 }
                 STATUS_CONNECT_CLOSED -> {
                     mChannel = null

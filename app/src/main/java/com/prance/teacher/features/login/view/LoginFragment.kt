@@ -2,28 +2,22 @@ package com.prance.teacher.features.login.view
 
 import android.os.Bundle
 import android.view.View
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
 import com.prance.lib.base.http.ResultException
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.lib.third.inter.PluginsManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
-import com.prance.teacher.features.check.CheckKeyPadActivity
-import com.prance.teacher.features.classes.ClassesActivity
-import com.prance.teacher.features.classes.ClassesDetailActivity
-import com.prance.teacher.features.classes.model.ClassesEntity
-import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.login.model.QrCodeEntity
+import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
-import com.prance.teacher.features.main.view.MainFragment
-import com.prance.teacher.features.match.MatchKeyPadActivity
-import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
+import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -58,8 +52,14 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         //显示loading
         showProgress()
 
-        //获取二维码
-        getNewQrCode(0)
+        //检查版本更新
+        mPresenter.checkVersion()
+
+        //新版本提示
+        if (CommonShared.getPreVersion() != AppUtils.getAppVersionCode()) {
+            CommonShared.setPreVersion(AppUtils.getAppVersionCode())
+            ToastUtils.showShort("已更新为最新版本v" + AppUtils.getAppVersionName())
+        }
 
         //启动主页
         if (BuildConfig.DEBUG) {
@@ -184,6 +184,19 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         return false
     }
 
-    override fun needSunVoteService(): Boolean = false
+    /**
+     * 检查更新之后
+     */
+    override fun checkVersionCallBack(versionEntity: VersionEntity?) {
+        //显示更新提示
+        versionEntity?.let {
+            activity?.supportFragmentManager?.inTransaction {
+                add(R.id.fragmentContainer, UpdateFragment.forVersion(it))
+            }
+        }
+
+        //获取二维码
+        getNewQrCode(0)
+    }
 }
 

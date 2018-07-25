@@ -4,6 +4,7 @@ import com.prance.lib.database.UserEntity
 import com.prance.lib.teacher.base.http.ResponseBody
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
+import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
 import retrofit2.http.GET
@@ -12,11 +13,9 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    //    @GET("http://result.eolinker.com/FfBct6q9d9d994b38dc3c41b45b3cbb591fefab7c045a43?uri=http://api-shuangshi.dev.tengyue360.com/backend/user/app/qrCode")
     @GET("backend/user/unauth/app/qrCode")
     fun qrCodeDetail(): Flowable<QrCodeEntity>
 
-    //    @POST("http://result.eolinker.com/FfBct6q9d9d994b38dc3c41b45b3cbb591fefab7c045a43?uri=http://api-shuangshi.dev.tengyue360.com/backend/user/app/login")
     @POST("backend/user/unauth/app/login")
     fun checkQrCode(@Query("timestamp") timestamp: Long, @Query("token") token: String): Flowable<UserEntity>
 
@@ -31,4 +30,7 @@ interface ApiService {
 
     @POST("backend/course/app/replace")
     fun replaceKeyPad(@Query("classId") classId: String, @Query("oldClikerNum") oldKeyPadId: String, @Query("newClikerNum") newKeyPadId: String): Flowable<Any>
+
+    @GET("backend/course/app/replace")
+    fun checkVersion(): Flowable<VersionEntity>
 }

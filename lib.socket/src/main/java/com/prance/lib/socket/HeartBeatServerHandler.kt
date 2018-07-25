@@ -11,7 +11,7 @@ import io.netty.handler.timeout.IdleStateEvent
 
 internal class HeartBeatServerHandler : SimpleChannelInboundHandler<String>() {
 
-    override fun channelRead0(ctx: ChannelHandlerContext?, msg: String?) {
+    override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
             if (it == "#") {
                 return

@@ -45,6 +45,9 @@ abstract class BaseActivity : BaseActivity() {
         registerHomeMenuBroadcastReceiver()
     }
 
+    /**
+     * 界面返回上一层按钮点击事件
+     */
     open fun onBackBtnClick(view: View?) {
         finish()
     }
@@ -187,6 +190,9 @@ abstract class BaseActivity : BaseActivity() {
 
     protected open fun onHomeKeyEvent(): Boolean = false
 
+    /**
+     * 键盘返回键事件
+     */
     protected open fun onBackKeyEvent(): Boolean = false
 
     protected open fun onUpKeyEvent(): Boolean = false

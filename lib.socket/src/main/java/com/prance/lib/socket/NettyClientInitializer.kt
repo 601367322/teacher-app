@@ -2,8 +2,6 @@ package com.prance.lib.socket
 
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory
-import io.netty.handler.ssl.SslContextBuilder
 import io.netty.handler.codec.string.StringEncoder
 import io.netty.handler.codec.string.StringDecoder
 import io.netty.handler.timeout.IdleStateHandler
@@ -23,8 +21,6 @@ class NettyClientInitializer(private var listener: NettyListener) : ChannelIniti
 
     @Throws(Exception::class)
     override fun initChannel(ch: SocketChannel) {
-        val sslCtx = SslContextBuilder.forClient()
-                .trustManager(InsecureTrustManagerFactory.INSTANCE).build()
 
         val pipeline = ch.pipeline()
         // 开启SSL

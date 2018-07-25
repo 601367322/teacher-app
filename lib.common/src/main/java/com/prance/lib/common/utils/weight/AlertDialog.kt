@@ -4,25 +4,19 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 
 import com.prance.lib.common.R
 import kotlinx.android.synthetic.main.dialog_layout.*
 import android.view.WindowManager
 import android.view.Gravity
 
-
-
 /**
- * 创建自定义的dialog，主要学习其实现原理
- * Created by chengguo on 2016/3/22.
+ * Description : 自定义对话框
+ * @author  Sen
+ * @date 2018/7/14  下午2:21
  */
 class AlertDialog(context: Context) : Dialog(context, R.style.DialogStyle) {
 
-    private var mConfirm: Button? = null//确定按钮
-    private var mCancel: Button? = null//取消按钮
-    private var mMessage: TextView? = null//消息提示文本
     private var mMessageStr: String? = null//从外界设置的消息文本
     //确定文本和取消文本的显示内容
     private var mConfirmStr: String? = null
@@ -70,10 +64,6 @@ class AlertDialog(context: Context) : Dialog(context, R.style.DialogStyle) {
     fun setMessage(text: String): AlertDialog {
         mMessageStr = text
         return this
-    }
-
-    override fun show() {
-        super.show()
     }
 
 }

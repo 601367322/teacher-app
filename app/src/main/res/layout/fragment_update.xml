@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B2041319">
+
+
+    <LinearLayout
+        android:layout_width="@dimen/m960.0"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toast_background"
+        android:elevation="@dimen/m10.0"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/m120.0"
+        android:paddingVertical="@dimen/m83.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="您当前版本为v1.0，已检测到新版本v1.1，正在进行更新请稍等……"
+            android:textColor="#fff"
+            android:textSize="@dimen/m40.0" />
+
+        <ImageView
+            android:id="@+id/loadingBar"
+            android:layout_width="@dimen/m710.0"
+            android:layout_height="@dimen/m10.0"
+            android:layout_marginTop="@dimen/m59.0" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

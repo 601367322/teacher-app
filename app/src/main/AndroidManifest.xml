@@ -55,9 +55,14 @@
         <activity
             android:name=".features.replacekeypad.ReplaceKeyPadActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".features.classes.ClassesDetailActivity"
             android:screenOrientation="landscape" />
+
+        <service
+            android:name=".services.UpdateService"
+            android:exported="false"/>
 
         <!-- 设置IP测试入口 open close-->
         <meta-data
