@@ -141,6 +141,7 @@ dependencies {
     implementation project(":lib.common")
     implementation project(":lib.database")
     implementation project(":lib.qrcode")
+    implementation project(":lib.socket")
     implementation project(":lib.download")
     implementation project(":lib.sharedpreferences")
     implementation project(":lib.dimens")

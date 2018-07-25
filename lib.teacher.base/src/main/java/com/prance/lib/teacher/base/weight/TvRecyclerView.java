@@ -2,7 +2,6 @@ package com.prance.lib.teacher.base.weight;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +12,6 @@ import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.prance.lib.sunvote.utils.LogUtil;
 
 
 /**

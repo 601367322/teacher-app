@@ -7,14 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.prance.lib.sunvote.utils.LogUtil;
-
 /**
  * @author bingbing
  */

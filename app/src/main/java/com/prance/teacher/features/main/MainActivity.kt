@@ -4,7 +4,9 @@ import android.content.Context
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
+import com.prance.lib.socket.PushService
 import com.prance.teacher.features.main.view.MainFragment
 import com.prance.teacher.utils.IntentUtils
 import com.prance.teacher.weight.FloatButton
@@ -18,6 +20,12 @@ class MainActivity : BaseActivity() {
         fun callingIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
         }
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+
+        startService(PushService.callingIntent(this))
     }
 
     override fun onBackKeyEvent(): Boolean {
@@ -42,5 +50,6 @@ class MainActivity : BaseActivity() {
         super.onDestroy()
 
         FloatButton.hidePopupWindow()
+        stopService(PushService.callingIntent(this))
     }
 }

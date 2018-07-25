@@ -16,7 +16,6 @@
 package com.prance.lib.teacher.base.http;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.prance.lib.sunvote.utils.LogUtil;
 
 import java.io.EOFException;
 import java.io.IOException;

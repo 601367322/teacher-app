@@ -4,29 +4,6 @@
 
     <application>
         <service android:name=".service.SunVoteService" />
-        <!--
-            <activity
-                android:name=".lib.sunvote.features.ConfigSignin"
-                android:label="Signin config"
-                />
-            <activity
-                android:name=".lib.sunvote.features.ConfigChoice"
-                android:label="Choice config"  />
-            <activity
-                android:name=".lib.sunvote.features.ConfigQuiz"
-                android:label="Quiz config"/>
-            <activity
-                android:name=".lib.sunvote.features.ConfigExam"
-                android:label="Examination config" />
-            <activity
-                android:name=".lib.sunvote.features.ConfigQuestion"
-                android:label="Question config" />
-
-            <activity
-                android:name=".lib.sunvote.features.Device"
-                android:label="Devices"
-                android:theme="@android:style/Theme.Dialog" >
-            </activity>-->
 
     </application>
 

@@ -8,7 +8,6 @@ import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
-import com.prance.lib.sunvote.features.Keypad
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract

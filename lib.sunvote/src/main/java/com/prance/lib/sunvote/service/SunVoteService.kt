@@ -73,12 +73,10 @@ class SunVoteService : Service() {
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        LogUtils.d("onUnbind")
         return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
-        LogUtils.d("onDestroy")
         super.onDestroy()
 
         //关闭Usb读取线程
