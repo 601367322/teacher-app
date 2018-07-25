@@ -18,6 +18,11 @@ class MatchedKeyPadHolder(parent: View) :
         itemView.keyPadBtn.setTag(R.id.tag_data, bean)
         itemView.keyPadBtn.setOnClickListener(this)
 
+        if ((adapter as MatchedKeyPadAdapter).isDeleteState) {
+            itemView.keyImage.setImageResource(R.drawable.match_keypad_focus_icon_delete)
+        }else{
+            itemView.keyImage.setImageResource(R.drawable.match_keypad_focus_icon)
+        }
     }
 
     override fun onClick(v: View?) {

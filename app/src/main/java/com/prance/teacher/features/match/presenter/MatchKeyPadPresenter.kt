@@ -28,6 +28,7 @@ class MatchKeyPadPresenter : BasePresenterKt<IMatchKeyPadContract.View>(), IMatc
             val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
             if (list?.isNotEmpty()!!) {
                 it.onNext(list)
+                it.onComplete()
             }
         }, BackpressureStrategy.BUFFER)
                 .mySubscribe {

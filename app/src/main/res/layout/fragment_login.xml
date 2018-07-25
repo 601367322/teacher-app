@@ -8,11 +8,12 @@
 
     <ImageView
         android:id="@+id/qrCode"
-        android:layout_width="@dimen/m300.0"
-        android:layout_height="@dimen/m300.0"
+        android:layout_width="@dimen/m480.0"
+        android:layout_height="@dimen/m480.0"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/m51.0"
         android:scaleType="centerCrop"
+        android:padding="@dimen/m40.0"
         android:background="@drawable/qrcode_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
