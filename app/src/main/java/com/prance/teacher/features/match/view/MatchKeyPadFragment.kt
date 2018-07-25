@@ -239,6 +239,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         if (b) {
             //删除状态
             mAdapter.isDeleteState = true
+            mAdapter.notifyDataSetChanged()
 
             tip1.visibility = View.GONE
             tip2.visibility = View.VISIBLE
@@ -246,6 +247,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
         } else {
             mAdapter.isDeleteState = false
+            mAdapter.notifyDataSetChanged()
             complete.isEnabled = true
             delete.isEnabled = true
 

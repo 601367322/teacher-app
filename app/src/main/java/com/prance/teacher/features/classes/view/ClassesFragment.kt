@@ -92,12 +92,12 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         if (pageIndex < pageIndicatorView.count - 1) {
             rightArrow.visibility = View.VISIBLE
-        }else{
+        } else {
             rightArrow.visibility = View.GONE
         }
         if (pageIndex > 0) {
             leftArrow.visibility = View.VISIBLE
-        }else{
+        } else {
             rightArrow.visibility = View.GONE
         }
     }
@@ -107,6 +107,8 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         hideProgress()
         mAdapter.data = it
         mAdapter.notifyDataSetChanged()
+
+        checkEmpty()
     }
 
     override fun layoutId(): Int = R.layout.fragment_classes
@@ -117,5 +119,19 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     }
 
     override fun needSunVoteService(): Boolean = true
+
+    private fun checkEmpty() {
+        if (mAdapter.data.isEmpty()) {
+            emptyLayout.visibility = View.VISIBLE
+            recycler.visibility = View.GONE
+
+            refresh.requestFocus()
+        } else {
+            emptyLayout.visibility = View.VISIBLE
+            recycler.visibility = View.GONE
+
+            recycler.requestFocus()
+        }
+    }
 }
 
