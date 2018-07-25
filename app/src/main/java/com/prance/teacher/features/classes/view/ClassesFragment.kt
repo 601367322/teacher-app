@@ -127,8 +127,8 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
             refresh.requestFocus()
         } else {
-            emptyLayout.visibility = View.VISIBLE
-            recycler.visibility = View.GONE
+            emptyLayout.visibility = View.GONE
+            recycler.visibility = View.VISIBLE
 
             recycler.requestFocus()
         }
