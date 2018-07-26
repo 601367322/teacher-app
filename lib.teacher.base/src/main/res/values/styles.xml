@@ -22,6 +22,10 @@
         <item name="android:windowBackground">@drawable/activity_background</item>
     </style>
 
+    <style name="TransparentActivity" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <style name="MyTextViewStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/normal_text_color</item>
     </style>

@@ -1,6 +1,6 @@
 package com.prance.lib.socket
 
-interface NettyListener {
+interface MessageListener {
 
 
     /**

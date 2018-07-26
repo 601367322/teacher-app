@@ -13,7 +13,7 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder
 
 
 
-class NettyClientInitializer(private var listener: NettyListener) : ChannelInitializer<SocketChannel>() {
+class NettyClientInitializer(private var listener: MessageListener) : ChannelInitializer<SocketChannel>() {
 
     private val WRITE_WAIT_SECONDS = 30L
 

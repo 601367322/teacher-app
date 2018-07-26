@@ -60,6 +60,11 @@
             android:name=".features.classes.ClassesDetailActivity"
             android:screenOrientation="landscape" />
 
+        <activity
+            android:name=".features.subject.SubjectActivity"
+            android:theme="@style/ActivityTranslucent"
+            android:screenOrientation="landscape" />
+
         <service
             android:name=".services.UpdateService"
             android:exported="false"/>

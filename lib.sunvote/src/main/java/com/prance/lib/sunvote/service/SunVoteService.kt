@@ -20,9 +20,9 @@ class SunVoteService : Service() {
     private var mUsbManagerImpl: UsbManagerImpl = UsbManagerImpl()
 
     //用于和外界交互
-    private val binder = MyBinder()
+    private val binder = SunVoteServiceBinder()
 
-    inner class MyBinder : Binder() {
+    inner class SunVoteServiceBinder : Binder() {
         fun service(): SunVoteService {
             return this@SunVoteService
         }

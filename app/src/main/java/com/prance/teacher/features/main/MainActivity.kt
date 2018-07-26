@@ -22,12 +22,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun initView(savedInstanceState: Bundle?) {
-        super.initView(savedInstanceState)
-
-        startService(PushService.callingIntent(this))
-    }
-
     override fun onBackKeyEvent(): Boolean {
         onBackBtnClick(null)
         return true
@@ -50,6 +44,5 @@ class MainActivity : BaseActivity() {
         super.onDestroy()
 
         FloatButton.hidePopupWindow()
-        stopService(PushService.callingIntent(this))
     }
 }

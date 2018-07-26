@@ -63,7 +63,7 @@ class UpdateFragment : BaseFragment(), DownloadListener {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            (service as UpdateService.MyBinder).setListener(this@UpdateFragment)
+            (service as UpdateService.UpdateServiceBinder).setListener(this@UpdateFragment)
         }
     }
 

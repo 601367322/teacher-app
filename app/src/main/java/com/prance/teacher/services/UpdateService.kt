@@ -25,9 +25,9 @@ class UpdateService : Service() {
     private var mListener: DownloadListener? = null
 
     //用于和外界交互
-    private val binder = MyBinder()
+    private val binder = UpdateServiceBinder()
 
-    inner class MyBinder : Binder() {
+    inner class UpdateServiceBinder : Binder() {
 
         fun setListener(listener: DownloadListener) {
             this@UpdateService.mListener = listener

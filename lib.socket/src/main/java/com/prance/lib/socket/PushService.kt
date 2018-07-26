@@ -3,12 +3,14 @@ package com.prance.lib.socket
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
+import android.webkit.DownloadListener
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.Constants
 import com.prance.lib.common.utils.UrlUtil
-import com.prance.lib.socket.NettyListener.Companion.STATUS_CONNECT_CLOSED
-import com.prance.lib.socket.NettyListener.Companion.STATUS_CONNECT_SUCCESS
+import com.prance.lib.socket.MessageListener.Companion.STATUS_CONNECT_CLOSED
+import com.prance.lib.socket.MessageListener.Companion.STATUS_CONNECT_SUCCESS
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
@@ -21,6 +23,7 @@ class PushService : Service() {
     private var mEventLoopGroup: EventLoopGroup? = null
     private var mChannel: Channel? = null
     private lateinit var mSocketThread: Thread
+    private var mListeners: MutableList<MessageListener> = mutableListOf()
 
     companion object {
         fun callingIntent(context: Context): Intent {
@@ -28,8 +31,18 @@ class PushService : Service() {
         }
     }
 
-    override fun onBind(p0: Intent?): IBinder? {
-        return null
+    //用于和外界交互
+    private val binder = PushServiceBinder()
+
+    inner class PushServiceBinder : Binder() {
+
+        fun addListener(listener: MessageListener) {
+            this@PushService.mListeners.add(listener)
+        }
+    }
+
+    override fun onBind(intent: Intent): IBinder? {
+        return binder
     }
 
     override fun onCreate() {
@@ -48,7 +61,7 @@ class PushService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    internal inner class SocketThread : Thread(), NettyListener {
+    internal inner class SocketThread : Thread(), MessageListener {
 
         lateinit var mBootstrap: Bootstrap
 
@@ -87,7 +100,13 @@ class PushService : Service() {
         }
 
         override fun onMessageResponse(msg: String) {
-            LogUtils.d(msg)
+            for(listener in mListeners){
+                try {
+                    listener.onMessageResponse(msg)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         }
 
         public fun sendMessage(msg: String) {
@@ -95,6 +114,13 @@ class PushService : Service() {
         }
 
         override fun onServiceStatusConnectChanged(statusCode: Int) {
+            for(listener in mListeners){
+                try {
+                    listener.onServiceStatusConnectChanged(statusCode)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
             when (statusCode) {
                 STATUS_CONNECT_SUCCESS -> {
                     sendMessage("链接成功")
