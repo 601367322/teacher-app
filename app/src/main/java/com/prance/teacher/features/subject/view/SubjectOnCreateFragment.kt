@@ -37,13 +37,15 @@ class SubjectOnCreateFragment : BaseFragment() {
         animationSet.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
-                countDown.clearAnimation()
+                countDown?.run {
+                    clearAnimation()
 
-                if (countDown.text.toString().toInt() == 1) {
-                    (activity as SubjectActivity).onSubjectStart()
-                } else {
-                    countDown.text = (countDown.text.toString().toInt() - 1).toString()
-                    createAnimate().start()
+                    if (text.toString().toInt() == 1) {
+                        (activity as SubjectActivity).onSubjectStart()
+                    } else {
+                        text = (text.toString().toInt() - 1).toString()
+                        createAnimate().start()
+                    }
                 }
             }
         })

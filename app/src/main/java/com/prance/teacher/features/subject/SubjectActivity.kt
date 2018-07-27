@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import cn.sunars.sdk.SunARS
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.socket.MessageListener
@@ -25,6 +24,8 @@ import com.prance.teacher.features.subject.view.SubjectOnStopFragment
  * 上课答题
  */
 class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
+
+    var mPushBinder: PushService.PushServiceBinder? = null
 
     override fun onMessageResponse(msg: String) {
 //        SunARS.voteStart(SunARS.VoteType_Choice,"1,0,0,0,4,1")
@@ -51,19 +52,23 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            (service as PushService.PushServiceBinder).addListener(this@SubjectActivity)
+            mPushBinder = service as PushService.PushServiceBinder
+            mPushBinder?.addListener(this@SubjectActivity)
         }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        bindService(PushService.callingIntent(this),mPushServiceConnection, Service.BIND_AUTO_CREATE)
+        bindService(PushService.callingIntent(this), mPushServiceConnection, Service.BIND_AUTO_CREATE)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
+        mPushBinder?.run {
+            removeListener(this@SubjectActivity)
+        }
         unbindService(mPushServiceConnection)
     }
 
@@ -79,7 +84,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         }
     }
 
-    fun onSubjectDestroy(){
+    fun onSubjectDestroy() {
         supportFragmentManager.inTransaction {
             replace(R.id.fragmentContainer, SubjectOnDestroyFragment())
         }

@@ -3,6 +3,7 @@ package com.prance.lib.socket
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Binder
 import android.os.IBinder
 import android.webkit.DownloadListener
@@ -38,6 +39,10 @@ class PushService : Service() {
 
         fun addListener(listener: MessageListener) {
             this@PushService.mListeners.add(listener)
+        }
+
+        fun removeListener(listener: MessageListener) {
+            this@PushService.mListeners.remove(listener)
         }
     }
 

@@ -24,13 +24,16 @@ class ClassesDetailFragment : BaseFragment(), MessageListener {
 
     lateinit var mClassesEntity: ClassesEntity
 
+    var mPushBinder: PushService.PushServiceBinder? = null
+
     private var mPushServiceConnection = object : ServiceConnection {
 
         override fun onServiceDisconnected(name: ComponentName?) {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            (service as PushService.PushServiceBinder).addListener(this@ClassesDetailFragment)
+            mPushBinder = service as PushService.PushServiceBinder
+            mPushBinder?.addListener(this@ClassesDetailFragment)
         }
     }
 
@@ -78,6 +81,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener {
     override fun onDestroy() {
         super.onDestroy()
 
+        mPushBinder?.run {
+            removeListener(this@ClassesDetailFragment)
+        }
         //关闭Socket监听
         activity?.unbindService(mPushServiceConnection)
     }
