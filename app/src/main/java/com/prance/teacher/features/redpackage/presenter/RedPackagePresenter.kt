@@ -3,7 +3,6 @@ package com.prance.teacher.features.redpackage.presenter
 import cn.sunars.sdk.SunARS
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.common.utils.ToastUtils
 import com.prance.teacher.features.redpackage.model.RedPackageModel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import com.prance.teacher.features.redpackage.RedPackageManager
+import com.prance.teacher.features.redpackage.model.RedPackageStatus
 
 
 /**
@@ -36,9 +36,10 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    val redPackageWrapper = redPackageManager.obtainPackage()
-                    if (redPackageWrapper != null){
-                        mView!!.onShowPackage(redPackageWrapper)
+                    val redPackage = redPackageManager.obtainPackage()
+                    if (redPackage != null){
+                        redPackage.mStatus = RedPackageStatus.CANNOTGRAB
+                        mView!!.onShowPackage(redPackage)
                     }
                 }
     }

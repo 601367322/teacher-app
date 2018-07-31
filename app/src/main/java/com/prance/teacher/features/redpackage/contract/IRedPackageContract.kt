@@ -1,7 +1,6 @@
 package com.prance.teacher.features.redpackage.contract
 
 import com.prance.lib.base.mvp.*
-import com.prance.teacher.features.redpackage.model.RedPackageWrapper
 import com.prance.teacher.features.redpackage.view.RedPackageView
 
 /**
@@ -16,7 +15,7 @@ interface IRedPackageContract {
         /**
          * 显示一个随机生成的红包
          */
-        fun onShowPackage(redPackageWrapper: RedPackageWrapper)
+        fun onShowPackage(redPackage: RedPackageView)
     }
     interface Presenter : IPresenter<View, Model> {
         /**
