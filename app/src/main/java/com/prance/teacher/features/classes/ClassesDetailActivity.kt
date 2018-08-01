@@ -12,8 +12,6 @@ class ClassesDetailActivity : BaseActivity() {
 
     companion object {
 
-        fun callingIntent(context: Context) = Intent(context, ClassesDetailActivity::class.java)
-
         fun callingIntent(context: Context, classes: ClassesEntity): Intent {
             val intent = Intent(context, ClassesDetailActivity::class.java)
             intent.putExtra(StudentsFragment.CLASSES, classes)

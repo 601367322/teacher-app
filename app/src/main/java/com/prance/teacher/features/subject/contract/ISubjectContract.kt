@@ -1,6 +1,8 @@
 package com.prance.teacher.features.subject.contract
 
 import com.prance.lib.base.mvp.*
+import com.prance.teacher.features.subject.model.KeyPadResult
+import io.reactivex.Flowable
 
 /**
  * Description :
@@ -16,6 +18,11 @@ interface ISubjectContract {
         fun setPresenter(presenter: Presenter)
     }
 
-    interface Presenter : IPresenter<View, Model> {}
-    interface Model : IModel {}
+    interface Presenter : IPresenter<View, Model> {
+        fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String)
+    }
+
+    interface Model : IModel {
+        fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String): Flowable<Any>
+    }
 }

@@ -28,6 +28,12 @@
         android:text="开发环境dev" />
 
     <Button
+        android:id="@+id/frode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开发环境frode" />
+
+    <Button
         android:id="@+id/systemSettingBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

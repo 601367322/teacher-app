@@ -197,12 +197,11 @@ public final class HttpLoggingInterceptor implements Interceptor {
                 }
 
                 if (isPlaintext(buffer)) {
-//                    LogUtils.i(buffer.readString(charset));
-//                    LogUtils.i("--> END " + request.method()
-//                            + " (" + requestBody.contentLength() + "-byte body)");
+                    LogUtils.i(buffer.readString(charset)+"\n\n"+"--> END " + request.method()
+                            + " (" + requestBody.contentLength() + "-byte body)");
                 } else {
-//                    LogUtils.i("--> END " + request.method() + " (binary "
-//                            + requestBody.contentLength() + "-byte body omitted)");
+                    LogUtils.i("--> END " + request.method() + " (binary "
+                            + requestBody.contentLength() + "-byte body omitted)");
                 }
             }
         }

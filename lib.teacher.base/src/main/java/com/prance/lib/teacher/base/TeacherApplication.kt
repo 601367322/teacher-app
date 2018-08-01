@@ -76,8 +76,8 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         registerActivityLifecycleCallbacks(DefaultActivityLifecycleCallbacks())
 
         //没有基站时，测试开发使用
-        if (BuildConfig.DEBUG)
-            mBaseStation = BaseStationEntity(0, "test")
+//        if (BuildConfig.DEBUG)
+//            mBaseStation = BaseStationEntity(0, "test")
     }
 
 

@@ -1,12 +1,14 @@
 package com.prance.lib.socket
 
+import com.prance.lib.socket.model.MessageEntity
+
 interface MessageListener {
 
 
     /**
      * 对消息的处理
      */
-    fun onMessageResponse(msg: String)
+    fun onMessageResponse(msg: MessageEntity)
 
     /**
      * 当服务状态发生变化时触发

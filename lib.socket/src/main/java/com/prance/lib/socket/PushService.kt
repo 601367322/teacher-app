@@ -3,15 +3,13 @@ package com.prance.lib.socket
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Binder
 import android.os.IBinder
-import android.webkit.DownloadListener
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.Constants
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.socket.MessageListener.Companion.STATUS_CONNECT_CLOSED
-import com.prance.lib.socket.MessageListener.Companion.STATUS_CONNECT_SUCCESS
+import com.prance.lib.socket.model.MessageEntity
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
@@ -23,10 +21,18 @@ class PushService : Service() {
 
     private var mEventLoopGroup: EventLoopGroup? = null
     private var mChannel: Channel? = null
-    private lateinit var mSocketThread: Thread
+    private lateinit var mSocketThread: SocketThread
     private var mListeners: MutableList<MessageListener> = mutableListOf()
 
     companion object {
+
+        const val CMD = "cmd"
+
+        const val ATTEND_CLASS = 1 //上课
+        const val CMD_SEND_QUESTION = 2 //发送练习
+        const val CMD_END_QUESTION = 3 //结束联系
+        const val QUESTION_RESULT = 4//答题结果
+
         fun callingIntent(context: Context): Intent {
             return Intent(context, PushService::class.java)
         }
@@ -43,6 +49,10 @@ class PushService : Service() {
 
         fun removeListener(listener: MessageListener) {
             this@PushService.mListeners.remove(listener)
+        }
+
+        fun sendMessage(msg: String) {
+            mSocketThread.sendMessage(msg)
         }
     }
 
@@ -94,9 +104,9 @@ class PushService : Service() {
                     futureListener?.run {
                         if (isSuccess) {
                             mChannel = channel()
-                            LogUtils.d("Connect to server successfully!")
+                            LogUtils.d("连接成功")
                         } else {
-                            LogUtils.d("Failed to connect to server, try connect after 3s")
+                            LogUtils.d("连接失败，3秒后重新链接")
                             channel().eventLoop().schedule({ doConnect() }, 3, TimeUnit.SECONDS)
                         }
                     }
@@ -104,8 +114,8 @@ class PushService : Service() {
             })
         }
 
-        override fun onMessageResponse(msg: String) {
-            for(listener in mListeners){
+        override fun onMessageResponse(msg: MessageEntity) {
+            for (listener in mListeners) {
                 try {
                     listener.onMessageResponse(msg)
                 } catch (e: Exception) {
@@ -115,11 +125,16 @@ class PushService : Service() {
         }
 
         public fun sendMessage(msg: String) {
+            LogUtils.d(msg)
             mChannel?.writeAndFlush("$msg\n")
         }
 
         override fun onServiceStatusConnectChanged(statusCode: Int) {
-            for(listener in mListeners){
+            if (statusCode == STATUS_CONNECT_CLOSED) {
+                LogUtils.d("断开连接")
+            }
+
+            for (listener in mListeners) {
                 try {
                     listener.onServiceStatusConnectChanged(statusCode)
                 } catch (e: Exception) {
@@ -127,9 +142,6 @@ class PushService : Service() {
                 }
             }
             when (statusCode) {
-                STATUS_CONNECT_SUCCESS -> {
-                    sendMessage("链接成功")
-                }
                 STATUS_CONNECT_CLOSED -> {
                     mChannel = null
 

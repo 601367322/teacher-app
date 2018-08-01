@@ -11,8 +11,10 @@ import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
+import com.prance.lib.socket.model.MessageEntity
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectOnCreateFragment
@@ -26,18 +28,41 @@ import com.prance.teacher.features.subject.view.SubjectOnStopFragment
 class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
     var mPushBinder: PushService.PushServiceBinder? = null
+    private var mQuestion: ClassesDetailFragment.Question? = null
 
-    override fun onMessageResponse(msg: String) {
-//        SunARS.voteStart(SunARS.VoteType_Choice,"1,0,0,0,4,1")
+    var onStartFragment: SubjectOnStartFragment? = null
+
+    override fun onMessageResponse(msg: MessageEntity) {
+        when (msg.cmd) {
+            PushService.CMD_END_QUESTION -> {
+                //结束答题
+                val question = msg.create(ClassesDetailFragment.Question::class.java)
+                if (question.classId == mQuestion?.classId) {
+                    onSubjectStop()
+                }
+            }
+            PushService.QUESTION_RESULT -> {
+                //答题结果
+                val question = msg.create(SubjectOnDestroyFragment.QuestionResult::class.java)
+                if (question.classId == mQuestion?.classId) {
+                    onSubjectDestroy(question)
+                }
+            }
+        }
     }
 
     override fun onServiceStatusConnectChanged(statusCode: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {
 
-        fun callingIntent(context: Context) = Intent(context, SubjectActivity::class.java)
+        const val QUESTION = "question"
+
+        fun callingIntent(context: Context, question: ClassesDetailFragment.Question): Intent {
+            val intent = Intent(context, SubjectActivity::class.java)
+            intent.putExtra(QUESTION, question)
+            return intent
+        }
     }
 
     override fun fragment(): BaseFragment = SubjectOnCreateFragment()
@@ -59,6 +84,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        mQuestion = intent?.getSerializableExtra(QUESTION) as ClassesDetailFragment.Question?
 
         bindService(PushService.callingIntent(this), mPushServiceConnection, Service.BIND_AUTO_CREATE)
     }
@@ -73,20 +99,30 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
     }
 
     fun onSubjectStart() {
-        supportFragmentManager.inTransaction {
-            replace(R.id.fragmentContainer, SubjectOnStartFragment())
+        mQuestion?.let {
+            onStartFragment = SubjectOnStartFragment.forQuestion(it)
+            supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, onStartFragment)
+            }
         }
     }
 
-    fun onSubjectStop() {
+    private fun onSubjectStop() {
+
+        mQuestion?.classId?.let {
+            onStartFragment?.run {
+                mPresenter.sendResult(it, mResult,mQuestion?.questionId!!.toString())
+            }
+        }
+
         supportFragmentManager.inTransaction {
             replace(R.id.fragmentContainer, SubjectOnStopFragment())
         }
     }
 
-    fun onSubjectDestroy() {
+    private fun onSubjectDestroy(questionResult: SubjectOnDestroyFragment.QuestionResult) {
         supportFragmentManager.inTransaction {
-            replace(R.id.fragmentContainer, SubjectOnDestroyFragment())
+            replace(R.id.fragmentContainer, SubjectOnDestroyFragment.forQuestionResult(questionResult))
         }
     }
 }

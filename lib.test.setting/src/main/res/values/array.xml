@@ -10,11 +10,21 @@
         <item>api-shuangshi.tengyue360.com</item>
         <item>api-shuangshi.dev.tengyue360.com</item>
         <item>api-shuangshi.test.tengyue360.com</item>
+        <item>10.88.91.172</item>
     </string-array>
 
     <string-array name="port">
+        <item></item>
         <item>80</item>
         <item>8080</item>
+        <item>8081</item>
+    </string-array>
+
+    <string-array name="socket_host">
+        <item>10.88.88.204</item>
+    </string-array>
+
+    <string-array name="socket_port">
         <item>8081</item>
     </string-array>
 </resources>

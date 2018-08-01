@@ -1,15 +1,15 @@
 package com.prance.teacher.apis
 
+import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.database.UserEntity
 import com.prance.lib.teacher.base.http.ResponseBody
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -33,4 +33,9 @@ interface ApiService {
 
     @GET("backend/course/app/replace")
     fun checkVersion(): Flowable<VersionEntity>
+
+    @FormUrlEncoded
+    @POST("http://10.88.88.204:8080/webApp/questionResult")
+    fun postResult(@Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
+
 }

@@ -1,6 +1,8 @@
 package com.prance.lib.socket
 
 import com.blankj.utilcode.util.LogUtils
+import com.google.gson.Gson
+import com.prance.lib.socket.model.MessageEntity
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 
@@ -20,7 +22,11 @@ class NettyClientHandler(private val listener: MessageListener) : SimpleChannelI
     override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
             LogUtils.d(msg)
-            listener.onMessageResponse(it)
+            try {
+                listener.onMessageResponse(Gson().fromJson(msg, MessageEntity::class.java))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

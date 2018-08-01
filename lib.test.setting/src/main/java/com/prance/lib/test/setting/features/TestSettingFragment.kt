@@ -14,6 +14,7 @@ import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.test.setting.R
+import com.prance.lib.test.setting.R.array.port
 import kotlinx.android.synthetic.main.activity_test_setting.*
 import java.io.File
 import java.io.FileOutputStream
@@ -25,7 +26,9 @@ class TestSettingFragment : BaseFragment() {
 
     private val mScheme by lazy(mode = LazyThreadSafetyMode.NONE) { resources.getStringArray(R.array.scheme) }
     private val mHost by lazy(mode = LazyThreadSafetyMode.NONE) { resources.getStringArray(R.array.host) }
+    private val mSocketHost by lazy(mode = LazyThreadSafetyMode.NONE) { resources.getStringArray(R.array.socket_host) }
     private val mPort by lazy(mode = LazyThreadSafetyMode.NONE) { resources.getStringArray(R.array.port) }
+    private val mSocketPort by lazy(mode = LazyThreadSafetyMode.NONE) { resources.getStringArray(R.array.socket_port) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +53,11 @@ class TestSettingFragment : BaseFragment() {
         }
 
         dev.setOnClickListener {
-            ok(mHost[1])
+            ok(mHost[1], mPort[0], mSocketHost[0], mSocketPort[0])
+        }
+
+        frode.setOnClickListener {
+            ok(mHost[3], mPort[2], mSocketHost[0], mSocketPort[0])
         }
     }
 
@@ -65,6 +72,17 @@ class TestSettingFragment : BaseFragment() {
         val prop = Properties()
 
         prop["host"] = host
+
+        saveChangeData(prop)
+    }
+
+    fun ok(host: String, port: String, socketHost: String, socketPort: String) {
+        val prop = Properties()
+
+        prop["host"] = host
+        prop["port"] = port
+        prop["socket_host"] = socketHost
+        prop["socket_port"] = socketPort
 
         saveChangeData(prop)
     }

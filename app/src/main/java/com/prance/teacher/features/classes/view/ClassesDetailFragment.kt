@@ -4,19 +4,28 @@ import android.app.Service
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
 import android.view.View
-import com.blankj.utilcode.util.ServiceUtils.startService
+import cn.sunars.sdk.SunARS
+import cn.sunars.sdk.SunARS.removeListener
+import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
+import com.prance.lib.socket.PushService.Companion.ATTEND_CLASS
+import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
+import com.prance.lib.socket.model.MessageEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
+import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.utils.IntentUtils
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
+import org.json.JSONObject
+import java.io.Serializable
 
 class ClassesDetailFragment : BaseFragment(), MessageListener {
 
@@ -89,9 +98,38 @@ class ClassesDetailFragment : BaseFragment(), MessageListener {
     }
 
 
-    override fun onMessageResponse(msg: String) {
+    override fun onMessageResponse(msg: MessageEntity) {
+        if (msg.cmd == CMD_SEND_QUESTION) {
+            //开始答题
+            val question = msg.create(Question::class.java)
+            if (question.classId == mClassesEntity.klass?.id) {
+                ActivityUtils.finishActivity(SubjectActivity::class.java)
+                context?.run {
+                    startActivity(SubjectActivity.callingIntent(this, question))
+                }
+            }
+        }
+
+    }
+
+    override fun needSunVoteService(): Boolean = true
+
+    class Question : Serializable {
+
+        var classId: Int? = null
+        var type: Int? = null
+        var param: String? = null
+        var questionId: Int? = null
     }
 
     override fun onServiceStatusConnectChanged(statusCode: Int) {
+        when (statusCode) {
+            MessageListener.STATUS_CONNECT_SUCCESS -> {
+                val json = JSONObject()
+                json.put(PushService.CMD, ATTEND_CLASS)
+                json.put("classId", mClassesEntity.klass?.id)
+                mPushBinder?.sendMessage(json.toString())
+            }
+        }
     }
 }

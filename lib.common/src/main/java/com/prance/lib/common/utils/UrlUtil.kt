@@ -37,7 +37,11 @@ object UrlUtil {
     }
 
     fun getUrl(): String {
-        return """${getScheme()}://${getHost()}"""
+        var port = getPort()
+        if (port.isNotEmpty()) {
+            port = """:$port"""
+        }
+        return """${getScheme()}://${getHost()}$port"""
     }
 
     /**
@@ -158,7 +162,7 @@ object UrlUtil {
      * @return
      */
     fun getBaseCrashDir(): String {
-        return getBaseDir()+"crash/"
+        return getBaseDir() + "crash/"
     }
 
 }
