@@ -19,16 +19,15 @@
 
        <RelativeLayout
            android:id="@+id/road1"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:background="#00f"
            android:layout_weight="1">
 
        </RelativeLayout>
 
        <RelativeLayout
            android:id="@+id/road2"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:layout_weight="1">
 
@@ -36,16 +35,15 @@
 
        <RelativeLayout
            android:id="@+id/road3"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:background="#00f"
            android:layout_weight="1">
 
        </RelativeLayout>
 
        <RelativeLayout
            android:id="@+id/road4"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:layout_weight="1">
 
@@ -53,16 +51,15 @@
 
        <RelativeLayout
            android:id="@+id/road5"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:background="#00f"
            android:layout_weight="1">
 
        </RelativeLayout>
 
        <RelativeLayout
            android:id="@+id/road6"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:layout_weight="1">
 

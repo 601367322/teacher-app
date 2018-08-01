@@ -1,11 +1,13 @@
 package com.prance.teacher.features.redpackage.view
 
 import android.animation.Animator
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.support.constraint.solver.GoalRow
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
+import com.prance.teacher.utils.DimenUtils
 import java.util.*
 
 /**
@@ -27,13 +30,20 @@ class RedPackageView(context: Context?) : RelativeLayout(context) {
     var screenHeight: Int = 0
     var screenWidth: Int = 0
     lateinit var mChoose: TextView
-    lateinit var mGrabName: TextView
-    val fallAnimator: ObjectAnimator? = null
+    var fallAnimator: ObjectAnimator? = null
+    var hideAnimator: ObjectAnimator? = null
+
     companion object {
         /**
          * 可以被使用的选项
          */
         var canUseSigns: LinkedList<String> = LinkedList()
+        /**
+         * 红包距离父view的边距
+         */
+        var redPackageMargin: Int = 0
+        var redPackageWidth = 66
+        var redPackageHeight = 120
 
         init {
             canUseSigns.addAll(arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"))
@@ -41,10 +51,11 @@ class RedPackageView(context: Context?) : RelativeLayout(context) {
     }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.red_package,this)
+        LayoutInflater.from(context).inflate(R.layout.red_package, this)
         mChoose = findViewById(R.id.tv_choose)
-        mGrabName = findViewById(R.id.tv_grabname)
-        mGrabName.visibility = View.GONE
+        val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        params.leftMargin = redPackageMargin
+        layoutParams = params
     }
 
     override fun onAttachedToWindow() {
@@ -70,32 +81,42 @@ class RedPackageView(context: Context?) : RelativeLayout(context) {
      * 红包被抢到
      */
     fun grab(name: String) {
-        val hideAnimator = ObjectAnimator.ofFloat(this, "Alpha", 1f, 0f)
-        hideAnimator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
+        if (parent != null) {
+            val relativeLayout = parent as ViewGroup
+            val upView = UpView(mContext, name, translationY)
+            relativeLayout.addView(upView)
+            upView.startanimator()
+        }
+        if (hideAnimator == null) {
+            hideAnimator = ObjectAnimator.ofFloat(this, "Alpha", 1f, 0f)
+            hideAnimator?.setDuration(1000)
+            hideAnimator?.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {
+                }
 
-            override fun onAnimationEnd(animation: Animator?) {
-                recycle()
-            }
+                override fun onAnimationEnd(animation: Animator?) {
+                    fallAnimator?.cancel()
+                }
 
-            override fun onAnimationCancel(animation: Animator?) {
-            }
+                override fun onAnimationCancel(animation: Animator?) {
+                }
 
-            override fun onAnimationStart(animation: Animator?) {
-            }
+                override fun onAnimationStart(animation: Animator?) {
+                }
 
-        })
-        hideAnimator.setDuration(1000).start()
+            })
+        }
+        hideAnimator?.start()
     }
 
     /**
      * 红包开始下落的动画
      */
     fun startFall() {
-        val fallAnimator = ObjectAnimator.ofFloat(this, "translationY", 0f, screenHeight.toFloat())
-        fallAnimator.addUpdateListener {
-            //            var value = it.getAnimatedValue() as Float
+        if (fallAnimator == null) {
+            fallAnimator = ObjectAnimator.ofFloat(this, "translationY", -DimenUtils.dip2px(mContext!!, redPackageHeight.toFloat()).toFloat(), screenHeight.toFloat())
+            fallAnimator?.addUpdateListener {
+                //            var value = it.getAnimatedValue() as Float
 //            if (value < 0.2){
 //                mStatus = RedPackageStatus.CANNOTGRAB
 //                setTextColor(Color.YELLOW)
@@ -106,32 +127,38 @@ class RedPackageView(context: Context?) : RelativeLayout(context) {
 //                mStatus = RedPackageStatus.CANNOTGRAB
 //                setTextColor(Color.YELLOW)
 //            }
+            }
+            fallAnimator?.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    if (mStatus != RedPackageStatus.GRAB)
+                        canUseSigns.add(getChoose())
+                    recycle()
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+                    canUseSigns.remove(getChoose())
+                    mStatus = RedPackageStatus.CANGRAB
+                }
+
+            })
+            fallAnimator?.setDuration(5000)
         }
-        fallAnimator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-
-            override fun onAnimationEnd(animation: Animator?) {
-                canUseSigns.add(getChoose())
-                recycle()
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-
-            override fun onAnimationStart(animation: Animator?) {
-                canUseSigns.remove(getChoose())
-                mStatus = RedPackageStatus.CANGRAB
-            }
-
-        })
-        fallAnimator.setDuration(10000).start()
+        fallAnimator?.start()
     }
 
     fun recycle() {
-        val relativeLayout = parent as ViewGroup
-        if (parent != null)
+        if (parent != null) {
+            val relativeLayout = parent as ViewGroup
             relativeLayout.removeView(this)
+        }
         mStatus = RedPackageStatus.FREE
+        translationY = 0f
+        alpha = 1f
     }
 }

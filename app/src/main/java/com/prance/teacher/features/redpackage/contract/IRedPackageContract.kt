@@ -16,6 +16,7 @@ interface IRedPackageContract {
          * 显示一个随机生成的红包
          */
         fun onShowPackage(redPackage: RedPackageView)
+        fun onTimeEnd(resultMaps: HashMap<String,Int>)
     }
     interface Presenter : IPresenter<View, Model> {
         /**

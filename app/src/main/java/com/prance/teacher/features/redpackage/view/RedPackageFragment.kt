@@ -10,6 +10,9 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
+import android.util.DisplayMetrics
+import com.prance.teacher.utils.DimenUtils
+
 
 /**
  * Description :
@@ -19,6 +22,9 @@ import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
  */
 
 class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
+    var screenWith: Int = 0
+    var screenHeight: Int = 0
+    var roadMargin:Float = 30f
 
     lateinit var mRoad1: RelativeLayout
     lateinit var mRoad2: RelativeLayout
@@ -42,6 +48,11 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val dm = resources.displayMetrics
+        screenHeight = dm.heightPixels
+        screenWith = dm.widthPixels
+        var roadWidth = (screenWith - DimenUtils.dip2px(context!!,roadMargin*2)) / 6
+        RedPackageView.redPackageMargin = (roadWidth - DimenUtils.dip2px(context!!,RedPackageView.redPackageWidth.toFloat())) /2
         mPresenter.startRedPackage()
     }
 
@@ -75,9 +86,19 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        super.onKeyEventCallBack(KeyID, iMode, Time, sInfo)
-        Log.e("rich",Looper.myLooper().toString() + ":" + Looper.getMainLooper().toString())
-//        mPresenter.grabRedPackage(KeyID, sInfo)
+        mPresenter.grabRedPackage(KeyID, sInfo)
+    }
+
+    override fun onTimeEnd(resultMaps: HashMap<String,Int>) {
+        Log.e("rich",resultMaps.toString())
+        var rank = arrayOf(0,0,0)
+        for ((key,value)in resultMaps){
+            for (item in rank ){
+                if (value > item){
+
+                }
+            }
+        }
     }
 }
 

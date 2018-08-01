@@ -42,9 +42,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         startLesson.setOnClickListener {
             context?.let {
-//                startActivity(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
-//                startActivity(AfterClassActivity.callingIntent(it))
-                startActivity(RedPackageActivity.callingIntent(it))
+                startActivity(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
             }
         }
 

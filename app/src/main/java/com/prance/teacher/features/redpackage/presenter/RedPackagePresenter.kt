@@ -21,8 +21,14 @@ import com.prance.teacher.features.redpackage.model.RedPackageStatus
  */
 
 class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPackageContract.Presenter {
-
-    var packageTotal: Long = 30
+    /**
+     * 总时间
+     */
+    var totalTime: Long = 30000
+    /**
+     * 每次生成红包的间隔时间
+     */
+    var intervalTime: Long = 500
     var disposable: Disposable? = null
     lateinit var redPackageManager: RedPackageManager
 
@@ -31,11 +37,16 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     override fun startRedPackage() {
         redPackageManager = RedPackageManager(getContext())
         SunARS.voteStart(SunARS.VoteType_Choice,"1,1,0,0,10,1")
-        disposable = Flowable.interval(500, TimeUnit.MILLISECONDS)
-                .take(packageTotal)
+        var time = totalTime / intervalTime
+        disposable = Flowable.interval(intervalTime, TimeUnit.MILLISECONDS)
+                .take(time)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    if (-- time < 1){
+                        mView?.onTimeEnd(redPackageManager.resultMaps)
+                        stopRedPackage()
+                    }
                     val redPackage = redPackageManager.obtainPackage()
                     if (redPackage != null){
                         redPackage.mStatus = RedPackageStatus.CANNOTGRAB

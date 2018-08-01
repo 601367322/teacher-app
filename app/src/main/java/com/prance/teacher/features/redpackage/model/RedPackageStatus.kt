@@ -17,4 +17,8 @@ enum class RedPackageStatus {
      * 红包处于可抢状态
      */
     CANGRAB,
+    /**
+     * 红包已被抢
+     */
+    GRAB,
 }

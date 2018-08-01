@@ -1,6 +1,8 @@
 package com.prance.teacher.features.redpackage
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import com.prance.teacher.features.redpackage.model.RedPackageBean
@@ -8,6 +10,7 @@ import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.view.RedPackageView
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  *Created by rich on 2018/7/26
@@ -28,7 +31,11 @@ class RedPackageManager {
      * 各个泳道上一个红包的显示时间
      */
     var showTimes: Array<Long> = Array(roadCount, { 0L })
-
+    /**
+     * 抢红包的结果
+     */
+    var resultMaps: HashMap<String,Int> = HashMap()
+    var mHandler: Handler = Handler(Looper.getMainLooper())
     constructor(context: Context?) {
         mContext = context
     }
@@ -122,8 +129,12 @@ class RedPackageManager {
         if (!TextUtils.isEmpty(sInfo)){
             for (view in mRedPackage) {
                 if (view.mStatus == RedPackageStatus.CANGRAB && view.getChoose().equals(sInfo)) {
-                    view.grab(keyToName(KeyID))
-                    saveResult()
+                    view.mStatus = RedPackageStatus.GRAB
+                    RedPackageView.canUseSigns.add(view.getChoose())
+                    mHandler.post({
+                        view.grab(keyToName(KeyID))
+                    })
+                    saveResult(KeyID)
                 }
             }
         }
@@ -133,13 +144,18 @@ class RedPackageManager {
      * 通过keid查找对应的学生名字
      */
     fun keyToName(KeyID: String): String{
-        return KeyID + "抢到了红包"
+        return KeyID + "  +2"
     }
 
     /**
      * 保存抢到红包的结果
      */
-    fun saveResult(){
-
+    fun saveResult(KeyID: String){
+        val value = resultMaps[KeyID]
+        if (value == null){
+            resultMaps[KeyID] = 2
+        } else {
+            resultMaps[KeyID] = value + 2
+        }
     }
 }
