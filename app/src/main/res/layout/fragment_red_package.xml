@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="抢红包"
+        android:textSize="30sp"/>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="horizontal">
+
+       <RelativeLayout
+           android:id="@+id/road1"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
+
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/road2"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
+
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/road3"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
+
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/road4"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
+
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/road5"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
+
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/road6"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
+
+       </RelativeLayout>
+   </LinearLayout>
+</RelativeLayout>

@@ -10,6 +10,8 @@ import com.prance.lib.sunvote.service.SunVoteService
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.test.setting.features.TestSettingActivity
+import com.prance.teacher.features.afterclass.AfterClassActivity
+import com.prance.teacher.features.afterclass.view.AfterClassFragment
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -17,6 +19,7 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.utils.IntentUtils
 
 
