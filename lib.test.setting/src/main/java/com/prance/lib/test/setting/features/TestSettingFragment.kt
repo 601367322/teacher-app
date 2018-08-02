@@ -49,7 +49,7 @@ class TestSettingFragment : BaseFragment() {
         }
 
         test.setOnClickListener {
-            ok(mHost[2])
+            ok(mHost[2], mPort[0], mSocketHost[2], mSocketPort[0])
         }
 
         dev.setOnClickListener {

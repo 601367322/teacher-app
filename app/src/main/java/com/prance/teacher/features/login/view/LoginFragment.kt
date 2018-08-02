@@ -76,12 +76,12 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         }
 
         //启动主页
-//        if (BuildConfig.DEBUG) {
-//            val classes = ClassesEntity(1)
-//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
-//
-//            activity?.finish()
-//        }
+        if (BuildConfig.DEBUG) {
+            val classes = ClassesEntity(1)
+            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
+
+            activity?.finish()
+        }
     }
 
     /**
