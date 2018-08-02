@@ -21,6 +21,7 @@
     </string-array>
 
     <string-array name="socket_host">
+        <item>api-shuangshi.tengyue360.com</item>
         <item>10.88.88.204</item>
     </string-array>
 
