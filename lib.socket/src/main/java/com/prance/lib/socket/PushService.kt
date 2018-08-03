@@ -97,6 +97,8 @@ class PushService : Service() {
                 return
             }
 
+            LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)+"\n"+UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
+
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
 
             future.addListener(object : ChannelFutureListener {
