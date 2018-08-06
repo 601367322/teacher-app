@@ -9,6 +9,6 @@ interface PushApiService {
 
 //    @GET("backend/course/webApp/receipt")
     @FormUrlEncoded
-    @POST("http://10.88.88.204:8080/webApp/receipt")
+    @POST("backend/course/webApp/receipt")
     fun messageReceivedCallBack(@Field("msgId") msgId: String): Flowable<Any>
 }
