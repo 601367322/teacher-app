@@ -1,10 +1,10 @@
 package com.prance.teacher.features.check.presenter
 
 import cn.sunars.sdk.SunARS
-import com.prance.lib.base.http.ResultException
+import com.prance.lib.common.utils.http.ResultException
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.check.model.CheckKeyPadGroupTitle
 import com.prance.teacher.features.check.model.CheckKeyPadModel

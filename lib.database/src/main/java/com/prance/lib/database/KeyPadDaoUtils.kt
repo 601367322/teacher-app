@@ -5,7 +5,7 @@ import android.provider.SyncStateContract.Helpers.insert
 
 class KeyPadDaoUtils {
 
-    private val mDao: KeyPadEntityDao = DaoManager.getDaoSession().keyPadEntityDao
+    private val mDao: KeyPadEntityDao = DaoManager.daoSession?.keyPadEntityDao!!
 
     fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
         return mDao.queryBuilder()

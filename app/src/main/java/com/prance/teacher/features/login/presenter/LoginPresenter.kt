@@ -2,7 +2,7 @@ package com.prance.teacher.features.login.presenter
 
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.LoginModel
 

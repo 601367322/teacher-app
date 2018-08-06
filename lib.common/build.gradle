@@ -37,10 +37,19 @@ dependencies {
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
     implementation dependencies.okhttp3
+    implementation dependencies.gson
+    implementation dependencies.rxandroid
+    implementation dependencies.rxjava
     implementation(dependencies.glide) {
         exclude group: "com.android.support"
     }
     implementation(dependencies.glideOkHttp) {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation (dependencies.retrofit2AdapterRxJava) {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation (dependencies.retrofit2) {
         exclude group: 'com.squareup.okhttp3'
     }
     implementation dependencies.glideTransformations

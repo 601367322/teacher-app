@@ -8,8 +8,11 @@ import android.os.IBinder
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.Constants
 import com.prance.lib.common.utils.UrlUtil
+import com.prance.lib.common.utils.http.RetrofitUtils
+import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.database.MessageDaoUtils
+import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener.Companion.STATUS_CONNECT_CLOSED
-import com.prance.lib.socket.model.MessageEntity
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
@@ -22,7 +25,9 @@ class PushService : Service() {
     private var mEventLoopGroup: EventLoopGroup? = null
     private var mChannel: Channel? = null
     private lateinit var mSocketThread: SocketThread
+    private lateinit var mMessageResponseCallBack: MessageResponseCallBack
     private var mListeners: MutableList<MessageListener> = mutableListOf()
+    private val mMessageDaoUtils = MessageDaoUtils()
 
     companion object {
 
@@ -64,6 +69,8 @@ class PushService : Service() {
         super.onCreate()
         mSocketThread = SocketThread()
         mSocketThread.start()
+        mMessageResponseCallBack = MessageResponseCallBack(RetrofitUtils.getApiService(PushApiService::class.java), mMessageDaoUtils)
+        mMessageResponseCallBack.start()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -97,7 +104,7 @@ class PushService : Service() {
                 return
             }
 
-            LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)+"\n"+UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
+            LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
 
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
 
@@ -117,6 +124,16 @@ class PushService : Service() {
         }
 
         override fun onMessageResponse(msg: MessageEntity) {
+
+            //检查是否重复消息
+            val existsMessage = mMessageDaoUtils.getMessageByMsgId(msg.msgId)
+            if (existsMessage != null) {
+                return
+            }
+
+            //保存消息
+            mMessageDaoUtils.saveMessage(msg)
+
             for (listener in mListeners) {
                 try {
                     listener.onMessageResponse(msg)
@@ -164,6 +181,7 @@ class PushService : Service() {
             mChannel = null
             mEventLoopGroup = null
             mSocketThread.interrupt()
+            mMessageResponseCallBack.interrupt()
         } catch (e: Exception) {
             e.printStackTrace()
         }

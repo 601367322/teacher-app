@@ -13,7 +13,7 @@
         </provider>
 
         <provider
-            android:name=".http.cookie.CookieProvider"
+            android:name="com.prance.lib.common.utils.http.cookie.CookieProvider"
             android:authorities="com.prance.teacher"
             android:multiprocess="false"/>
     </application>

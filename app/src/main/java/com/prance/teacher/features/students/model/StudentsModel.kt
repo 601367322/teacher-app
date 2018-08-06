@@ -2,8 +2,8 @@ package com.prance.teacher.features.students.model
 
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.base.mvp.BaseModelKt
-import com.prance.lib.teacher.base.http.ResponseBody
-import com.prance.lib.teacher.base.http.RetrofitUtils
+import com.prance.lib.common.utils.http.ResponseBody
+import com.prance.lib.common.utils.http.RetrofitUtils
 import com.prance.teacher.apis.ApiService
 import io.reactivex.Flowable
 
@@ -17,11 +17,11 @@ import io.reactivex.Flowable
 class StudentsModel : BaseModelKt(), IStudentsContract.Model {
 
     override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(id)
+        return RetrofitUtils.getApiService(ApiService::class.java).studentsForClasses(id)
     }
 
     override fun startBind(classesId: String, keyPadIds: MutableList<String>): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).bindKeyPad(classesId,keyPadIds )
+        return RetrofitUtils.getApiService(ApiService::class.java).bindKeyPad(classesId,keyPadIds )
     }
 }
 

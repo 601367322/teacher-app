@@ -4,19 +4,16 @@ import android.app.Service
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.Handler
 import android.os.IBinder
 import android.view.View
-import cn.sunars.sdk.SunARS
-import cn.sunars.sdk.SunARS.removeListener
 import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.weight.AlertDialog
+import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
 import com.prance.lib.socket.PushService.Companion.ATTEND_CLASS
 import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
-import com.prance.lib.socket.model.MessageEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -101,7 +98,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener {
     override fun onMessageResponse(msg: MessageEntity) {
         if (msg.cmd == CMD_SEND_QUESTION) {
             //开始答题
-            val question = msg.create(Question::class.java)
+            val question = msg.getData(Question::class.java)
             if (question.classId == mClassesEntity.klass?.id) {
                 ActivityUtils.finishActivity(SubjectActivity::class.java)
                 context?.run {

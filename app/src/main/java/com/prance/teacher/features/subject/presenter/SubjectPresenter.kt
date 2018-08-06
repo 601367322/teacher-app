@@ -3,7 +3,7 @@ package com.prance.teacher.features.subject.presenter
 import com.blankj.utilcode.util.LogUtils
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.subject.model.KeyPadResult
 import com.prance.teacher.features.subject.model.SubjectModel
 

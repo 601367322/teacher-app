@@ -2,7 +2,7 @@ package com.prance.teacher.features.classes.presenter
 
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.classes.model.ClassesModel
 
 /**

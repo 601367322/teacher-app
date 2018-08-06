@@ -9,9 +9,9 @@ import android.os.Bundle
 import android.os.IBinder
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
-import com.prance.lib.socket.model.MessageEntity
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
@@ -36,14 +36,14 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
                 //结束答题
-                val question = msg.create(ClassesDetailFragment.Question::class.java)
+                val question = msg.getData(ClassesDetailFragment.Question::class.java)
                 if (question.classId == mQuestion?.classId) {
                     onSubjectStop()
                 }
             }
             PushService.QUESTION_RESULT -> {
                 //答题结果
-                val question = msg.create(SubjectOnDestroyFragment.QuestionResult::class.java)
+                val question = msg.getData(SubjectOnDestroyFragment.QuestionResult::class.java)
                 if (question.classId == mQuestion?.classId) {
                     onSubjectDestroy(question)
                 }

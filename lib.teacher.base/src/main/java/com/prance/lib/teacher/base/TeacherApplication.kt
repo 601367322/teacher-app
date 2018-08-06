@@ -3,9 +3,7 @@ package com.prance.lib.teacher.base
 import android.annotation.SuppressLint
 import android.app.Application
 import cn.sunars.sdk.SunARS
-import cn.sunars.sdk.SunARS.BaseStation_Connected_Model
 import com.blankj.utilcode.util.*
-import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.third.inter.PluginsManager
 import com.squareup.leakcanary.LeakCanary
 import com.prance.lib.common.utils.ImageLoaderFactory
@@ -13,8 +11,7 @@ import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.database.BaseStationEntity
 import com.prance.lib.database.DaoManager
 import com.prance.lib.database.UserEntity
-import com.prance.lib.teacher.base.http.OkHttpUtils
-import com.prance.lib.third.inter.PluginsManager.Companion.teacher
+import com.prance.lib.common.utils.http.OkHttpUtils
 import org.greenrobot.greendao.query.QueryBuilder
 
 

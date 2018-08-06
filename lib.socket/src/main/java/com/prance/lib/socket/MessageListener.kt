@@ -1,6 +1,6 @@
 package com.prance.lib.socket
 
-import com.prance.lib.socket.model.MessageEntity
+import com.prance.lib.database.MessageEntity
 
 interface MessageListener {
 

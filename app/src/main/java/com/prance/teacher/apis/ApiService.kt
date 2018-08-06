@@ -1,13 +1,11 @@
 package com.prance.teacher.apis
 
-import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.database.UserEntity
-import com.prance.lib.teacher.base.http.ResponseBody
+import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
 import retrofit2.http.*
 

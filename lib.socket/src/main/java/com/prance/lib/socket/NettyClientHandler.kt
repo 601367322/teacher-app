@@ -2,7 +2,7 @@ package com.prance.lib.socket
 
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
-import com.prance.lib.socket.model.MessageEntity
+import com.prance.lib.database.MessageEntity
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 

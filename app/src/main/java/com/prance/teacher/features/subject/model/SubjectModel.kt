@@ -3,7 +3,7 @@ package com.prance.teacher.features.subject.model
 import com.google.gson.Gson
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.lib.base.mvp.BaseModelKt
-import com.prance.lib.teacher.base.http.RetrofitUtils
+import com.prance.lib.common.utils.http.RetrofitUtils
 import com.prance.teacher.apis.ApiService
 import io.reactivex.Flowable
 
@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 class SubjectModel : BaseModelKt(), ISubjectContract.Model {
 
     override fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String): Flowable<Any> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).postResult(classId.toString(), Gson().toJson(mResult), questionId)
+        return RetrofitUtils.getApiService(ApiService::class.java).postResult(classId.toString(), Gson().toJson(mResult), questionId)
     }
 }
 

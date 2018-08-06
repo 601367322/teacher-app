@@ -1,9 +1,9 @@
 package com.prance.teacher.features.students.presenter
 
-import com.prance.lib.base.http.ResultException
+import com.prance.lib.common.utils.http.ResultException
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.match.model.MatchKeyPadModel
 import com.prance.teacher.features.students.model.StudentsModel

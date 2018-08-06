@@ -3,7 +3,7 @@ package com.prance.teacher.features.afterclass.presenter
 import cn.sunars.sdk.SunARS
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.afterclass.model.AfterClassModel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

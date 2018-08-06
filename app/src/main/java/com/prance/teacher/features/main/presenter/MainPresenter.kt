@@ -2,7 +2,7 @@ package com.prance.teacher.features.main.presenter
 
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.main.model.MainModel
 import com.prance.teacher.features.match.model.MatchKeyPadModel

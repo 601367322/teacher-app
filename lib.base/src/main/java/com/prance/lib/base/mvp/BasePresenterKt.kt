@@ -1,5 +1,7 @@
 package com.prance.lib.base.mvp
 
+import com.prance.lib.common.utils.http.defaultOnNetworkError
+
 /**
  * Description :
  * @author  XQ Yang
