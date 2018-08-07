@@ -19,36 +19,43 @@ interface ApiService {
                 "unauth/app/qrCode"
             else
                 "backend/user/unauth/app/qrCode"
+
         val checkQrCode: String
             get() = if (UrlUtil.isLocalHost())
                 "unauth/app/login"
             else
                 "backend/user/unauth/app/login"
+
         val allClasses: String
             get() = if (UrlUtil.isLocalHost())
                 "app/classList"
             else
                 "backend/course/app/classList"
+
         val studentsForClasses: String
             get() = if (UrlUtil.isLocalHost())
                 "app/studentList"
             else
                 "backend/course/app/studentList"
+
         val bindKeyPad: String
             get() = if (UrlUtil.isLocalHost())
                 "app/binding"
             else
                 "backend/course/app/binding"
+
         val replaceKeyPad: String
             get() = if (UrlUtil.isLocalHost())
                 "app/replace"
             else
                 "backend/course/app/replace"
+
         val checkVersion: String
             get() = if (UrlUtil.isLocalHost())
                 "app/replace"
             else
                 "backend/course/app/replace"
+
         val postResult: String
             get() = if (UrlUtil.isLocalHost())
                 "webApp/questionResult"
