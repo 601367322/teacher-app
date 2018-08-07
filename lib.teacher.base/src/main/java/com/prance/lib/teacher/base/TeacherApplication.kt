@@ -36,6 +36,12 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         Utils.init(this)
 
         /**
+         * 日志
+         */
+        if (!ModelUtil.isTestModel)
+            LogUtils.getConfig().setLogSwitch(false)
+
+        /**
          * 注册生命周期
          */
         val lifes = PluginsManager.teacher?.getLifecycle()

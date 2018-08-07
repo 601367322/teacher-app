@@ -59,6 +59,10 @@ class TestSettingFragment : BaseFragment() {
         frode.setOnClickListener {
             ok(mHost[3], mPort[2], mSocketHost[0], mSocketPort[0])
         }
+
+        landy.setOnClickListener {
+            ok(mHost[4], mPort[2], mSocketHost[1], mSocketPort[0])
+        }
     }
 
     private fun initTextView(data: Array<String>, view: AutoCompleteTextView) {

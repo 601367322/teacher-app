@@ -17,6 +17,7 @@ import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
+import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
 
@@ -104,7 +105,7 @@ class PushService : Service() {
                 return
             }
 
-            LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
+            LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt() + "\n" + InetAddress.getByName(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)).hostAddress)
 
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
 

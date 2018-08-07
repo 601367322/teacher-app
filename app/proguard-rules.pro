@@ -710,3 +710,11 @@
 #chuck
 -keep class com.readystatesoftware.chuck.internal.data.HttpTransaction { *; }
 -keep class android.support.v7.widget.SearchView { *; }
+
+#Netty
+-keepattributes Signature,InnerClasses
+-keepclasseswithmembers class io.netty.** {
+    *;
+}
+-dontwarn io.netty.**
+-dontwarn sun.**

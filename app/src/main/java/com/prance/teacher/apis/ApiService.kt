@@ -33,7 +33,8 @@ interface ApiService {
     fun checkVersion(): Flowable<VersionEntity>
 
     @FormUrlEncoded
-    @POST("http://10.88.88.204:8080/webApp/questionResult")
+    @POST("backend/course/webApp/questionResult")
+//    @POST("webApp/questionResult")
     fun postResult(@Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
 
 }
