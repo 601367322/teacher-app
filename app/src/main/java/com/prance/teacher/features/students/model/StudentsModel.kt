@@ -17,11 +17,11 @@ import io.reactivex.Flowable
 class StudentsModel : BaseModelKt(), IStudentsContract.Model {
 
     override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.getApiService(ApiService::class.java).studentsForClasses(id)
+        return RetrofitUtils.getApiService(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses, id)
     }
 
     override fun startBind(classesId: String, keyPadIds: MutableList<String>): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.getApiService(ApiService::class.java).bindKeyPad(classesId,keyPadIds )
+        return RetrofitUtils.getApiService(ApiService::class.java).bindKeyPad(ApiService.bindKeyPad, classesId, keyPadIds)
     }
 }
 

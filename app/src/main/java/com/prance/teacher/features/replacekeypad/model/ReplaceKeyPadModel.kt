@@ -16,7 +16,7 @@ import io.reactivex.Flowable
 class ReplaceKeyPadModel : BaseModelKt(), IReplaceKeyPadContract.Model {
 
     override fun replaceKeyPad(classesId: String, oldKeyPadId: String, newKeyPadId: String): Flowable<Any> {
-        return RetrofitUtils.getApiService(ApiService::class.java).replaceKeyPad(classesId, oldKeyPadId, newKeyPadId)
+        return RetrofitUtils.getApiService(ApiService::class.java).replaceKeyPad(ApiService.replaceKeyPad, classesId, oldKeyPadId, newKeyPadId)
     }
 }
 

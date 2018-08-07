@@ -17,15 +17,15 @@ import io.reactivex.Flowable
 class LoginModel : BaseModelKt(), ILoginContract.Model {
 
     override fun loadQrCodeDetail(): Flowable<QrCodeEntity> {
-        return RetrofitUtils.getApiService(ApiService::class.java).qrCodeDetail()
+        return RetrofitUtils.getApiService(ApiService::class.java).qrCodeDetail(ApiService.qrCodeDetail)
     }
 
     override fun checkQrCode(qrCode: QrCodeEntity): Flowable<UserEntity> {
-        return RetrofitUtils.getApiService(ApiService::class.java).checkQrCode(qrCode.timestamp, qrCode.token)
+        return RetrofitUtils.getApiService(ApiService::class.java).checkQrCode(ApiService.checkQrCode,qrCode.timestamp, qrCode.token)
     }
 
     override fun checkVersion(): Flowable<VersionEntity> {
-        return RetrofitUtils.getApiService(ApiService::class.java).checkVersion()
+        return RetrofitUtils.getApiService(ApiService::class.java).checkVersion(ApiService.checkVersion)
     }
 }
 

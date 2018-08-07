@@ -24,7 +24,7 @@ object UrlUtil {
     val pathName: String
         get() = "config.properties"
 
-    fun getScheme(): String {
+    private fun getScheme(): String {
         return getPropertiesValue("scheme")
     }
 
@@ -32,7 +32,7 @@ object UrlUtil {
         return getPropertiesValue("host")
     }
 
-    fun getPort(): String {
+    private fun getPort(): String {
         return getPropertiesValue("port")
     }
 
@@ -42,6 +42,10 @@ object UrlUtil {
             port = """:$port"""
         }
         return """${getScheme()}://${getHost()}$port"""
+    }
+
+    fun isLocalHost(): Boolean {
+        return !(getPort() == "" || getPort() == "80")
     }
 
     /**

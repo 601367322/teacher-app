@@ -16,7 +16,7 @@ class MessageResponseCallBack(private val mPushApiService: PushApiService, priva
                 for (message in list) {
                     ids.add(message.msgId)
                 }
-                mPushApiService.messageReceivedCallBack(ids.joinToString())
+                mPushApiService.messageReceivedCallBack(PushApiService.messageReceivedCallBack, ids.joinToString())
                         .mySubscribe {
                             for (message in list) {
                                 mMessageDaoUtils.deleteMessage(message)

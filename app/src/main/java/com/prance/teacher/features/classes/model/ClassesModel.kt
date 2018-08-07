@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 class ClassesModel : BaseModelKt(), IClassesContract.Model {
 
     override fun getAllClasses(): Flowable<ResponseBody<ClassesEntity>> {
-        return RetrofitUtils.getApiService(ApiService::class.java).allClasses()
+        return RetrofitUtils.getApiService(ApiService::class.java).allClasses(ApiService.allClasses)
     }
 }
 
