@@ -65,27 +65,27 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //启动主页
         if (BuildConfig.DEBUG) {
-//            val classes = ClassesEntity(1)
-//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
-//
-//            activity?.finish()
+            val classes = ClassesEntity(1)
+            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
+
+            activity?.finish()
         }
     }
 
     /**
      * 渲染二维码
      */
-    override fun renderQrCode(obj: QrCodeEntity) {
-        mQrCode = obj
+    override fun renderQrCode(code: QrCodeEntity) {
+        mQrCode = code
 
         //过期后重置二维码
-        getNewQrCode(obj.getExpireTime() - 2)
+        getNewQrCode(code.getExpireTime() - 2)
 
         //隐藏loading
         hideProgress()
 
         //显示二维码
-        qrCode.setImageBitmap(QrCodeUtils.createQRImage(obj.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
+        qrCode.setImageBitmap(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
 
         //开启定时检查二维码有效性
         startCheckQrCode(CHECK_INTERVAL)
