@@ -1,13 +1,11 @@
 package com.prance.teacher.features.redpackage.contract
 
 import com.prance.lib.base.mvp.*
-import com.prance.lib.teacher.base.http.ResponseBody
-import com.prance.teacher.features.login.model.VersionEntity
+import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.RedPackageView
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
-import retrofit2.http.Query
 
 /**
  * Description :

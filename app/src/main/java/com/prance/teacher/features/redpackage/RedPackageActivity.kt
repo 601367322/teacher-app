@@ -8,11 +8,10 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
-import com.prance.lib.socket.model.MessageEntity
 import com.prance.lib.teacher.base.core.platform.BaseActivity
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
 

@@ -1,7 +1,7 @@
 package com.prance.teacher.features.classes.contract
 
 import com.prance.lib.base.mvp.*
-import com.prance.lib.teacher.base.http.ResponseBody
+import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
 

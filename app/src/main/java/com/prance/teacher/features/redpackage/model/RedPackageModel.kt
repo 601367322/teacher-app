@@ -1,12 +1,10 @@
 package com.prance.teacher.features.redpackage.model
 
-import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BaseModelKt
-import com.prance.lib.teacher.base.http.ResponseBody
-import com.prance.lib.teacher.base.http.RetrofitUtils
+import com.prance.lib.common.utils.http.ResponseBody
+import com.prance.lib.common.utils.http.RetrofitUtils
 import com.prance.teacher.apis.ApiService
-import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
 
@@ -19,11 +17,11 @@ import io.reactivex.Flowable
 
 class RedPackageModel : BaseModelKt(), IRedPackageContract.Model {
     override fun getStudentList(classId: String): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(classId)
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses, classId)
     }
 
-    override fun postRedPackageResult(classId: String,answersJsonArray: String,interactId: String,lessionId: String): Flowable<Any>{
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).postRedPackageResult(classId,answersJsonArray,interactId,lessionId)
+    override fun postRedPackageResult(classId: String, answersJsonArray: String, interactId: String, lessionId: String): Flowable<Any> {
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).postRedPackageResult(classId, answersJsonArray, interactId, lessionId)
     }
 }
 

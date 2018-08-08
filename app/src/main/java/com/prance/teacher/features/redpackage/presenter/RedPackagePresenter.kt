@@ -5,9 +5,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BasePresenterKt
-import com.prance.lib.base.mvp.mySubscribe
-import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.login.model.VersionEntity
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.redpackage.model.RedPackageModel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

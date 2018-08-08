@@ -1,10 +1,9 @@
 package com.prance.teacher.features.afterclass.model
 
-import android.util.Log
 import com.google.gson.Gson
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BaseModelKt
-import com.prance.lib.teacher.base.http.RetrofitUtils
+import com.prance.lib.common.utils.http.RetrofitUtils
 import com.prance.teacher.apis.ApiService
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import io.reactivex.Flowable
