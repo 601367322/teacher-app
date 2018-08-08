@@ -45,6 +45,11 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
         showProgress()
     }
 
+    override fun onNetworkError(throwable: Throwable): Boolean {
+        hideProgress()
+        return true
+    }
+
     override fun confirmChooseSuccess() {
         activity?.finish()
     }
