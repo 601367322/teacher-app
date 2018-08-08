@@ -105,9 +105,7 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     override fun onComplete(id: Int, dir: String?, name: String?) {
         startInstall(File(dir, name))
 
-        activity?.run {
-            supportFragmentManager.beginTransaction().remove(this@UpdateFragment).commitAllowingStateLoss()
-        }
+        finish()
     }
 
     override fun onCancel(id: Int) {
@@ -119,11 +117,19 @@ class UpdateFragment : BaseFragment(), DownloadListener {
                     .setConfirmButton("确定", {
                         activity?.finish()
                     })
-                    .setCancelButton("取消", null)
+                    .setCancelButton("取消", {
+                        finish()
+                    })
                     .setMessage("更新失败，可退出程序重新进入 进行更新")
                     .show()
         }
 
+    }
+
+    fun finish(){
+        activity?.run {
+            supportFragmentManager.beginTransaction().remove(this@UpdateFragment).commitAllowingStateLoss()
+        }
     }
 
     override fun onDestroy() {
