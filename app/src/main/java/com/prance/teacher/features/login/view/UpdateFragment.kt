@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.support.v4.content.FileProvider
 import android.view.View
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ServiceUtils
 import com.blankj.utilcode.util.ServiceUtils.stopService
 import com.blankj.utilcode.util.ServiceUtils.unbindService
@@ -54,6 +55,8 @@ class UpdateFragment : BaseFragment(), DownloadListener {
                 .asGif()
                 .load(R.drawable.update_loading_bar)
                 .into(loadingBar)
+
+        desc.text = """您当前的版本为v${AppUtils.getAppVersionName()}，已检测到新版本v${mVersionEntity.appVersion}，正在进行更新请稍等……"""
 
         //启动下载服务
         activity?.bindService(UpdateService.callingIntent(context!!), mDownloadServiceConnection, Service.BIND_AUTO_CREATE)
