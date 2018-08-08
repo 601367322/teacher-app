@@ -64,12 +64,12 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         }
 
         //启动主页
-        if (BuildConfig.DEBUG) {
-            val classes = ClassesEntity(1)
-            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
-
-            activity?.finish()
-        }
+//        if (BuildConfig.DEBUG) {
+//            val classes = ClassesEntity(1)
+//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
+//
+//            activity?.finish()
+//        }
     }
 
     /**
@@ -193,8 +193,10 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
     override fun checkVersionCallBack(versionEntity: VersionEntity?) {
         //显示更新提示
         versionEntity?.let {
-            activity?.supportFragmentManager?.inTransaction {
-                add(R.id.fragmentContainer, UpdateFragment.forVersion(it))
+            if (versionEntity.codeVersion > AppUtils.getAppVersionCode()) {
+                activity?.supportFragmentManager?.inTransaction {
+                    add(R.id.fragmentContainer, UpdateFragment.forVersion(it))
+                }
             }
         }
 

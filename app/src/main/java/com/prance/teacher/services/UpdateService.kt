@@ -115,6 +115,11 @@ class UpdateService : Service() {
         return super.onStartCommand(intent, 0, startId)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        LogUtils.d("onDestroy")
+    }
+
     companion object {
 
         const val DIR = "app_update"

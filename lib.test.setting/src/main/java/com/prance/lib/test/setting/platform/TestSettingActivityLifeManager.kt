@@ -38,9 +38,9 @@ class TestSettingActivityLifeManager : Application.ActivityLifecycleCallbacks {
 
             activityCount--
 
-//            if (activityCount == 0)
-//                if (ModelUtil.isTestModel)
-//                    WindowUtils.hidePopupWindow()
+            if (activityCount == 0)
+                if (ModelUtil.isTestModel)
+                    WindowUtils.hidePopupWindow()
         }
     }
 

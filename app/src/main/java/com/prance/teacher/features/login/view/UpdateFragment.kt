@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.os.IBinder
 import android.support.v4.content.FileProvider
 import android.view.View
+import com.blankj.utilcode.util.ServiceUtils
+import com.blankj.utilcode.util.ServiceUtils.stopService
 import com.blankj.utilcode.util.ServiceUtils.unbindService
 import com.leo.download.DownloadError
 import com.leo.download.DownloadListener
@@ -54,7 +56,7 @@ class UpdateFragment : BaseFragment(), DownloadListener {
                 .into(loadingBar)
 
         //启动下载服务
-        activity?.bindService(UpdateService.callingIntent(context!!, mVersionEntity.url), mDownloadServiceConnection, Service.BIND_AUTO_CREATE)
+        activity?.bindService(UpdateService.callingIntent(context!!), mDownloadServiceConnection, Service.BIND_AUTO_CREATE)
     }
 
     private val mDownloadServiceConnection = object : ServiceConnection {
@@ -63,7 +65,10 @@ class UpdateFragment : BaseFragment(), DownloadListener {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            //绑定监听事件
             (service as UpdateService.UpdateServiceBinder).setListener(this@UpdateFragment)
+            //开始下载
+            activity?.startService(UpdateService.callingIntent(context!!, mVersionEntity.path))
         }
     }
 
@@ -96,6 +101,10 @@ class UpdateFragment : BaseFragment(), DownloadListener {
 
     override fun onComplete(id: Int, dir: String?, name: String?) {
         startInstall(File(dir, name))
+
+        activity?.run {
+            supportFragmentManager.beginTransaction().remove(this@UpdateFragment).commitAllowingStateLoss()
+        }
     }
 
     override fun onCancel(id: Int) {
@@ -116,6 +125,9 @@ class UpdateFragment : BaseFragment(), DownloadListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(mDownloadServiceConnection)
+        context?.run {
+            unbindService(mDownloadServiceConnection)
+            stopService(UpdateService.callingIntent(this))
+        }
     }
 }
