@@ -59,9 +59,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //新版本提示
         if (CommonShared.getPreVersion() != AppUtils.getAppVersionCode()) {
-            CommonShared.setPreVersion(AppUtils.getAppVersionCode())
             ToastUtils.showShort("已更新为最新版本v" + AppUtils.getAppVersionName())
         }
+        CommonShared.setPreVersion(AppUtils.getAppVersionCode())
 
         //启动主页
 //        if (BuildConfig.DEBUG) {
