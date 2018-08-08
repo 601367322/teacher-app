@@ -34,9 +34,7 @@ class UsbManagerImpl : IUsbManagerInterface {
     private val recvBuffer = ByteArray(64)
 
     override fun checkUsbDevice(context: Context?) {
-        if (mUsbManager == null) {
-            mUsbManager = context?.getSystemService(Context.USB_SERVICE) as UsbManager?
-        }
+        mUsbManager = context?.getSystemService(Context.USB_SERVICE) as UsbManager?
         val map = mUsbManager?.deviceList
         map?.let {
             for (device in map.values) {
@@ -69,6 +67,8 @@ class UsbManagerImpl : IUsbManagerInterface {
                     } else {
                         openUsbDevice()
                     }
+
+                    break
                 }
             }
         }

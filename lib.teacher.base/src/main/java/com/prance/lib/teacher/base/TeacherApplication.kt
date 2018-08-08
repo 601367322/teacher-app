@@ -77,7 +77,9 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         }
 
         registerActivityLifecycleCallbacks(DefaultActivityLifecycleCallbacks())
-        registerActivityLifecycleCallbacks(PluginsManager.testSetting?.testSettingActivityLifeManager)
+
+        if (BuildConfig.DEBUG)
+            registerActivityLifecycleCallbacks(PluginsManager.testSetting?.testSettingActivityLifeManager)
 
         //没有基站时，测试开发使用
 //        if (BuildConfig.DEBUG)
