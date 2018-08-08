@@ -32,6 +32,10 @@ class PushService : Service() {
         const val CMD_SEND_QUESTION = 2 //发送练习
         const val CMD_END_QUESTION = 3 //结束联系
         const val QUESTION_RESULT = 4//答题结果
+        const val QUIZ = 5//下课反馈提问
+        const val QUIZ_RESULT = 6//下课提问结果
+        const val INTERACT_START = 7//发起趣味互动
+        const val END_INTERACTN = 8//结束趣味互动
 
         fun callingIntent(context: Context): Intent {
             return Intent(context, PushService::class.java)

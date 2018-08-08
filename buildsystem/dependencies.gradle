@@ -10,7 +10,7 @@ ext {
     buildToolsVersion = "27.0.3"//编译工具版本
     checkReleaseBuilds = false//打包时是否检测
     abortOnError = false//
-    targetSdkVersion = 27//支持最大版本号
+    targetSdkVersion = 24//支持最大版本号
     minSdkVersion = 22//支持最小版本号
     versionCode = 2//当前程序版本号
     versionName = "1.0.0"

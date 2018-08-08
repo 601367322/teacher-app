@@ -1,16 +1,14 @@
 package com.prance.teacher.features.redpackage.view
 
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
-import android.util.DisplayMetrics
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.utils.DimenUtils
 
 
@@ -22,6 +20,14 @@ import com.prance.teacher.utils.DimenUtils
  */
 
 class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
+    companion object {
+        const val mSetTing: String = "settting"
+    }
+
+    /**
+     * 抢红包的设置参数
+     */
+    var mSetting: RedPackageSetting? = null
     var screenWith: Int = 0
     var screenHeight: Int = 0
     var roadMargin:Float = 30f
@@ -44,6 +50,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         mRoad4 = rootView.findViewById(R.id.road4)
         mRoad5 = rootView.findViewById(R.id.road5)
         mRoad6 = rootView.findViewById(R.id.road6)
+        mSetting = arguments?.getSerializable(mSetTing) as RedPackageSetting
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +60,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         screenWith = dm.widthPixels
         var roadWidth = (screenWith - DimenUtils.dip2px(context!!,roadMargin*2)) / 6
         RedPackageView.redPackageMargin = (roadWidth - DimenUtils.dip2px(context!!,RedPackageView.redPackageWidth.toFloat())) /2
-        mPresenter.startRedPackage()
+        mPresenter.startRedPackage(mSetting)
     }
 
     override fun onDestroyView() {
@@ -99,6 +106,10 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
                 }
             }
         }
+    }
+
+    fun redPackageStop(){
+        mPresenter.stopRedPackage()
     }
 }
 

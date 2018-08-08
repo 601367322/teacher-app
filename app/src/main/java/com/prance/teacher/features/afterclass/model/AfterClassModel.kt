@@ -1,9 +1,14 @@
 package com.prance.teacher.features.afterclass.model
 
 import android.util.Log
+import com.google.gson.Gson
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BaseModelKt
+import com.prance.lib.teacher.base.http.RetrofitUtils
+import com.prance.teacher.apis.ApiService
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import io.reactivex.Flowable
+import java.util.*
 
 /**
  * Description :
@@ -14,15 +19,24 @@ import io.reactivex.Flowable
 
 class AfterClassModel : BaseModelKt(), IAfterClassContract.Model {
 
-    var chooseMaps: HashMap<String, String> = HashMap()
+    var chooseList: ArrayList<Answer> = ArrayList()
 
     override fun saveChoose(deviceId: String, choose: String) {
-        chooseMaps.put(deviceId, choose)
-        Log.e("rich:AfterClassModel",deviceId + ";" + choose )
+        var answer = Answer()
+        answer.clikerId = deviceId
+        answer.answer = choose
+        answer.answerTime = Date().time
+        for (StudentsEntity in ClassesDetailFragment.mStudentList!!){
+            if (deviceId.equals(StudentsEntity.clickers!![0].id)){
+                answer.studentId = StudentsEntity.id
+            }
+        }
+        chooseList.add(answer)
     }
 
-    override fun confirmChoose(): Flowable<Int> {
-        return Flowable.range(0,1)
+    override fun confirmChoose(classId: Int,questionId: Int): Flowable<Any> {
+        var json = Gson().toJson(chooseList)
+        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).postFeedbcakResult(classId.toString(),json,questionId.toString())
     }
 }
 

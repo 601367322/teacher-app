@@ -38,4 +38,18 @@ interface ApiService {
     @POST("http://10.88.88.204:8080/webApp/questionResult")
     fun postResult(@Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
 
+    /**
+     * 上传抢红包的数据
+     */
+    @FormUrlEncoded
+    @POST("webApp/sendInteract")
+    fun postRedPackageResult(@Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String,
+                             @Field("interactId") interactId: String,@Field("lessionId") lessionId: String): Flowable<Any>
+
+    /**
+     * 上传课后反馈的数据
+     */
+    @FormUrlEncoded
+    @POST("webApp/feedbackResult")
+    fun postFeedbcakResult(@Field("classId") classId: String, @Field("feedbackMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
 }

@@ -1,6 +1,7 @@
 package com.prance.teacher.features.afterclass.contract
 
 import com.prance.lib.base.mvp.*
+import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import io.reactivex.Flowable
@@ -29,7 +30,7 @@ interface IAfterClassContract {
         /**
          * 开始接收答题数据
          */
-        fun startReceive()
+        fun startReceive(mFeedback: FeedBack)
 
         /**
          * 停止接收
@@ -50,6 +51,6 @@ interface IAfterClassContract {
         /**
          * 提交选择结果
          */
-        fun confirmChoose (): Flowable<Int>
+        fun confirmChoose (classId: Int,questionId: Int): Flowable<Any>
     }
 }
