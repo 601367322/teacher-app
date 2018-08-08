@@ -34,9 +34,11 @@ class SubjectOnDestroyFragment : BaseFragment() {
             answerResult.text = """答对：${answerMsg?.right}人      答错：${answerMsg?.wrong}人     未作答：${answerMsg?.noAnswer}人"""
 
             var sb = StringBuilder()
-            for (i in 0..min(5, rank.size)) {
-                sb.append("""第${i}名：${rank[i].name}""")
-                sb.append("\n")
+            if (rank.isNotEmpty()) {
+                for (i in 0..min(4, rank.size - 1)) {
+                    sb.append("""第${i + 1}名：${rank[i].name}""")
+                    sb.append("\n")
+                }
             }
             rankText.text = sb.toString()
         }
