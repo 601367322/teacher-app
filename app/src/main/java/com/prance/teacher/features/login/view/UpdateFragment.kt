@@ -56,7 +56,7 @@ class UpdateFragment : BaseFragment(), DownloadListener {
                 .load(R.drawable.update_loading_bar)
                 .into(loadingBar)
 
-        desc.text = """您当前的版本为v${AppUtils.getAppVersionName()}，已检测到新版本v${mVersionEntity.appVersion}，正在进行更新请稍等……"""
+        desc.text = """您当前的版本为v${AppUtils.getAppVersionName()}，已检测到新版本${mVersionEntity.appVersion}，正在进行更新请稍等……"""
 
         //启动下载服务
         activity?.bindService(UpdateService.callingIntent(context!!), mDownloadServiceConnection, Service.BIND_AUTO_CREATE)
