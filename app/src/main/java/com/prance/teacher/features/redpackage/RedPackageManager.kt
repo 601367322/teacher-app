@@ -5,7 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageBean
+import com.prance.teacher.features.redpackage.model.RedPackageRecord
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.view.RedPackageView
 import java.util.*
@@ -19,6 +21,10 @@ import kotlin.collections.HashMap
 class RedPackageManager {
 
     var mContext: Context?
+    /**
+     * 每个红包获得的积分
+     */
+    var mScore: Int = 2
     /**
      * 存放红包
      */
@@ -35,9 +41,11 @@ class RedPackageManager {
      * 抢红包的结果
      */
     var resultMaps: HashMap<String,Int> = HashMap()
+    var results: ArrayList<RedPackageRecord> = ArrayList()
     var mHandler: Handler = Handler(Looper.getMainLooper())
-    constructor(context: Context?) {
+    constructor(context: Context?,score: Int) {
         mContext = context
+        mScore = score
     }
 
     /**
@@ -131,8 +139,9 @@ class RedPackageManager {
                 if (view.mStatus == RedPackageStatus.CANGRAB && view.getChoose().equals(sInfo)) {
                     view.mStatus = RedPackageStatus.GRAB
                     RedPackageView.canUseSigns.add(view.getChoose())
+                    val keyToName = keyToName(KeyID)
                     mHandler.post({
-                        view.grab(keyToName(KeyID))
+                        view.grab(keyToName)
                     })
                     saveResult(KeyID)
                 }
@@ -141,10 +150,22 @@ class RedPackageManager {
     }
 
     /**
-     * 通过keid查找对应的学生名字
+     * 通过keyid查找对应的学生名字
      */
     fun keyToName(KeyID: String): String{
-        return KeyID + "  +2"
+        var name = KeyID
+        ClassesDetailFragment.mStudentList?.let {
+            for(studentsEntity in it){
+                studentsEntity.run {
+                    if (KeyID.equals(clickers?.get(0))) {
+                        this.name?.let {
+                            name = it
+                        }
+                    }
+                }
+            }
+        }
+        return name + "  +" + mScore
     }
 
     /**
@@ -153,9 +174,18 @@ class RedPackageManager {
     fun saveResult(KeyID: String){
         val value = resultMaps[KeyID]
         if (value == null){
-            resultMaps[KeyID] = 2
+            resultMaps[KeyID] = mScore
         } else {
-            resultMaps[KeyID] = value + 2
+            resultMaps[KeyID] = value + mScore
         }
+        var red = RedPackageRecord()
+        red.clickerId = KeyID
+        red.answerTime = Date().time
+        for (StudentsEntity in ClassesDetailFragment.mStudentList!!){
+            if (KeyID.equals(StudentsEntity.clickers!![0].id)){
+                red.studentId = StudentsEntity.id.toString()
+            }
+        }
+        results.add(red)
     }
 }

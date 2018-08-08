@@ -16,7 +16,10 @@ import com.prance.lib.socket.PushService.Companion.ATTEND_CLASS
 import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
+import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.utils.IntentUtils
@@ -24,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
 
-class ClassesDetailFragment : BaseFragment(), MessageListener {
+class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailContract.View{
 
     override fun layoutId(): Int = R.layout.fragment_classes_detail
 
@@ -52,6 +55,11 @@ class ClassesDetailFragment : BaseFragment(), MessageListener {
             fragment.arguments = arguments
             return fragment
         }
+
+        /**
+         * 班级学生列表的集合
+         */
+        var mStudentList: MutableList<StudentsEntity>? = null
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
@@ -128,5 +136,21 @@ class ClassesDetailFragment : BaseFragment(), MessageListener {
                 mPushBinder?.sendMessage(json.toString())
             }
         }
+    }
+
+    override var mPresenter: IClassesDetailContract.Presenter = ClassesDetailPresenter()
+
+    override fun showLoding() {
+        showProgress()
+    }
+
+    override fun studentList(list: MutableList<StudentsEntity>) {
+        hideProgress()
+        mStudentList = list
+    }
+
+    override fun onNetworkError(throwable: Throwable): Boolean {
+        hideProgress()
+        return true
     }
 }
