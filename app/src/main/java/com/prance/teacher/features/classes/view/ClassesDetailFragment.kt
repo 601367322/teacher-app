@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.common.utils.ToastUtils
@@ -64,7 +65,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
-
+        mPresenter.getStudentsByClassesId(mClassesEntity.klass!!.id.toString())
         readyClass.setOnClickListener {
             context?.let {
                 AlertDialog(it)
@@ -147,6 +148,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun studentList(list: MutableList<StudentsEntity>) {
         hideProgress()
         mStudentList = list
+        Log.e("rich",list.toString())
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

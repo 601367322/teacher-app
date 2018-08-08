@@ -7,7 +7,6 @@
     <RelativeLayout
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="@dimen/m928.0">
@@ -24,6 +23,7 @@
             android:id="@+id/emptyLayout"
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
             android:gravity="center"
             android:layout_height="match_parent">
 
