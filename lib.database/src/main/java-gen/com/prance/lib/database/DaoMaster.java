@@ -23,16 +23,16 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(Database db, boolean ifNotExists) {
         UserEntityDao.createTable(db, ifNotExists);
         KeyPadEntityDao.createTable(db, ifNotExists);
-        BaseStationEntityDao.createTable(db, ifNotExists);
         MessageEntityDao.createTable(db, ifNotExists);
+        BaseStationEntityDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         UserEntityDao.dropTable(db, ifExists);
         KeyPadEntityDao.dropTable(db, ifExists);
-        BaseStationEntityDao.dropTable(db, ifExists);
         MessageEntityDao.dropTable(db, ifExists);
+        BaseStationEntityDao.dropTable(db, ifExists);
     }
 
     /**
@@ -53,8 +53,8 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(UserEntityDao.class);
         registerDaoClass(KeyPadEntityDao.class);
-        registerDaoClass(BaseStationEntityDao.class);
         registerDaoClass(MessageEntityDao.class);
+        registerDaoClass(BaseStationEntityDao.class);
     }
 
     public DaoSession newSession() {

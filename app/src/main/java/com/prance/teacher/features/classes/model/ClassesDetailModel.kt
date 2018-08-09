@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 
 class ClassesDetailModel : BaseModelKt(), IClassesDetailContract.Model {
     override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses, id)
+        return RetrofitUtils.getApiService(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses, id)
     }
 }
 

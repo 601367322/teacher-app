@@ -15,11 +15,17 @@ import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
 import com.prance.lib.socket.PushService.Companion.ATTEND_CLASS
 import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
+import com.prance.lib.socket.PushService.Companion.INTERACT_START
+import com.prance.lib.socket.PushService.Companion.QUIZ
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.features.afterclass.AfterClassActivity
+import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
+import com.prance.teacher.features.redpackage.RedPackageActivity
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
@@ -112,6 +118,24 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 ActivityUtils.finishActivity(SubjectActivity::class.java)
                 context?.run {
                     startActivity(SubjectActivity.callingIntent(this, question))
+                }
+            }
+        } else  if (msg.cmd == INTERACT_START) {
+            //开始答题
+            val setting = msg.getData(RedPackageSetting::class.java)
+            if (setting.classId == mClassesEntity.klass?.id) {
+                ActivityUtils.finishActivity(SubjectActivity::class.java)
+                context?.run {
+                    startActivity(RedPackageActivity.callingIntent(this, setting))
+                }
+            }
+        }else  if (msg.cmd == QUIZ) {
+            //开始答题
+            val feedBack = msg.getData(FeedBack::class.java)
+            if (feedBack.classId == mClassesEntity.klass?.id) {
+                ActivityUtils.finishActivity(SubjectActivity::class.java)
+                context?.run {
+                    startActivity(AfterClassActivity.callingIntent(this, feedBack))
                 }
             }
         }

@@ -17,11 +17,13 @@ import io.reactivex.Flowable
 
 class RedPackageModel : BaseModelKt(), IRedPackageContract.Model {
     override fun getStudentList(classId: String): Flowable<ResponseBody<StudentsEntity>> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses, classId)
+        return RetrofitUtils.getApiService(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses,classId)
     }
 
-    override fun postRedPackageResult(classId: String, answersJsonArray: String, interactId: String, lessionId: String): Flowable<Any> {
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).postRedPackageResult(classId, answersJsonArray, interactId, lessionId)
+    override fun postRedPackageResult(classId: String,answersJsonArray: String,interactId: String): Flowable<Any>{
+        return RetrofitUtils.
+                getApiService(ApiService::class.java)
+                .postRedPackageResult(ApiService.postRedPackageResult,classId,answersJsonArray,interactId)
     }
 }
 

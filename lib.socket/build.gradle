@@ -43,4 +43,5 @@ dependencies {
 
     implementation project(":lib.common")
     implementation project(":lib.database")
+    compile project(path: ':lib.database')
 }

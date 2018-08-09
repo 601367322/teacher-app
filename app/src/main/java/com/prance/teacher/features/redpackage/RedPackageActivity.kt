@@ -5,15 +5,19 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import com.prance.lib.database.MessageEntity
 import android.os.Bundle
 import android.os.IBinder
+import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.redpackage.view.RankFragment
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
+import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 
 class RedPackageActivity : BaseActivity(), MessageListener {
 
@@ -84,5 +88,13 @@ class RedPackageActivity : BaseActivity(), MessageListener {
             removeListener(this@RedPackageActivity)
         }
         unbindService(mPushServiceConnection)
+    }
+
+    fun redPackageRank(rank: Array<Int>) {
+        rank?.let {
+            supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, RankFragment.create(it))
+            }
+        }
     }
 }

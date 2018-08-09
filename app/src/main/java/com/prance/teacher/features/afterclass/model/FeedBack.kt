@@ -9,4 +9,8 @@ import java.io.Serializable
 class FeedBack : Serializable{
     var classId: Int ? = null
     var questionId: Int? = null
+    override fun toString(): String {
+        return "FeedBack(classId=$classId, questionId=$questionId)"
+    }
+
 }

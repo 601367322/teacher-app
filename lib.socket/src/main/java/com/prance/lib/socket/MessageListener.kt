@@ -2,6 +2,7 @@ package com.prance.lib.socket
 
 import com.prance.lib.database.MessageEntity
 
+
 interface MessageListener {
 
 

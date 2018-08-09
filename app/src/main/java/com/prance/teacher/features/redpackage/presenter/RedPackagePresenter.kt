@@ -1,5 +1,6 @@
 package com.prance.teacher.features.redpackage.presenter
 
+import android.util.Log
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
@@ -49,6 +50,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
             totalTime = it.lastTime!!.toLong() * 1000
             score = it.integrat!!
         }
+        this.mSetting = mSetting
         redPackageManager = RedPackageManager(getContext(), score)
         SunARS.voteStart(SunARS.VoteType_Choice, "1,1,0,0,10,1")
         var time = totalTime / intervalTime
@@ -84,9 +86,9 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
      */
     fun postRedPackageResult() {
         var json = Gson().toJson(redPackageManager.results)
-        mModel.postRedPackageResult(mSetting!!.classId.toString(),json, mSetting!!.interactId.toString(), "3")
+        mModel.postRedPackageResult(mSetting!!.classId.toString(),json, mSetting!!.interactId.toString())
                 .mySubscribe {
-                    LogUtils.e("success")
+                    Log.e("rich","success")
                 }
     }
 }

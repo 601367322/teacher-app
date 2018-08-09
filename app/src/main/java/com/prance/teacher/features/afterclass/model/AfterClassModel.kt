@@ -22,12 +22,14 @@ class AfterClassModel : BaseModelKt(), IAfterClassContract.Model {
 
     override fun saveChoose(deviceId: String, choose: String) {
         var answer = Answer()
-        answer.clikerId = deviceId
+        answer.clickerId = deviceId
         answer.answer = choose
         answer.answerTime = Date().time
         for (StudentsEntity in ClassesDetailFragment.mStudentList!!){
-            if (deviceId.equals(StudentsEntity.clickers!![0].id)){
-                answer.studentId = StudentsEntity.id
+            StudentsEntity.clickers?.let {
+                if (deviceId == StudentsEntity.clickers!![0].number){
+                    answer.studentId = StudentsEntity.id
+                }
             }
         }
         chooseList.add(answer)
@@ -35,7 +37,7 @@ class AfterClassModel : BaseModelKt(), IAfterClassContract.Model {
 
     override fun confirmChoose(classId: Int,questionId: Int): Flowable<Any> {
         var json = Gson().toJson(chooseList)
-        return RetrofitUtils.instance.mRetrofit.create(ApiService::class.java).postFeedbcakResult(classId.toString(),json,questionId.toString())
+        return RetrofitUtils.getApiService(ApiService::class.java).postFeedbcakResult(ApiService.postFeedbcakResult,classId.toString(),json,questionId.toString())
     }
 }
 

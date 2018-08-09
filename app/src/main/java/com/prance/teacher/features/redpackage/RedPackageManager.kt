@@ -153,11 +153,14 @@ class RedPackageManager {
      * 通过keyid查找对应的学生名字
      */
     fun keyToName(KeyID: String): String{
-        var name = KeyID
+        Log.e("rich","KeyID= "+ KeyID)
+        var name = "000" + KeyID
         ClassesDetailFragment.mStudentList?.let {
             for(studentsEntity in it){
                 studentsEntity.run {
-                    if (KeyID.equals(clickers?.get(0))) {
+                    var number:String = clickers?.get(0)?.number.toString()
+                    val replaceFirst = number.replaceFirst("^0*", "")
+                    if (name.equals(replaceFirst)) {
                         this.name?.let {
                             name = it
                         }
@@ -182,8 +185,10 @@ class RedPackageManager {
         red.clickerId = KeyID
         red.answerTime = Date().time
         for (StudentsEntity in ClassesDetailFragment.mStudentList!!){
-            if (KeyID.equals(StudentsEntity.clickers!![0].id)){
-                red.studentId = StudentsEntity.id.toString()
+            StudentsEntity.clickers?.let {
+                if (KeyID == it[0].number){
+                    red.studentId = StudentsEntity.id.toString()
+                }
             }
         }
         results.add(red)

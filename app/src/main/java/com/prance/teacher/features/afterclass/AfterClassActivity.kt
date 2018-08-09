@@ -18,9 +18,7 @@ class AfterClassActivity : BaseActivity() {
         const val feedback: String = "feedback"
         fun callingIntent(context: Context, fb: FeedBack): Intent {
             val intent = Intent(context, AfterClassActivity::class.java)
-            val bundle = Bundle()
-            bundle.putSerializable(feedback, fb)
-            intent.putExtras(bundle)
+            intent.putExtra(feedback,fb)
             return intent
         }
     }

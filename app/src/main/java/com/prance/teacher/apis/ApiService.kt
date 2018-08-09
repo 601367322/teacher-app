@@ -61,6 +61,18 @@ interface ApiService {
                 "webApp/questionResult"
             else
                 "backend/course/webApp/questionResult"
+
+        val postRedPackageResult: String
+            get() = if (UrlUtil.isLocalHost())
+                "webApp/sendInteract"
+            else
+                "backend/course/webApp/sendInteract"
+
+        val postFeedbcakResult: String
+            get() = if (UrlUtil.isLocalHost())
+                "webApp/feedbackResult"
+            else
+                "backend/course/webApp/feedbackResult"
     }
 
     @GET
@@ -92,14 +104,14 @@ interface ApiService {
      * 上传抢红包的数据
      */
     @FormUrlEncoded
-    @POST("webApp/sendInteract")
-    fun postRedPackageResult(@Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String,
-                             @Field("interactId") interactId: String,@Field("lessionId") lessionId: String): Flowable<Any>
+    @POST
+    fun postRedPackageResult(@Url url: String, @Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String,
+                             @Field("interactId") interactId: String): Flowable<Any>
 
     /**
      * 上传课后反馈的数据
      */
     @FormUrlEncoded
-    @POST("webApp/feedbackResult")
-    fun postFeedbcakResult(@Field("classId") classId: String, @Field("feedbackMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
+    @POST
+    fun postFeedbcakResult(@Url url: String, @Field("classId") classId: String, @Field("feedbackMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
 }

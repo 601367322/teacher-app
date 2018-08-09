@@ -46,7 +46,7 @@ interface IRedPackageContract {
         /**
          * 发送抢红包信息
          */
-        fun postRedPackageResult(classId: String,answersJsonArray: String,interactId: String,lessionId: String): Flowable<Any>
+        fun postRedPackageResult(classId: String,answersJsonArray: String,interactId: String): Flowable<Any>
         /**
          * 获取学生列表信息
          */

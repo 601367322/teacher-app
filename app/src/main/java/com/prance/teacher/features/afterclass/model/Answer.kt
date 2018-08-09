@@ -5,7 +5,7 @@ package com.prance.teacher.features.afterclass.model
  */
 
 class Answer{
-    var clikerId: String? = null
+    var clickerId: String? = null
     var answer: String? = null
     var answerTime: Long? = null
     var studentId: Int? = null

@@ -1,6 +1,8 @@
 package com.prance.teacher.features.afterclass.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
 import cn.sunars.sdk.SunARS
@@ -12,6 +14,7 @@ import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.afterclass.presenter.AfterClassPresenter
+import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
 
@@ -40,7 +43,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        mPresenter.saveChoose(KeyID, sInfo ?: "")
+        Handler(Looper.getMainLooper()).post { mPresenter.saveChoose(generateKeyPadId(KeyID), sInfo ?: "") }
     }
 
     override fun onTimeChange(time: String) {

@@ -1,5 +1,6 @@
 package com.prance.teacher.features.afterclass.presenter
 
+import android.util.Log
 import cn.sunars.sdk.SunARS
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BasePresenterKt
@@ -27,7 +28,7 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
         this.mFeedback = feedback
         SunARS.voteStart(SunARS.VoteType_Choice,"1,0,0,0,4,1")
         mDisposable = Flowable.interval(1000,TimeUnit.MILLISECONDS)
-                .take(10)
+                .take(30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe{

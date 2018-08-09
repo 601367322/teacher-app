@@ -1,12 +1,17 @@
 package com.prance.teacher.features.redpackage.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import cn.sunars.sdk.SunARS
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.teacher.R
+import com.prance.teacher.features.match.view.generateKeyPadId
+import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.utils.DimenUtils
@@ -65,7 +70,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mPresenter.stopRedPackage()
+        SunARS.voteStop()
     }
 
     override fun onShowPackage(redPackageView: RedPackageView) {
@@ -93,19 +98,25 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        mPresenter.grabRedPackage(KeyID, sInfo)
+        Handler(Looper.getMainLooper()).post {
+            mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
+        }
     }
 
     override fun onTimeEnd(resultMaps: HashMap<String,Int>) {
-        Log.e("rich",resultMaps.toString())
-        var rank = arrayOf(0,0,0)
+        var rank = arrayOf(0,0,0,0)
         for ((key,value)in resultMaps){
-            for (item in rank ){
-                if (value > item){
-
+            rank[0] = value
+            for (i in 0 until 2){
+                if (rank[i] > rank[i+1]) {
+                    var temp = rank[i]
+                    rank[i] = rank[i+1]
+                    rank[i+1] = temp
                 }
             }
         }
+        Log.e("rich",rank.toString())
+        (activity as RedPackageActivity).redPackageRank(rank)
     }
 
     fun redPackageStop(){
