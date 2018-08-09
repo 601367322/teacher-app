@@ -21,4 +21,11 @@ class RedPackageSetting : Serializable {
      * 每个红包的积分数量
      */
     var integrat: Int? = null
+
+    constructor(classId: Int?, lastTime: Int?, interactId: Int?, integrat: Int?) {
+        this.classId = classId
+        this.lastTime = lastTime
+        this.interactId = interactId
+        this.integrat = integrat
+    }
 }

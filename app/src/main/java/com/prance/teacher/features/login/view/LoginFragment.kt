@@ -22,6 +22,8 @@ import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.main.view.MainFragment
+import com.prance.teacher.features.redpackage.RedPackageActivity
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -71,8 +73,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            val classes = ClassesEntity(1)
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
 
-            val feedBack = FeedBack(1,1)
-            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
+//            val feedBack = FeedBack(1,1)
+//            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
+
+            val redConfig = RedPackageSetting(1,30,1,1)
+            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
             activity?.finish()
         }
     }
