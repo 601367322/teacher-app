@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.hardware.usb.UsbManager
 import android.os.Binder
 import android.os.IBinder
+import android.os.UserManager
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.sunvote.platform.*
@@ -23,8 +24,9 @@ class SunVoteService : Service() {
     private val binder = SunVoteServiceBinder()
 
     inner class SunVoteServiceBinder : Binder() {
-        fun service(): SunVoteService {
-            return this@SunVoteService
+
+        fun getUserManager(): IUsbManagerInterface {
+            return this@SunVoteService.getUserManager()
         }
     }
 

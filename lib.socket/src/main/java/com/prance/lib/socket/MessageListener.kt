@@ -9,12 +9,12 @@ interface MessageListener {
     /**
      * 对消息的处理
      */
-    fun onMessageResponse(msg: MessageEntity)
+    fun onMessageResponse(msg: MessageEntity) {}
 
     /**
      * 当服务状态发生变化时触发
      */
-    fun onServiceStatusConnectChanged(statusCode: Int)
+    fun onServiceStatusConnectChanged(statusCode: Int) {}
 
     companion object {
 

@@ -24,7 +24,7 @@ class MessageResponseCallBack(private val mPushApiService: PushApiService, priva
                         }
             }
             try {
-                Thread.sleep(3000)
+                Thread.sleep(1000)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
                 break

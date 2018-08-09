@@ -37,7 +37,7 @@ class NettyClientInitializer(private var listener: MessageListener) : ChannelIni
         //设置心跳
         pipeline.addLast(IdleStateHandler(READ_WAIT_SECONDS, WRITE_WAIT_SECONDS, 0, TimeUnit.SECONDS))
         //心跳检测
-        pipeline.addLast(NeetyHeartBeatHandler())
+        pipeline.addLast(NettyHeartBeatHandler())
 
         pipeline.addLast(NettyClientHandler(listener))
 

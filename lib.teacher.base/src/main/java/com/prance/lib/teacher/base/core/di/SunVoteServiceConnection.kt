@@ -5,14 +5,14 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import com.prance.lib.sunvote.service.SunVoteService
 
-class MyServiceConnection(private val serviceBinder: IServiceBinder) : ServiceConnection {
+class SunVoteServiceConnection(private val sunVoteServiceInterface: ISunVoteService) : ServiceConnection {
 
     override fun onServiceDisconnected(name: ComponentName?) {
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         val myBinder = service as SunVoteService.SunVoteServiceBinder
-        serviceBinder.mSunVoteService = myBinder.service()
-        serviceBinder.onServiceConnected()
+        sunVoteServiceInterface.mSunVoteService = myBinder
+        sunVoteServiceInterface.onSunVoteServiceConnected()
     }
 }

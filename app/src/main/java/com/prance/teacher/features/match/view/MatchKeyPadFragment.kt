@@ -82,7 +82,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         displayMoreBtn()
     }
 
-    override fun onServiceConnected() {
+    override fun onSunVoteServiceConnected() {
         mSunVoteService?.let {
             val usbDevice = it.getUserManager().getUsbDevice()
             usbDevice?.let {

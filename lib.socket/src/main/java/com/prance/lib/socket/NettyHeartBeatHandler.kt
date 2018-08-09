@@ -6,7 +6,7 @@ import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.handler.timeout.IdleState
 import io.netty.handler.timeout.IdleStateEvent
 
-internal class NeetyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
+internal class NettyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
 
     override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
