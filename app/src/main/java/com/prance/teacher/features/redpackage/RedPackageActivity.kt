@@ -91,7 +91,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     }
 
     fun redPackageRank(rank: Array<Int>) {
-        rank?.let {
+        rank.let {
             supportFragmentManager.inTransaction {
                 replace(R.id.fragmentContainer, RankFragment.create(it))
             }

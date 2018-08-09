@@ -1,6 +1,5 @@
 package com.prance.teacher.features.afterclass.presenter
 
-import android.util.Log
 import cn.sunars.sdk.SunARS
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BasePresenterKt
@@ -20,35 +19,33 @@ import java.util.concurrent.TimeUnit
  * 								 - generate by MvpAutoCodePlus plugin.
  */
 class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterClassContract.Presenter {
-    var mTime: Int = 30
+    var mTime: Int = 5
     var mDisposable: Disposable? = null
     override val mModel: IAfterClassContract.Model = AfterClassModel()
-    var mFeedback: FeedBack? = null
     override fun startReceive(feedback: FeedBack) {
-        this.mFeedback = feedback
-        SunARS.voteStart(SunARS.VoteType_Choice,"1,0,0,0,4,1")
-        mDisposable = Flowable.interval(1000,TimeUnit.MILLISECONDS)
+        SunARS.voteStart(SunARS.VoteType_Choice, "1,0,0,0,4,1")
+        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
                 .take(30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe{
-                    -- mTime
+                .subscribe {
+                    --mTime
+                    if (mTime < 10) {
+                        mView?.onTimeChange("00:0$mTime")
+                    } else {
+                        mView?.onTimeChange("00:$mTime")
+                    }
                     if (mTime < 1) {
                         mDisposable()
                         mView?.showLoading()
-                        mModel.confirmChoose(mFeedback?.classId!!,mFeedback?.questionId!!).mySubscribe(onSubscribeError, {
+                        mModel.confirmChoose(feedback.classId!!, feedback.questionId!!).mySubscribe(onSubscribeError, {
                             mView?.confirmChooseSuccess()
                         })
-                    }
-                    if (mTime < 10) {
-                        mView?.onTimeChange("00:0${mTime}")
-                    } else{
-                        mView?.onTimeChange("00:${mTime}")
                     }
                 }
     }
 
-    fun mDisposable(){
+    fun mDisposable() {
         mDisposable?.let {
             if (!it.isDisposed) {
                 it.dispose()
@@ -62,7 +59,7 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
     }
 
     override fun saveChoose(deviceId: String, choose: String) {
-        mModel.saveChoose(deviceId,choose)
+        mModel.saveChoose(deviceId, choose)
     }
 }
 

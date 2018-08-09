@@ -35,7 +35,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     var mSetting: RedPackageSetting? = null
     var screenWith: Int = 0
     var screenHeight: Int = 0
-    var roadMargin:Float = 30f
+    var roadMargin: Float = 30f
 
     lateinit var mRoad1: RelativeLayout
     lateinit var mRoad2: RelativeLayout
@@ -63,8 +63,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         val dm = resources.displayMetrics
         screenHeight = dm.heightPixels
         screenWith = dm.widthPixels
-        var roadWidth = (screenWith - DimenUtils.dip2px(context!!,roadMargin*2)) / 6
-        RedPackageView.redPackageMargin = (roadWidth - DimenUtils.dip2px(context!!,RedPackageView.redPackageWidth.toFloat())) /2
+        var roadWidth = (screenWith - DimenUtils.dip2px(context!!, roadMargin * 2)) / 6
+        RedPackageView.redPackageMargin = (roadWidth - DimenUtils.dip2px(context!!, RedPackageView.redPackageWidth.toFloat())) / 2
         mPresenter.startRedPackage(mSetting)
     }
 
@@ -103,23 +103,24 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         }
     }
 
-    override fun onTimeEnd(resultMaps: HashMap<String,Int>) {
-        var rank = arrayOf(0,0,0,0)
-        for ((key,value)in resultMaps){
+    override fun onTimeEnd(resultMaps: HashMap<String, Int>) {
+        var rank = arrayOf(0, 0, 0, 0)
+        for ((key, value) in resultMaps) {
             rank[0] = value
-            for (i in 0 until 2){
-                if (rank[i] > rank[i+1]) {
-                    var temp = rank[i]
-                    rank[i] = rank[i+1]
-                    rank[i+1] = temp
-                }
+
+        }
+        for (i in 0 until 2) {
+            if (rank[i] > rank[i + 1]) {
+                var temp = rank[i]
+                rank[i] = rank[i + 1]
+                rank[i + 1] = temp
             }
         }
-        Log.e("rich",rank.toString())
+        Log.e("rich", rank.toString())
         (activity as RedPackageActivity).redPackageRank(rank)
     }
 
-    fun redPackageStop(){
+    fun redPackageStop() {
         mPresenter.stopRedPackage()
     }
 }

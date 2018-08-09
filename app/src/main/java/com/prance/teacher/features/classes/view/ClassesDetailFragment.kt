@@ -121,19 +121,19 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 }
             }
         } else  if (msg.cmd == INTERACT_START) {
-            //开始答题
+            //抢红包
             val setting = msg.getData(RedPackageSetting::class.java)
             if (setting.classId == mClassesEntity.klass?.id) {
-                ActivityUtils.finishActivity(SubjectActivity::class.java)
+                ActivityUtils.finishActivity(RedPackageActivity::class.java)
                 context?.run {
                     startActivity(RedPackageActivity.callingIntent(this, setting))
                 }
             }
         }else  if (msg.cmd == QUIZ) {
-            //开始答题
+            //课后反馈
             val feedBack = msg.getData(FeedBack::class.java)
             if (feedBack.classId == mClassesEntity.klass?.id) {
-                ActivityUtils.finishActivity(SubjectActivity::class.java)
+                ActivityUtils.finishActivity(AfterClassActivity::class.java)
                 context?.run {
                     startActivity(AfterClassActivity.callingIntent(this, feedBack))
                 }

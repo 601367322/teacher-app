@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
+import com.prance.teacher.R.id.name
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageBean
 import com.prance.teacher.features.redpackage.model.RedPackageRecord
@@ -154,7 +155,7 @@ class RedPackageManager {
      */
     fun keyToName(KeyID: String): String{
         Log.e("rich","KeyID= "+ KeyID)
-        var name = "000" + KeyID
+        var name= KeyID
         ClassesDetailFragment.mStudentList?.let {
             for(studentsEntity in it){
                 studentsEntity.run {
@@ -168,7 +169,7 @@ class RedPackageManager {
                 }
             }
         }
-        return name + "  +" + mScore
+        return "$name  +$mScore"
     }
 
     /**

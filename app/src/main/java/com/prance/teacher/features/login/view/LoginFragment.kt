@@ -13,6 +13,8 @@ import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.features.afterclass.AfterClassActivity
+import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
@@ -66,9 +68,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         //启动主页
         if (BuildConfig.DEBUG) {
-            val classes = ClassesEntity(1)
-            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
+//            val classes = ClassesEntity(1)
+//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
 
+            val feedBack = FeedBack(1,1)
+            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
             activity?.finish()
         }
     }

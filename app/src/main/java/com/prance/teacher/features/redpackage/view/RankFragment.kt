@@ -32,8 +32,8 @@ class RankFragment: BaseFragment() {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         rank = arguments?.getSerializable(RANK) as Array<Int>
-        rootView.findViewById<TextView>(R.id.tv1).setText(rank!![3].toString())
-        rootView.findViewById<TextView>(R.id.tv1).setText(rank!![2].toString())
-        rootView.findViewById<TextView>(R.id.tv1).setText(rank!![1].toString())
+        rootView.findViewById<TextView>(R.id.tv1).text = rank!![3].toString()
+        rootView.findViewById<TextView>(R.id.tv1).text = rank!![2].toString()
+        rootView.findViewById<TextView>(R.id.tv1).text = rank!![1].toString()
     }
 }
