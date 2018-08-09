@@ -31,6 +31,8 @@ class SubjectOnDestroyFragment : BaseFragment() {
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
 
         mQuestionResult?.run {
+            rightAnswer.text = "正确答案：$answer"
+
             answerResult.text = """答对：${answerMsg?.right}人      答错：${answerMsg?.wrong}人     未作答：${answerMsg?.noAnswer}人"""
 
             var sb = StringBuilder()
