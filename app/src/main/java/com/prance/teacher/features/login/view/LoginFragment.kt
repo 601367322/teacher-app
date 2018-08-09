@@ -19,6 +19,7 @@ import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
+import com.prance.teacher.features.main.view.MainFragment
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -64,12 +65,12 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         CommonShared.setPreVersion(AppUtils.getAppVersionCode())
 
         //启动主页
-        if (BuildConfig.DEBUG) {
-            val classes = ClassesEntity(1)
-            context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
-
-            activity?.finish()
-        }
+//        if (BuildConfig.DEBUG) {
+//            val classes = ClassesEntity(1)
+//            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//
+//            activity?.finish()
+//        }
     }
 
     /**
