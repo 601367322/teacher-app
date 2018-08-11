@@ -85,7 +85,10 @@ class RedPackage {
         //设置为已被抢状态
         state = RedPackageStatus.GRAB
 
-        scoreTip = ScoreTip(x, y, """${studentScore.student.name}  +${studentScore.score}""")
+        Thread({
+            //生成抢到红包提示
+            scoreTip = ScoreTip(x, y, width.toInt(), """${studentScore.student.name}  +${RedPackageManager.DEFAULT_SCORE}""")
+        }).run()
 
         if (hideAnimator == null) {
             hideAnimator = ObjectAnimator.ofInt(alpha, 0).setDuration(200)

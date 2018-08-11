@@ -6,6 +6,8 @@ import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
+import android.R.attr.centerX
+
 
 class ScoreTip {
 
@@ -32,36 +34,44 @@ class ScoreTip {
     var bitmap: Bitmap? = null
 
     //动画时长
-    val translationDurationTime = 5000L
+    val translationDurationTime = 3000L
 
     //被抢的状态
     var state = RedPackageTipStatus.SHOW
 
-    constructor(x: Int, y: Int, title: String) {
-        this.x = x
-        this.y = y
+    constructor(x: Int, y: Int, redPackageWidth: Int, title: String) {
+
         this.title = title
 
         //文字画笔
         val textPaint = Paint()
+        textPaint.isAntiAlias = true
         textPaint.color = Color.WHITE
-        textPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m40_0).toFloat()
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m20_0).toFloat()
+
+        this.width = textPaint.measureText(title).toInt()
         //计算文字宽高
         val textRect = Rect()
         textPaint.getTextBounds(title, 0, title.length, textRect)
 
-        this.width = textRect.width()
         this.height = textRect.height()
 
         //红包背景
-        var bitmap = Bitmap.createBitmap(width, Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m200_0), Bitmap.Config.ARGB_8888)
+        var bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.BLUE)
+
+        var targetRect = Rect(0, 0, width, height)
         //绘制名字
         val fontMetrics = textPaint.fontMetricsInt
-        val baseline = (textRect.bottom + textRect.top - fontMetrics.bottom - fontMetrics.top) / 2
-        canvas.drawText(title, textRect.centerX().toFloat(), baseline.toFloat(), textPaint)
+        val baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2
+
+        canvas.drawText(title, targetRect.centerX().toFloat(), baseline.toFloat(), textPaint)
         this.bitmap = bitmap
+
+        this.x = x + (redPackageWidth - this.width) / 2
+
+        this.y = y
 
         startFall()
     }

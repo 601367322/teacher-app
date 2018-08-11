@@ -36,7 +36,6 @@ class AnimGLView : GLContinuousView {
             item.scoreTip?.let {
                 if (it.state == RedPackageTipStatus.SHOW) {
                     canvas.save()
-                    LogUtils.d(it.toString())
                     canvas.setAlpha(it.alpha)
                     it.bitmap?.run {
                         if (!this.isRecycled)

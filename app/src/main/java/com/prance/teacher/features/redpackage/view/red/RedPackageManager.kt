@@ -26,14 +26,14 @@ class RedPackageManager {
         const val alphaDurationTime = 200L
 
         const val DEFAULT_ALPHA = 255
+
+        //红包的默认分数
+        const val DEFAULT_SCORE = 2
     }
 
     var DEFAULT_WIDTH = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m66_0)
     var DEFAULT_HEIGHT = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m120_0)
 
-
-    //红包的默认分数
-    var DEFAULT_SCORE = 2
 
     private var mRedPackageBackgroundPaint: Paint? = null
     private var mRedPackageTextPaint: Paint? = null
@@ -245,7 +245,7 @@ class RedPackageManager {
         studentScore.score += DEFAULT_SCORE
 
         //添加答题记录，用于发送到服务器
-        results.add(RedPackageRecord(KeyID, studentScore.student.id.toString(), Date().time))
+        results.add(RedPackageRecord(studentScore))
 
         return studentScore
     }
