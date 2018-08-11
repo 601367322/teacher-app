@@ -52,7 +52,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        Handler(Looper.getMainLooper()).post {
+        animGlView.post {
             mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
         }
     }

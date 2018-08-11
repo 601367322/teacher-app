@@ -8,6 +8,8 @@ import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.redpackage.RedPackageActivity
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.view.StudentsFragment
 
 class ClassesDetailActivity : BaseActivity() {

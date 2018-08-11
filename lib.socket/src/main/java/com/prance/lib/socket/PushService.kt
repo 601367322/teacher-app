@@ -19,6 +19,8 @@ import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
@@ -28,7 +30,6 @@ class PushService : Service() {
     private var mEventLoopGroup: EventLoopGroup? = null
     private var mChannel: Channel? = null
     private lateinit var mSocketThread: SocketThread
-    private lateinit var mMessageResponseCallBack: MessageResponseCallBack
     private var mListeners: MutableList<MessageListener> = mutableListOf()
     private val mMessageDaoUtils = MessageDaoUtils()
     private var mPushApiService: PushApiService? = null
@@ -206,6 +207,8 @@ class PushService : Service() {
                             ids.add(message.msgId)
                         }
                         mPushApiService?.messageReceivedCallBack(PushApiService.messageReceivedCallBack, ids.joinToString())!!
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io())
                                 .subscribe({
                                     for (message in list) {
                                         mMessageDaoUtils.deleteMessage(message)
@@ -259,7 +262,6 @@ class PushService : Service() {
             mChannel = null
             mEventLoopGroup = null
             mSocketThread.interrupt()
-            mMessageResponseCallBack.interrupt()
         } catch (e: Exception) {
             e.printStackTrace()
         }

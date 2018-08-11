@@ -1,6 +1,7 @@
 package com.prance.teacher.features.redpackage.view.red
 
 import android.graphics.*
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
@@ -9,6 +10,7 @@ import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
 import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 class RedPackageManager {
 
@@ -42,7 +44,7 @@ class RedPackageManager {
     var screenWidth: Int = Utils.getApp().resources.displayMetrics.widthPixels
 
     //红包集合
-    val redPackages = mutableListOf<RedPackage>()
+    val redPackages = CopyOnWriteArrayList<RedPackage>()
 
     val titles = mutableListOf("A", "B", "C", "D")
 
@@ -184,11 +186,13 @@ class RedPackageManager {
     @Synchronized
     fun grabRedPackage(keyID: String, sInfo: String?) {
         sInfo?.let {
+            val time = System.currentTimeMillis()
             //找到最下面那个没有被抢到的红包
             var redPackage: RedPackage? = null
-            for (i in redPackages.indices.reversed()) {
-                if (redPackages[i].state == RedPackageStatus.CANGRAB) {
-                    redPackage = redPackages[i]
+            for (i in redPackages) {
+                if (i.state == RedPackageStatus.CANGRAB) {
+                    redPackage = i
+                    break
                 }
             }
             redPackage?.let {
@@ -202,6 +206,7 @@ class RedPackageManager {
                     }
                 }
             }
+            println(System.currentTimeMillis() - time)
         }
     }
 

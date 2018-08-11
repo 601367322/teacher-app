@@ -5,14 +5,18 @@ import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.database.KeyPadEntityDao.Properties.KeyId
 import com.prance.teacher.features.redpackage.model.RedPackageModel
 import com.prance.teacher.features.redpackage.model.RedPackageRecord
 import io.reactivex.disposables.Disposable
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
+import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.io.Serializable
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.TimeUnit
 
 
@@ -37,6 +41,9 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     lateinit var mRedPackageManager: RedPackageManager
     var mSetting: RedPackageSetting? = null
     override val mModel: IRedPackageContract.Model = RedPackageModel()
+
+    var keyEvents = CopyOnWriteArrayList<KeyEvent>()
+    var keyEventThread = KeyEventThread()
 
     override fun getStudentList(classId: String) {
         mModel.getStudentList("1").subscribe()
@@ -67,6 +74,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                         mView?.onShowPackage(redPackage)
                     }
                 }
+//        keyEventThread.start()
     }
 
     override fun stopRedPackage() {
@@ -88,8 +96,9 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         SunARS.voteStop()
         //停止计时器
         disposable?.dispose()
+        //停止循环
+//        keyEventThread.interrupt()
     }
-
 
     override fun grabRedPackage(KeyID: String, sInfo: String?) {
         mRedPackageManager.grabRedPackage(KeyID, sInfo)
@@ -100,7 +109,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
      */
     private fun postRedPackageResult() {
         val list = mutableListOf<RedPackageRecord>()
-        for(score in mRedPackageManager.studentScores){
+        for (score in mRedPackageManager.studentScores) {
             list.add(RedPackageRecord(score))
         }
         var json = Gson().toJson(list)
@@ -109,5 +118,21 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
                 }
     }
+
+    inner class KeyEventThread : Thread() {
+
+        override fun run() {
+            while (!isInterrupted) {
+                for (event in keyEvents) {
+                    mRedPackageManager.grabRedPackage(event.keyId,event.sInfo)
+                }
+            }
+        }
+    }
+
+    class KeyEvent(
+            var keyId: String,
+            var sInfo: String
+    ) : Serializable
 }
 

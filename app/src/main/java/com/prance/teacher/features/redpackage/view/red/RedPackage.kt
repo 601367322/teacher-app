@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.*
+import android.os.Looper
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
