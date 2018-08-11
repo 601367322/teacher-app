@@ -6,6 +6,7 @@ import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.redpackage.model.RedPackageModel
+import com.prance.teacher.features.redpackage.model.RedPackageRecord
 import io.reactivex.disposables.Disposable
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
@@ -28,7 +29,6 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
      * 总时间
      */
     var totalTime: Long = 3000
-    var score: Int = 2
     /**
      * 每次生成红包的间隔时间
      */
@@ -45,7 +45,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     override fun startRedPackage(mSetting: RedPackageSetting?) {
         mSetting?.let {
             totalTime = it.lastTime!!.toLong() * 1000
-            score = it.integrat!!
+            RedPackageManager.DEFAULT_SCORE = it.integrat!!
         }
         this.mSetting = mSetting
         mRedPackageManager = RedPackageManager()
@@ -99,7 +99,11 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
      * 发送抢红包信息
      */
     private fun postRedPackageResult() {
-        var json = Gson().toJson(mRedPackageManager.results)
+        val list = mutableListOf<RedPackageRecord>()
+        for(score in mRedPackageManager.studentScores){
+            list.add(RedPackageRecord(score))
+        }
+        var json = Gson().toJson(list)
         mModel.postRedPackageResult(mSetting!!.classId.toString(), json, mSetting!!.interactId.toString())
                 .mySubscribe {
 
