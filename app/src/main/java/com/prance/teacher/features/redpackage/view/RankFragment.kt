@@ -2,10 +2,8 @@ package com.prance.teacher.features.redpackage.view
 
 import android.os.Bundle
 import android.view.View
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
-import com.prance.teacher.features.afterclass.AfterClassActivity.Companion.feedback
 import com.prance.teacher.features.redpackage.model.StudentScore
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

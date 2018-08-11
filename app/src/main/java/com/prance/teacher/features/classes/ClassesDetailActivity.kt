@@ -29,9 +29,9 @@ class ClassesDetailActivity : BaseActivity() {
         super.initView(savedInstanceState)
 
         //启动主页
-        if (BuildConfig.DEBUG) {
-            val redConfig = RedPackageSetting(1, 10, 1, 1)
-            startActivity(RedPackageActivity.callingIntent(this, redConfig))
-        }
+//        if (BuildConfig.DEBUG) {
+//            val redConfig = RedPackageSetting(1, 10, 1, 1)
+//            startActivity(RedPackageActivity.callingIntent(this, redConfig))
+//        }
     }
 }
