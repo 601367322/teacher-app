@@ -114,7 +114,7 @@ dependencies {
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.v4
     implementation dependencies.recyclerview
-
+    implementation dependencies.openGlCanvas
     implementation dependencies.okhttp3
     implementation dependencies.rxjava
     implementation dependencies.rxandroid

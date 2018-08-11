@@ -1,23 +1,22 @@
+/*
 package com.prance.teacher.features.redpackage.view
 
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.prance.teacher.R
-import com.prance.teacher.features.redpackage.model.RedPackageStatus
-import com.prance.teacher.utils.DimenUtils
+import com.prance.teacher.features.redpackage.view.red.RedPackage
 
+*/
 /**
  *Created by rich on 2018/8/1
- */
+ *//*
+
 
 class UpView(context: Context?, name: String, mTranslationY: Float): RelativeLayout(context) {
     var mContext: Context? = context
@@ -29,7 +28,7 @@ class UpView(context: Context?, name: String, mTranslationY: Float): RelativeLay
         tv_name = findViewById(R.id.tv_name)
         tv_name.text = name
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        params.leftMargin = RedPackageView.redPackageMargin
+        params.leftMargin = RedPackage.redPackageMargin
         layoutParams = params
     }
 
@@ -63,4 +62,4 @@ class UpView(context: Context?, name: String, mTranslationY: Float): RelativeLay
         translationY = 0f
         alpha = 1f
     }
-}
+}*/

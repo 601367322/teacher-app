@@ -17,6 +17,11 @@ class StudentsEntity : Serializable {
 
     }
 
+    fun getClicker(): Clicker? {
+        clickers?.let { return it[0] }
+        return null
+    }
+
     override fun toString(): String {
         return "StudentsEntity(id=$id, name=$name, clickers=$clickers)"
     }

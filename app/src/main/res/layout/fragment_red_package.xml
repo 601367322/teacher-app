@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,59 +8,21 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="抢红包"
-        android:textSize="30sp"/>
+        android:textSize="30sp" />
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="horizontal">
+    <!--<TextureView-->
+    <!--android:id="@+id/textureView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
 
-       <RelativeLayout
-           android:id="@+id/road1"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1">
+    <!--<com.prance.teacher.features.redpackage.view.MySurfaceView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/surfaceView"-->
+        <!--android:layout_height="match_parent" />-->
 
-       </RelativeLayout>
 
-       <RelativeLayout
-           android:id="@+id/road2"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1">
-
-       </RelativeLayout>
-
-       <RelativeLayout
-           android:id="@+id/road3"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1">
-
-       </RelativeLayout>
-
-       <RelativeLayout
-           android:id="@+id/road4"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1">
-
-       </RelativeLayout>
-
-       <RelativeLayout
-           android:id="@+id/road5"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1">
-
-       </RelativeLayout>
-
-       <RelativeLayout
-           android:id="@+id/road6"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_weight="1">
-
-       </RelativeLayout>
-   </LinearLayout>
+    <com.prance.teacher.features.redpackage.view.AnimGLView
+        android:id="@+id/animGlView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

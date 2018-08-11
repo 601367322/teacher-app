@@ -1,3 +1,4 @@
+/*
 package com.prance.teacher.features.redpackage.view
 
 import android.animation.Animator
@@ -19,74 +20,82 @@ import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.utils.DimenUtils
 import java.util.*
 
+*/
 /**
  *Created by rich on 2018/7/27
- */
+ *//*
 
-class RedPackageView(context: Context?) : RelativeLayout(context) {
-    var mContext: Context? = context
+
+class RedPackage {
+
+
+    lateinit var mContext: Context
     var roadPosition: Int = 0
     var mStatus: RedPackageStatus = RedPackageStatus.CANNOTGRAB
     var screenHeight: Int = 0
     var screenWidth: Int = 0
-    lateinit var mChoose: TextView
     var fallAnimator: ObjectAnimator? = null
     var hideAnimator: ObjectAnimator? = null
+    var translationY = 0f
+    var alpha = 1f
+    var text: String? = null
 
-    companion object {
-        /**
-         * 可以被使用的选项
-         */
-        var canUseSigns: LinkedList<String> = LinkedList()
-        /**
-         * 红包距离父view的边距
-         */
-        var redPackageMargin: Int = 0
-        var redPackageWidth = 66
-        var redPackageHeight = 120
+    constructor(mContext: Context) {
+        this.mContext = mContext
 
-        init {
-            canUseSigns.addAll(arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"))
-        }
-    }
-
-    init {
-        LayoutInflater.from(context).inflate(R.layout.red_package, this)
-        mChoose = findViewById(R.id.tv_choose)
-        val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        params.leftMargin = redPackageMargin
-        layoutParams = params
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        val resources = context.resources
+        val resources = mContext.resources
         val dm = resources.displayMetrics
         screenWidth = dm.widthPixels
         screenHeight = dm.heightPixels
     }
 
-    /**
+    companion object {
+        */
+/**
+         * 可以被使用的选项
+         *//*
+
+        private var canUseSigns: LinkedList<String> = LinkedList()
+        */
+/**
+         * 红包距离父view的边距
+         *//*
+
+        var redPackageMargin: Int = 0
+        var redPackageWidth = 66
+        var redPackageHeight = 120
+
+        init {
+            canUseSigns.addAll(arrayOf("A", "B", "C", "D"))
+        }
+    }
+
+
+    */
+/**
      * 设置红包对应的选项
-     */
+     *//*
+
     fun setChoose(choose: String) {
-        mChoose.text = choose
+        text = choose
     }
 
     fun getChoose(): String {
-        return mChoose.text.toString()
+        return text.toString()
     }
 
-    /**
+    */
+/**
      * 红包被抢到
-     */
+     *//*
+
     fun grab(name: String) {
-        if (parent != null) {
-            val relativeLayout = parent as ViewGroup
-            val upView = UpView(mContext, name, translationY)
-            relativeLayout.addView(upView)
-            upView.startanimator()
-        }
+//        if (parent != null) {
+//            val relativeLayout = parent as ViewGroup
+//            val upView = UpView(mContext, name, translationY)
+//            relativeLayout.addView(upView)
+//            upView.startanimator()
+//        }
         if (hideAnimator == null) {
             hideAnimator = ObjectAnimator.ofFloat(this, "Alpha", 1f, 0f)
             hideAnimator?.setDuration(1000)
@@ -109,9 +118,11 @@ class RedPackageView(context: Context?) : RelativeLayout(context) {
         hideAnimator?.start()
     }
 
-    /**
+    */
+/**
      * 红包开始下落的动画
-     */
+     *//*
+
     fun startFall() {
         if (fallAnimator == null) {
             fallAnimator = ObjectAnimator.ofFloat(this, "translationY", -DimenUtils.dip2px(mContext!!, redPackageHeight.toFloat()).toFloat(), screenHeight.toFloat())
@@ -153,12 +164,8 @@ class RedPackageView(context: Context?) : RelativeLayout(context) {
     }
 
     fun recycle() {
-        if (parent != null) {
-            val relativeLayout = parent as ViewGroup
-            relativeLayout.removeView(this)
-        }
         mStatus = RedPackageStatus.FREE
         translationY = 0f
         alpha = 1f
     }
-}
+}*/

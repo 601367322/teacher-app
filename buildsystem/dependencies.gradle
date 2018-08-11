@@ -64,7 +64,8 @@ ext {
     glideOkHttp = "4.7.1"
     netty = '5.0.0.Alpha2'
     observablesscrollview = '1.6.0'
-    pageindicatorview='1.0.1'
+    pageindicatorview = '1.0.1'
+    openGlCanvas = 'v1.4.1.0'
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -188,6 +189,7 @@ ext {
             netty                         : "io.netty:netty-all:${netty}",
             pageindicatorview             : "com.romandanylyk:pageindicatorview:${pageindicatorview}",
 
-            observablesscrollview         : "com.github.ksoichiro:android-observablescrollview:${observablesscrollview}"
+            observablesscrollview         : "com.github.ksoichiro:android-observablescrollview:${observablesscrollview}",
+            openGlCanvas                  : "com.github.ChillingVan:android-openGL-canvas:${openGlCanvas}"
     ]
 }

@@ -9,4 +9,10 @@ class RedPackageRecord {
     var clickerId: String? = null
     var studentId: String? = null
     var answerTime: Long? = null
+
+    constructor(clickerId: String?, studentId: String?, answerTime: Long?) {
+        this.clickerId = clickerId
+        this.studentId = studentId
+        this.answerTime = answerTime
+    }
 }
