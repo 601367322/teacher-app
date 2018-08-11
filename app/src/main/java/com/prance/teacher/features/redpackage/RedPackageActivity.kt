@@ -15,9 +15,9 @@ import com.prance.lib.socket.PushService
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.RankFragment
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
-import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 
 class RedPackageActivity : BaseActivity(), MessageListener {
 
@@ -90,10 +90,10 @@ class RedPackageActivity : BaseActivity(), MessageListener {
         unbindService(mPushServiceConnection)
     }
 
-    fun redPackageRank(rank: Array<Int>) {
-        rank.let {
+    fun redPackageRank(scores: MutableList<StudentScore>) {
+        scores.let {
             supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, RankFragment.create(it))
+                replace(R.id.fragmentContainer, RankFragment.create(RankFragment.Companion.BundleScore(it)))
             }
         }
     }

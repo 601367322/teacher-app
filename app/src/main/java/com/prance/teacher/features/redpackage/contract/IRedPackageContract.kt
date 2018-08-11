@@ -3,6 +3,7 @@ package com.prance.teacher.features.redpackage.contract
 import com.prance.lib.base.mvp.*
 import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
@@ -20,7 +21,7 @@ interface IRedPackageContract {
          * 显示一个随机生成的红包
          */
         fun onShowPackage(redPackage: RedPackage)
-        fun onTimeEnd(resultMaps: HashMap<String,Int>)
+        fun onTimeEnd(scores: MutableList<StudentScore>)
     }
     interface Presenter : IPresenter<View, Model> {
         /**

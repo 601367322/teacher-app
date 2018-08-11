@@ -1,7 +1,5 @@
 package com.prance.teacher.features.redpackage.presenter
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import cn.sunars.sdk.SunARS
 import com.google.gson.Gson
@@ -11,7 +9,6 @@ import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.redpackage.model.RedPackageModel
 import io.reactivex.disposables.Disposable
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -75,6 +72,8 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         stopInterval()
         //发送答题结果
         postRedPackageResult()
+        //转到排行榜界面
+        mView?.onTimeEnd(mRedPackageManager.studentScores)
     }
 
     override fun detachView() {

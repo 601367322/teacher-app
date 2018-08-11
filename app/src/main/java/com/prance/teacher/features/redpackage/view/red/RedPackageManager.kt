@@ -39,7 +39,6 @@ class RedPackageManager {
     private var mRedPackageTextPaint: Paint? = null
 
     //屏幕宽高
-    var screenHeight: Int = Utils.getApp().resources.displayMetrics.heightPixels
     var screenWidth: Int = Utils.getApp().resources.displayMetrics.widthPixels
 
     //红包集合

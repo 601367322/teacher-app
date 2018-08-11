@@ -1,15 +1,17 @@
 package com.prance.lib.socket
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
+import android.os.Handler
 import android.os.IBinder
+import android.os.Message
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.Constants
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.common.utils.http.RetrofitUtils
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageDaoUtils
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener.Companion.STATUS_CONNECT_CLOSED
@@ -29,6 +31,7 @@ class PushService : Service() {
     private lateinit var mMessageResponseCallBack: MessageResponseCallBack
     private var mListeners: MutableList<MessageListener> = mutableListOf()
     private val mMessageDaoUtils = MessageDaoUtils()
+    private var mPushApiService: PushApiService? = null
 
     companion object {
 
@@ -42,6 +45,9 @@ class PushService : Service() {
         const val QUIZ_RESULT = 6//下课提问结果
         const val INTERACT_START = 7//发起趣味互动
         const val END_INTERACTN = 8//结束趣味互动
+
+        const val SEND_RESPONSE_MESSAGE_WHAT = 1
+        const val SEND_RESPONSE_MESSAGE_INTERVAL = 1000
 
         fun callingIntent(context: Context): Intent {
             return Intent(context, PushService::class.java)
@@ -74,8 +80,10 @@ class PushService : Service() {
         super.onCreate()
         mSocketThread = SocketThread()
         mSocketThread.start()
-        mMessageResponseCallBack = MessageResponseCallBack(RetrofitUtils.getApiService(PushApiService::class.java), mMessageDaoUtils)
-        mMessageResponseCallBack.start()
+
+        mPushApiService = RetrofitUtils.getApiService(PushApiService::class.java)
+
+        startPostResponseMessage(null)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -174,12 +182,77 @@ class PushService : Service() {
                     }
                 }
             }
+
+
         }
+    }
+
+    /**
+     * 循环发送回执消息
+     */
+    private val mMessageResponseCallBackHandler = @SuppressLint("HandlerLeak")
+    object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+
+            val startTime = System.currentTimeMillis()
+
+            when (msg.what) {
+                SEND_RESPONSE_MESSAGE_WHAT -> {
+                    val list = mMessageDaoUtils.getAllMessage()
+                    if (list.isNotEmpty()) {
+                        val ids = mutableListOf<String>()
+                        for (message in list) {
+                            ids.add(message.msgId)
+                        }
+                        mPushApiService?.messageReceivedCallBack(PushApiService.messageReceivedCallBack, ids.joinToString())!!
+                                .subscribe({
+                                    for (message in list) {
+                                        mMessageDaoUtils.deleteMessage(message)
+                                    }
+
+                                    //算时间间隔
+                                    val interval = System.currentTimeMillis() - startTime
+                                    if (interval >= SEND_RESPONSE_MESSAGE_INTERVAL) {
+                                        //如果请求时间大于1秒，则立即发送
+                                        startPostResponseMessage(null)
+                                    } else {
+                                        //成功后，减去请求时间，重发
+                                        startPostResponseMessage(SEND_RESPONSE_MESSAGE_INTERVAL - interval)
+                                    }
+                                }, {
+                                    //失败后隔一秒重发
+                                    startPostResponseMessage(SEND_RESPONSE_MESSAGE_INTERVAL.toLong())
+                                })
+                    } else {
+                        startPostResponseMessage(SEND_RESPONSE_MESSAGE_INTERVAL.toLong())
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 开始发送回执
+     */
+    fun startPostResponseMessage(interval: Long?) {
+        if (interval != null) {
+            mMessageResponseCallBackHandler.sendEmptyMessageDelayed(SEND_RESPONSE_MESSAGE_WHAT, interval)
+        } else {
+            mMessageResponseCallBackHandler.sendEmptyMessage(SEND_RESPONSE_MESSAGE_WHAT)
+        }
+    }
+
+    /**
+     * 停止发送回执
+     */
+    private fun stopPostResponseMessage() {
+        mMessageResponseCallBackHandler.removeMessages(SEND_RESPONSE_MESSAGE_WHAT)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
+        stopPostResponseMessage()
         try {
             mChannel?.close()
             mEventLoopGroup?.shutdownGracefully()

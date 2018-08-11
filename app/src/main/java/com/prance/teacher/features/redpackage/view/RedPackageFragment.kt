@@ -1,7 +1,6 @@
 package com.prance.teacher.features.redpackage.view
 
 import android.os.*
-import android.util.Log
 import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -11,9 +10,9 @@ import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
 import kotlinx.android.synthetic.main.fragment_red_package.*
-import java.util.*
 
 
 /**
@@ -66,21 +65,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         }
     }
 
-    override fun onTimeEnd(resultMaps: HashMap<String, Int>) {
-        var rank = arrayOf(0, 0, 0, 0)
-        for ((key, value) in resultMaps) {
-            rank[0] = value
-
-        }
-        for (i in 0 until 2) {
-            if (rank[i] > rank[i + 1]) {
-                var temp = rank[i]
-                rank[i] = rank[i + 1]
-                rank[i + 1] = temp
-            }
-        }
-        Log.e("rich", rank.toString())
-        (activity as RedPackageActivity).redPackageRank(rank)
+    override fun onTimeEnd(scores: MutableList<StudentScore>) {
+        (activity as RedPackageActivity).redPackageRank(scores)
     }
 
     fun redPackageStop() {
