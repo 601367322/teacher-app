@@ -3,14 +3,16 @@ package com.prance.teacher.features.classes
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.redpackage.RedPackageActivity
-import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.students.view.StudentsFragment
+import com.prance.teacher.features.subject.SubjectActivity
 
 class ClassesDetailActivity : BaseActivity() {
 
@@ -29,9 +31,21 @@ class ClassesDetailActivity : BaseActivity() {
         super.initView(savedInstanceState)
 
         //启动主页
-//        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
 //            val redConfig = RedPackageSetting(1, 10, 1, 1)
 //            startActivity(RedPackageActivity.callingIntent(this, redConfig))
-//        }
+
+//            val question  = ClassesDetailFragment.Question()
+//            question.classId = 1
+//            startActivity(SubjectActivity.callingIntent(this,question))
+
+//            Handler()
+//                    .postDelayed({
+//                        sendBroadcast(Intent("com.prance.Broadcast.start"))
+//                    },5000)
+
+        }
+
+
     }
 }

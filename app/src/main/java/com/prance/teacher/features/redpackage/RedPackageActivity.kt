@@ -33,6 +33,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     companion object {
         fun callingIntent(context: Context, redPackage: RedPackageSetting): Intent {
             val intent = Intent(context, RedPackageActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
             intent.putExtra(RedPackageFragment.mSetTing, redPackage)
             return intent
         }

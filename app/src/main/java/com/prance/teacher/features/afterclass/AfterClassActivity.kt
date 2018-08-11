@@ -17,6 +17,7 @@ class AfterClassActivity : BaseActivity() {
         const val feedback: String = "feedback"
         fun callingIntent(context: Context, fb: FeedBack): Intent {
             val intent = Intent(context, AfterClassActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
             intent.putExtra(feedback, fb)
             return intent
         }

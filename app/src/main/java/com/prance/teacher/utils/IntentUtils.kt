@@ -13,6 +13,7 @@ class IntentUtils {
          */
         fun callingXYDial(): Intent {
             val intent = Intent()
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.setClassName("com.xylink.gill", "com.ainemo.becky.eapp.activity.home.DialerActivity")
             return intent
         }

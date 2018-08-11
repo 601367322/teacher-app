@@ -5,9 +5,12 @@ import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import com.blankj.utilcode.util.Utils
 import com.prance.lib.socket.PushService
 import com.prance.teacher.features.main.view.MainFragment
+import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.utils.IntentUtils
 import com.prance.teacher.weight.FloatButton
 
@@ -28,16 +31,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackBtnClick(view: View?) {
-        try {
-            startActivity(IntentUtils.callingTVHome())
-        } catch (e: Exception) {
-            e.printStackTrace()
-            try {
-                startActivity(IntentUtils.callingXYHome())
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        moveTaskToBack(true)
     }
 
     override fun onDestroy() {

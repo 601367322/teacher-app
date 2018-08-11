@@ -71,7 +71,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
+        //获取学生列表
         mPresenter.getStudentsByClassesId(mClassesEntity.klass!!.id.toString())
+
         readyClass.setOnClickListener {
             context?.let {
                 AlertDialog(it)

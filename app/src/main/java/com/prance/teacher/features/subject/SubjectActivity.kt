@@ -60,6 +60,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
         fun callingIntent(context: Context, question: ClassesDetailFragment.Question): Intent {
             val intent = Intent(context, SubjectActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
             intent.putExtra(QUESTION, question)
             return intent
         }
