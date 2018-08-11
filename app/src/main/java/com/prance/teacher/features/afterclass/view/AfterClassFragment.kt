@@ -43,7 +43,9 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
     }
 
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        Handler(Looper.getMainLooper()).post { mPresenter.saveChoose(generateKeyPadId(KeyID), sInfo ?: "") }
+        Handler(Looper.getMainLooper()).post {
+            mPresenter.saveChoose(generateKeyPadId(KeyID), sInfo ?: "")
+        }
     }
 
     override fun onTimeChange(time: String) {
@@ -56,7 +58,8 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         hideProgress()
-        return true
+        activity?.finish()
+        return false
     }
 
     override fun confirmChooseSuccess() {

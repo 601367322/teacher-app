@@ -1,6 +1,5 @@
 package com.prance.teacher.features.redpackage.presenter
 
-import android.util.Log
 import cn.sunars.sdk.SunARS
 import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract

@@ -95,16 +95,20 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         pageIndicatorView.post {
             pageIndicatorView.setSelected(pageIndex)
 
-            if (pageIndex < pageIndicatorView.count - 1) {
-                rightArrow.visibility = View.VISIBLE
-            } else {
-                rightArrow.visibility = View.GONE
-            }
-            if (pageIndex > 0) {
+            if (pageIndex == 0) {
+                leftArrow.visibility = View.GONE
+            }else{
                 leftArrow.visibility = View.VISIBLE
-            } else {
-                rightArrow.visibility = View.GONE
             }
+
+
+            if (pageIndex == layoutManager?.totalPageCount!! - 1) {
+                rightArrow.visibility = View.GONE
+            }else{
+                rightArrow.visibility = View.VISIBLE
+            }
+
+
         }
     }
 
@@ -114,10 +118,11 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         mAdapter.data = it
         mAdapter.notifyDataSetChanged()
 
-        if (layoutManager?.totalPageCount!! > 0) {
-            rightArrow.visibility = View.VISIBLE
-
-            pageIndicatorView.count = layoutManager?.totalPageCount!!
+        rightArrow.post {
+            if (layoutManager?.totalPageCount!! > 0) {
+                rightArrow.visibility = View.VISIBLE
+                pageIndicatorView.count = layoutManager?.totalPageCount!!
+            }
         }
 
         checkEmpty()
