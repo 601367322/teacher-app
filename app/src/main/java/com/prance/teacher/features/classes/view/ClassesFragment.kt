@@ -102,7 +102,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
             }
 
 
-            if (pageIndex == layoutManager?.totalPageCount!! - 1) {
+            if (pageIndex == layoutManager?.totalPageCount!! - 1 || mAdapter.data.isEmpty()) {
                 rightArrow.visibility = View.GONE
             }else{
                 rightArrow.visibility = View.VISIBLE

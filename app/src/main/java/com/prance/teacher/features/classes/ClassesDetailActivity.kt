@@ -3,16 +3,12 @@ package com.prance.teacher.features.classes
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.students.view.StudentsFragment
-import com.prance.teacher.features.subject.SubjectActivity
 
 class ClassesDetailActivity : BaseActivity() {
 
