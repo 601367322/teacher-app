@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  * 								 - generate by MvpAutoCodePlus plugin.
  */
 class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterClassContract.Presenter {
-    var mTime: Int = 5
+    var mTime: Int = 30
     var mDisposable: Disposable? = null
     override val mModel: IAfterClassContract.Model = AfterClassModel()
     override fun startReceive(feedback: FeedBack) {

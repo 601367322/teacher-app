@@ -428,7 +428,7 @@ public class PagerGridLayoutManager extends RecyclerView.LayoutManager
     /**
      * 获取总页数
      */
-    private int getTotalPageCount() {
+    public int getTotalPageCount() {
         if (getItemCount() <= 0) {
             return 0;
         }

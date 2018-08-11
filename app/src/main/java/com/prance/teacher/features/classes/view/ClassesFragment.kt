@@ -28,6 +28,8 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
     var mAdapter: ClassesAdapter = ClassesAdapter()
 
+    var layoutManager: PagerGridLayoutManager? = null
+
     companion object {
         const val ACTION = "action"
         const val ACTION_TO_CLASS = 0
@@ -45,20 +47,20 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        val layoutManager = PagerGridLayoutManager(
+        layoutManager = PagerGridLayoutManager(
                 2, 2, PagerGridLayoutManager.HORIZONTAL)
         recycler.layoutManager = layoutManager
 
         val pageSnapHelper = PagerGridSnapHelper()
         pageSnapHelper.attachToRecyclerView(recycler)
 
-        layoutManager.setPageListener(this)
-        layoutManager.isAllowContinuousScroll = false
+        layoutManager!!.setPageListener(this)
+        layoutManager!!.isAllowContinuousScroll = false
 
         recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
 
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-                val position = layoutManager.getPosition(view!!)
+                val position = layoutManager!!.getPosition(view!!)
                 if ((position + 1) % 2 == 1) {
                     outRect?.left = resources.getDimensionPixelOffset(R.dimen.m120_0)
                 } else {
@@ -83,22 +85,26 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     }
 
     override fun onPageSizeChanged(pageSize: Int) {
-        pageIndicatorView.count = pageSize
-        pageIndicatorView.setSelected(0)
+        pageIndicatorView.post {
+            pageIndicatorView.count = pageSize
+            pageIndicatorView.setSelected(0)
+        }
     }
 
     override fun onPageSelect(pageIndex: Int) {
-        pageIndicatorView.setSelected(pageIndex)
+        pageIndicatorView.post {
+            pageIndicatorView.setSelected(pageIndex)
 
-        if (pageIndex < pageIndicatorView.count - 1) {
-            rightArrow.visibility = View.VISIBLE
-        } else {
-            rightArrow.visibility = View.GONE
-        }
-        if (pageIndex > 0) {
-            leftArrow.visibility = View.VISIBLE
-        } else {
-            rightArrow.visibility = View.GONE
+            if (pageIndex < pageIndicatorView.count - 1) {
+                rightArrow.visibility = View.VISIBLE
+            } else {
+                rightArrow.visibility = View.GONE
+            }
+            if (pageIndex > 0) {
+                leftArrow.visibility = View.VISIBLE
+            } else {
+                rightArrow.visibility = View.GONE
+            }
         }
     }
 
@@ -107,6 +113,12 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         hideProgress()
         mAdapter.data = it
         mAdapter.notifyDataSetChanged()
+
+        if (layoutManager?.totalPageCount!! > 0) {
+            rightArrow.visibility = View.VISIBLE
+
+            pageIndicatorView.count = layoutManager?.totalPageCount!!
+        }
 
         checkEmpty()
     }
