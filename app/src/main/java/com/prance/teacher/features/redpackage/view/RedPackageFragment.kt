@@ -42,16 +42,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mSetting = arguments?.getSerializable(mSetTing) as RedPackageSetting
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         mPresenter.startRedPackage(mSetting)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        SunARS.voteStop()
     }
 
     override fun onShowPackage(redPackage: RedPackage) {

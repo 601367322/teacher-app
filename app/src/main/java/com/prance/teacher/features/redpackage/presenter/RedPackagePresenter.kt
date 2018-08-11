@@ -61,6 +61,8 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                         //停止答题
                         stopRedPackage()
                     }
+
+                    //生成红包
                     val redPackage = mRedPackageManager.generateRedPack()
                     redPackage?.let {
                         mView?.onShowPackage(redPackage)
@@ -101,7 +103,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         var json = Gson().toJson(mRedPackageManager.results)
         mModel.postRedPackageResult(mSetting!!.classId.toString(), json, mSetting!!.interactId.toString())
                 .mySubscribe {
-                    Log.e("rich", "success")
+
                 }
     }
 }

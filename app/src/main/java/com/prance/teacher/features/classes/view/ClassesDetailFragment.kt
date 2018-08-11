@@ -172,7 +172,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun studentList(list: MutableList<StudentsEntity>) {
         hideProgress()
         mStudentList = list
-        Log.e("rich",list.toString())
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {
