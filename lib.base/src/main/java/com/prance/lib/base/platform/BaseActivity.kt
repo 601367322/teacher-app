@@ -16,6 +16,7 @@
 package com.prance.lib.base.platform
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.prance.lib.base.R
@@ -49,17 +50,22 @@ abstract class BaseActivity : FragmentActivity() {
     }
 
     override fun onBackPressed() {
-        (supportFragmentManager.findFragmentById(
-                R.id.fragmentContainer) as BaseFragment).onBackPressed()
+        if (supportFragmentManager.fragments.size > 0)
+            (supportFragmentManager.findFragmentById(
+                    R.id.fragmentContainer) as BaseFragment).onBackPressed()
         super.onBackPressed()
     }
 
-    private fun addFragment(savedInstanceState: Bundle?) =
+    private fun addFragment(savedInstanceState: Bundle?) {
+        val fragment = fragment()
+        fragment?.let {
             savedInstanceState ?: supportFragmentManager.inTransaction {
                 add(R.id.fragmentContainer, fragment())
             }
+        }
+    }
 
-    abstract fun fragment(): BaseFragment
+    abstract fun fragment(): BaseFragment?
 
     open fun layoutId(): Int = R.layout.activity_layout
 }

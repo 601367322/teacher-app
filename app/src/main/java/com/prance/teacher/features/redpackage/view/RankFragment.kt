@@ -53,7 +53,7 @@ class RankFragment : BaseFragment() {
         val rank = sort(scores)
 
         val builder = StringBuilder()
-        for (i in 0 until min(5, rank.size)) {
+        for (i in 0 until min(3, rank.size)) {
             builder.append("第${i + 1}名：${rank[i].student.name}  ${rank[i].score}分\n")
         }
 

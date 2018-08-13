@@ -76,6 +76,10 @@
             android:screenOrientation="landscape"
             android:theme="@style/ActivityTranslucent" />
 
+        <activity
+            android:name=".features.main.view.ExitActivity"
+            android:screenOrientation="landscape" />
+
         <service
             android:name=".services.UpdateService"
             android:exported="false" />
