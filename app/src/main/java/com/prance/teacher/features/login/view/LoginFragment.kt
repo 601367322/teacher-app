@@ -5,6 +5,8 @@ import android.view.View
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.GlideOptions
 import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
 import com.prance.lib.common.utils.http.ResultException
@@ -29,6 +31,7 @@ import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.concurrent.TimeUnit
 
@@ -69,6 +72,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         }
         CommonShared.setPreVersion(AppUtils.getAppVersionCode())
 
+        versionName.text = "版本号：v" + AppUtils.getAppVersionName()
         //启动主页
         if (BuildConfig.DEBUG) {
             val classes = ClassesEntity(1)
@@ -97,8 +101,13 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         //隐藏loading
         hideProgress()
 
+        GlideApp.with(this)
+                .load(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
+                .apply(GlideOptions.bitmapTransform(RoundedCornersTransformation(resources.getDimensionPixelOffset(R.dimen.m16_0), 0)))
+                .into(qrCode)
+
         //显示二维码
-        qrCode.setImageBitmap(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
+//        qrCode.setImageBitmap(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
 
         //开启定时检查二维码有效性
         startCheckQrCode(CHECK_INTERVAL)

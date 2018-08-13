@@ -104,7 +104,7 @@
         app:icon="@drawable/icon_back_button"
         app:layout_constraintStart_toStartOf="@+id/startLesson"
         app:layout_constraintTop_toBottomOf="@+id/startLesson"
-        app:text="返回上一层" />
+        app:text="返回" />
 
 
     <com.prance.lib.common.utils.weight.MyButton

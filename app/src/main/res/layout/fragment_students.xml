@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:onClick="onBackBtnClick"
             app:icon="@drawable/icon_back_button"
-            app:text="返回上一层" />
+            app:text="返回" />
 
 
     </LinearLayout>

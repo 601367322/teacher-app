@@ -15,7 +15,7 @@ class ButtonBackground : View {
 
     constructor(context: Context) : super(context) {
         mShadowWidth = resources.getDimensionPixelOffset(R.dimen.m9_0).toFloat()
-        mRadius = resources.getDimensionPixelOffset(R.dimen.m4_0).toFloat()
+        mRadius = resources.getDimensionPixelOffset(R.dimen.m8_0).toFloat()
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         setWillNotDraw(false)

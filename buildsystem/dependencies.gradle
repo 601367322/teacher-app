@@ -13,7 +13,7 @@ ext {
     targetSdkVersion = 24//支持最大版本号
     minSdkVersion = 22//支持最小版本号
     versionCode = 4//当前程序版本号
-    versionName = "1.1.0"
+    versionName = "1.1"
     supportVersion = "27.1.1"//v4 v7版本号
 
     constraintLayoutVersion = '1.1.0-beta3'

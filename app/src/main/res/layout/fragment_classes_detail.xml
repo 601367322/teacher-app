@@ -40,7 +40,7 @@
         app:icon="@drawable/icon_back_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:text="返回上一层">
+        app:text="返回">
 
     </com.prance.lib.common.utils.weight.MyButton>
 
