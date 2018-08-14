@@ -10,6 +10,7 @@
         android:layout_width="@dimen/m88.0"
         android:layout_height="@dimen/m88.0"
         android:scaleType="fitXY"
+        android:src="@drawable/default_avatar_boy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m18.0"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintStart_toEndOf="@+id/avatar"

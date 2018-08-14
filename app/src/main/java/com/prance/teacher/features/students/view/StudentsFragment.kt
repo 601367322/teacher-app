@@ -49,7 +49,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
-        recycler.layoutManager = GridLayoutManager(activity, 7)
+        recycler.layoutManager = GridLayoutManager(activity, 6)
 
         recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {

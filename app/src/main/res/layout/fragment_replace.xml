@@ -9,9 +9,9 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m210.0"
+        android:layout_marginTop="@dimen/m179.0"
         android:text="更改答题器"
-        android:textSize="@dimen/m40.0"
+        android:textSize="@dimen/m70.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

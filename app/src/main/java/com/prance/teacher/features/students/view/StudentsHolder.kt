@@ -22,10 +22,6 @@ class StudentsHolder(itemView: View) :
                     itemView.keyPadId.text = it.clickers!![0].number
                 }
             }
-            if (layoutPosition % 2 == 0)
-                itemView.avatar.setImageResource(R.drawable.default_circle_avatar_boy)
-            else
-                itemView.avatar.setImageResource(R.drawable.default_circle_avatar_girl)
         }
     }
 
