@@ -112,6 +112,11 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
 //                })
     }
 
+    override fun onTerminate() {
+        super.onTerminate()
+
+        SunARS.removeListener(this)
+    }
 
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
         when (iMode) {

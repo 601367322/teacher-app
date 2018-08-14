@@ -337,10 +337,6 @@ public class SunARS {
         listeners.remove(al);
     }
 
-    public static void clearListener() {
-        listeners.clear();
-    }
-
     public static int DataRx(byte[] recvData, int dataLen) {
         return DataRx0(recvData, dataLen);
     }

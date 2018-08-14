@@ -87,7 +87,7 @@ class SunVoteService : Service() {
 
         unregisterReceiver(mUsbReceiver)
 
-        SunARS.clearListener()
+        SunARS.removeListener(mSunARSListener)
     }
 
     companion object {
