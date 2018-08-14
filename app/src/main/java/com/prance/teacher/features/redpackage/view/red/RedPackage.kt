@@ -57,7 +57,7 @@ class RedPackage {
     fun startFall() {
         if (fallAnimator == null) {
             fallAnimator = ObjectAnimator.ofInt(-height.toInt(), screenHeight).setDuration(RedPackageManager.translationDurationTime)
-            fallAnimator!!.interpolator = AccelerateInterpolator()
+            fallAnimator!!.interpolator = LinearInterpolator()
             fallAnimator!!.addUpdateListener {
                 y = it.animatedValue.toString().toInt()
 

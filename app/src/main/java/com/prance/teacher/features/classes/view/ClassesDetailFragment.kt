@@ -75,6 +75,11 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPresenter.getStudentsByClassesId(mClassesEntity.klass!!.id.toString())
 
         readyClass.setOnClickListener {
+            try {
+                Thread.sleep(2000)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             context?.let {
                 AlertDialog(it)
                         .setMessage("确定准备就绪？")

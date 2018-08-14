@@ -30,8 +30,8 @@ class ClassesDetailActivity : BaseActivity() {
 
         //启动主页
         if (BuildConfig.DEBUG) {
-//            val redConfig = RedPackageSetting(1, 10, 1, 1)
-//            startActivity(RedPackageActivity.callingIntent(this, redConfig))
+            val redConfig = RedPackageSetting(1, 30, 1, 1)
+            startActivity(RedPackageActivity.callingIntent(this, redConfig))
 
 //            val question  = ClassesDetailFragment.Question()
 //            question.classId = 1

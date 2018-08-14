@@ -2,6 +2,7 @@ package com.prance.lib.teacher.base
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.view.Choreographer
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.*
 import com.prance.lib.third.inter.PluginsManager
@@ -12,7 +13,9 @@ import com.prance.lib.database.BaseStationEntity
 import com.prance.lib.database.DaoManager
 import com.prance.lib.database.UserEntity
 import com.prance.lib.common.utils.http.OkHttpUtils
+import com.prance.lib.teacher.base.utils.LogMonitor
 import org.greenrobot.greendao.query.QueryBuilder
+import java.util.concurrent.TimeUnit
 
 
 class TeacherApplication : Application(), SunARS.SunARSListener {
@@ -84,6 +87,29 @@ class TeacherApplication : Application(), SunARS.SunARSListener {
         //没有基站时，测试开发使用
 //        if (BuildConfig.DEBUG)
 //            mBaseStation = BaseStationEntity(0, "test")
+
+//        var last = 0L
+//        var current = 0L
+//
+//        Choreographer.getInstance()
+//                .postFrameCallback(object : Choreographer.FrameCallback {
+//                    override fun doFrame(frameTimeNanos: Long) {
+//                        if (frameTimeNanos == 0L) {
+//                            last = frameTimeNanos
+//                        }
+//                        current = frameTimeNanos
+//                        var diffMs = TimeUnit.MILLISECONDS.convert(current - last, TimeUnit.NANOSECONDS)
+//                        var drop = 0
+//                        if (diffMs > 16.6f) {
+//                            drop = (diffMs / 16.6).toInt()
+//                        }
+//                        if (LogMonitor.getInstance().isMonitor) {
+//                            LogMonitor.getInstance().removeMonitor()
+//                        }
+//                        LogMonitor.getInstance().startMonitor()
+//                        Choreographer.getInstance().postFrameCallback(this)
+//                    }
+//                })
     }
 
 
