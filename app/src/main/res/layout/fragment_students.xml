@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
-            app:text="开始绑定"
+            app:text="开始"
             android:visibility="gone"
             app:icon="@drawable/icon_start_bind_button"/>
 
@@ -61,7 +61,7 @@
             android:layout_marginEnd="@dimen/m32.0"
             android:visibility="gone"
             app:icon="@drawable/icon_complete_bind_button"
-            app:text="完成绑定" />
+            app:text="完成" />
 
         <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/replace"
@@ -70,7 +70,7 @@
             android:layout_marginEnd="@dimen/m32.0"
             android:visibility="gone"
             app:icon="@drawable/icon_replace_button"
-            app:text="替换答题器" />
+            app:text="替换" />
 
         <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/refresh"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
             app:icon="@drawable/icon_refresh_button"
-            app:text="数据刷新" />
+            app:text="刷新" />
 
         <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/back"

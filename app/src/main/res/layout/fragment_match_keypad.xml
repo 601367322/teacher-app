@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/back"
         app:layout_constraintTop_toTopOf="@+id/back"
-        app:text="完成配对" />
+        app:text="完成" />
 
     <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/delete"
@@ -100,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/back"
         app:layout_constraintEnd_toStartOf="@+id/complete"
         app:layout_constraintTop_toTopOf="@+id/back"
-        app:text="删除配对" />
+        app:text="删除" />
 
 
     <com.prance.lib.common.utils.weight.MyButton
