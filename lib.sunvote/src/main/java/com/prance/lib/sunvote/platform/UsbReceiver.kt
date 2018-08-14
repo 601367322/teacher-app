@@ -33,7 +33,7 @@ class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : Broa
                     }
                 } else if (UsbManager.ACTION_USB_DEVICE_DETACHED == action) {
                     /* 移除 */
-                    mUsbManagerInterface.closeUsb()
+                    mUsbManagerInterface.checkUsbDevice(context)
                 } else if (ACTION_USB_PERMISSION == action) {
                     //授权
                     synchronized(this) {

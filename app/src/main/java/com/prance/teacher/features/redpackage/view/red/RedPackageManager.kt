@@ -17,13 +17,13 @@ class RedPackageManager {
     companion object {
 
         //红包每个泳道最小的时间间隔
-        const val minInterval = 2000
+        const val minInterval = 2500
 
         //随机取值范围
-        const val intervalRange = 3000
+        const val intervalRange = 3500
 
         //红包的动画总长
-        const val translationDurationTime = 5000L
+        const val translationDurationTime = 6000L
 
         const val alphaDurationTime = 200L
 

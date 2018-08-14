@@ -42,9 +42,6 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     var mSetting: RedPackageSetting? = null
     override val mModel: IRedPackageContract.Model = RedPackageModel()
 
-    var keyEvents = CopyOnWriteArrayList<KeyEvent>()
-    var keyEventThread = KeyEventThread()
-
     override fun getStudentList(classId: String) {
         mModel.getStudentList("1").subscribe()
     }
@@ -74,7 +71,6 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                         mView?.onShowPackage(redPackage)
                     }
                 }
-//        keyEventThread.start()
     }
 
     override fun stopRedPackage() {
@@ -96,8 +92,6 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         SunARS.voteStop()
         //停止计时器
         disposable?.dispose()
-        //停止循环
-//        keyEventThread.interrupt()
     }
 
     override fun grabRedPackage(KeyID: String, sInfo: String?) {
@@ -117,17 +111,6 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                 .mySubscribe {
 
                 }
-    }
-
-    inner class KeyEventThread : Thread() {
-
-        override fun run() {
-            while (!isInterrupted) {
-                for (event in keyEvents) {
-                    mRedPackageManager.grabRedPackage(event.keyId,event.sInfo)
-                }
-            }
-        }
     }
 
     class KeyEvent(

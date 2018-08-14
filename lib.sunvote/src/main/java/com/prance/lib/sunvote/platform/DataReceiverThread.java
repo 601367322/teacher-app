@@ -28,7 +28,7 @@ public class DataReceiverThread extends Thread {
                 onDataReceived(buffer);
             }
             try {
-                sleep(50);
+                sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;

@@ -37,6 +37,7 @@ class UsbManagerImpl : IUsbManagerInterface {
         mUsbManager = context?.getSystemService(Context.USB_SERVICE) as UsbManager?
         val map = mUsbManager?.deviceList
         map?.let {
+            var baseStation: UsbDevice? = null
             for (device in map.values) {
 //                LogUtils.d("checkDevice", "找到基站: Vid:" + device.vendorId + "  Pid:" + device.productId)
 
@@ -44,19 +45,19 @@ class UsbManagerImpl : IUsbManagerInterface {
                         || device.vendorId == VendorID_2 && device.productId == ProductID_2
                         || device.vendorId == VendorID_3 && device.productId == ProductID_3) {
 
-                    mUsbDevice = device
+                    baseStation = device
 
                     LogUtils.d("找到基站\t\n"
-                            + mUsbDevice?.deviceId + "\n"
-                            + mUsbDevice?.deviceName + "\n"
-                            + mUsbDevice?.deviceClass + "\n"
-                            + mUsbDevice?.deviceProtocol + "\n"
-                            + mUsbDevice?.deviceSubclass + "\n"
-                            + mUsbDevice?.productId + "\n"
-                            + mUsbDevice?.productName + "\n"
-                            + mUsbDevice?.manufacturerName + "\n"
-                            + mUsbDevice?.vendorId + "\n"
-                            + mUsbDevice?.serialNumber + "\n"
+                            + baseStation?.deviceId + "\n"
+                            + baseStation?.deviceName + "\n"
+                            + baseStation?.deviceClass + "\n"
+                            + baseStation?.deviceProtocol + "\n"
+                            + baseStation?.deviceSubclass + "\n"
+                            + baseStation?.productId + "\n"
+                            + baseStation?.productName + "\n"
+                            + baseStation?.manufacturerName + "\n"
+                            + baseStation?.vendorId + "\n"
+                            + baseStation?.serialNumber + "\n"
                     )
 
                     //申请授权
@@ -71,6 +72,11 @@ class UsbManagerImpl : IUsbManagerInterface {
                     break
                 }
             }
+
+            if (baseStation == null) {
+                closeUsb()
+            }
+            mUsbDevice = baseStation
         }
     }
 
