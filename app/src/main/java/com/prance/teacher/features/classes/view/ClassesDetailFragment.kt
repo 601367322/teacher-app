@@ -1,15 +1,14 @@
 package com.prance.teacher.features.classes.view
 
+import android.app.Activity
 import android.app.Service
 import android.content.ComponentName
+import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -30,18 +29,19 @@ import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
-import com.prance.teacher.utils.IntentUtils
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
 
-class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailContract.View{
+class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_classes_detail
 
     lateinit var mClassesEntity: ClassesEntity
 
     var mPushBinder: PushService.PushServiceBinder? = null
+
+    var REQUEST_CODE = 10001
 
     private var mPushServiceConnection = object : ServiceConnection {
 
@@ -77,19 +77,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         readyClass.setOnClickListener {
             context?.let {
-                startActivity(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
-//                AlertDialog(it)
-//                        .setMessage("确定准备就绪？")
-//                        .setConfirmButton("确定", {
-//                            try {
-//                                startActivity(IntentUtils.callingXYDial())
-//                            } catch (e: Exception) {
-//                                e.printStackTrace()
-//                                ToastUtils.showShort("请使用小鱼易联")
-//                            }
-//                        })
-//                        .setCancelButton("取消", null)
-//                        .show()
+                //准备就绪，检查答题器
+                startActivityForResult(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS), REQUEST_CODE)
             }
         }
 
@@ -99,8 +88,20 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         classesSubTitle.text = mClassesEntity.klass?.addr
         classesDate.text = """${mClassesEntity.klass?.startTime}-${mClassesEntity.klass?.endTime}"""
 
-        //开始Socket监听
-        activity?.bindService(PushService.callingIntent(context!!), mPushServiceConnection, Service.BIND_AUTO_CREATE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_CODE -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        //开始Socket监听
+                        activity?.bindService(PushService.callingIntent(context!!), mPushServiceConnection, Service.BIND_AUTO_CREATE)
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -124,7 +125,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                     startActivity(SubjectActivity.callingIntent(this, question))
                 }
             }
-        } else  if (msg.cmd == INTERACT_START) {
+        } else if (msg.cmd == INTERACT_START) {
             //抢红包
             val setting = msg.getData(RedPackageSetting::class.java)
             if (setting.classId == mClassesEntity.klass?.id) {
@@ -133,7 +134,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                     startActivity(RedPackageActivity.callingIntent(this, setting))
                 }
             }
-        }else  if (msg.cmd == QUIZ) {
+        } else if (msg.cmd == QUIZ) {
             //课后反馈
             val feedBack = msg.getData(FeedBack::class.java)
             if (feedBack.classId == mClassesEntity.klass?.id) {

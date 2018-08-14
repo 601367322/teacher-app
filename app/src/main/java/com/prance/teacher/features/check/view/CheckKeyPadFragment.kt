@@ -1,5 +1,6 @@
 package com.prance.teacher.features.check.view
 
+import android.app.Activity
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -92,6 +93,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
                     ToastUtils.showShort("请使用小鱼易联")
                 }
             }
+            activity?.setResult(Activity.RESULT_OK)
             activity?.finish()
         }
 
