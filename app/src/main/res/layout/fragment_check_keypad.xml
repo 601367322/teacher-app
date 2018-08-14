@@ -5,42 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/descriptionGroup"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/classTip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tip">
+        android:layout_marginBottom="@dimen/m25.0"
+        android:layout_marginStart="@dimen/m118.0"
+        android:text="检测提示："
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintBottom_toTopOf="@+id/classTip1"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/classTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/m209.0"
-            android:text="上课提示"
-            android:textSize="@dimen/m48.0" />
+    <TextView
+        android:id="@+id/classTip1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m25.0"
+        android:text="1.检测前请按答题器任意键进行唤醒"
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintBottom_toTopOf="@+id/classTip2"
+        app:layout_constraintStart_toStartOf="@+id/classTip" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/m554.0"
-            android:layout_marginTop="@dimen/m48.0"
-            android:text="1.以答题器配对信息为校准标准"
-            android:textSize="@dimen/m40.0" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/m554.0"
-            android:layout_marginTop="@dimen/m41.0"
-            android:text="2.检测已配对答题器是否在线、电量是否充足"
-            android:textSize="@dimen/m40.0" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/classTip2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m87.0"
+        android:text="2.检测已配对答题器是否在线、电量是否充足"
+        android:textSize="@dimen/m32.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/classTip1" />
 
     <TextView
         android:id="@+id/tip"
@@ -79,6 +73,7 @@
         android:paddingBottom="@dimen/m90.0"
         android:paddingEnd="@dimen/m120.0"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -88,16 +83,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
             app:icon="@drawable/icon_check_button"
-            app:text="检测答题器" />
+            app:text="重新检测" />
 
         <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/jump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m32.0"
-            android:visibility="gone"
             app:icon="@drawable/icon_jump_button"
-            app:text="跳过" />
+            app:text="下一步" />
 
         <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/back"
@@ -108,33 +102,5 @@
             app:text="返回" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/checkCompleteGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m80.0"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionGroup">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/m179.0"
-            android:layout_height="@dimen/m179.0"
-            android:scaleType="centerCrop"
-            android:src="@drawable/check_complete" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/m36.0"
-            android:text="检测完成：未发现异常"
-            android:textColor="#fff"
-            android:textSize="@dimen/m40.0" />
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

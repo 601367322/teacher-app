@@ -21,6 +21,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.afterclass.model.FeedBack
+import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
@@ -75,24 +76,20 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPresenter.getStudentsByClassesId(mClassesEntity.klass!!.id.toString())
 
         readyClass.setOnClickListener {
-            try {
-                Thread.sleep(2000)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
             context?.let {
-                AlertDialog(it)
-                        .setMessage("确定准备就绪？")
-                        .setConfirmButton("确定", {
-                            try {
-                                startActivity(IntentUtils.callingXYDial())
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                ToastUtils.showShort("请使用小鱼易联")
-                            }
-                        })
-                        .setCancelButton("取消", null)
-                        .show()
+                startActivity(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
+//                AlertDialog(it)
+//                        .setMessage("确定准备就绪？")
+//                        .setConfirmButton("确定", {
+//                            try {
+//                                startActivity(IntentUtils.callingXYDial())
+//                            } catch (e: Exception) {
+//                                e.printStackTrace()
+//                                ToastUtils.showShort("请使用小鱼易联")
+//                            }
+//                        })
+//                        .setCancelButton("取消", null)
+//                        .show()
             }
         }
 

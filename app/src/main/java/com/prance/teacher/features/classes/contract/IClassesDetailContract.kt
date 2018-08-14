@@ -2,6 +2,7 @@ package com.prance.teacher.features.classes.contract
 
 import com.prance.lib.base.mvp.*
 import com.prance.lib.common.utils.http.ResponseBody
+import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
 

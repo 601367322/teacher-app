@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.common.utils.http.ResultException
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -16,6 +17,7 @@ import com.prance.teacher.features.check.presenter.CheckKeyPadPresenter
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
+import com.prance.teacher.utils.IntentUtils
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_check_keypad.*
@@ -80,14 +82,17 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         }
         recycler.layoutManager = layoutManager
 
-        if (mAction == ClassesFragment.ACTION_TO_CLASS) {
-            jump.visibility = View.VISIBLE
-            jump.setOnClickListener {
-                context?.run { startActivity(ClassesActivity.callingIntent(this, ClassesFragment.ACTION_TO_CLASS)) }
+        //开始连接视频
+        jump.setOnClickListener {
+            context?.run {
+                try {
+                    startActivity(IntentUtils.callingXYDial())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showShort("请使用小鱼易联")
+                }
             }
-            classTip.text = "上课提示"
-        } else {
-            classTip.text = "检测提示"
+            activity?.finish()
         }
 
         check.setOnClickListener {
@@ -97,29 +102,44 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
             }
             showProgress("正在进行检测")
 
-            descriptionGroup.visibility = View.VISIBLE
-            tip.visibility = View.GONE
-            recycler.visibility = View.GONE
-            checkCompleteGroup.visibility = View.GONE
+            hideRecycler()
 
             mPresenter.getMatchedKeyPadByBaseStationId(application.mBaseStation.sn)
         }
+
+        check.performClick()
+    }
+
+    fun showRecycler() {
+        tip.visibility = View.VISIBLE
+        recycler.visibility = View.VISIBLE
+        linearLayout.visibility = View.VISIBLE
+
+        classTip.visibility = View.GONE
+        classTip1.visibility = View.GONE
+        classTip2.visibility = View.GONE
+    }
+
+    fun hideRecycler() {
+        tip.visibility = View.GONE
+        recycler.visibility = View.GONE
+        linearLayout.visibility = View.GONE
+
+        classTip.visibility = View.VISIBLE
+        classTip1.visibility = View.VISIBLE
+        classTip2.visibility = View.VISIBLE
     }
 
     override fun renderKeyPads(it: MutableList<Any>) {
         hideProgress()
 
         if (it.isEmpty()) {
-            checkCompleteGroup.visibility = View.VISIBLE
-
-            if (mAction == ACTION_JUST_CHECK)
-                back.requestFocus()
-            else
-                jump.requestFocus()
+            //所有答题器都没问题
+            jump.performClick()
         } else {
-            descriptionGroup.visibility = View.GONE
-            tip.visibility = View.VISIBLE
-            recycler.visibility = View.VISIBLE
+            showRecycler()
+
+            check.requestFocus()
 
             mAdapter.data = it
             mAdapter.notifyDataSetChanged()
@@ -160,6 +180,15 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         hideProgress()
+        if (throwable is ResultException) {
+            when (throwable.status) {
+                88002 -> {
+                    activity?.finish()
+                    return false
+                }
+            }
+        }
+        showRecycler()
         return false
     }
 }

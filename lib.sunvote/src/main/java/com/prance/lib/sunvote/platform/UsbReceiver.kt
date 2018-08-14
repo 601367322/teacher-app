@@ -44,7 +44,7 @@ class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : Broa
                                 LogUtils.d("授权成功")
                                 if (System.currentTimeMillis() - lastOpenTime > 1000) {
                                     lastOpenTime = System.currentTimeMillis()
-                                    mUsbManagerInterface.openUsbDevice()
+                                    mUsbManagerInterface.checkUsbDevice(context)
                                 }
                             } else {
                                 // 授权失败

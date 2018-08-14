@@ -16,7 +16,5 @@ interface IUsbManagerInterface {
 
     fun checkUsbDevice(context: Context?)
 
-    fun openUsbDevice(): Boolean
-
     fun getUsbDevice(): UsbDevice?
 }

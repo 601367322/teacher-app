@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Message
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.Utils
 import java.util.*
 
 
@@ -34,50 +35,39 @@ class UsbManagerImpl : IUsbManagerInterface {
     private val recvBuffer = ByteArray(64)
 
     override fun checkUsbDevice(context: Context?) {
-        mUsbManager = context?.getSystemService(Context.USB_SERVICE) as UsbManager?
+
+        val usbDevice = checkUserDevice()
+        if (usbDevice == null) {
+            //如果没有检测到基站，则关闭连接
+            closeUsb()
+        } else {
+            mUsbDevice = usbDevice
+            //申请授权
+            if (!mUsbManager!!.hasPermission(usbDevice)) {
+                val intent = Intent(ACTION_USB_PERMISSION)
+                val mPermissionIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+                mUsbManager?.requestPermission(usbDevice, mPermissionIntent)
+            } else {
+                openUsbDevice()
+            }
+        }
+    }
+
+    private fun checkUserDevice(): UsbDevice? {
+        mUsbManager = Utils.getApp().getSystemService(Context.USB_SERVICE) as UsbManager
         val map = mUsbManager?.deviceList
         map?.let {
-            var baseStation: UsbDevice? = null
             for (device in map.values) {
-//                LogUtils.d("checkDevice", "找到基站: Vid:" + device.vendorId + "  Pid:" + device.productId)
 
                 if (device.vendorId == VendorID && device.productId == ProductID
                         || device.vendorId == VendorID_2 && device.productId == ProductID_2
                         || device.vendorId == VendorID_3 && device.productId == ProductID_3) {
 
-                    baseStation = device
-
-                    LogUtils.d("找到基站\t\n"
-                            + baseStation?.deviceId + "\n"
-                            + baseStation?.deviceName + "\n"
-                            + baseStation?.deviceClass + "\n"
-                            + baseStation?.deviceProtocol + "\n"
-                            + baseStation?.deviceSubclass + "\n"
-                            + baseStation?.productId + "\n"
-                            + baseStation?.productName + "\n"
-                            + baseStation?.manufacturerName + "\n"
-                            + baseStation?.vendorId + "\n"
-                            + baseStation?.serialNumber + "\n"
-                    )
-
-                    //申请授权
-                    if (!mUsbManager!!.hasPermission(device)) {
-                        val intent = Intent(ACTION_USB_PERMISSION)
-                        val mPermissionIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
-                        mUsbManager?.requestPermission(device, mPermissionIntent)
-                    } else {
-                        openUsbDevice()
-                    }
-
-                    break
+                    return device
                 }
             }
-
-            if (baseStation == null) {
-                closeUsb()
-            }
-            mUsbDevice = baseStation
         }
+        return null
     }
 
     override fun getUsbDevice(): UsbDevice? {
@@ -89,7 +79,7 @@ class UsbManagerImpl : IUsbManagerInterface {
      *
      * @paramdevice
      */
-    override fun openUsbDevice(): Boolean {
+    private fun openUsbDevice(): Boolean {
         mUsbDevice?.let {
             if (it.interfaceCount == 0) {
                 return false
