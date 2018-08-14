@@ -6,9 +6,6 @@ import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
-import android.R.attr.centerX
-import android.os.Looper
-
 
 class ScoreTip {
 

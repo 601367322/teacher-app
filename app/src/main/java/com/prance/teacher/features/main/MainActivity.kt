@@ -32,8 +32,8 @@ class MainActivity : BaseActivity() {
         super.initView(savedInstanceState)
 
         if (BuildConfig.DEBUG) {
-            val classes = ClassesEntity(1)
-            startActivity(ClassesDetailActivity.callingIntent(this, classes))
+//            val classes = ClassesEntity(1)
+//            startActivity(ClassesDetailActivity.callingIntent(this, classes))
         }
     }
 

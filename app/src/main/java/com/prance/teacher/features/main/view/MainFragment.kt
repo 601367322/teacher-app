@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.teacher.R
@@ -40,19 +41,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
             }
         }
 
-        check.setOnClickListener {
-            if (application.mBaseStation.sn == null) {
-                ToastUtils.showShort("请先连接基站")
-            } else {
-                mPresenter.checkIfKeyPadAlreadyMatched(application.mBaseStation.sn, {
-                    context?.let {
-                        startActivity(CheckKeyPadActivity.callingIntent(it))
-                    }
-                }, { ToastUtils.showShort("请先进行答题器配对") }
-                )
-            }
-        }
-
         matchKeyPad.setOnClickListener {
             if (application.mBaseStation.sn == null) {
                 ToastUtils.showShort("请先连接基站")
@@ -72,6 +60,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
         exit.setOnClickListener {
             startActivity(Intent(activity, ExitActivity::class.java))
         }
+
+        versionName.text = "版本号：v" + AppUtils.getAppVersionName()
     }
 
     override fun needSunVoteService(): Boolean = true

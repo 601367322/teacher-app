@@ -13,9 +13,9 @@ import com.prance.lib.common.R;
 
 public class FocusRelativeLayout extends RelativeLayout {
 
-    private Rect mBound;
-    private Drawable mDrawable;
-    private Rect mRect;
+    protected Rect mBound;
+    protected Drawable mDrawable;
+    protected Rect mRect;
 
     private float defaultZ = 0;
 
@@ -42,9 +42,13 @@ public class FocusRelativeLayout extends RelativeLayout {
         mRect = new Rect();
         mBound = new Rect();
         //获取焦点后,外侧的阴影图片
-//        mDrawable = getResources().getDrawable(R.drawable.poster_shadow_4);
+//        mDrawable = getResources().getDrawable(R.drawable.btn_common_focused);
         setChildrenDrawingOrderEnabled(true);
-
+        setClipToPadding(false);
+        setClickable(true);
+        setClipChildren(false);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
         defaultZ = getZ();
     }
 
@@ -58,25 +62,23 @@ public class FocusRelativeLayout extends RelativeLayout {
         super.draw(canvas);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (hasFocus()) {
-            super.getDrawingRect(mRect);
-            mBound.set(-5 + mRect.left, -5 + mRect.top, 5 + mRect.right, 5 + mRect.bottom);
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        if (hasFocus()) {
+//            super.getDrawingRect(mRect);
+//            mBound.set(-5 + mRect.left, -5 + mRect.top, 5 + mRect.right, 5 + mRect.bottom);
 //            mDrawable.setBounds(mBound);
-            canvas.save();
+//            canvas.save();
 //            mDrawable.draw(canvas);
-            canvas.restore();
-        }
-        super.onDraw(canvas);
-    }
+//            canvas.restore();
+//        }
+//        super.onDraw(canvas);
+//    }
 
     @Override
     protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         if (gainFocus) {
-            getRootView().requestLayout();
-            getRootView().invalidate();
             zoomOut();
         } else {
             zoomIn();

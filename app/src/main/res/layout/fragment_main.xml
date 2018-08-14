@@ -1,105 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:clipToPadding="false"
+    android:clipChildren="false"
     android:layout_height="match_parent">
 
 
-    <com.prance.lib.common.utils.weight.FocusRelativeLayout
+    <com.prance.teacher.features.main.view.MainFocusRelativeLayout
         android:id="@+id/startLesson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m190.0"
+        android:nextFocusRight="@id/matchKeyPad"
         android:layout_marginTop="@dimen/m138.0"
-        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <ImageView
             android:layout_width="@dimen/m520.0"
             android:layout_height="@dimen/m708.0"
-            android:background="@drawable/home_focus_background"
-            android:duplicateParentState="true"
-            android:src="@drawable/home_start_icon"
-            android:padding="@dimen/m7.0"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/home_start_icon" />
 
         <requestFocus />
-    </com.prance.lib.common.utils.weight.FocusRelativeLayout>
+
+    </com.prance.teacher.features.main.view.MainFocusRelativeLayout>
 
 
-    <com.prance.lib.common.utils.weight.FocusRelativeLayout
-        android:id="@+id/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m48.0"
-        android:focusable="true"
-        android:nextFocusDown="@id/matchKeyPad"
-        android:nextFocusRight="@id/matchKeyPad"
+    <com.prance.teacher.features.main.view.MainFocusRelativeLayout
+        android:id="@+id/matchKeyPad"
+        android:layout_width="@dimen/m960.0"
+        android:layout_height="@dimen/m330.0"
+        android:layout_marginLeft="@dimen/m48.0"
+        android:nextFocusRight="@id/bindKeyPad"
         app:layout_constraintStart_toEndOf="@+id/startLesson"
         app:layout_constraintTop_toTopOf="@+id/startLesson">
 
         <ImageView
-            android:layout_width="@dimen/m960.0"
-            android:layout_height="@dimen/m330.0"
-            android:background="@drawable/home_focus_background"
-            android:duplicateParentState="true"
-            android:scaleType="fitXY"
-            android:padding="@dimen/m7.0"
-            android:src="@drawable/home_check_icon" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/home_match_icon"
+            android:scaleType="fitXY" />
 
-    </com.prance.lib.common.utils.weight.FocusRelativeLayout>
+    </com.prance.teacher.features.main.view.MainFocusRelativeLayout>
 
 
-    <com.prance.lib.common.utils.weight.FocusRelativeLayout
-        android:id="@+id/matchKeyPad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m48.0"
-        android:focusable="true"
-        android:nextFocusLeft="@id/check"
-        app:layout_constraintStart_toStartOf="@+id/check"
-        app:layout_constraintTop_toBottomOf="@+id/check">
-
-        <ImageView
-            android:layout_width="@dimen/m456.0"
-            android:layout_height="@dimen/m330.0"
-            android:scaleType="fitXY"
-            android:background="@drawable/home_focus_background"
-            android:duplicateParentState="true"
-            android:padding="@dimen/m7.0"
-            android:src="@drawable/home_match_icon" />
-
-    </com.prance.lib.common.utils.weight.FocusRelativeLayout>
-
-
-    <com.prance.lib.common.utils.weight.FocusRelativeLayout
+    <com.prance.teacher.features.main.view.MainFocusRelativeLayout
         android:id="@+id/bindKeyPad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m48.0"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@+id/matchKeyPad"
-        app:layout_constraintTop_toTopOf="@+id/matchKeyPad">
+        android:layout_width="@dimen/m960.0"
+        android:layout_height="@dimen/m330.0"
+        android:layout_marginTop="@dimen/m48.0"
+        app:layout_constraintEnd_toEndOf="@+id/matchKeyPad"
+        app:layout_constraintStart_toStartOf="@+id/matchKeyPad"
+        app:layout_constraintTop_toBottomOf="@+id/matchKeyPad">
 
         <ImageView
-            android:layout_width="@dimen/m456.0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:layout_height="@dimen/m330.0"
-            android:background="@drawable/home_focus_background"
-            android:duplicateParentState="true"
-            android:padding="@dimen/m7.0"
             android:src="@drawable/home_bind_icon" />
 
-    </com.prance.lib.common.utils.weight.FocusRelativeLayout>
+    </com.prance.teacher.features.main.view.MainFocusRelativeLayout>
 
 
     <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m71.0"
+        android:layout_marginTop="@dimen/m70.0"
         android:onClick="onBackBtnClick"
         app:icon="@drawable/icon_back_button"
         app:layout_constraintStart_toStartOf="@+id/startLesson"
@@ -115,4 +85,16 @@
         app:layout_constraintEnd_toEndOf="@+id/bindKeyPad"
         app:layout_constraintTop_toTopOf="@+id/back"
         app:text="退出" />
+
+    <TextView
+        android:id="@+id/versionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m74.0"
+        android:layout_marginTop="@dimen/m59.0"
+        android:text="TextView"
+        android:textColor="#fff"
+        android:textSize="@dimen/m30.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
