@@ -52,9 +52,9 @@ interface ApiService {
 
         val checkVersion: String
             get() = if (UrlUtil.isLocalHost())
-                "webApp/selectNewlyResult"
+                "unauth/webApp/selectNewlyResult"
             else
-                "backend/course/webApp/selectNewlyResult"
+                "backend/course/unauth/webApp/selectNewlyResult"
 
         val postResult: String
             get() = if (UrlUtil.isLocalHost())
