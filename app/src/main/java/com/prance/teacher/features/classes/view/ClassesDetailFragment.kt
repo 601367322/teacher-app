@@ -110,8 +110,10 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushBinder?.run {
             removeListener(this@ClassesDetailFragment)
         }
-        //关闭Socket监听
-        activity?.unbindService(mPushServiceConnection)
+        try {//关闭Socket监听
+            activity?.unbindService(mPushServiceConnection)
+        } catch (e: Exception) {
+        }
     }
 
 
