@@ -114,8 +114,9 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     override fun onError(id: Int, error: DownloadError?) {
         context?.let {
             AlertDialog(it)
-                    .setConfirmButton("确定", {
-                        activity?.finish()
+                    .setConfirmButton("重新更新", {
+                        //开始下载
+                        activity?.startService(UpdateService.callingIntent(context!!, mVersionEntity.path))
                     })
                     .setCancelButton("取消", {
                         finish()

@@ -28,10 +28,10 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="@dimen/m334.0"
+                android:layout_width="@dimen/m572.0"
                 android:scaleType="fitXY"
                 android:src="@drawable/empty_classes"
-                android:layout_height="@dimen/m280.0" />
+                android:layout_height="@dimen/m374.0" />
 
             <TextView
                 android:layout_width="wrap_content"
