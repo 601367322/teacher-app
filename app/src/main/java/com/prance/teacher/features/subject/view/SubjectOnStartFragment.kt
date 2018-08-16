@@ -12,6 +12,9 @@ import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.model.KeyPadResult
 import java.util.*
 
+/**
+ * 开始答题
+ */
 class SubjectOnStartFragment : BaseFragment() {
 
     val mResult = mutableListOf<KeyPadResult>()
@@ -35,6 +38,7 @@ class SubjectOnStartFragment : BaseFragment() {
 
         application.mBaseStation.sn?.let {
             mQuestion?.run {
+                //基站开始发送题目
                 SunARS.voteStart(type!!, param)
             }
         }
@@ -42,10 +46,15 @@ class SubjectOnStartFragment : BaseFragment() {
 
     override fun needSunVoteService(): Boolean = true
 
+    /**
+     * 防止初始化的时候，application.mBaseStation.sn是空的，当重新绑定Service的时候，再执行发一遍题目
+     * SunARS.voteStart(type!!, param) 这行代码，只执行一次，要么初始化时执行，要么绑定完Service，打开usb后执行
+     */
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
         super.onConnectEventCallBack(iBaseID, iMode, sInfo)
         if (sInfo == SunARS.BaseStation_Connected) {
             mQuestion?.run {
+                //基站开始发送题目
                 SunARS.voteStart(type!!, param)
             }
         }
@@ -53,6 +62,7 @@ class SubjectOnStartFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        //停止发送
         SunARS.voteStop()
     }
 
