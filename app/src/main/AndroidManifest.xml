@@ -38,16 +38,16 @@
         </activity>
 
         <activity
+            android:name=".features.danmutest.DanmuTestActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
             android:name=".features.check.CheckKeyPadActivity"
             android:screenOrientation="landscape" />
 
         <activity
             android:name=".features.match.MatchKeyPadActivity"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".features.classes.ClassesActivity"

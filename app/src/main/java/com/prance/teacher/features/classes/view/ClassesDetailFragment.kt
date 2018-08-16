@@ -157,6 +157,13 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var type: Int? = null
         var param: String? = null
         var questionId: Int? = null
+
+        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?) {
+            this.classId = classId
+            this.type = type
+            this.param = param
+            this.questionId = questionId
+        }
     }
 
     override fun onServiceStatusConnectChanged(statusCode: Int) {

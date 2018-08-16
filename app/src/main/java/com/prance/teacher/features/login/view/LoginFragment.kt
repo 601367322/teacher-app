@@ -1,5 +1,6 @@
 package com.prance.teacher.features.login.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
@@ -21,6 +22,8 @@ import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.danmutest.DanmuTestActivity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
@@ -28,6 +31,7 @@ import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.main.view.MainFragment
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -79,14 +83,18 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            val classes = ClassesEntity(1)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
-            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
+
+            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1)
+            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
 
 //            val feedBack = FeedBack(1,1)
 //            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
 
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-//            activity?.finish()
+            activity?.finish()
         }
     }
 

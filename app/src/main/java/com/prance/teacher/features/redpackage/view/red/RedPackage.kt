@@ -5,8 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.*
-import android.os.Looper
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
@@ -33,7 +31,7 @@ class RedPackage {
     //标题
     var title: String
 
-    var fallAnimator: ValueAnimator? = null
+    var translationAnimator: ValueAnimator? = null
     var hideAnimator: ValueAnimator? = null
 
     var bitmap: Bitmap? = null
@@ -55,10 +53,10 @@ class RedPackage {
     }
 
     fun startFall() {
-        if (fallAnimator == null) {
-            fallAnimator = ObjectAnimator.ofInt(-height.toInt(), screenHeight).setDuration(RedPackageManager.translationDurationTime)
-            fallAnimator!!.interpolator = LinearInterpolator()
-            fallAnimator!!.addUpdateListener {
+        if (translationAnimator == null) {
+            translationAnimator = ObjectAnimator.ofInt(-height.toInt(), screenHeight).setDuration(RedPackageManager.translationDurationTime)
+            translationAnimator!!.interpolator = LinearInterpolator()
+            translationAnimator!!.addUpdateListener {
                 y = it.animatedValue.toString().toInt()
 
                 if (y >= height) {
@@ -66,7 +64,7 @@ class RedPackage {
                     state = RedPackageStatus.CANGRAB
                 }
             }
-            fallAnimator!!.addListener(object : AnimatorListenerAdapter() {
+            translationAnimator!!.addListener(object : AnimatorListenerAdapter() {
 
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
@@ -79,7 +77,7 @@ class RedPackage {
                 }
             })
         }
-        fallAnimator!!.start()
+        translationAnimator!!.start()
     }
 
     fun destroy(studentScore: StudentScore) {
@@ -102,7 +100,7 @@ class RedPackage {
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
                     //取消下落动画
-                    fallAnimator?.cancel()
+                    translationAnimator?.cancel()
 
                     //动画结束之后变为释放状态
                     state = RedPackageStatus.FREE

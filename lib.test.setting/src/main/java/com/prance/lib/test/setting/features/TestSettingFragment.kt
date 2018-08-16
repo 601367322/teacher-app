@@ -48,6 +48,10 @@ class TestSettingFragment : BaseFragment() {
             ok(mHost[0], mPort[0], mHost[0], mSocketPort[0])
         }
 
+        staging.setOnClickListener {
+            ok(mHost[5], mPort[0], mHost[5], mSocketPort[0])
+        }
+
         test.setOnClickListener {
             ok(mHost[2], mPort[0], mHost[2], mSocketPort[0])
         }
@@ -63,13 +67,6 @@ class TestSettingFragment : BaseFragment() {
         landy.setOnClickListener {
             ok(mHost[4], mPort[2], mSocketHost[1], mSocketPort[0])
         }
-    }
-
-    private fun initTextView(data: Array<String>, view: AutoCompleteTextView) {
-        val ipAdapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, data)
-        view.setAdapter(ipAdapter)
-        view.threshold = 1
-        view.setOnClickListener({ view -> (view as AutoCompleteTextView).showDropDown() })
     }
 
     fun ok(host: String) {

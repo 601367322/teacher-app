@@ -24,7 +24,9 @@ android {
 
         //只有中文
         resConfigs "zh"
-
+        ndk {
+            abiFilters "armeabi-v7a", 'x86'
+        }
         // 测试开关
         manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_close")
         //Bugly
@@ -50,9 +52,7 @@ android {
         debug {
             minifyEnabled false
 
-//            ndk {
-//                abiFilters "armeabi-v7a", 'x86'
-//            }
+
 
             signingConfig signingConfigs.release
             zipAlignEnabled true
@@ -62,9 +62,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-//            ndk {
-//                abiFilters "armeabi-v7a", 'x86'
-//            }
 
             zipAlignEnabled true
             signingConfig signingConfigs.release
@@ -108,7 +105,6 @@ dependencies {
     kapt dependencies.permissionsdispatcherProcessor
 
     implementation dependencies.constraintLayout
-    implementation dependencies.leanback
     implementation dependencies.kotlin
     implementation dependencies.kotlinCoroutines
     implementation dependencies.kotlinCoroutinesAndroid
@@ -123,6 +119,7 @@ dependencies {
     implementation dependencies.eventbus
     implementation dependencies.pageindicatorview
     implementation dependencies.glideTransformations
+    implementation dependencies.danmu
     implementation (dependencies.retrofit2) {
         exclude group: 'com.squareup.okhttp3'
     }

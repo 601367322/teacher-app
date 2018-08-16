@@ -9,6 +9,8 @@ import com.chillingvan.canvasgl.textureFilter.BasicTextureFilter
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
 import com.prance.teacher.features.redpackage.view.red.RedPackage
+import master.flame.danmaku.danmaku.util.SystemClock
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 class AnimGLView : GLContinuousView {
@@ -48,5 +50,22 @@ class AnimGLView : GLContinuousView {
 
     fun addItem(redPackage: RedPackage) {
         mLocations.add(redPackage)
+    }
+
+
+    private val MAX_RECORD_SIZE = 50
+    private val ONE_SECOND = 1000
+    private var mDrawTimes = LinkedList<Long>()
+
+    private fun fps(): Float {
+        val lastTime = SystemClock.uptimeMillis()
+        mDrawTimes.addLast(lastTime)
+        val first = mDrawTimes.peekFirst() ?: return 0.0f
+        val dtime = (lastTime - first).toFloat()
+        val frames = mDrawTimes.size
+        if (frames > MAX_RECORD_SIZE) {
+            mDrawTimes.removeFirst()
+        }
+        return if (dtime > 0) mDrawTimes.size * ONE_SECOND / dtime else 0.0f
     }
 }

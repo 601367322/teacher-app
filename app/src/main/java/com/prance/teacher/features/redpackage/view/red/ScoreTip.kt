@@ -26,7 +26,7 @@ class ScoreTip {
     //标题
     var title: String
 
-    var fallAnimator: ValueAnimator? = null
+    var translationAnimator: ValueAnimator? = null
     var hideAnimator: ValueAnimator? = null
 
     var bitmap: Bitmap? = null
@@ -102,7 +102,7 @@ class ScoreTip {
     }
 
     override fun toString(): String {
-        return "ScoreTip(translationDistance=$translationDistance, x=$x, y=$y, alpha=$alpha, width=$width, height=$height, title='$title', fallAnimator=$fallAnimator, hideAnimator=$hideAnimator, bitmap=$bitmap, translationDurationTime=$translationDurationTime, state=$state)"
+        return "ScoreTip(translationDistance=$translationDistance, x=$x, y=$y, alpha=$alpha, width=$width, height=$height, title='$title', translationAnimator=$translationAnimator, hideAnimator=$hideAnimator, bitmap=$bitmap, translationDurationTime=$translationDurationTime, state=$state)"
     }
 
 }

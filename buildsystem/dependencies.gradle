@@ -66,6 +66,7 @@ ext {
     observablesscrollview = '1.6.0'
     pageindicatorview = '1.0.1'
     openGlCanvas = 'v1.4.1.0'
+    danmu = '0.9.25'
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -190,6 +191,8 @@ ext {
             pageindicatorview             : "com.romandanylyk:pageindicatorview:${pageindicatorview}",
 
             observablesscrollview         : "com.github.ksoichiro:android-observablescrollview:${observablesscrollview}",
-            openGlCanvas                  : "com.github.ChillingVan:android-openGL-canvas:${openGlCanvas}"
+            openGlCanvas                  : "com.github.ChillingVan:android-openGL-canvas:${openGlCanvas}",
+
+            danmu                         : "com.github.ctiao:DanmakuFlameMaster:${danmu}"
     ]
 }
