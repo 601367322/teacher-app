@@ -10,6 +10,7 @@ import android.os.Message
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
+import com.prance.lib.database.BaseStationEntity
 import java.util.*
 
 
@@ -42,6 +43,7 @@ class UsbManagerImpl : IUsbManagerInterface {
             closeUsb()
         } else {
             mUsbDevice = usbDevice
+            baseStation.sn = mUsbDevice?.serialNumber
             //申请授权
             if (!mUsbManager!!.hasPermission(usbDevice)) {
                 val intent = Intent(ACTION_USB_PERMISSION)
@@ -139,6 +141,8 @@ class UsbManagerImpl : IUsbManagerInterface {
 
     companion object {
         const val ACTION_USB_PERMISSION = "com.hhd.USB_PERMISSION"
+
+        var baseStation: BaseStationEntity = BaseStationEntity()
     }
 
     override fun getDeviceList(): HashMap<String, UsbDevice>? {
@@ -201,6 +205,7 @@ class UsbManagerImpl : IUsbManagerInterface {
                 epIn = null
                 mUsbInterface = null
                 mUsbDevice = null
+                baseStation = BaseStationEntity()
             }
         }
     }

@@ -1,17 +1,13 @@
 package com.prance.teacher.features.subject
 
-import android.app.Service
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.base.service.BaseServicePresenter
 import com.prance.lib.database.MessageEntity
-import com.prance.lib.socket.MessageListener
-import com.prance.lib.socket.PushService
+import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
@@ -27,10 +23,11 @@ import com.prance.teacher.features.subject.view.SubjectOnStopFragment
  */
 class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
-    var mPushBinder: PushService.PushServiceBinder? = null
     private var mQuestion: ClassesDetailFragment.Question? = null
 
-    var onStartFragment: SubjectOnStartFragment? = null
+    private val mPushServicePresenterPresenter by lazy { PushServicePresenter(this, this) }
+
+    private var onStartFragment: SubjectOnStartFragment? = null
 
     override fun onMessageResponse(msg: MessageEntity) {
         when (msg.cmd) {
@@ -72,31 +69,17 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
     override var mPresenter: ISubjectContract.Presenter = SubjectPresenter()
 
-    private var mPushServiceConnection = object : ServiceConnection {
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-        }
-
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            mPushBinder = service as PushService.PushServiceBinder
-            mPushBinder?.addListener(this@SubjectActivity)
-        }
-    }
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mQuestion = intent?.getSerializableExtra(QUESTION) as ClassesDetailFragment.Question?
 
-        bindService(PushService.callingIntent(this), mPushServiceConnection, Service.BIND_AUTO_CREATE)
+        mPushServicePresenterPresenter.bind()
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        mPushBinder?.run {
-            removeListener(this@SubjectActivity)
-        }
-        unbindService(mPushServiceConnection)
+        mPushServicePresenterPresenter.unBind()
     }
 
     fun onSubjectStart() {
@@ -112,7 +95,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
         mQuestion?.classId?.let {
             onStartFragment?.run {
-                mPresenter.sendResult(it, mResult,mQuestion?.questionId!!.toString())
+                mPresenter.sendResult(it, mResult, mQuestion?.questionId!!.toString())
             }
         }
 

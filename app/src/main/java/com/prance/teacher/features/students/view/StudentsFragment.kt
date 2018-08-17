@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
@@ -70,8 +71,8 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         start.setOnClickListener {
             showProgress()
-            application.mBaseStation.sn?.let {
-                mPresenter.startBind(mClassesEntity.klass?.id.toString(), application.mBaseStation.sn)
+            UsbManagerImpl.baseStation.sn?.let {
+                mPresenter.startBind(mClassesEntity.klass?.id.toString(), it)
             }
         }
 

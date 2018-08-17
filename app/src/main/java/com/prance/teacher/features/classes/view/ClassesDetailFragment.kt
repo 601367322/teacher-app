@@ -1,12 +1,8 @@
 package com.prance.teacher.features.classes.view
 
 import android.app.Activity
-import android.app.Service
-import android.content.ComponentName
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.database.MessageEntity
@@ -16,6 +12,7 @@ import com.prance.lib.socket.PushService.Companion.ATTEND_CLASS
 import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
 import com.prance.lib.socket.PushService.Companion.INTERACT_START
 import com.prance.lib.socket.PushService.Companion.QUIZ
+import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
@@ -33,26 +30,18 @@ import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
 
+/**
+ * 班级详情页面
+ */
 class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_classes_detail
 
     lateinit var mClassesEntity: ClassesEntity
 
-    var mPushBinder: PushService.PushServiceBinder? = null
+    private val mPushServicePresenter by lazy { PushServicePresenter(context!!, this) }
 
     var REQUEST_CODE = 10001
-
-    private var mPushServiceConnection = object : ServiceConnection {
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-        }
-
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            mPushBinder = service as PushService.PushServiceBinder
-            mPushBinder?.addListener(this@ClassesDetailFragment)
-        }
-    }
 
     companion object {
 
@@ -96,7 +85,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         //开始Socket监听
-                        activity?.bindService(PushService.callingIntent(context!!), mPushServiceConnection, Service.BIND_AUTO_CREATE)
+                        mPushServicePresenter.bind()
                     }
                 }
             }
@@ -107,13 +96,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun onDestroy() {
         super.onDestroy()
 
-        mPushBinder?.run {
-            removeListener(this@ClassesDetailFragment)
-        }
-        try {//关闭Socket监听
-            activity?.unbindService(mPushServiceConnection)
-        } catch (e: Exception) {
-        }
+        mPushServicePresenter.unBind()
     }
 
 
@@ -149,8 +132,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     }
 
-    override fun needSunVoteService(): Boolean = true
-
     class Question : Serializable {
 
         var classId: Int? = null
@@ -166,13 +147,16 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         }
     }
 
+    /**
+     * Netty链接成功
+     */
     override fun onServiceStatusConnectChanged(statusCode: Int) {
         when (statusCode) {
             MessageListener.STATUS_CONNECT_SUCCESS -> {
                 val json = JSONObject()
                 json.put(PushService.CMD, ATTEND_CLASS)
                 json.put("classId", mClassesEntity.klass?.id)
-                mPushBinder?.sendMessage(json.toString())
+                mPushServicePresenter.mService?.sendMessage(json.toString())
             }
         }
     }

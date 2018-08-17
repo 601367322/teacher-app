@@ -36,4 +36,6 @@ dependencies {
     implementation dependencies.utilcode
 
     implementation project(":lib.common")
+    implementation project(":lib.base")
+    implementation project(":lib.database")
 }

@@ -7,22 +7,28 @@ import android.view.View
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.sunvote.platform.UsbManagerImpl
+import com.prance.lib.sunvote.service.SunARSListenerAdapter
+import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
-import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
 
-
+/**
+ * 首页
+ */
 class MainFragment : BaseFragment(), IMainContract.View {
 
     override var mPresenter: IMainContract.Presenter = MainPresenter()
 
     override fun layoutId(): Int = R.layout.fragment_main
+
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {}) }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -42,7 +48,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         matchKeyPad.setOnClickListener {
-            if (application.mBaseStation.sn == null) {
+            if (UsbManagerImpl.baseStation.sn == null) {
                 ToastUtils.showShort("请先连接基站")
             } else {
                 context?.let {
@@ -62,7 +68,14 @@ class MainFragment : BaseFragment(), IMainContract.View {
         }
 
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
+
+        mSunVoteServicePresenter.bind()
     }
 
-    override fun needSunVoteService(): Boolean = true
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mSunVoteServicePresenter.unBind()
+    }
+
 }

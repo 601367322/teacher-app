@@ -255,6 +255,7 @@ class PushService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        LogUtils.d("onDestroy")
         stopPostResponseMessage()
         try {
             mChannel?.close()

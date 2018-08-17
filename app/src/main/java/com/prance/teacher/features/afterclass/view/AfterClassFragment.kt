@@ -3,6 +3,8 @@ package com.prance.teacher.features.afterclass.view
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import com.prance.lib.sunvote.service.SunARSListenerAdapter
+import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
@@ -13,7 +15,7 @@ import com.prance.teacher.features.match.view.generateKeyPadId
 import kotlinx.android.synthetic.main.fragment_after_class.*
 
 /**
- * Description :
+ * Description : 课后答题界面
  * @author  rich
  * @date 2018/7/25  下午5:15
  * 								 - generate by MvpAutoCodePlus plugin.
@@ -28,18 +30,22 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_after_class
 
-    override fun needSunVoteService(): Boolean = true
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+
+        override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+            timer.post {
+                mPresenter.saveChoose(generateKeyPadId(KeyID), sInfo ?: "")
+            }
+        }
+
+    })}
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mTime = rootView.findViewById(R.id.timer)
         mFeedback = arguments?.getSerializable(AfterClassActivity.feedback) as FeedBack
         mPresenter.startReceive(mFeedback!!)
-    }
 
-    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        timer.post {
-            mPresenter.saveChoose(generateKeyPadId(KeyID), sInfo ?: "")
-        }
+        mSunVoteServicePresenter.bind()
     }
 
     override fun onTimeChange(time: String) {
@@ -63,6 +69,8 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.stopReceive()
+
+        mSunVoteServicePresenter.unBind()
     }
 }
 

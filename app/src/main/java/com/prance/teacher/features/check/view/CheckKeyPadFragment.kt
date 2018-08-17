@@ -9,7 +9,11 @@ import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.ResultException
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
+import com.prance.lib.sunvote.platform.UsbManagerImpl
+import com.prance.lib.sunvote.service.SunARSListenerAdapter
+import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
@@ -21,9 +25,13 @@ import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.utils.IntentUtils
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.fragment_after_class.*
 import kotlinx.android.synthetic.main.fragment_check_keypad.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * 答题器检测
+ */
 class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_check_keypad
@@ -49,6 +57,33 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
             }
             return fragment
         }
+    }
+
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
+        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+
+            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+                //4 2 0.0 0,0,2.92,34
+                val keyId = generateKeyPadId(KeyID)
+                when (iMode) {
+                //键盘检测结果
+                    SunARS.KeyResult_status -> {
+                        sInfo?.let {
+                            val status = it.split(",")
+                            var battery = status[2].toFloat()
+                            mCheckKeyPadEntities.add(KeyPadEntity(keyId, battery))
+                        }
+                    }
+                }
+            }
+
+            override fun onServiceConnected() {
+                super.onServiceConnected()
+
+                check.performClick()
+            }
+
+        })
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
@@ -98,7 +133,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         }
 
         check.setOnClickListener {
-            if (application.mBaseStation.sn == null) {
+            if (UsbManagerImpl.baseStation.sn == null) {
                 ToastUtils.showShort("请先链接基站")
                 return@setOnClickListener
             }
@@ -106,10 +141,10 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
             hideRecycler()
 
-            mPresenter.getMatchedKeyPadByBaseStationId(application.mBaseStation.sn)
+            mPresenter.getMatchedKeyPadByBaseStationId(UsbManagerImpl.baseStation.sn)
         }
 
-        check.performClick()
+        mSunVoteServicePresenter.bind()
     }
 
     fun showRecycler() {
@@ -154,30 +189,17 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         SunARS.checkKeyPad()
 
-        Flowable.timer(2, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .subscribe({
+        Flowable.timer(2, TimeUnit.SECONDS)
+                .mySubscribe {
                     SunARS.voteStop()
-
                     mPresenter.generateGroup(mMatchKeyPadEntities!!, mCheckKeyPadEntities)
-                })
+                }
     }
 
-    override fun needSunVoteService(): Boolean = true
+    override fun onDestroy() {
+        super.onDestroy()
 
-    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        //4 2 0.0 0,0,2.92,34
-        val keyId = generateKeyPadId(KeyID)
-        when (iMode) {
-        //键盘检测结果
-            SunARS.KeyResult_status -> {
-                sInfo?.let {
-                    val status = it.split(",")
-                    var battery = status[2].toFloat()
-                    mCheckKeyPadEntities.add(KeyPadEntity(keyId, battery))
-                }
-            }
-        }
-
+        mSunVoteServicePresenter.unBind()
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

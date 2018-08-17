@@ -23,6 +23,11 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
                         writeHDParam(iBaseID, KeyPad_IdentificationMode, "0")
                         //中文模式
                         writeHDParam(iBaseID, KeyPad_Config, "0,10,1,0,0,0,1")
+
+                        //基站识别ID
+                        readHDParam(0, SunARS.BaseStation_ID)
+                        //读取基站信息
+                        readHDParam(0, SunARS.BaseStation_Channel)
                     }
                     SunARS.BaseStation_DisConnected -> {
                         //关闭连接
@@ -48,7 +53,10 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
         when (iMode) {
         //基站主信道
             SunARS.BaseStation_Channel -> {
-
+                UsbManagerImpl.baseStation.stationChannel = sInfo.toLong()
+            }
+            SunARS.BaseStation_ID -> {
+                UsbManagerImpl.baseStation.stationId = sInfo.toInt()
             }
         }
     }

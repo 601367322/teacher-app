@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.lib.teacher.base.TeacherApplication
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -22,7 +23,7 @@ class StudentsActivity : BaseActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        if ((application as TeacherApplication).mBaseStation.sn == null) {
+        if (UsbManagerImpl.baseStation.sn == null) {
             ToastUtils.showShort("请先连接基站")
             finish()
             return

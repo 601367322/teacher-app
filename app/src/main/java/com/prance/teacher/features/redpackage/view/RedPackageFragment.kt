@@ -3,6 +3,8 @@ package com.prance.teacher.features.redpackage.view
 import android.os.*
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.prance.lib.sunvote.service.SunARSListenerAdapter
+import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.teacher.R
@@ -16,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_red_package.*
 
 
 /**
- * Description :
+ * Description : 抢红包
  * @author  rich
  * @date 2018/7/26  下午2:34
  * 								 - generate by MvpAutoCodePlus plugin.
@@ -36,7 +38,13 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_red_package
 
-    override fun needSunVoteService(): Boolean = true
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+        override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+            animGlView.post {
+                mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
+            }
+        }
+    })}
 
     override var mPresenter: IRedPackageContract.Presenter = RedPackagePresenter()
 
@@ -44,17 +52,13 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         mSetting = arguments?.getSerializable(mSetTing) as RedPackageSetting
 
         mPresenter.startRedPackage(mSetting)
+
+        mSunVoteServicePresenter.bind()
     }
 
     override fun onShowPackage(redPackage: RedPackage) {
         animGlView?.addItem(redPackage)
         redPackage.startFall()
-    }
-
-    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        animGlView.post {
-            mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
-        }
     }
 
     override fun onTimeEnd(scores: MutableList<StudentScore>) {
@@ -69,6 +73,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         super.onDestroy()
 
         mPresenter.detachView()
+
+        mSunVoteServicePresenter.unBind()
     }
 
 }

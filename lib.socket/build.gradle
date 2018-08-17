@@ -43,4 +43,5 @@ dependencies {
 
     implementation project(":lib.common")
     implementation project(":lib.database")
+    implementation project(":lib.base")
 }

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_classes.*
 
 
 /**
- * Description :
+ * Description : 班级列表界面
  * @author  Sen
  * @date 2018/7/18  上午10:05
  * 								 - generate by MvpAutoCodePlus plugin.
@@ -134,8 +134,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         hideProgress()
         return false
     }
-
-    override fun needSunVoteService(): Boolean = true
 
     private fun checkEmpty() {
         if (mAdapter.data.isEmpty()) {

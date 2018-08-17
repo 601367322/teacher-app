@@ -9,6 +9,9 @@ import cn.sunars.sdk.SunARS
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
+import com.prance.lib.sunvote.platform.UsbManagerImpl
+import com.prance.lib.sunvote.service.SunARSListenerAdapter
+import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
@@ -20,6 +23,9 @@ import kotlinx.coroutines.experimental.launch
 import org.greenrobot.eventbus.Subscribe
 import java.io.Serializable
 
+/**
+ * 配对答题器
+ */
 class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnClickListener {
 
     override var mPresenter: IMatchKeyPadContract.Presenter = MatchKeyPadPresenter()
@@ -28,6 +34,49 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter()
 
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+
+        override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
+            when (iMode) {
+            //基站主信道
+                SunARS.BaseStation_Channel -> {
+                    UsbManagerImpl.baseStation.stationChannel = sInfo?.toLong()
+                    setTip()
+                }
+            }
+        }
+
+        override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+            when (iMode) {
+                SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
+                    launch(UI) {
+                        KeyID?.let {
+                            val keyId = generateKeyPadId(it)
+                            if (!isExists(keyId)) {
+                                //保存答题器
+                                val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(UsbManagerImpl.baseStation.sn, keyId))
+
+                                keyPadEntity?.let {
+                                    mAdapter.addData(it)
+                                    mAdapter.notifyDataSetChanged()
+                                    recycler.post {
+                                        setLastItemRequestFocus()
+                                    }
+                                    displayMoreBtn()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        override fun onServiceConnected() {
+            //查找已经配对过的答题器
+            mPresenter.getMatchedKeyPadByBaseStationId(UsbManagerImpl.baseStation.sn)
+        }
+
+    })}
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -55,12 +104,14 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
         //按钮页面状态初始化
         displayMoreBtn()
+
+        mSunVoteServicePresenter.bind()
     }
 
     private fun setTip() {
         //设置顶部提示语
         mRootView?.get()?.post {
-            application.mBaseStation.let {
+            UsbManagerImpl.baseStation.let {
                 tip1.visibility = View.VISIBLE
                 tip2.visibility = View.GONE
                 tip_text2.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
@@ -80,26 +131,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         mAdapter.notifyDataSetChanged()
 
         displayMoreBtn()
-    }
-
-    override fun onSunVoteServiceConnected() {
-        mSunVoteService?.let {
-            val usbDevice = it.getUserManager().getUsbDevice()
-            usbDevice?.let {
-                //查找已经配对过的答题器
-                mPresenter.getMatchedKeyPadByBaseStationId(it.serialNumber)
-            }
-        }
-    }
-
-    override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
-        when (iMode) {
-        //基站主信道
-            SunARS.BaseStation_Channel -> {
-                application.mBaseStation.stationChannel = sInfo?.toLong()
-                setTip()
-            }
-        }
     }
 
     /**
@@ -122,33 +153,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         count.text = Html.fromHtml("""已配对成功 <font color="#3AF0EE">${mAdapter.data.size}</font> 个答题器""")
         displayEmptyView()
     }
-
-    override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-        when (iMode) {
-            SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
-                launch(UI) {
-                    KeyID?.let {
-                        val keyId = generateKeyPadId(it)
-                        if (!isExists(keyId)) {
-                            //保存答题器
-                            val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(application.mBaseStation.sn, keyId))
-
-                            keyPadEntity?.let {
-                                mAdapter.addData(it)
-                                mAdapter.notifyDataSetChanged()
-                                recycler.post {
-                                    setLastItemRequestFocus()
-                                }
-                                displayMoreBtn()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun needSunVoteService(): Boolean = true
 
     override fun onClick(v: View?) {
         when (v) {
@@ -278,4 +282,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mSunVoteServicePresenter.unBind()
+    }
 }

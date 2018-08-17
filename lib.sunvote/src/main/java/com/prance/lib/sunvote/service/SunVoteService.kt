@@ -80,14 +80,17 @@ class SunVoteService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
+        LogUtils.d("onDestroy")
+
+        SunARS.removeListener(mSunARSListener)
+
+        unregisterReceiver(mUsbReceiver)
+
         //关闭Usb读取线程
         mUsbThread.let {
             it.interrupt()
         }
 
-        unregisterReceiver(mUsbReceiver)
-
-        SunARS.removeListener(mSunARSListener)
     }
 
     companion object {
