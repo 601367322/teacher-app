@@ -58,6 +58,7 @@ class TestSettingFragment : BaseFragment() {
 
         dev.setOnClickListener {
             ok(mHost[1], mPort[0], mHost[1], mSocketPort[0])
+//            ok(mHost[1], mPort[0], mSocketHost[2], mSocketPort[0])
         }
 
         frode.setOnClickListener {

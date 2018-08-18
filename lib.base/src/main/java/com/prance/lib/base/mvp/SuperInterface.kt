@@ -41,7 +41,7 @@ interface IView<P : ITopPresenter> : ITopView {
     }
 }
 
-interface IPresenter<V : ITopView, M : IModel> : ITopPresenter {
+interface IPresenter<V : ITopView, out M : IModel> : ITopPresenter {
     var mView: V?
     val mModel: M
     fun getContext() = mView?.getContext()

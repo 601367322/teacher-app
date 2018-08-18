@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/m72.0"
         android:layout_centerInParent="true"
-        android:background="@drawable/button_background"
         android:duplicateParentState="true"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/m24.0"

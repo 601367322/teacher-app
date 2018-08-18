@@ -1,6 +1,7 @@
 package com.prance.lib.common.utils.weight
 
 import android.content.Context
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.prance.lib.common.utils.getInflate
@@ -42,43 +43,37 @@ class MyButton : FocusRelativeLayout {
         } finally {
             a.recycle()
         }
+    }
+
+    override fun init() {
+        super.init()
 
         isFocusable = true
+        mDrawable = resources.getDrawable(R.drawable.button_focus_bg)
 
-        mShadowWidth = resources.getDimensionPixelOffset(R.dimen.m8_0).toFloat()
-        mRadius = resources.getDimensionPixelOffset(R.dimen.m4_0).toFloat()
+        mRadius = resources.getDimensionPixelOffset(R.dimen.m8_0).toFloat()
 
-        if (visibility == View.VISIBLE) {
-            addShadow()
-        }
+
     }
 
-    override fun setVisibility(visibility: Int) {
-        super.setVisibility(visibility)
-
-        if (visibility == View.VISIBLE && !mInitShadow) {
-            addShadow()
-        }
-    }
-
-    private fun addShadow() {
-        mInitShadow = true
-        val viewTreeObserver = container.viewTreeObserver
-        viewTreeObserver
-                .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        container.viewTreeObserver
-                                .removeOnGlobalLayoutListener(this)
-
-                        val buttonBackground = ButtonBackground(context)
-                        val layoutParams = RelativeLayout.LayoutParams(container.width + mShadowWidth.toInt() * 2, container.height + mShadowWidth.toInt() * 2)
-                        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
-                        buttonBackground.layoutParams = layoutParams
-                        ((container.parent) as RelativeLayout).addView(buttonBackground, 0)
-
-                    }
-                })
-    }
+//    private fun addShadow() {
+//        mInitShadow = true
+//        val viewTreeObserver = container.viewTreeObserver
+//        viewTreeObserver
+//                .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+//                    override fun onGlobalLayout() {
+//                        container.viewTreeObserver
+//                                .removeOnGlobalLayoutListener(this)
+//
+//                        val buttonBackground = ButtonBackground(context)
+//                        val layoutParams = RelativeLayout.LayoutParams(container.width + mShadowWidth.toInt() * 2, container.height + mShadowWidth.toInt() * 2)
+//                        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
+//                        buttonBackground.layoutParams = layoutParams
+//                        ((container.parent) as RelativeLayout).addView(buttonBackground, 0)
+//
+//                    }
+//                })
+//    }
 
     fun setText(str: String) {
         text.text = str
@@ -98,4 +93,85 @@ class MyButton : FocusRelativeLayout {
             }
         }
     }
+
+    override fun onDraw(canvas: Canvas) {
+        var mRect = Rect()
+        super.getDrawingRect(mRect)
+
+        if (isEnabled) {
+            if (hasFocus()) {
+                //边框的偏移量
+                val padding = resources.getDimensionPixelOffset(R.dimen.m2_0)
+                //画阴影
+                val drawablePadding = Rect()
+                mDrawable.getPadding(drawablePadding)
+                var shadowBound = Rect(
+                        (mRect.left - drawablePadding.left - padding),
+                        (mRect.top - drawablePadding.top - padding),
+                        (mRect.right + drawablePadding.right + padding),
+                        (mRect.bottom + drawablePadding.bottom + padding))
+                mDrawable.bounds = shadowBound
+                mDrawable.draw(canvas)
+
+                val disablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+                disablePaint.color = Color.parseColor("#3A81F0")
+                canvas.drawRoundRect(RectF(mRect), mRadius, mRadius, disablePaint)
+
+                val focusPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+                focusPaint.color = Color.parseColor("#33ffffff")
+                canvas.drawRoundRect(RectF(mRect), mRadius, mRadius, focusPaint)
+
+                //边框的大小
+                var mBorderRect = Rect(mRect)
+                mBorderRect.set(
+                        -padding + mRect.left,
+                        -padding + mRect.top,
+                        padding + mRect.right,
+                        padding + mRect.bottom)
+
+                val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+                paint.strokeWidth = resources.getDimensionPixelOffset(R.dimen.m2_0).toFloat()
+                paint.style = Paint.Style.STROKE
+                paint.color = Color.WHITE
+
+                //圆角边框，需要算上strokeWidth的宽度
+                val roundRect = RectF(
+                        mBorderRect.left + paint.strokeWidth / 2,
+                        mBorderRect.top + paint.strokeWidth / 2,
+                        mBorderRect.right - paint.strokeWidth / 2,
+                        mBorderRect.bottom - paint.strokeWidth / 2)
+
+                //画边框
+                canvas.drawRoundRect(
+                        roundRect,
+                        mRadius,
+                        mRadius,
+                        paint)
+
+            } else {
+                //画阴影
+                val drawablePadding = Rect()
+                mDrawable.getPadding(drawablePadding)
+                var shadowBound = Rect(
+                        (mRect.left - drawablePadding.left),
+                        (mRect.top - drawablePadding.top),
+                        (mRect.right + drawablePadding.right),
+                        (mRect.bottom + drawablePadding.bottom))
+                mDrawable.bounds = shadowBound
+                mDrawable.draw(canvas)
+
+                val disablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+                disablePaint.color = Color.parseColor("#3A81F0")
+                canvas.drawRoundRect(RectF(mRect), mRadius, mRadius, disablePaint)
+            }
+        } else {
+            val disablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            disablePaint.color = Color.parseColor("#959595")
+            canvas.drawRoundRect(RectF(mRect), mRadius, mRadius, disablePaint)
+            return
+        }
+        super.onDraw(canvas)
+    }
+
+
 }

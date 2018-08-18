@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/toast_background"
     android:elevation="@dimen/m10.0"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:paddingHorizontal="@dimen/m124.0"
     android:paddingVertical="@dimen/m85.0">
 
