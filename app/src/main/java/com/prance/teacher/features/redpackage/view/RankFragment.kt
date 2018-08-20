@@ -28,7 +28,7 @@ class RankFragment : BaseFragment() {
 
     var mDisposable: Disposable? = null
 
-    var mTotalTime = 100
+    var mTotalTime = 5
 
     lateinit var rankNames: MutableList<TextView>
     lateinit var rankScores: MutableList<TextView>
