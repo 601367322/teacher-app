@@ -3,40 +3,117 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/activity_background"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/subject_on_destroy_background">
 
-    <TextView
-        android:id="@+id/rightAnswer"
+    <LinearLayout
+        android:id="@+id/rightAnswerLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:text="正确答案"
+        android:layout_marginTop="@dimen/m207.0"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
+        <com.prance.teacher.weight.FZTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正确答案:"
+            android:textColor="#FFFEFE"
+            android:textSize="@dimen/m58.0"
+            app:strokeColor="#0C0731"
+            app:strokeWidth="@dimen/m5.0" />
+
+        <ImageView
+            android:id="@+id/rightAnswer"
+            android:layout_width="@dimen/m73.0"
+            android:layout_height="@dimen/m73.0"
+            android:layout_marginLeft="@dimen/m26.0"
+            android:src="@drawable/answer_a" />
+    </LinearLayout>
+
+    <com.prance.teacher.weight.FZTextView
         android:id="@+id/answerResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/rightAnswer"
-        app:layout_constraintStart_toStartOf="@+id/rightAnswer"
-        app:layout_constraintTop_toBottomOf="@+id/rightAnswer" />
+        android:textColor="#FEFEFE"
+        android:textSize="@dimen/m47.0"
+        app:layout_constraintEnd_toEndOf="@+id/rightAnswerLayout"
+        app:layout_constraintStart_toStartOf="@+id/rightAnswerLayout"
+        app:layout_constraintTop_toBottomOf="@+id/rightAnswerLayout"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m5.0" />
 
-    <TextView
-        android:id="@+id/rankText"
-        android:layout_width="wrap_content"
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rankText1"
+        android:layout_width="@dimen/m170.0"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="@dimen/m250.0"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/m897.0"
+        android:layout_marginTop="@dimen/m528.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="@dimen/m41.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answerResult" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m4.0" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rankText2"
+        android:layout_width="@dimen/m170.0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m602.0"
+        android:layout_marginTop="@dimen/m586.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="@dimen/m41.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m4.0" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rankText3"
+        android:layout_width="@dimen/m170.0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m1195.0"
+        android:layout_marginTop="@dimen/m604.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="@dimen/m41.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m4.0" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rankText4"
+        android:layout_width="@dimen/m170.0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m304.0"
+        android:layout_marginTop="@dimen/m632.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="@dimen/m41.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m4.0" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rankText5"
+        android:layout_width="@dimen/m170.0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m1488.0"
+        android:layout_marginTop="@dimen/m650.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="@dimen/m41.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m4.0" />
 </android.support.constraint.ConstraintLayout>

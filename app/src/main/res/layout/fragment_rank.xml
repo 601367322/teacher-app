@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/red_package_rank_background"
     android:layout_height="match_parent">
 
 
@@ -40,6 +41,19 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:layout_width="@dimen/m152.0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m550.0"
+        android:layout_marginTop="@dimen/m584.0"
+        android:maxLines="1"
+        app:strokeWidth="@dimen/m4.0"
+        app:strokeColor="#0C0731"
+        android:text="王小迷茫"
+        android:textSize="@dimen/m41.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

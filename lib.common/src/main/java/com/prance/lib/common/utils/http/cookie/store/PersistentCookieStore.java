@@ -111,7 +111,9 @@ public class PersistentCookieStore implements CookieStore {
                 }
             }
         }
-        LogUtils.i(uri.toString() + "\n\n" + TextUtils.join(",", ret));
+        if(!uri.toString().contains("log")){
+            LogUtils.i(uri.toString() + "\n\n" + TextUtils.join(",", ret));
+        }
         return ret;
     }
 

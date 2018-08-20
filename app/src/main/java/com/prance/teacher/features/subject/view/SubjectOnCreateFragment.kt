@@ -18,10 +18,12 @@ class SubjectOnCreateFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_subject_on_create
 
+    var num = 2
+
+    var countDownTimerImg = mutableListOf(R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)
+
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-
         createAnimate().start()
-
     }
 
     private fun createAnimate(): AnimatorSet {
@@ -40,10 +42,11 @@ class SubjectOnCreateFragment : BaseFragment() {
                 countDown?.run {
                     clearAnimation()
 
-                    if (text.toString().toInt() == 1) {
+                    if (num == 0) {
                         (activity as SubjectActivity).onSubjectStart()
                     } else {
-                        text = (text.toString().toInt() - 1).toString()
+                        num--
+                        countDown.setImageResource(countDownTimerImg[num])
                         createAnimate().start()
                     }
                 }

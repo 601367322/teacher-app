@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
@@ -13,7 +14,10 @@ import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
 import com.prance.lib.socket.PushService.Companion.INTERACT_START
 import com.prance.lib.socket.PushService.Companion.QUIZ
 import com.prance.lib.socket.PushServicePresenter
+import com.prance.lib.sunvote.service.SunARSListenerAdapter
+import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.afterclass.model.FeedBack
@@ -21,14 +25,17 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
+import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.features.subject.model.KeyPadResult
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
+import java.util.*
 
 /**
  * 班级详情页面
@@ -40,6 +47,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     lateinit var mClassesEntity: ClassesEntity
 
     private val mPushServicePresenter by lazy { PushServicePresenter(context!!, this) }
+
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
+        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+        })
+    }
+
 
     var REQUEST_CODE = 10001
 
@@ -77,6 +90,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         classesSubTitle.text = mClassesEntity.klass?.addr
         classesDate.text = """${mClassesEntity.klass?.startTime}-${mClassesEntity.klass?.endTime}"""
 
+        if (BuildConfig.DEBUG) {
+            //开始Socket监听
+            mPushServicePresenter.bind()
+
+            mSunVoteServicePresenter.bind()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,6 +116,10 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         super.onDestroy()
 
         mPushServicePresenter.unBind()
+
+        if (BuildConfig.DEBUG) {
+            mSunVoteServicePresenter.unBind()
+        }
     }
 
 

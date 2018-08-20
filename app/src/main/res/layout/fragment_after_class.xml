@@ -1,58 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/after_class_background"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="下课提问"
-        android:textSize="30sp" />
-
-    <TextView
+    <com.prance.teacher.weight.FZTextView
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/m26.0"
+        android:layout_marginTop="@dimen/m49.0"
+        android:paddingLeft="@dimen/m10.0"
+        android:paddingRight="@dimen/m10.0"
         android:text="00:30"
-        android:textSize="20sp" />
+        android:textStyle="bold"
+        android:textColor="#FFFEFE"
+        android:textSize="@dimen/m69.0"
+        app:strokeColor="#D86410"
+        app:strokeWidth="@dimen/m6.0"
+        app:typeface="COMICSANSMSGRAS" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/m398.0"
+        android:paddingRight="@dimen/m398.0"
+        android:paddingTop="@dimen/m280.0">
 
-        <TextView
+        <com.prance.teacher.weight.FZTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="同学们，我们就要下课了，拿起答题器说说你对本节课的看法吧~~"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:text="同学们，我们就要下课了，拿起答题器说说你对本节课的看法吧。"
+            android:textColor="#fff"
+            android:textSize="@dimen/m54.0"
+            app:strokeColor="#512B90"
+            app:strokeWidth="@dimen/m4.0" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A 本节课充实并学到了新知识"
-            android:textSize="16sp" />
+            android:layout_marginLeft="@dimen/m65.0"
+            android:layout_marginTop="@dimen/m65.0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
+            <ImageView
+                android:layout_width="@dimen/m65.0"
+                android:layout_height="@dimen/m65.0"
+                android:src="@drawable/answer_a" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m69.0"
+                android:text="本节课充实并学到了新知识"
+                android:textColor="#512B90"
+                android:textSize="@dimen/m58.0" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B 本节课较充实并学到了新知识"
-            android:textSize="16sp" />
+            android:layout_marginLeft="@dimen/m65.0"
+            android:layout_marginTop="@dimen/m40.0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
+            <ImageView
+                android:layout_width="@dimen/m65.0"
+                android:layout_height="@dimen/m65.0"
+                android:src="@drawable/answer_b" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m69.0"
+                android:text="本节课较充实并学到了新知识"
+                android:textColor="#512B90"
+                android:textSize="@dimen/m58.0" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C 本节课一般并学到了一些新知识"
-            android:textSize="16sp" />
+            android:layout_marginLeft="@dimen/m65.0"
+            android:layout_marginTop="@dimen/m40.0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
+            <ImageView
+                android:layout_width="@dimen/m65.0"
+                android:layout_height="@dimen/m65.0"
+                android:src="@drawable/answer_c" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m69.0"
+                android:text="本节课一般并学到了一些新知识"
+                android:textColor="#512B90"
+                android:textSize="@dimen/m58.0" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="D 本节课不好并没有学到了新知识"
-            android:textSize="16sp" />
+            android:layout_marginLeft="@dimen/m65.0"
+            android:layout_marginTop="@dimen/m40.0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/m65.0"
+                android:layout_height="@dimen/m65.0"
+                android:src="@drawable/answer_d" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m69.0"
+                android:text="本节课不好并没有学到了新知识"
+                android:textColor="#512B90"
+                android:textSize="@dimen/m58.0" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

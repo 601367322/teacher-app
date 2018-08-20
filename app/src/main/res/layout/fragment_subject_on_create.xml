@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/activity_background"
+    android:background="@drawable/subject_on_create_background"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="@dimen/m300.0"
-        android:background="@drawable/count_down_text_background"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/countDown"
+        android:layout_width="@dimen/m234.0"
+        android:layout_height="@dimen/m234.0"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/m440.0"
+        android:gravity="center"
+        android:src="@drawable/count_down_timer_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="@dimen/m300.0">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/countDown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="3"
-            android:layout_centerInParent="true"
-            android:textColor="#fff"
-            android:textSize="@dimen/m180.0" />
-    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

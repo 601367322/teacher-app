@@ -81,9 +81,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
         //启动主页
         if (BuildConfig.DEBUG) {
-            val classes = ClassesEntity(1)
+//            val classes = ClassesEntity(6)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
-            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
+//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
 //            context?.let { startActivity(MainActivity.callingIntent(it)) }
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
@@ -91,8 +91,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1)
 //            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
 
-//            val feedBack = FeedBack(1,1)
-//            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
+            val feedBack = FeedBack(1,1)
+            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
 
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }

@@ -2,10 +2,7 @@ package com.prance.lib.socket
 
 import com.prance.lib.common.utils.UrlUtil
 import io.reactivex.Flowable
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Url
+import retrofit2.http.*
 
 interface PushApiService {
 
@@ -19,7 +16,7 @@ interface PushApiService {
 
     @FormUrlEncoded
     @POST
-    fun messageReceivedCallBack(@Url url: String, @Field("msgId") msgId: String): Flowable<Any>
+    fun messageReceivedCallBack(@Url url: String, @Field("msgId") msgId: String, @Query("log") log: String): Flowable<Any>
 
 
 }

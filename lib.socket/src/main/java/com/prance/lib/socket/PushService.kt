@@ -206,7 +206,7 @@ class PushService : Service() {
                         for (message in list) {
                             ids.add(message.msgId)
                         }
-                        mPushApiService?.messageReceivedCallBack(PushApiService.messageReceivedCallBack, ids.joinToString())!!
+                        mPushApiService?.messageReceivedCallBack(PushApiService.messageReceivedCallBack, ids.joinToString(), "false")!!
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io())
                                 .subscribe({

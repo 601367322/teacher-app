@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.base.service.BaseServicePresenter
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
@@ -74,6 +73,15 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         mQuestion = intent?.getSerializableExtra(QUESTION) as ClassesDetailFragment.Question?
 
         mPushServicePresenterPresenter.bind()
+
+//        Flowable.timer(6, TimeUnit.SECONDS)
+//                .subscribe {
+//                    onSubjectStop()
+//                }
+//        Flowable.timer(9, TimeUnit.SECONDS)
+//                .subscribe {
+//                    onSubjectDestroy(SubjectOnDestroyFragment.QuestionResult(1,SubjectOnDestroyFragment.Answer()))
+//                }
     }
 
     override fun onDestroy() {

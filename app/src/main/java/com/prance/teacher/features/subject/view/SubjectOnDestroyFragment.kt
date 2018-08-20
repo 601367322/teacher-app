@@ -2,6 +2,7 @@ package com.prance.teacher.features.subject.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
@@ -13,6 +14,9 @@ class SubjectOnDestroyFragment : BaseFragment() {
     override fun layoutId(): Int = R.layout.fragment_subject_on_destroy
 
     var mQuestionResult: QuestionResult? = null
+
+    var answerMap = mutableMapOf("A" to R.drawable.answer_a, "B" to R.drawable.answer_b, "C" to R.drawable.answer_c, "D" to R.drawable.answer_d)
+    lateinit var rankNames: MutableList<TextView>
 
     companion object {
 
@@ -30,19 +34,18 @@ class SubjectOnDestroyFragment : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
 
+        rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
+
         mQuestionResult?.run {
-            rightAnswer.text = "正确答案：$answer"
+            rightAnswer.setImageResource(answerMap[answer]!!)
 
-            answerResult.text = """答对：${answerMsg?.right}人      答错：${answerMsg?.wrong}人     未作答：${answerMsg?.noAnswer}人"""
+            answerResult.text = """答对：${answerMsg?.right}人       答错：${answerMsg?.wrong}人       未作答：${answerMsg?.noAnswer}人"""
 
-            var sb = StringBuilder()
             if (rank.isNotEmpty()) {
                 for (i in 0..min(4, rank.size - 1)) {
-                    sb.append("""第${i + 1}名：${rank[i].name}""")
-                    sb.append("\n")
+                    rankNames[i].text = rank[i].name
                 }
             }
-            rankText.text = sb.toString()
         }
     }
 
@@ -69,6 +72,12 @@ class SubjectOnDestroyFragment : BaseFragment() {
         var right: Int = 0
         var noAnswer: Int = 0
         var wrong: Int = 0
+
+        constructor(right: Int, noAnswer: Int, wrong: Int) {
+            this.right = right
+            this.noAnswer = noAnswer
+            this.wrong = wrong
+        }
     }
 
     class Student : Serializable {
