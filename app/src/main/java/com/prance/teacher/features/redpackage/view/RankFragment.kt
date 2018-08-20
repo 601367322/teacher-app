@@ -2,7 +2,11 @@ package com.prance.teacher.features.redpackage.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.StudentScore
 import io.reactivex.Flowable
@@ -24,7 +28,11 @@ class RankFragment : BaseFragment() {
 
     var mDisposable: Disposable? = null
 
-    var mTotalTime = 5
+    var mTotalTime = 100
+
+    lateinit var rankNames: MutableList<TextView>
+    lateinit var rankScores: MutableList<TextView>
+    lateinit var rankAvatars: MutableList<ImageView>
 
     companion object {
         const val SCORES = "scores"
@@ -50,14 +58,29 @@ class RankFragment : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         scores = (arguments?.getSerializable(SCORES) as BundleScore).scores
 
+        rankNames = mutableListOf(rankText1, rankText2, rankText3)
+        rankScores = mutableListOf(rankScore1, rankScore2, rankScore3)
+        rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3)
+
         val rank = sort(scores)
 
-        val builder = StringBuilder()
         for (i in 0 until min(3, rank.size)) {
-            builder.append("第${i + 1}名：${rank[i].student.name}  ${rank[i].score}分\n")
+            rankNames[i].text = rank[i].student.name
+            rankScores[i].text = "${rank[i].score}分"
+            rankAvatars[i].visibility = View.VISIBLE
+            GlideApp.with(this)
+                    .load(rank[i].student.avatar)
+                    .circleCrop()
+                    .into(rankAvatars[i])
         }
 
-        rankText.text = builder.toString()
+//        if (BuildConfig.DEBUG) {
+//            rankAvatar1.visibility = View.VISIBLE
+//            GlideApp.with(this)
+//                    .load(R.drawable.match_empty_view)
+//                    .circleCrop()
+//                    .into(rankAvatar1)
+//        }
 
         updateTimeText()
 

@@ -116,4 +116,63 @@
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#0C0731"
         app:strokeWidth="@dimen/m4.0" />
+
+    <ImageView
+        android:id="@+id/rankAvatar1"
+        android:layout_width="@dimen/m146.0"
+        android:layout_height="@dimen/m146.0"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/m36.0"
+        android:padding="@dimen/m15.0"
+        android:background="@drawable/rank_avatar_bg"
+        app:layout_constraintBottom_toTopOf="@+id/rankText1"
+        app:layout_constraintEnd_toEndOf="@+id/rankText1"
+        app:layout_constraintStart_toStartOf="@+id/rankText1" />
+
+    <ImageView
+        android:id="@+id/rankAvatar2"
+        android:layout_width="@dimen/m146.0"
+        android:layout_height="@dimen/m146.0"
+        android:layout_marginBottom="@dimen/m36.0"
+        android:padding="@dimen/m15.0"
+        android:visibility="gone"
+        android:background="@drawable/rank_avatar_bg"
+        app:layout_constraintBottom_toTopOf="@+id/rankText2"
+        app:layout_constraintEnd_toEndOf="@+id/rankText2"
+        app:layout_constraintStart_toStartOf="@+id/rankText2" />
+
+    <ImageView
+        android:id="@+id/rankAvatar3"
+        android:layout_width="@dimen/m146.0"
+        android:layout_height="@dimen/m146.0"
+        android:padding="@dimen/m15.0"
+        android:layout_marginBottom="@dimen/m36.0"
+        android:visibility="gone"
+        android:background="@drawable/rank_avatar_bg"
+        app:layout_constraintBottom_toTopOf="@+id/rankText3"
+        app:layout_constraintEnd_toEndOf="@+id/rankText3"
+        app:layout_constraintStart_toStartOf="@+id/rankText3" />
+
+    <ImageView
+        android:id="@+id/rankAvatar4"
+        android:layout_width="@dimen/m146.0"
+        android:layout_height="@dimen/m146.0"
+        android:layout_marginBottom="@dimen/m36.0"
+        android:background="@drawable/rank_avatar_bg"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/rankText4"
+        app:layout_constraintEnd_toEndOf="@+id/rankText4"
+        app:layout_constraintStart_toStartOf="@+id/rankText4" />
+
+    <ImageView
+        android:id="@+id/rankAvatar5"
+        android:layout_width="@dimen/m146.0"
+        android:padding="@dimen/m15.0"
+        android:layout_height="@dimen/m146.0"
+        android:layout_marginBottom="@dimen/m36.0"
+        android:background="@drawable/rank_avatar_bg"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/rankText5"
+        app:layout_constraintEnd_toEndOf="@+id/rankText5"
+        app:layout_constraintStart_toStartOf="@+id/rankText5" />
 </android.support.constraint.ConstraintLayout>

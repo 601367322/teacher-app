@@ -1,16 +1,19 @@
 package com.prance.teacher.features.redpackage.view.red
 
+import android.content.Context
 import android.graphics.*
-import com.blankj.utilcode.util.LogUtils
+import android.graphics.BitmapFactory.decodeResource
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.redpackage.model.RedPackageRecord
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
+import android.R.attr.scaleHeight
+import android.R.attr.scaleWidth
+
 
 class RedPackageManager {
 
@@ -33,8 +36,8 @@ class RedPackageManager {
         var DEFAULT_SCORE = 2
     }
 
-    var DEFAULT_WIDTH = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m66_0)
-    var DEFAULT_HEIGHT = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m120_0)
+    var DEFAULT_WIDTH = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
+    var DEFAULT_HEIGHT = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
 
 
     private var mRedPackageBackgroundPaint: Paint? = null
@@ -49,7 +52,7 @@ class RedPackageManager {
     val titles = mutableListOf("A", "B", "C", "D")
 
     //总列数
-    val lines = 6
+    val lines = 5
 
     //提前绘制好的红包
     val map = HashMap<String, Bitmap>()
@@ -57,13 +60,21 @@ class RedPackageManager {
     //红包分数集合
     var studentScores = mutableListOf<StudentScore>()
 
-    constructor() {
+    var redPackageImg: MutableMap<String, Bitmap>
+
+    constructor(context: Context) {
         mRedPackageBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mRedPackageBackgroundPaint!!.color = Color.RED
         mRedPackageTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mRedPackageTextPaint!!.color = Color.WHITE
         mRedPackageTextPaint!!.textSize = 80F
         mRedPackageTextPaint!!.textAlign = Paint.Align.CENTER
+
+        redPackageImg = mutableMapOf(
+                "A" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_a)),
+                "B" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_b)),
+                "C" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_c)),
+                "D" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_d)))
     }
 
     fun generateRedPack(): RedPackage? {
@@ -79,7 +90,7 @@ class RedPackageManager {
                     DEFAULT_WIDTH.toLong(),
                     DEFAULT_HEIGHT.toLong(),
                     randomTitle,
-                    createBitmap(DEFAULT_WIDTH, DEFAULT_HEIGHT, randomTitle)
+                    redPackageImg[randomTitle]!!
             )
 
             redPackages.add(red)
@@ -160,24 +171,12 @@ class RedPackageManager {
         return (System.currentTimeMillis() - redPackage.createTime) > (minInterval + Math.random() * intervalRange)
     }
 
-    private fun createBitmap(width: Int, height: Int, title: String): Bitmap {
-        if (map.containsKey(title)) {
-            return map[title]!!
-        } else {
-            //红包背景
-            var bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            val targetRect = RectF(0F, 0F, width.toFloat(), height.toFloat())
-            canvas.drawRect(targetRect, mRedPackageBackgroundPaint)
-
-            //红包的答案
-            val fontMetrics = mRedPackageTextPaint!!.fontMetricsInt
-            val baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2
-            canvas.drawText(title, targetRect.centerX(), baseline, mRedPackageTextPaint)
-            canvas.save()
-            map[title] = bitmap
-            return bitmap
-        }
+    private fun createBitmap(baseBitmap: Bitmap): Bitmap {
+        // 初始化Matrix对象
+        val matrix = Matrix()
+        // 根据传入的参数设置缩放比例
+        matrix.postScale(DEFAULT_WIDTH.toFloat() / baseBitmap.width.toFloat(), DEFAULT_HEIGHT.toFloat() / baseBitmap.height.toFloat())
+        return Bitmap.createBitmap(baseBitmap, 0, 0, baseBitmap.width, baseBitmap.height, matrix, true)
     }
 
     /**

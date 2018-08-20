@@ -55,14 +55,14 @@ abstract class BaseFragment : Fragment(), ITopView {
         if (!inited) {
             val rootView = mRootView!!.get()
             rootView?.let {
-                initView(it, savedInstanceState)
-
                 if (needEventBus()) {
                     EventBus.getDefault().register(this)
                 }
 
                 inited()
                 inited = true
+
+                initView(it, savedInstanceState)
             }
         }
     }

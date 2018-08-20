@@ -7,6 +7,7 @@ class StudentsEntity : Serializable {
     var id: Int? = null
     var name: String? = null
     var clickers: MutableList<Clicker>? = null
+    var avatar: String? = null
 
     class Clicker : Serializable {
         var id: Int? = null

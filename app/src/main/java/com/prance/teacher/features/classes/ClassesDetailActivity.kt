@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -12,6 +12,8 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.view.StudentsFragment
+import io.reactivex.Flowable
+import java.util.concurrent.TimeUnit
 
 class ClassesDetailActivity : BaseActivity() {
 
@@ -31,8 +33,10 @@ class ClassesDetailActivity : BaseActivity() {
 
         //启动主页
         if (BuildConfig.DEBUG) {
-//            val redConfig = RedPackageSetting(1, 30, 1, 1)
-//            startActivity(RedPackageActivity.callingIntent(this, redConfig))
+            Flowable.timer(3,TimeUnit.SECONDS)
+                    .mySubscribe {
+                        val redConfig = RedPackageSetting(1, 5, 1, 1)
+                        startActivity(RedPackageActivity.callingIntent(this, redConfig)) }
 
 //            val question  = ClassesDetailFragment.Question()
 //            question.classId = 1

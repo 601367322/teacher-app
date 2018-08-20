@@ -2,9 +2,12 @@ package com.prance.teacher.features.subject.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.features.students.model.StudentsEntity
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
 import java.io.Serializable
 import kotlin.math.min
@@ -17,6 +20,7 @@ class SubjectOnDestroyFragment : BaseFragment() {
 
     var answerMap = mutableMapOf("A" to R.drawable.answer_a, "B" to R.drawable.answer_b, "C" to R.drawable.answer_c, "D" to R.drawable.answer_d)
     lateinit var rankNames: MutableList<TextView>
+    lateinit var rankAvatars: MutableList<ImageView>
 
     companion object {
 
@@ -35,6 +39,7 @@ class SubjectOnDestroyFragment : BaseFragment() {
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
 
         rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
+        rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
 
         mQuestionResult?.run {
             rightAnswer.setImageResource(answerMap[answer]!!)
@@ -44,6 +49,11 @@ class SubjectOnDestroyFragment : BaseFragment() {
             if (rank.isNotEmpty()) {
                 for (i in 0..min(4, rank.size - 1)) {
                     rankNames[i].text = rank[i].name
+                    rankAvatars[i].visibility = View.VISIBLE
+                    GlideApp.with(this@SubjectOnDestroyFragment)
+                            .load(rank[i].avatar)
+                            .circleCrop()
+                            .into(rankAvatars[i])
                 }
             }
         }
@@ -54,11 +64,11 @@ class SubjectOnDestroyFragment : BaseFragment() {
         var classId: Int? = null
         var answerMsg: Answer? = null
         var answer: String? = null
-        var rank: List<Student> = mutableListOf()
+        var rank: List<StudentsEntity> = mutableListOf()
 
         constructor()
 
-        constructor(classId: Int?, answerMsg: Answer?, answer: String?, rank: List<Student>) {
+        constructor(classId: Int?, answerMsg: Answer?, answer: String?, rank: List<StudentsEntity>) {
             this.classId = classId
             this.answerMsg = answerMsg
             this.answer = answer
@@ -78,10 +88,6 @@ class SubjectOnDestroyFragment : BaseFragment() {
             this.noAnswer = noAnswer
             this.wrong = wrong
         }
-    }
-
-    class Student : Serializable {
-        var name: String? = null
     }
 
 }

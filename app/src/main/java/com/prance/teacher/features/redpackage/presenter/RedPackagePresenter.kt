@@ -5,18 +5,15 @@ import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
-import com.prance.lib.database.KeyPadEntityDao.Properties.KeyId
 import com.prance.teacher.features.redpackage.model.RedPackageModel
 import com.prance.teacher.features.redpackage.model.RedPackageRecord
 import io.reactivex.disposables.Disposable
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
-import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.Serializable
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.TimeUnit
 
 
@@ -52,7 +49,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
             RedPackageManager.DEFAULT_SCORE = it.integrat!!
         }
         this.mSetting = mSetting
-        mRedPackageManager = RedPackageManager()
+        mRedPackageManager = RedPackageManager(mView?.getContext()!!)
         SunARS.voteStart(SunARS.VoteType_Choice, "1,1,0,0,10,1")
         var time = totalTime / intervalTime
         disposable = Flowable.interval(intervalTime, TimeUnit.MILLISECONDS)
