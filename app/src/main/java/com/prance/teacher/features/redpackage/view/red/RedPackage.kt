@@ -9,6 +9,7 @@ import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
+import com.prance.teacher.features.students.model.StudentsEntity
 
 class RedPackage {
 
@@ -36,12 +37,14 @@ class RedPackage {
 
     var bitmap: Bitmap? = null
 
+    var tipBitmap: Bitmap
+
     var scoreTip: ScoreTip? = null
 
     //被抢的状态
     var state = RedPackageStatus.CANNOTGRAB
 
-    constructor(x: Int, y: Int, createTime: Long, alpha: Int, width: Long, height: Long, title: String, bitmap: Bitmap) {
+    constructor(x: Int, y: Int, createTime: Long, alpha: Int, width: Long, height: Long, title: String, bitmap: Bitmap, tipBitmap: Bitmap) {
         this.x = x
         this.y = y
         this.createTime = createTime
@@ -50,6 +53,7 @@ class RedPackage {
         this.height = height
         this.title = title
         this.bitmap = bitmap
+        this.tipBitmap = tipBitmap
     }
 
     fun startFall() {
@@ -62,6 +66,10 @@ class RedPackage {
                 if (y >= height) {
                     //全部出来之后才可以抢
                     state = RedPackageStatus.CANGRAB
+                }
+
+                if (y > 600 && hideAnimator == null) {
+                    destroy(StudentScore(StudentsEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "https://www.baidu.com/img/bd_logo1.png"), 2, 2))
                 }
             }
             translationAnimator!!.addListener(object : AnimatorListenerAdapter() {
@@ -84,10 +92,10 @@ class RedPackage {
         //设置为已被抢状态
         state = RedPackageStatus.GRAB
 
-        Thread({
+//        Thread({
             //生成抢到红包提示
-            scoreTip = ScoreTip(x, y, width.toInt(), """${studentScore.student.name}  +${RedPackageManager.DEFAULT_SCORE}""")
-        }).run()
+            scoreTip = ScoreTip(x, y, width.toInt(), height.toInt(), """${studentScore.student.name}""", tipBitmap)
+//        }).run()
 
         if (hideAnimator == null) {
             hideAnimator = ObjectAnimator.ofInt(alpha, 0).setDuration(200)

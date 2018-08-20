@@ -9,6 +9,11 @@ class StudentsEntity : Serializable {
     var clickers: MutableList<Clicker>? = null
     var avatar: String? = null
 
+    constructor(name: String?, avatar: String?) {
+        this.name = name
+        this.avatar = avatar
+    }
+
     class Clicker : Serializable {
         var id: Int? = null
         var number: String? = null
@@ -17,6 +22,8 @@ class StudentsEntity : Serializable {
         }
 
     }
+
+
 
     fun getClicker(): Clicker? {
         clickers?.let { return it[0] }

@@ -6,6 +6,7 @@ import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
+import com.prance.teacher.weight.FontCustom
 
 class ScoreTip {
 
@@ -21,7 +22,6 @@ class ScoreTip {
 
     //宽高
     var width: Int
-    var height: Int
 
     //标题
     var title: String
@@ -37,42 +37,67 @@ class ScoreTip {
     //被抢的状态
     var state = RedPackageTipStatus.SHOW
 
-    constructor(x: Int, y: Int, redPackageWidth: Int, title: String) {
+    constructor(x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, title: String, background: Bitmap) {
 
         this.title = title
+
+        //底部文字溢出长度
+        val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
+
+        this.width = background.width
+
+        //红包背景378
+        var bitmap = Bitmap.createBitmap(
+                background.width,
+                background.height,
+                Bitmap.Config.ARGB_4444)
+
+        val canvas = Canvas(bitmap)
+
+        canvas.drawBitmap(background, 0f, 0f, null)
+
+        val strokeTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        strokeTextPaint.color = Color.parseColor("#923D00")
+        strokeTextPaint.textAlign = Paint.Align.CENTER
+        strokeTextPaint.strokeWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m3_0).toFloat()
+        strokeTextPaint.style = Paint.Style.FILL_AND_STROKE
+        strokeTextPaint.typeface = FontCustom.getFZY1JWFont(Utils.getApp())
+        strokeTextPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m47_0).toFloat()
 
         //文字画笔
         val textPaint = Paint()
         textPaint.isAntiAlias = true
         textPaint.color = Color.WHITE
+        textPaint.typeface = FontCustom.getFZY1JWFont(Utils.getApp())
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m20_0).toFloat()
+        textPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m47_0).toFloat()
 
-        this.width = textPaint.measureText(title).toInt()
         //计算文字宽高
         val textRect = Rect()
         textPaint.getTextBounds(title, 0, title.length, textRect)
 
-        this.height = textRect.height()
+        var textHeight = textRect.height()
 
-        //红包背景
-        var bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-
-        var targetRect = Rect(0, 0, width, height)
+        var targetRect = Rect(0, 0, width, textHeight)
         //绘制名字
         val fontMetrics = textPaint.fontMetricsInt
         val baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2
 
-        canvas.drawText(title, targetRect.centerX().toFloat(), baseline.toFloat(), textPaint)
+        val textStartY = bitmap.height - baseline.toFloat() + bottomPadding
+
+        canvas.drawText(title, targetRect.centerX().toFloat(), textStartY, strokeTextPaint)
+        canvas.drawText(title, targetRect.centerX().toFloat(), textStartY, textPaint)
+
         this.bitmap = bitmap
 
         this.x = x + (redPackageWidth - this.width) / 2
 
-        this.y = y
+        this.y = y - (bitmap.height - redPackageHeight)
 
         startFall()
     }
+
+    var animatorSet: AnimatorSet? = null
 
     private fun startFall() {
         val fallAnimator = ObjectAnimator.ofInt(y, y - translationDistance)
@@ -84,11 +109,11 @@ class ScoreTip {
             alpha = it.animatedValue.toString().toInt()
         }
 
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(fallAnimator, hideAnimator)
-        animatorSet.duration = translationDurationTime
-        animatorSet.interpolator = LinearInterpolator()
-        animatorSet.addListener(object : AnimatorListenerAdapter() {
+        animatorSet = AnimatorSet()
+        animatorSet!!.playTogether(fallAnimator, hideAnimator)
+        animatorSet!!.duration = translationDurationTime
+        animatorSet!!.interpolator = LinearInterpolator()
+        animatorSet!!.addListener(object : AnimatorListenerAdapter() {
 
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
@@ -98,11 +123,12 @@ class ScoreTip {
                 bitmap = null
             }
         })
-        animatorSet.start()
+        animatorSet!!.start()
     }
 
-    override fun toString(): String {
-        return "ScoreTip(translationDistance=$translationDistance, x=$x, y=$y, alpha=$alpha, width=$width, height=$height, title='$title', translationAnimator=$translationAnimator, hideAnimator=$hideAnimator, bitmap=$bitmap, translationDurationTime=$translationDurationTime, state=$state)"
+    fun destroy() {
+        animatorSet?.cancel()
     }
+
 
 }

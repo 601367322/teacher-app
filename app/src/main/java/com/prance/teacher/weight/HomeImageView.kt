@@ -42,7 +42,7 @@ class HomeImageView : ImageView {
             val dstBitmap = Bitmap.createBitmap(
                     bitmap.width, // Width
                     bitmap.height, // Height
-                    Bitmap.Config.ARGB_8888 // Config
+                    Bitmap.Config.ARGB_4444 // Config
             )
             val paint = Paint()
             paint.isAntiAlias = true

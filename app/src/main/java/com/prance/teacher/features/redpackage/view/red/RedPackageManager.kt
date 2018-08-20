@@ -2,7 +2,7 @@ package com.prance.teacher.features.redpackage.view.red
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.BitmapFactory.decodeResource
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
@@ -11,8 +11,6 @@ import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
-import android.R.attr.scaleHeight
-import android.R.attr.scaleWidth
 
 
 class RedPackageManager {
@@ -40,9 +38,6 @@ class RedPackageManager {
     var DEFAULT_HEIGHT = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
 
 
-    private var mRedPackageBackgroundPaint: Paint? = null
-    private var mRedPackageTextPaint: Paint? = null
-
     //屏幕宽高
     var screenWidth: Int = Utils.getApp().resources.displayMetrics.widthPixels
 
@@ -60,21 +55,38 @@ class RedPackageManager {
     //红包分数集合
     var studentScores = mutableListOf<StudentScore>()
 
+    //红包背景
     var redPackageImg: MutableMap<String, Bitmap>
 
+    //红包背景
+    var scoreBitmaps: MutableMap<String, Bitmap>
+
+    //抢到提示背景
+    var tipBitmapLittle: Bitmap
+    var tipBitmapBig: Bitmap
+
     constructor(context: Context) {
-        mRedPackageBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        mRedPackageBackgroundPaint!!.color = Color.RED
-        mRedPackageTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        mRedPackageTextPaint!!.color = Color.WHITE
-        mRedPackageTextPaint!!.textSize = 80F
-        mRedPackageTextPaint!!.textAlign = Paint.Align.CENTER
 
         redPackageImg = mutableMapOf(
-                "A" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_a)),
-                "B" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_b)),
-                "C" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_c)),
-                "D" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_d)))
+                "A" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_a), DEFAULT_WIDTH),
+                "B" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_b), DEFAULT_WIDTH),
+                "C" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_c), DEFAULT_WIDTH),
+                "D" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_d), DEFAULT_WIDTH))
+
+        var scoreMaxWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m48_0)
+
+        scoreBitmaps = mutableMapOf(
+                "+" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_add), scoreMaxWidth),
+                "2" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_2), scoreMaxWidth),
+                "4" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_4), scoreMaxWidth))
+
+        val tipBitmap = createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_tip_background), Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m236_0))
+        tipBitmapLittle = createTipBitmap(tipBitmap, "+2")
+        tipBitmapBig = createTipBitmap(tipBitmap, "+4")
+
+        //提前扩充内存，避免卡顿
+        val memory = ScoreTip(0, 0, DEFAULT_WIDTH,DEFAULT_HEIGHT, """test""", tipBitmap)
+        memory.destroy()
     }
 
     fun generateRedPack(): RedPackage? {
@@ -90,7 +102,8 @@ class RedPackageManager {
                     DEFAULT_WIDTH.toLong(),
                     DEFAULT_HEIGHT.toLong(),
                     randomTitle,
-                    redPackageImg[randomTitle]!!
+                    redPackageImg[randomTitle]!!,
+                    tipBitmapLittle
             )
 
             redPackages.add(red)
@@ -171,12 +184,49 @@ class RedPackageManager {
         return (System.currentTimeMillis() - redPackage.createTime) > (minInterval + Math.random() * intervalRange)
     }
 
-    private fun createBitmap(baseBitmap: Bitmap): Bitmap {
+    private fun createBitmap(baseBitmap: Bitmap, width: Int): Bitmap {
         // 初始化Matrix对象
         val matrix = Matrix()
         // 根据传入的参数设置缩放比例
-        matrix.postScale(DEFAULT_WIDTH.toFloat() / baseBitmap.width.toFloat(), DEFAULT_HEIGHT.toFloat() / baseBitmap.height.toFloat())
+        matrix.postScale(width.toFloat() / baseBitmap.width.toFloat(), width.toFloat() / baseBitmap.width.toFloat())
         return Bitmap.createBitmap(baseBitmap, 0, 0, baseBitmap.width, baseBitmap.height, matrix, true)
+    }
+
+    private fun createTipBitmap(tipBitmap: Bitmap, score: String): Bitmap {
+        //底部文字溢出长度
+        val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
+        //右部文字溢出长度
+        val rightPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m71_0)
+
+        //红包背景378
+        var bitmap = Bitmap.createBitmap(
+                tipBitmap.width + rightPadding * 2,
+                tipBitmap.height + bottomPadding,
+                Bitmap.Config.ARGB_4444)
+
+        val canvas = Canvas(bitmap)
+
+        canvas.drawBitmap(
+                tipBitmap,
+                (bitmap.width - tipBitmap.width).toFloat() / 2F,
+                0F,
+                null)
+
+        val scores = convertTextToBitmap(score)
+        var startX = bitmap.width - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m86_0).toFloat()
+        for (score in scores) {
+            canvas.drawBitmap(score, startX, bitmap.height - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m98_0).toFloat() - score.height, null)
+            startX += SizeUtils.px2dp(60F)
+        }
+        return bitmap
+    }
+
+    private fun convertTextToBitmap(text: String): MutableList<Bitmap> {
+        val list = mutableListOf<Bitmap>()
+        for (i in text) {
+            list.add(this.scoreBitmaps[i.toString()]!!)
+        }
+        return list
     }
 
     /**

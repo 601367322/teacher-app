@@ -35,7 +35,7 @@ class ClassesDetailActivity : BaseActivity() {
         if (BuildConfig.DEBUG) {
             Flowable.timer(3,TimeUnit.SECONDS)
                     .mySubscribe {
-                        val redConfig = RedPackageSetting(1, 5, 1, 1)
+                        val redConfig = RedPackageSetting(1, 30, 1, 1)
                         startActivity(RedPackageActivity.callingIntent(this, redConfig)) }
 
 //            val question  = ClassesDetailFragment.Question()
