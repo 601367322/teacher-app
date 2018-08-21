@@ -287,9 +287,11 @@ class RedPackageManager {
         if (studentScore == null) {
             //根据keyId去找到对应的学生信息
             var studentEntity: StudentsEntity? = null
-            for (item in ClassesDetailFragment.mStudentList!!) {
-                if (KeyID == item.getClicker()?.number) {
-                    studentEntity = item
+            ClassesDetailFragment.mStudentList?.let {
+                for (item in it) {
+                    if (KeyID == item.getClicker()?.number) {
+                        studentEntity = item
+                    }
                 }
             }
             //如果学生信息没有找到，则放弃处理
@@ -298,7 +300,7 @@ class RedPackageManager {
             }
 
             //找到学生后，添加一个新的答题积分记录
-            studentScore = StudentScore(studentEntity, 0, 0)
+            studentScore = StudentScore(studentEntity!!, 0, 0)
             studentScores.add(studentScore)
         }
 
