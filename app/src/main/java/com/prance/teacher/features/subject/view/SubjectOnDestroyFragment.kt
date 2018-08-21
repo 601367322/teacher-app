@@ -51,7 +51,7 @@ class SubjectOnDestroyFragment : BaseFragment() {
                     rankNames[i].text = rank[i].name
                     rankAvatars[i].visibility = View.VISIBLE
                     GlideApp.with(this@SubjectOnDestroyFragment)
-                            .load(rank[i].avatar)
+                            .load(rank[i].head)
                             .circleCrop()
                             .into(rankAvatars[i])
                 }

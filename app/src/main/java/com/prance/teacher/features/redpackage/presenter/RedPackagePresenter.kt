@@ -80,7 +80,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
     override fun detachView() {
         super.detachView()
-
+        mRedPackageManager.destroy()
         stopInterval()
     }
 

@@ -5,13 +5,13 @@ import java.io.Serializable
 class StudentsEntity : Serializable {
 
     var id: Int? = null
-    var name: String? = null
+    var name: String = ""
     var clickers: MutableList<Clicker>? = null
-    var avatar: String? = null
+    var head: String? = null
 
     constructor(name: String?, avatar: String?) {
-        this.name = name
-        this.avatar = avatar
+        this.name = name ?: ""
+        this.head = avatar
     }
 
     class Clicker : Serializable {
@@ -22,7 +22,6 @@ class StudentsEntity : Serializable {
         }
 
     }
-
 
 
     fun getClicker(): Clicker? {

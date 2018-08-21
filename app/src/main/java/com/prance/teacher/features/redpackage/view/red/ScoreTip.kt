@@ -1,11 +1,14 @@
 package com.prance.teacher.features.redpackage.view.red
 
 import android.animation.*
+import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
+import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
+import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.weight.FontCustom
 
 class ScoreTip {
@@ -26,9 +29,6 @@ class ScoreTip {
     //标题
     var title: String
 
-    var translationAnimator: ValueAnimator? = null
-    var hideAnimator: ValueAnimator? = null
-
     var bitmap: Bitmap? = null
 
     //动画时长
@@ -36,10 +36,13 @@ class ScoreTip {
 
     //被抢的状态
     var state = RedPackageTipStatus.SHOW
+    var context: Context
 
-    constructor(x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, title: String, background: Bitmap) {
+    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap) {
 
-        this.title = title
+        this.context = context
+
+        this.title = student.name
 
         //底部文字溢出长度
         val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
@@ -74,7 +77,7 @@ class ScoreTip {
 
         //计算文字宽高
         val textRect = Rect()
-        textPaint.getTextBounds(title, 0, title.length, textRect)
+        textPaint.getTextBounds(student.name, 0, student.name.length, textRect)
 
         var textHeight = textRect.height()
 
@@ -85,8 +88,8 @@ class ScoreTip {
 
         val textStartY = bitmap.height - baseline.toFloat() + bottomPadding
 
-        canvas.drawText(title, targetRect.centerX().toFloat(), textStartY, strokeTextPaint)
-        canvas.drawText(title, targetRect.centerX().toFloat(), textStartY, textPaint)
+        canvas.drawText(student.name, targetRect.centerX().toFloat(), textStartY, strokeTextPaint)
+        canvas.drawText(student.name, targetRect.centerX().toFloat(), textStartY, textPaint)
 
         this.bitmap = bitmap
 
@@ -95,6 +98,11 @@ class ScoreTip {
         this.y = y - (bitmap.height - redPackageHeight)
 
         startFall()
+
+//        GlideApp.with(context)
+//                .asBitmap()
+//                .load(student.head)
+//                .
     }
 
     var animatorSet: AnimatorSet? = null
@@ -125,10 +133,4 @@ class ScoreTip {
         })
         animatorSet!!.start()
     }
-
-    fun destroy() {
-        animatorSet?.cancel()
-    }
-
-
 }

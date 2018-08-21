@@ -62,7 +62,7 @@ class FZTextView : TextView, AutoSizeableTextView {
 
             val currentTextColor = currentTextColor
             p.style = Paint.Style.STROKE
-            p.strokeWidth = SizeUtils.px2dp(strokeWidth.toFloat()).toFloat()
+            p.strokeWidth = strokeWidth.toFloat()
             setTextColor(strokeColor)
             super.onDraw(canvas)
             setTextColor(currentTextColor)

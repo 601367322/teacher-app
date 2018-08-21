@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
@@ -44,7 +45,10 @@ class RedPackage {
     //被抢的状态
     var state = RedPackageStatus.CANNOTGRAB
 
-    constructor(x: Int, y: Int, createTime: Long, alpha: Int, width: Long, height: Long, title: String, bitmap: Bitmap, tipBitmap: Bitmap) {
+    var context: Context
+
+    constructor(context: Context, x: Int, y: Int, createTime: Long, alpha: Int, width: Long, height: Long, title: String, bitmap: Bitmap, tipBitmap: Bitmap) {
+        this.context = context
         this.x = x
         this.y = y
         this.createTime = createTime
@@ -92,10 +96,8 @@ class RedPackage {
         //设置为已被抢状态
         state = RedPackageStatus.GRAB
 
-//        Thread({
-            //生成抢到红包提示
-            scoreTip = ScoreTip(x, y, width.toInt(), height.toInt(), """${studentScore.student.name}""", tipBitmap)
-//        }).run()
+        //生成抢到红包提示
+        scoreTip = ScoreTip(context, x, y, width.toInt(), height.toInt(), studentScore.student, tipBitmap)
 
         if (hideAnimator == null) {
             hideAnimator = ObjectAnimator.ofInt(alpha, 0).setDuration(200)

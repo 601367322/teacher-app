@@ -9,6 +9,7 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.weight.FontCustom
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -49,23 +50,32 @@ class RedPackageManager {
     //总列数
     val lines = 5
 
-    //提前绘制好的红包
-    val map = HashMap<String, Bitmap>()
-
     //红包分数集合
     var studentScores = mutableListOf<StudentScore>()
 
     //红包背景
     var redPackageImg: MutableMap<String, Bitmap>
 
-    //红包背景
+    //红包积分数字图
     var scoreBitmaps: MutableMap<String, Bitmap>
 
-    //抢到提示背景
+    //抢到红包提示缓存背景，防止卡顿
+//    var cacheBitmap: Bitmap
+
+    //抢到红包提示背景原图
+//    var tipBitmap: Bitmap
+
+    //抢到小红包提示背景
     var tipBitmapLittle: Bitmap
+
+    //抢到大红包提示背景
     var tipBitmapBig: Bitmap
 
+    private var context: Context
+
     constructor(context: Context) {
+
+        this.context = context
 
         redPackageImg = mutableMapOf(
                 "A" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_a), DEFAULT_WIDTH),
@@ -73,7 +83,7 @@ class RedPackageManager {
                 "C" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_c), DEFAULT_WIDTH),
                 "D" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_d), DEFAULT_WIDTH))
 
-        var scoreMaxWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m48_0)
+        val scoreMaxWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m48_0)
 
         scoreBitmaps = mutableMapOf(
                 "+" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_add), scoreMaxWidth),
@@ -85,8 +95,7 @@ class RedPackageManager {
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
         //提前扩充内存，避免卡顿
-        val memory = ScoreTip(0, 0, DEFAULT_WIDTH,DEFAULT_HEIGHT, """test""", tipBitmap)
-        memory.destroy()
+        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("e",""), tipBitmapBig)
     }
 
     fun generateRedPack(): RedPackage? {
@@ -95,6 +104,7 @@ class RedPackageManager {
             val randomTitle = titles[(Math.random() * (titles.size)).toInt()]
 
             val red = RedPackage(
+                    context,
                     getRedPackageStartX(it).toInt(),
                     -DEFAULT_HEIGHT,
                     System.currentTimeMillis(),
@@ -215,8 +225,9 @@ class RedPackageManager {
         val scores = convertTextToBitmap(score)
         var startX = bitmap.width - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m86_0).toFloat()
         for (score in scores) {
+            //积分图
             canvas.drawBitmap(score, startX, bitmap.height - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m98_0).toFloat() - score.height, null)
-            startX += SizeUtils.px2dp(60F)
+            startX += Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m35_0)
         }
         return bitmap
     }
@@ -295,5 +306,8 @@ class RedPackageManager {
         studentScore.score += DEFAULT_SCORE
 
         return studentScore
+    }
+
+    fun destroy() {
     }
 }
