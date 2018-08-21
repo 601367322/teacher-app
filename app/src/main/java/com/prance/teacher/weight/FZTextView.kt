@@ -30,6 +30,7 @@ class FZTextView : TextView, AutoSizeableTextView {
     private fun init(context: Context, attrs: AttributeSet?) {
         this.typeface = FontCustom.getFZY1JWFont(context)
 
+
         attrs?.let {
             val a = context.obtainStyledAttributes(it, R.styleable.FZTextView)
             try {
@@ -55,17 +56,22 @@ class FZTextView : TextView, AutoSizeableTextView {
     override fun onDraw(canvas: Canvas) {
         if (strokeWidth > 0) {
             isDrawing = true
-            val p = paint
-            p.style = Paint.Style.FILL
-
-            super.onDraw(canvas)
-
             val currentTextColor = currentTextColor
-            p.style = Paint.Style.STROKE
+            val p = paint
+            p.isFakeBoldText = true
+
+            //画背景边框
+            p.style = Paint.Style.FILL_AND_STROKE
             p.strokeWidth = strokeWidth.toFloat()
             setTextColor(strokeColor)
             super.onDraw(canvas)
+
+            //画字体
+            p.strokeWidth = 0F
+            p.style = Paint.Style.FILL
             setTextColor(currentTextColor)
+            super.onDraw(canvas)
+
             isDrawing = false
         } else {
             super.onDraw(canvas)

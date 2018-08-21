@@ -81,9 +81,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
         //启动主页
         if (BuildConfig.DEBUG) {
-            val classes = ClassesEntity(6)
+//            val classes = ClassesEntity(1)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
-            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
+//            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
 //            context?.let { startActivity(MainActivity.callingIntent(it)) }
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }

@@ -50,14 +50,18 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
      */
     override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
         LogUtils.d("onHDParamCallBack>>$iBaseID $iMode $sInfo")
-        when (iMode) {
-        //基站主信道
-            SunARS.BaseStation_Channel -> {
-                UsbManagerImpl.baseStation.stationChannel = sInfo.toLong()
+        try {
+            when (iMode) {
+            //基站主信道
+                SunARS.BaseStation_Channel -> {
+                    UsbManagerImpl.baseStation.stationChannel = sInfo.toLong()
+                }
+                SunARS.BaseStation_ID -> {
+                    UsbManagerImpl.baseStation.stationId = sInfo.toInt()
+                }
             }
-            SunARS.BaseStation_ID -> {
-                UsbManagerImpl.baseStation.stationId = sInfo.toInt()
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
