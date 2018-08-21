@@ -10,12 +10,15 @@ import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectOnCreateFragment
 import com.prance.teacher.features.subject.view.SubjectOnDestroyFragment
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.prance.teacher.features.subject.view.SubjectOnStopFragment
+import io.reactivex.Flowable
+import java.util.concurrent.TimeUnit
 
 /**
  * 上课答题
@@ -74,14 +77,28 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
         mPushServicePresenterPresenter.bind()
 
+        if (BuildConfig.DEBUG) {
 //        Flowable.timer(6, TimeUnit.SECONDS)
 //                .subscribe {
 //                    onSubjectStop()
 //                }
-//        Flowable.timer(9, TimeUnit.SECONDS)
-//                .subscribe {
-//                    onSubjectDestroy(SubjectOnDestroyFragment.QuestionResult(1,SubjectOnDestroyFragment.Answer()))
-//                }
+//            Flowable.timer(3, TimeUnit.SECONDS)
+//                    .subscribe {
+//                        onSubjectDestroy(
+//                                SubjectOnDestroyFragment
+//                                        .QuestionResult(
+//                                                1,
+//                                                SubjectOnDestroyFragment.Answer(1, 2, 3),
+//                                                "ABC",
+//                                                mutableListOf(
+//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png")
+//                                                )))
+//                    }
+        }
     }
 
     override fun onDestroy() {

@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.ActivityUtils
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -25,17 +25,14 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
-import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
-import com.prance.teacher.features.subject.model.KeyPadResult
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
-import java.util.*
 
 /**
  * 班级详情页面
@@ -193,6 +190,17 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun studentList(list: MutableList<StudentsEntity>) {
         hideProgress()
         mStudentList = list
+
+        //提前下载学生头像缓存
+        mStudentList?.let {
+            for(student in it){
+                GlideApp.with(this)
+                        .asBitmap()
+                        .load(student.head)
+                        .submit()
+            }
+        }
+
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

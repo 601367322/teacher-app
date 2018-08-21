@@ -3,11 +3,13 @@ package com.prance.teacher.features.subject.view
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
 import java.io.Serializable
 import kotlin.math.min
@@ -18,7 +20,7 @@ class SubjectOnDestroyFragment : BaseFragment() {
 
     var mQuestionResult: QuestionResult? = null
 
-    var answerMap = mutableMapOf("A" to R.drawable.answer_a, "B" to R.drawable.answer_b, "C" to R.drawable.answer_c, "D" to R.drawable.answer_d)
+    var answerMap = mutableMapOf("A" to R.drawable.answer_a, "B" to R.drawable.answer_b, "C" to R.drawable.answer_c, "D" to R.drawable.answer_d, "对" to R.drawable.answer_true, "错" to R.drawable.answer_false)
     lateinit var rankNames: MutableList<TextView>
     lateinit var rankAvatars: MutableList<ImageView>
 
@@ -42,7 +44,9 @@ class SubjectOnDestroyFragment : BaseFragment() {
         rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
 
         mQuestionResult?.run {
-            rightAnswer.setImageResource(answerMap[answer]!!)
+            for (a in answer!!) {
+                rightAnswers.addView(createAnswerImg(a))
+            }
 
             answerResult.text = """答对：${answerMsg?.right}人       答错：${answerMsg?.wrong}人       未作答：${answerMsg?.noAnswer}人"""
 
@@ -52,11 +56,17 @@ class SubjectOnDestroyFragment : BaseFragment() {
                     rankAvatars[i].visibility = View.VISIBLE
                     GlideApp.with(this@SubjectOnDestroyFragment)
                             .load(rank[i].head)
-                            .circleCrop()
                             .into(rankAvatars[i])
                 }
             }
         }
+    }
+
+    fun createAnswerImg(char: Char): ImageView {
+        val image = ImageView(context)
+        image.layoutParams = LinearLayout.LayoutParams(resources.getDimensionPixelOffset(R.dimen.m73_0),resources.getDimensionPixelOffset(R.dimen.m73_0))
+        image.setImageResource(answerMap[char.toString()]!!)
+        return image
     }
 
     class QuestionResult : Serializable {

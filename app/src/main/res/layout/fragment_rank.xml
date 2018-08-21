@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/red_package_rank_background">
@@ -27,9 +26,10 @@
         android:layout_width="@dimen/m170.0"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m900.0"
-        android:layout_marginTop="@dimen/m528.0"
+        android:layout_marginTop="@dimen/m535.0"
         android:gravity="center"
         android:maxLines="1"
+        android:textColor="#FFFEFE"
         android:textSize="@dimen/m41.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,9 +39,10 @@
     <com.prance.teacher.weight.FZTextView
         android:id="@+id/rankText2"
         android:layout_width="@dimen/m170.0"
+        android:textColor="#FFFEFE"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m546.0"
-        android:layout_marginTop="@dimen/m584.0"
+        android:layout_marginTop="@dimen/m591.0"
         android:gravity="center"
         android:maxLines="1"
         android:textSize="@dimen/m41.0"
@@ -55,8 +56,9 @@
         android:layout_width="@dimen/m170.0"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m1275.0"
-        android:layout_marginTop="@dimen/m604.0"
+        android:layout_marginTop="@dimen/m611.0"
         android:gravity="center"
+        android:textColor="#FFFEFE"
         android:maxLines="1"
         android:textSize="@dimen/m41.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,6 +73,7 @@
         android:layout_marginBottom="@dimen/m69.0"
         android:textSize="@dimen/m60.0"
         android:textStyle="bold"
+        android:textColor="#FFFEFE"
         app:layout_constraintBottom_toTopOf="@+id/rankText1"
         app:layout_constraintEnd_toEndOf="@+id/rankText1"
         app:layout_constraintStart_toStartOf="@+id/rankText1"
@@ -85,6 +88,7 @@
         android:layout_marginBottom="@dimen/m69.0"
         android:textSize="@dimen/m60.0"
         android:textStyle="bold"
+        android:textColor="#FFFEFE"
         app:layout_constraintBottom_toTopOf="@+id/rankText3"
         app:layout_constraintEnd_toEndOf="@+id/rankText3"
         app:layout_constraintStart_toStartOf="@+id/rankText3"
@@ -98,13 +102,14 @@
         android:layout_marginBottom="@dimen/m69.0"
         android:textSize="@dimen/m60.0"
         android:textStyle="bold"
+        android:textColor="#FFFEFE"
         app:layout_constraintBottom_toTopOf="@+id/rankText2"
         app:layout_constraintEnd_toEndOf="@+id/rankText2"
         app:layout_constraintStart_toStartOf="@+id/rankText2"
         app:strokeWidth="@dimen/m4.0"
         app:typeface="COMICSANSMSGRAS" />
 
-    <ImageView
+    <com.prance.lib.common.utils.weight.CircleImageView
         android:id="@+id/rankAvatar1"
         android:layout_width="@dimen/m145.0"
         android:layout_height="@dimen/m145.0"
@@ -116,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="@+id/rankText1"
         app:layout_constraintStart_toStartOf="@+id/rankText1" />
 
-    <ImageView
+    <com.prance.lib.common.utils.weight.CircleImageView
         android:id="@+id/rankAvatar2"
         android:layout_width="@dimen/m145.0"
         android:layout_height="@dimen/m145.0"
@@ -129,7 +134,7 @@
         app:layout_constraintStart_toStartOf="@+id/rankText2" />
 
 
-    <ImageView
+    <com.prance.lib.common.utils.weight.CircleImageView
         android:id="@+id/rankAvatar3"
         android:layout_width="@dimen/m145.0"
         android:layout_height="@dimen/m145.0"

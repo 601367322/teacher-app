@@ -32,6 +32,7 @@ import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.main.view.MainFragment
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.redpackage.view.RankFragment
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
@@ -81,7 +82,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
         //启动主页
         if (BuildConfig.DEBUG) {
-//            val classes = ClassesEntity(1)
+//            val classes = ClassesEntity(6)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
 //            context?.let { startActivity(MainActivity.callingIntent(it)) }

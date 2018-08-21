@@ -95,7 +95,7 @@ class RedPackageManager {
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
         //提前扩充内存，避免卡顿
-        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("e",""), tipBitmapBig)
+        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("e", ""), tipBitmapBig)
     }
 
     fun generateRedPack(): RedPackage? {
@@ -216,6 +216,7 @@ class RedPackageManager {
 
         val canvas = Canvas(bitmap)
 
+        canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
         canvas.drawBitmap(
                 tipBitmap,
                 (bitmap.width - tipBitmap.width).toFloat() / 2F,

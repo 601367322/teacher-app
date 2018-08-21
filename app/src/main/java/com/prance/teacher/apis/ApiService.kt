@@ -79,7 +79,7 @@ interface ApiService {
     fun qrCodeDetail(@Url url: String): Flowable<QrCodeEntity>
 
     @POST
-    fun checkQrCode(@Url url: String, @Query("timestamp") timestamp: Long, @Query("token") token: String): Flowable<UserEntity>
+    fun checkQrCode(@Url url: String, @Query("timestamp") timestamp: Long, @Query("token") token: String, @Query("log") log: String): Flowable<UserEntity>
 
     @GET
     fun allClasses(@Url url: String): Flowable<ResponseBody<ClassesEntity>>

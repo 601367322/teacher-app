@@ -13,11 +13,16 @@ import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.RankFragment
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
+import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.subject.view.SubjectOnDestroyFragment
+import io.reactivex.Flowable
+import java.util.concurrent.TimeUnit
 
 class RedPackageActivity : BaseActivity(), MessageListener {
 
@@ -30,6 +35,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
      * 抢红包fragment
      */
     var mGrabFragment: RedPackageFragment? = null
+
     companion object {
         fun callingIntent(context: Context, redPackage: RedPackageSetting): Intent {
             val intent = Intent(context, RedPackageActivity::class.java)
@@ -39,7 +45,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
         }
     }
 
-    override fun fragment(): BaseFragment{
+    override fun fragment(): BaseFragment {
         if (mGrabFragment == null) {
             mGrabFragment = RedPackageFragment()
         }
@@ -50,13 +56,42 @@ class RedPackageActivity : BaseActivity(), MessageListener {
         super.initView(savedInstanceState)
         mSetting = intent?.getSerializableExtra(RedPackageFragment.mSetTing) as RedPackageSetting?
         val bundle = Bundle()
-        bundle.putSerializable(RedPackageFragment.mSetTing,mSetting)
-        if (mGrabFragment!!.arguments != null){
+        bundle.putSerializable(RedPackageFragment.mSetTing, mSetting)
+        if (mGrabFragment!!.arguments != null) {
             mGrabFragment!!.arguments?.putAll(bundle)
         } else {
             mGrabFragment!!.arguments = bundle
         }
         bindService(PushService.callingIntent(this), mPushServiceConnection, Service.BIND_AUTO_CREATE)
+
+
+        if(BuildConfig.DEBUG) {
+//            Flowable.timer(3, TimeUnit.SECONDS)
+//                    .subscribe {
+//                        redPackageRank(mutableListOf(
+//                                StudentScore(
+//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                        10,
+//                                        5
+//                                ),
+//                                StudentScore(
+//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                        10,
+//                                        5
+//                                ),
+//                                StudentScore(
+//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                        10,
+//                                        5
+//                                ),
+//                                StudentScore(
+//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+//                                        10,
+//                                        5
+//                                )
+//                        ))
+//                    }
+        }
     }
 
     private var mPushServiceConnection = object : ServiceConnection {
@@ -71,8 +106,8 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     }
 
     override fun onMessageResponse(msg: MessageEntity) {
-        when(msg.cmd){
-            PushService.END_INTERACTN ->{
+        when (msg.cmd) {
+            PushService.END_INTERACTN -> {
                 mGrabFragment!!.redPackageStop()
                 finish()
             }

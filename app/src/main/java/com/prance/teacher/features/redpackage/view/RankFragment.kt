@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.StudentScore
 import io.reactivex.Flowable
@@ -69,17 +70,16 @@ class RankFragment : BaseFragment() {
             rankAvatars[i].visibility = View.VISIBLE
             GlideApp.with(this)
                     .load(rank[i].student.head)
-                    .circleCrop()
                     .into(rankAvatars[i])
         }
 
-//        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
 //            rankAvatar1.visibility = View.VISIBLE
 //            GlideApp.with(this)
 //                    .load(R.drawable.match_empty_view)
 //                    .circleCrop()
 //                    .into(rankAvatar1)
-//        }
+        }
 
         updateTimeText()
 
