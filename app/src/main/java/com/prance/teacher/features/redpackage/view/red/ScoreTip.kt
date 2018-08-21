@@ -5,19 +5,21 @@ import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.weight.FontCustom
-import android.graphics.Paint.FILTER_BITMAP_FLAG
-import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.PaintFlagsDrawFilter
+import android.text.TextUtils
+import com.bumptech.glide.request.target.SimpleTarget
+import jp.wasabeef.glide.transformations.CropCircleTransformation
 
 
 class ScoreTip {
+
+    var context: Context
 
     //向上消失距离
     var translationDistance: Int = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m40_0)
@@ -38,11 +40,13 @@ class ScoreTip {
     var bitmap: Bitmap
 
     //动画时长
-    val translationDurationTime = 3000L
+    val translationDurationTime = 1000L
 
     //被抢的状态
     var state = RedPackageTipStatus.SHOW
-    var context: Context
+
+    //动画集
+    var animatorSet: AnimatorSet? = null
 
     constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap) {
 
@@ -50,22 +54,23 @@ class ScoreTip {
 
         this.title = student.name
 
+        this.width = background.width
+
         //底部文字溢出长度
         val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
 
-        this.width = background.width
-
-        //红包背景378
+        //设置空的画布
         bitmap = Bitmap.createBitmap(
                 background.width,
                 background.height,
                 Bitmap.Config.ARGB_4444)
-
         val canvas = Canvas(bitmap)
-
+        //抗锯齿
         canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
+        //画背景
         canvas.drawBitmap(background, 0f, 0f, null)
 
+        //描边文字
         val strokeTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         strokeTextPaint.color = Color.parseColor("#923D00")
         strokeTextPaint.textAlign = Paint.Align.CENTER
@@ -85,48 +90,56 @@ class ScoreTip {
         //计算文字宽高
         val textRect = Rect()
         textPaint.getTextBounds(student.name, 0, student.name.length, textRect)
-
-        var textHeight = textRect.height()
-
-        var targetRect = Rect(0, 0, width, textHeight)
-        //绘制名字
+        val targetRect = Rect(0, 0, width, textRect.height())
         val fontMetrics = textPaint.fontMetricsInt
         val baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2
-
         val textStartY = bitmap.height - baseline.toFloat() + bottomPadding
-
+        //写名字和描边
         canvas.drawText(student.name, targetRect.centerX().toFloat(), textStartY, strokeTextPaint)
         canvas.drawText(student.name, targetRect.centerX().toFloat(), textStartY, textPaint)
 
+        //计算初始位置
         this.x = x + (redPackageWidth - this.width) / 2
-
         this.y = y - (bitmap.height - redPackageHeight)
 
+        //开始下落动画
         startFall()
 
-        GlideApp.with(context)
-                .asBitmap()
-                .load(student.head)
-                .circleCrop()
-                .into(object : SimpleTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        //红包背景378
-                        val canvas = Canvas(this@ScoreTip.bitmap)
-                        canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-                        var avatarWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m190_0)
-                        // 初始化Matrix对象
-                        val matrix = Matrix()
-                        // 根据传入的参数设置缩放比例
-                        matrix.postScale(avatarWidth.toFloat() / resource.width.toFloat(), avatarWidth.toFloat() / resource.width.toFloat())
-                        val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
+        //头像宽高
+        var avatarWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m190_0)
+        if(!TextUtils.isEmpty(student.head)) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(student.head)
+                    .override(avatarWidth, avatarWidth)
+                    .transform(CropCircleTransformation())
+                    .into(object : SimpleTarget<Bitmap>() {
 
-                        matrix.postTranslate((this@ScoreTip.bitmap.width.toFloat() - avatarWidth.toFloat()) / 2F, (this@ScoreTip.bitmap.height - bottomPadding).toFloat())
-                        canvas.drawBitmap(resource, matrix, null)
-                    }
-                })
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            //重新绘制一张空图
+                            var bg = Bitmap.createBitmap(
+                                    bitmap.width,
+                                    bitmap.height,
+                                    Bitmap.Config.ARGB_4444)
+                            val canvas = Canvas(bg)
+                            //抗锯齿
+                            canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
+                            //画背景
+                            canvas.drawBitmap(bitmap, 0F, 0F, null)
+                            // 设置X，Y
+                            val matrix = Matrix()
+                            val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
+                            matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
+                            //画头像
+                            canvas.drawBitmap(resource, matrix, null)
+                            //释放原图
+                            bitmap.recycle()
+                            //设置有头像的图
+                            bitmap = bg
+                        }
+                    })
+        }
     }
-
-    var animatorSet: AnimatorSet? = null
 
     private fun startFall() {
         val fallAnimator = ObjectAnimator.ofInt(y, y - translationDistance)
