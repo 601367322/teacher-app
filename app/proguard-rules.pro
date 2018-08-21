@@ -712,9 +712,8 @@
 -keep class android.support.v7.widget.SearchView { *; }
 
 #Netty
--keepattributes Signature,InnerClasses
--keepclasseswithmembers class io.netty.** {
-    *;
-}
--dontwarn io.netty.**
--dontwarn sun.**
+-keep class io.netty.util.internal.chmv8.** {*;}
+-keep public class * implements io.netty.channel.ChannelHandler{*;}
+
+-keep public class * implements io.netty.channel.ChannelHandlerContext{*;}
+

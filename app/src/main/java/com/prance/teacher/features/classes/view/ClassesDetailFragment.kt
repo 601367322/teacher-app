@@ -87,12 +87,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         classesSubTitle.text = mClassesEntity.klass?.addr
         classesDate.text = """${mClassesEntity.klass?.startTime}-${mClassesEntity.klass?.endTime}"""
 
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             //开始Socket监听
             mPushServicePresenter.bind()
 
             mSunVoteServicePresenter.bind()
-        }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -114,9 +114,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         mPushServicePresenter.unBind()
 
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             mSunVoteServicePresenter.unBind()
-        }
+//        }
     }
 
 

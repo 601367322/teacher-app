@@ -8,6 +8,7 @@ import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
@@ -72,8 +73,10 @@ class RedPackage {
                     state = RedPackageStatus.CANGRAB
                 }
 
-                if (y > 600 && hideAnimator == null) {
-                    destroy(StudentScore(StudentsEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "https://www.baidu.com/img/bd_logo1.png"), 2, 2))
+                if(BuildConfig.DEBUG) {
+                    if (y > 600 && hideAnimator == null) {
+                        destroy(StudentScore(StudentsEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "https://www.baidu.com/img/bd_logo1.png"), 2, 2))
+                    }
                 }
             }
             translationAnimator!!.addListener(object : AnimatorListenerAdapter() {
