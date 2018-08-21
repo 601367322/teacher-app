@@ -189,4 +189,19 @@
         app:layout_constraintBottom_toTopOf="@+id/rankText5"
         app:layout_constraintEnd_toEndOf="@+id/rankText5"
         app:layout_constraintStart_toStartOf="@+id/rankText5" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m40.0"
+        android:layout_marginTop="@dimen/m40.0"
+        android:letterSpacing="0.1"
+        android:text="TextView"
+        android:textColor="#FFFEFE"
+        android:textSize="@dimen/m60.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#D86410"
+        app:strokeWidth="@dimen/m5.0" />
 </android.support.constraint.ConstraintLayout>

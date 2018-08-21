@@ -9,9 +9,13 @@ import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
 import java.io.Serializable
+import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
 class SubjectOnDestroyFragment : BaseFragment() {
@@ -19,6 +23,9 @@ class SubjectOnDestroyFragment : BaseFragment() {
     override fun layoutId(): Int = R.layout.fragment_subject_on_destroy
 
     var mQuestionResult: QuestionResult? = null
+
+    var mDisposable: Disposable? = null
+    var mTotalTime = 5
 
     var answerMap = mutableMapOf("A" to R.drawable.answer_a, "B" to R.drawable.answer_b, "C" to R.drawable.answer_c, "D" to R.drawable.answer_d, "对" to R.drawable.answer_true, "错" to R.drawable.answer_false)
     lateinit var rankNames: MutableList<TextView>
@@ -60,6 +67,30 @@ class SubjectOnDestroyFragment : BaseFragment() {
                 }
             }
         }
+
+        updateTimeText()
+        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
+                .take(5)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mTotalTime--
+
+                    updateTimeText()
+                }
+    }
+
+    private fun updateTimeText() {
+        if (mTotalTime == 0) {
+            activity?.finish()
+        }
+        time.text = "${mTotalTime}秒"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mDisposable?.dispose()
     }
 
     fun createAnswerImg(char: Char): ImageView {
