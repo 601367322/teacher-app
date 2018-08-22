@@ -63,9 +63,13 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
                 val position = layoutManager!!.getPosition(view!!)
                 if ((position + 1) % 2 == 1) {
                     outRect?.left = resources.getDimensionPixelOffset(R.dimen.m120_0)
+                    outRect?.right = resources.getDimensionPixelOffset(R.dimen.m20_0)
                 } else {
                     outRect?.left = resources.getDimensionPixelOffset(R.dimen.m20_0)
+                    outRect?.right = resources.getDimensionPixelOffset(R.dimen.m120_0)
                 }
+
+                outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m40_0)
             }
         })
 
@@ -97,14 +101,14 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
             if (pageIndex == 0) {
                 leftArrow.visibility = View.GONE
-            }else{
+            } else {
                 leftArrow.visibility = View.VISIBLE
             }
 
 
             if (pageIndex == layoutManager?.totalPageCount!! - 1 || mAdapter.data.isEmpty()) {
                 rightArrow.visibility = View.GONE
-            }else{
+            } else {
                 rightArrow.visibility = View.VISIBLE
             }
 

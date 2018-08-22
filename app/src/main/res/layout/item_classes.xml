@@ -3,29 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="@dimen/m820.0"
-    android:layout_height="@dimen/m337.0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:focusable="true">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/containerCard"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/m820.0"
+        android:layout_height="@dimen/m333.0"
+        android:background="@drawable/classes_background"
         android:duplicateParentState="true"
-        android:padding="@dimen/m36.0">
+        android:paddingHorizontal="@dimen/m30.0"
+        android:paddingVertical="@dimen/m30.0">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
-            android:layout_height="@dimen/m80.0"
-            android:layout_marginStart="@dimen/m32.0"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textStyle="bold"
+            android:minHeight="@dimen/m87.0"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowRadius="2"
+            android:shadowDy="4"
             android:text="2017年一年级语文暑假配有班2017年一年级语文暑假配有班"
             android:textColor="#fff"
-            android:textSize="@dimen/m32.0"
+            android:textSize="@dimen/m40.0"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/leftStateIcon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -36,8 +42,13 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="北京学而思xxxx班"
+            android:shadowRadius="2"
+            android:textStyle="bold"
             android:textColor="#fff"
-            android:textSize="@dimen/m26.0"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowDy="4"
+            android:textSize="@dimen/m34.0"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -45,12 +56,17 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/m35.0"
+            android:layout_marginBottom="@dimen/m28.0"
             android:height="@dimen/m37.0"
             android:gravity="center_vertical"
+            android:shadowRadius="2"
+            android:textStyle="bold"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowDy="4"
             android:text="2018.02.02-2018.03.04"
             android:textColor="#fff"
-            android:textSize="@dimen/m24.0"
+            android:textSize="@dimen/m26.0"
             app:layout_constraintBottom_toTopOf="@+id/teacher"
             app:layout_constraintStart_toStartOf="@+id/title" />
 
@@ -59,9 +75,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="阿穆老师"
+            android:shadowRadius="2"
+            android:shadowColor="#2F66BC"
+            android:textStyle="bold"
+            android:shadowDx="1"
+            android:shadowDy="4"
             android:textColor="#fff"
             android:textSize="@dimen/m25.0"
-            app:layout_constraintBottom_toBottomOf="@+id/leftStateIcon"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/title" />
 
         <ImageView
@@ -79,20 +100,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="未绑定"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowRadius="2"
+            android:shadowDy="4"
             android:textColor="#fff"
+            android:textStyle="bold"
             android:textSize="@dimen/m26.0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/teacher" />
-
-        <ImageView
-            android:id="@+id/leftStateIcon"
-            android:layout_width="@dimen/m186.0"
-            android:layout_height="@dimen/m256.0"
-            android:src="@drawable/icon_classes_bind"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </com.prance.lib.common.utils.weight.FocusRelativeLayout>
