@@ -17,6 +17,12 @@ class ClassesEntity : Serializable {
         klass!!.name = name
     }
 
+    constructor(name: String, binding: Int) {
+        this.binding = binding
+        klass = KlassEntity()
+        klass!!.name = name
+    }
+
     class KlassEntity : Serializable {
         var id: Int? = null
         var name: String? = null
