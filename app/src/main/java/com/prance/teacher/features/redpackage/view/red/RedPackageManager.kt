@@ -2,15 +2,12 @@ package com.prance.teacher.features.redpackage.view.red
 
 import android.content.Context
 import android.graphics.*
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.weight.FontCustom
-import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -19,10 +16,10 @@ class RedPackageManager {
     companion object {
 
         //红包每个泳道最小的时间间隔
-        const val minInterval = 2500
+        const val minInterval = 2000
 
         //随机取值范围
-        const val intervalRange = 3500
+        const val intervalRange = 4000
 
         //红包的动画总长
         const val translationDurationTime = 6000L
@@ -33,45 +30,44 @@ class RedPackageManager {
 
         //红包的默认分数
         var DEFAULT_SCORE = 2
-    }
 
-    var DEFAULT_WIDTH = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
-    var DEFAULT_HEIGHT = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
+        var DEFAULT_WIDTH = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
+        var DEFAULT_HEIGHT = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m300_0)
+
+        //总列数
+        const val lines = 5
+
+        var DEFAULT_SCALE = 1.5F
+    }
 
 
     //屏幕宽高
-    var screenWidth: Int = Utils.getApp().resources.displayMetrics.widthPixels
+    private var screenWidth: Int = Utils.getApp().resources.displayMetrics.widthPixels
 
     //红包集合
-    val redPackages = CopyOnWriteArrayList<RedPackage>()
+    private val redPackages = CopyOnWriteArrayList<RedPackage>()
 
-    val titles = mutableListOf("A", "B", "C", "D")
+    private val titles = mutableListOf("A", "B", "C", "D")
 
-    //总列数
-    val lines = 5
 
     //红包分数集合
     var studentScores = mutableListOf<StudentScore>()
 
     //红包背景
-    var redPackageImg: MutableMap<String, Bitmap>
+    private var redPackageImg: MutableMap<String, Bitmap>
 
     //红包积分数字图
-    var scoreBitmaps: MutableMap<String, Bitmap>
-
-    //抢到红包提示缓存背景，防止卡顿
-//    var cacheBitmap: Bitmap
-
-    //抢到红包提示背景原图
-//    var tipBitmap: Bitmap
+    private var scoreBitmaps: MutableMap<String, Bitmap>
 
     //抢到小红包提示背景
-    var tipBitmapLittle: Bitmap
+    private var tipBitmapLittle: Bitmap
 
     //抢到大红包提示背景
-    var tipBitmapBig: Bitmap
+    private var tipBitmapBig: Bitmap
 
     private var context: Context
+
+    private var destroyRedPackageNum = 0
 
     constructor(context: Context) {
 
@@ -95,7 +91,7 @@ class RedPackageManager {
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
         //提前扩充内存，避免卡顿
-        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("e", ""), tipBitmapBig)
+        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("test", ""), tipBitmapLittle, true)
     }
 
     fun generateRedPack(): RedPackage? {
@@ -103,20 +99,29 @@ class RedPackageManager {
 
             val randomTitle = titles[(Math.random() * (titles.size)).toInt()]
 
+            var big = false
+
+            //每10个红包，出现一个大红包  &  最后一个红包是小红包的前提下
+            if (destroyRedPackageNum > 0 && destroyRedPackageNum % 4 == 0 && (redPackages.isNotEmpty() && !redPackages.last().big)) {
+                big = true
+            }
+
+            var tip: Bitmap = if (big) tipBitmapBig else tipBitmapLittle
+
             val red = RedPackage(
                     context,
-                    getRedPackageStartX(it).toInt(),
-                    -DEFAULT_HEIGHT,
-                    System.currentTimeMillis(),
-                    DEFAULT_ALPHA,
-                    DEFAULT_WIDTH.toLong(),
-                    DEFAULT_HEIGHT.toLong(),
+                    DEFAULT_WIDTH,
+                    DEFAULT_HEIGHT,
                     randomTitle,
+                    it,
+                    big,
                     redPackageImg[randomTitle]!!,
-                    tipBitmapLittle
+                    tip
             )
 
             redPackages.add(red)
+
+            destroyRedPackageNum++
             return red
         }
         return null
@@ -138,12 +143,10 @@ class RedPackageManager {
         for (pack in redPackages) {
             //如果是未销毁的红包
             if (pack.state != RedPackageStatus.FREE) {
-                //如果红包的生命不大于2秒，就是不可用的泳道
+                //如果红包的生命小于2秒，就是不可用的泳道
                 if (!checkAvailableRedPackageLife(pack)) {
                     //去除不用的泳道
-                    val l = getLineNumberByStartX(pack.x)
-                    unAvailableLines.add(l)
-
+                    unAvailableLines.add(pack.lineNum)
                 }
             }
         }
@@ -155,36 +158,6 @@ class RedPackageManager {
         }
 
         return null
-    }
-
-    /**
-     * 根据泳道下标，获取起始X
-     */
-    private fun getStartXByLineNumber(lineNumber: Int): Float {
-        return screenWidth.toFloat() / lines.toFloat() * lineNumber.toFloat()
-    }
-
-    /**
-     * 根据泳道下标，获取起始X
-     */
-    private fun getLineNumberByStartX(x: Int): Int {
-        val lineWidth = screenWidth.toFloat() / lines.toFloat()
-        return (x / lineWidth).toInt()
-    }
-
-    /**
-     * 泳道的宽度
-     */
-    private fun getLineWidth(): Float {
-        return screenWidth.toFloat() / lines.toFloat()
-    }
-
-    /**
-     * 红包开始的X
-     */
-    private fun getRedPackageStartX(lintNumber: Int): Float {
-        val startX = getLineWidth() * lintNumber
-        return ((getLineWidth() - DEFAULT_WIDTH) / 2) + startX
     }
 
     /**
@@ -247,7 +220,6 @@ class RedPackageManager {
     @Synchronized
     fun grabRedPackage(keyID: String, sInfo: String?) {
         sInfo?.let {
-            val time = System.currentTimeMillis()
             //找到最下面那个没有被抢到的红包
             var redPackage: RedPackage? = null
             for (i in redPackages) {
@@ -265,9 +237,10 @@ class RedPackageManager {
                         //销毁红包
                         redPackage.destroy(it)
                     }
+                    //计算红包被抢到的数量
+                    destroyRedPackageNum++
                 }
             }
-            println(System.currentTimeMillis() - time)
         }
     }
 

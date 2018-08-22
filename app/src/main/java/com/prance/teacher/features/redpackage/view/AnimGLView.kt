@@ -38,13 +38,11 @@ class AnimGLView : GLContinuousView {
                 if (it.state == RedPackageTipStatus.SHOW) {
                     canvas.save()
                     canvas.setAlpha(it.alpha)
-                    it.bitmap?.run {
-                        try {
-                            if (!this.isRecycled)
-                                canvas.drawBitmap(this, it.x, it.y, textureFilter)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                    try {
+                        if (!it.bitmap.isRecycled)
+                            canvas.drawBitmap(it.bitmap, it.x, it.y, textureFilter)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                     canvas.restore()
                 }

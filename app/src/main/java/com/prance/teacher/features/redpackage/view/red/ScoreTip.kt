@@ -48,7 +48,7 @@ class ScoreTip {
     //动画集
     var animatorSet: AnimatorSet? = null
 
-    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap) {
+    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap, big: Boolean) {
 
         this.context = context
 
@@ -107,7 +107,7 @@ class ScoreTip {
 
         //头像宽高
         var avatarWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m190_0)
-        if(!TextUtils.isEmpty(student.head)) {
+        if (!TextUtils.isEmpty(student.head)) {
             try {
                 GlideApp.with(context)
                         .asBitmap()

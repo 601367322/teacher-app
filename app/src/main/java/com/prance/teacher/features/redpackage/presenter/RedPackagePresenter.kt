@@ -1,6 +1,7 @@
 package com.prance.teacher.features.redpackage.presenter
 
 import cn.sunars.sdk.SunARS
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.lib.base.mvp.BasePresenterKt
@@ -29,14 +30,18 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     /**
      * 总时间
      */
-    var totalTime: Long = 3000
+    private var totalTime: Long = 3000
     /**
      * 每次生成红包的间隔时间
      */
-    var intervalTime: Long = 500
-    var disposable: Disposable? = null
-    lateinit var mRedPackageManager: RedPackageManager
-    var mSetting: RedPackageSetting? = null
+    private var intervalTime: Long = 500
+
+    private var disposable: Disposable? = null
+
+    private lateinit var mRedPackageManager: RedPackageManager
+
+    private var mSetting: RedPackageSetting? = null
+
     override val mModel: IRedPackageContract.Model = RedPackageModel()
 
     override fun getStudentList(classId: String) {
@@ -44,28 +49,40 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     }
 
     override fun startRedPackage(mSetting: RedPackageSetting?) {
+        //应用服务端设置
         mSetting?.let {
             totalTime = it.lastTime!!.toLong() * 1000
             RedPackageManager.DEFAULT_SCORE = it.integrat!!
         }
+
+        totalTime -= RedPackageManager.translationDurationTime
+
         this.mSetting = mSetting
+
+        //初始化红包管理类
         mRedPackageManager = RedPackageManager(mView?.getContext()!!)
+
+        //基站发送命令，可重复的单选题
         SunARS.voteStart(SunARS.VoteType_Choice, "1,1,0,0,10,1")
+
+        //开始倒计时，take总次数
         var time = totalTime / intervalTime
         disposable = Flowable.interval(intervalTime, TimeUnit.MILLISECONDS)
                 .take(time)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (--time < 1) {
-                        //停止答题
-                        stopRedPackage()
-                    }
-
+                .mySubscribe {
                     //生成红包
                     val redPackage = mRedPackageManager.generateRedPack()
                     redPackage?.let {
                         mView?.onShowPackage(redPackage)
+                    }
+
+                    //最后一个红包
+                    if (it == time - 1) {
+                        //所有红包落下之后关闭界面
+                        Flowable.timer(RedPackageManager.translationDurationTime, TimeUnit.MILLISECONDS)
+                                .mySubscribe {
+                                    stopRedPackage()
+                                }
                     }
                 }
     }
@@ -103,16 +120,10 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         for (score in mRedPackageManager.studentScores) {
             list.add(RedPackageRecord(score))
         }
-        var json = Gson().toJson(list)
-        mModel.postRedPackageResult(mSetting!!.classId.toString(), json, mSetting!!.interactId.toString())
+        mModel.postRedPackageResult(mSetting?.classId.toString(), Gson().toJson(list), mSetting?.interactId.toString())
                 .mySubscribe {
-
+                    LogUtils.d("发送抢红包结果成功")
                 }
     }
-
-    class KeyEvent(
-            var keyId: String,
-            var sInfo: String
-    ) : Serializable
 }
 
