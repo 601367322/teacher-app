@@ -70,6 +70,7 @@ class RankFragment : BaseFragment() {
             rankAvatars[i].visibility = View.VISIBLE
             GlideApp.with(this)
                     .load(rank[i].student.head)
+                    .placeholder(R.drawable.default_avatar_boy)
                     .into(rankAvatars[i])
         }
 
