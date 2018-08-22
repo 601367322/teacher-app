@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.prance.lib.common.utils.weight.CircleImageView
         android:id="@+id/avatar"
         android:layout_width="@dimen/m88.0"
         android:layout_height="@dimen/m88.0"
-        android:scaleType="fitXY"
-        android:src="@drawable/default_avatar_boy"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m18.0"
+        android:layout_marginStart="@dimen/m20.0"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
@@ -26,11 +24,10 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/m180.0"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="left"
-            android:maxLength="5"
             android:maxLines="1"
             android:text="TextView"
             android:textColor="#fff"

@@ -33,10 +33,10 @@ class ClassesDetailActivity : BaseActivity() {
 
         //启动主页
         if (BuildConfig.DEBUG) {
-            Flowable.timer(3,TimeUnit.SECONDS)
-                    .mySubscribe {
-                        val redConfig = RedPackageSetting(1, 30, 1, 1)
-                        startActivity(RedPackageActivity.callingIntent(this, redConfig)) }
+//            Flowable.timer(3,TimeUnit.SECONDS)
+//                    .mySubscribe {
+//                        val redConfig = RedPackageSetting(1, 30, 1, 1)
+//                        startActivity(RedPackageActivity.callingIntent(this, redConfig)) }
 
 //            val question  = ClassesDetailFragment.Question()
 //            question.classId = 1

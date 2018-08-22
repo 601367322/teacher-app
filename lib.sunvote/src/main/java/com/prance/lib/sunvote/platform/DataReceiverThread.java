@@ -47,8 +47,12 @@ public class DataReceiverThread extends Thread {
         runOnUiThread1(new Runnable() {
             @Override
             public void run() {
-                processRecvData(buffer);
-
+                try {
+                    processRecvData(buffer);
+                } catch (Exception e) {
+                    SerDataRx = new byte[512];
+                    e.printStackTrace();
+                }
             }
         });
     }
