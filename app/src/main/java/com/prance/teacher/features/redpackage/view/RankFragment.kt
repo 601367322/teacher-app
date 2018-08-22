@@ -9,6 +9,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.StudentScore
+import com.prance.teacher.utils.SoundUtils
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -57,6 +58,8 @@ class RankFragment : BaseFragment() {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         scores = (arguments?.getSerializable(SCORES) as BundleScore).scores
+
+        SoundUtils.play("rank_background")
 
         rankNames = mutableListOf(rankText1, rankText2, rankText3)
         rankScores = mutableListOf(rankScore1, rankScore2, rankScore3)

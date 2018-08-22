@@ -9,6 +9,7 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.utils.SoundUtils
 import com.prance.teacher.weight.FontCustom
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
@@ -94,8 +95,7 @@ class RedPackageManager {
         tipBitmapLittle = createTipBitmap(tipBitmap, "+2")
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
-        //提前扩充内存，避免卡顿
-        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("e", ""), tipBitmapBig)
+        tipBitmap.recycle()
     }
 
     fun generateRedPack(): RedPackage? {

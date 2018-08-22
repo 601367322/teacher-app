@@ -1,5 +1,6 @@
 package com.prance.teacher.features.redpackage.view
 
+import android.media.AudioManager
 import android.os.*
 import android.view.View
 import cn.sunars.sdk.SunARS
@@ -14,7 +15,10 @@ import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
+import com.prance.teacher.utils.SoundUtils
 import kotlinx.android.synthetic.main.fragment_red_package.*
+import android.media.MediaPlayer
+import android.net.Uri
 
 
 /**
@@ -36,20 +40,32 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
      */
     var mSetting: RedPackageSetting? = null
 
+    var mMediaPlayer: MediaPlayer? = null
+
     override fun layoutId(): Int = R.layout.fragment_red_package
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
-        override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-            animGlView.post {
-                mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
+        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+                animGlView.post {
+                    mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
+                }
             }
-        }
-    })}
+        })
+    }
 
     override var mPresenter: IRedPackageContract.Presenter = RedPackagePresenter()
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mSetting = arguments?.getSerializable(mSetTing) as RedPackageSetting
+
+        try {
+            mMediaPlayer = MediaPlayer.create(context, R.raw.red_package_background)
+            mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
+            mMediaPlayer!!.prepare()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         mPresenter.startRedPackage(mSetting)
 
@@ -75,6 +91,10 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         mPresenter.detachView()
 
         mSunVoteServicePresenter.unBind()
+
+        mMediaPlayer?.stop()
+        mMediaPlayer?.release()
+        mMediaPlayer = null
     }
 
 }

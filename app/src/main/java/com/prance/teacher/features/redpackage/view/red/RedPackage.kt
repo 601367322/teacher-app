@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
@@ -12,6 +13,7 @@ import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.utils.SoundUtils
 
 class RedPackage {
 
@@ -98,6 +100,14 @@ class RedPackage {
     fun destroy(studentScore: StudentScore) {
         //设置为已被抢状态
         state = RedPackageStatus.GRAB
+
+        try {
+            if(!(context as Activity).isDestroyed) {
+                SoundUtils.play("red_package_get")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         //生成抢到红包提示
         scoreTip = ScoreTip(context, x, y, width.toInt(), height.toInt(), studentScore.student, tipBitmap)

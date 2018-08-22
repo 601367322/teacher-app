@@ -5,17 +5,15 @@ import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import com.blankj.utilcode.util.Utils
-import com.prance.lib.socket.PushService
 import com.prance.teacher.BuildConfig
-import com.prance.teacher.features.classes.ClassesDetailActivity
-import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.main.view.MainFragment
-import com.prance.teacher.features.match.MatchKeyPadActivity
-import com.prance.teacher.utils.IntentUtils
+import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.utils.SoundUtils
 import com.prance.teacher.weight.FloatButton
+import com.prance.teacher.weight.FontCustom
 
 class MainActivity : BaseActivity() {
 
@@ -29,7 +27,13 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        SoundUtils.load()
+
         super.initView(savedInstanceState)
+
+        //初始化字体
+        FontCustom.getCOMICSANSMSGRASFont(Utils.getApp())
+        FontCustom.getFZY1JWFont(Utils.getApp())
 
         if (BuildConfig.DEBUG) {
 //            val classes = ClassesEntity(1)

@@ -9,6 +9,7 @@ import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.utils.SoundUtils
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
 import java.io.Serializable
@@ -38,6 +39,9 @@ class SubjectOnDestroyFragment : BaseFragment() {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+
+        SoundUtils.play("rank_background")
+
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
 
         rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)

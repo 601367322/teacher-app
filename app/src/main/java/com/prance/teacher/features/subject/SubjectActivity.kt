@@ -2,7 +2,11 @@ package com.prance.teacher.features.subject
 
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Bundle
+import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.database.MessageEntity
