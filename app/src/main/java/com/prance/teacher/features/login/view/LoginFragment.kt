@@ -97,7 +97,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-//            activity?.finish()
+            activity?.finish()
         }
     }
 

@@ -12,8 +12,10 @@ import com.prance.lib.socket.PushService
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.main.view.MainFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.utils.IntentUtils
 import com.prance.teacher.weight.FloatButton
 
@@ -34,6 +36,9 @@ class MainActivity : BaseActivity() {
         if (BuildConfig.DEBUG) {
 //            val classes = ClassesEntity(1)
 //            startActivity(ClassesDetailActivity.callingIntent(this, classes))
+
+//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1)
+//            startActivity(SubjectActivity.callingIntent(this, question))
         }
     }
 

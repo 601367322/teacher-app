@@ -1,6 +1,5 @@
 package com.prance.teacher.features.subject.view
 
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -18,6 +17,7 @@ import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
 import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.danmutest.CenteredImageSpan
@@ -47,10 +47,12 @@ class SubjectOnStartFragment : BaseFragment() {
 
     var KEY_ENENT_HANDLER_WHAT = 1
 
-
     lateinit var mDanmuContext: DanmakuContext
 
     lateinit var mDanmuParser: BaseDanmakuParser
+
+    var lastDanmuTime = 0L
+    var danmuInterval = 2000L
 
     companion object {
 
@@ -68,6 +70,9 @@ class SubjectOnStartFragment : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mQuestion = arguments?.getSerializable(SubjectActivity.QUESTION) as ClassesDetailFragment.Question?
 
+        //初始化弹幕组件
+        initDanmu()
+
         UsbManagerImpl.baseStation.sn?.let {
             mQuestion?.run {
                 //基站开始发送题目
@@ -77,6 +82,9 @@ class SubjectOnStartFragment : BaseFragment() {
 
         ClassesDetailFragment.mStudentList?.let {
             powerProgressbar.max = it.size
+        }
+        if (BuildConfig.DEBUG) {
+            powerProgressbar.max = 32
         }
 
         mSunVoteServicePresenter.bind()
@@ -127,12 +135,25 @@ class SubjectOnStartFragment : BaseFragment() {
                         }
                     }
                     //如果学生信息没有找到，则放弃处理
+                    if (BuildConfig.DEBUG) {
+                        if (studentEntity == null) {
+                            studentEntity = StudentsEntity("假数据", "")
+                        }
+                    }
                     if (studentEntity == null) {
                         return
                     }
                     mResult.add(keyPadResult)
 
+                    //判断答案是否正确
+                    if (keyPadResult.answer != mQuestion?.result) {
+                        return
+                    }
+
+                    //添加弹幕
                     addDanmakuShowTextAndImage(studentEntity!!)
+
+                    powerProgressbar.progress += 1
                 }
             }
             super.dispatchMessage(msg)
@@ -177,26 +198,51 @@ class SubjectOnStartFragment : BaseFragment() {
     }
 
     private fun addDanmakuShowTextAndImage(studentsEntity: StudentsEntity) {
+        //加载头像
         GlideApp.with(this)
                 .asDrawable()
                 .load(studentsEntity.head)
+                .error(R.drawable.default_avatar_boy)
                 .override(100, 100)
                 .transform(CropCircleTransformation())
                 .into(object : SimpleTarget<Drawable>() {
                     override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                        val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
-                        val spannable = createSpannable(resource, studentsEntity.name)
-                        danmaku.text = spannable
-                        danmaku.padding = 5
-                        danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
-                        danmaku.isLive = false
-                        danmaku.time = danmu.currentTime
-                        context?.run {
-                            danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m25_0).toFloat()
+                        showDanmu(resource)
+                    }
+
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        errorDrawable?.let { showDanmu(it) }
+                    }
+
+                    private fun showDanmu(resource: Drawable){
+                        var interval = 0L
+                        //计算弹幕出现的时间，间隔danmuInterval
+                        if (System.currentTimeMillis() - lastDanmuTime < danmuInterval) {
+                            interval = danmuInterval - (System.currentTimeMillis() - lastDanmuTime)
                         }
-                        danmaku.textColor = Color.RED
-                        danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-                        danmu.addDanmaku(danmaku)
+                        lastDanmuTime = System.currentTimeMillis()
+                        danmu.postDelayed({
+                            try {
+                                val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
+                                //绘制头像
+                                resource.setBounds(0, 0, 100, 100)
+                                val spannable = createSpannable(resource, studentsEntity.name)
+
+                                danmaku.text = spannable
+                                danmaku.padding = 5
+                                danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
+                                danmaku.isLive = false
+                                danmaku.time = danmu.currentTime
+                                context?.run {
+                                    danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m25_0).toFloat()
+                                }
+                                danmaku.textColor = Color.RED
+                                danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
+                                danmu.addDanmaku(danmaku)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }, interval)
                     }
                 })
     }
@@ -216,7 +262,11 @@ class SubjectOnStartFragment : BaseFragment() {
         super.onDestroy()
         //停止发送
         SunARS.voteStop()
-
+        //释放弹幕资源
+        if (danmu != null) {
+            danmu.release()
+        }
+        //解绑答题器Service
         mSunVoteServicePresenter.unBind()
     }
 

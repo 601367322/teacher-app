@@ -158,12 +158,14 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var type: Int? = null
         var param: String? = null
         var questionId: Int? = null
+        var result: String? = null
 
-        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?) {
+        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?) {
             this.classId = classId
             this.type = type
             this.param = param
             this.questionId = questionId
+            this.result = answer
         }
     }
 
@@ -193,7 +195,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         //提前下载学生头像缓存
         mStudentList?.let {
-            for(student in it){
+            for (student in it) {
                 GlideApp.with(this)
                         .asBitmap()
                         .load(student.head)

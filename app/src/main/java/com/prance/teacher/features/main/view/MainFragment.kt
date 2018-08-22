@@ -12,12 +12,16 @@ import com.prance.lib.sunvote.service.SunARSListenerAdapter
 import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
+import com.prance.teacher.features.danmutest.DanmuTestActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.subject.SubjectActivity
 
 /**
  * 首页
@@ -42,6 +46,16 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 
         startLesson.setOnClickListener {
+            if (BuildConfig.DEBUG) {
+                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "B")
+                context?.let {
+                    startActivity(SubjectActivity.callingIntent(it, question))
+                }
+//                context?.let {
+//                    startActivity(Intent(it,DanmuTestActivity::class.java))
+//                }
+                return@setOnClickListener
+            }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
             }
