@@ -6,50 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/subject_on_destroy_background">
 
-    <LinearLayout
-        android:id="@+id/rightAnswerLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/m207.0"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.prance.teacher.weight.FZTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正确答案:"
-            android:textColor="#FFFEFE"
-            android:textSize="@dimen/m58.0"
-            app:strokeColor="#0C0731"
-            app:strokeWidth="@dimen/m5.0" />
-
-        <LinearLayout
-            android:id="@+id/rightAnswers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/m26.0"
-            android:orientation="horizontal">
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/answerResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#FEFEFE"
-        android:textSize="@dimen/m47.0"
-        app:layout_constraintEnd_toEndOf="@+id/rightAnswerLayout"
-        app:layout_constraintStart_toStartOf="@+id/rightAnswerLayout"
-        app:layout_constraintTop_toBottomOf="@+id/rightAnswerLayout"
-        app:strokeColor="#0C0731"
-        app:strokeWidth="@dimen/m5.0" />
-
     <com.prance.teacher.weight.FZTextView
         android:id="@+id/rankText1"
         android:layout_width="@dimen/m170.0"
