@@ -48,7 +48,7 @@ class ScoreTip {
     //动画集
     var animatorSet: AnimatorSet? = null
 
-    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap, big: Boolean) {
+    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap) {
 
         this.context = context
 

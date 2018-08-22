@@ -91,7 +91,7 @@ class RedPackageManager {
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
         //提前扩充内存，避免卡顿
-        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("test", ""), tipBitmapLittle, true)
+        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("test", ""), tipBitmapLittle)
     }
 
     fun generateRedPack(): RedPackage? {
@@ -106,7 +106,8 @@ class RedPackageManager {
                 big = true
             }
 
-            var tip: Bitmap = if (big) tipBitmapBig else tipBitmapLittle
+            val tip = if (big) tipBitmapBig else tipBitmapLittle
+            val score = if (big) DEFAULT_SCORE * 2 else DEFAULT_SCORE
 
             val red = RedPackage(
                     context,
@@ -115,6 +116,7 @@ class RedPackageManager {
                     randomTitle,
                     it,
                     big,
+                    score,
                     redPackageImg[randomTitle]!!,
                     tip
             )
@@ -232,7 +234,7 @@ class RedPackageManager {
                 if (sInfo == redPackage.title) {
                     //抢到了
                     //添加记录
-                    val studentScore = saveResult(keyID)
+                    val studentScore = saveResult(keyID, redPackage.score)
                     studentScore?.let {
                         //销毁红包
                         redPackage.destroy(it)
@@ -247,7 +249,7 @@ class RedPackageManager {
     /**
      * 保存答题信息
      */
-    private fun saveResult(KeyID: String): StudentScore? {
+    private fun saveResult(KeyID: String, score: Int): StudentScore? {
 
         //先找出已经存在缓存中的学生答题积分记录
         var studentScore: StudentScore? = null
@@ -279,7 +281,7 @@ class RedPackageManager {
 
         //添加答题次数和积分
         studentScore.redPackageNum += 1
-        studentScore.score += DEFAULT_SCORE
+        studentScore.score += score
 
         return studentScore
     }

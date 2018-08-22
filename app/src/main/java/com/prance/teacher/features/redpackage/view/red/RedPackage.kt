@@ -57,9 +57,13 @@ class RedPackage {
     //第几泳道
     var lineNum: Int
 
+    //大红包
     var big = false
 
-    constructor(context: Context, width: Int, height: Int, title: String, lineNum: Int, big: Boolean, bitmap: Bitmap, tipBitmap: Bitmap) {
+    //分数
+    var score = 0
+
+    constructor(context: Context, width: Int, height: Int, title: String, lineNum: Int, big: Boolean, score: Int, bitmap: Bitmap, tipBitmap: Bitmap) {
         this.context = context
         this.x = getRedPackageStartX(lineNum).toInt()
         this.y = -height
@@ -69,6 +73,7 @@ class RedPackage {
         this.height = height
         this.title = title
         this.big = big
+        this.score = score
         if (big) {
             //放大红包
             val oldWidth = bitmap.width
@@ -125,7 +130,7 @@ class RedPackage {
         state = RedPackageStatus.GRAB
 
         //生成抢到红包提示
-        scoreTip = ScoreTip(context, x, y, width, height, studentScore.student, tipBitmap, big)
+        scoreTip = ScoreTip(context, x, y, width, height, studentScore.student, tipBitmap)
 
         if (hideAnimator == null) {
             hideAnimator = ObjectAnimator.ofInt(alpha, 0).setDuration(RedPackageManager.alphaDurationTime)
