@@ -89,9 +89,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-            mPushServicePresenter.bind()
+//            mPushServicePresenter.bind()
 
-            mSunVoteServicePresenter.bind()
+//            mSunVoteServicePresenter.bind()
         }
     }
 
@@ -115,7 +115,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
-            mSunVoteServicePresenter.unBind()
+//            mSunVoteServicePresenter.unBind()
         }
     }
 

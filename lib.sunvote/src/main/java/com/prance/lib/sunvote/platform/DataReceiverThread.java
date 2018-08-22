@@ -28,7 +28,7 @@ public class DataReceiverThread extends Thread {
                 onDataReceived(buffer);
             }
             try {
-                sleep(5);
+                sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
@@ -47,8 +47,12 @@ public class DataReceiverThread extends Thread {
         runOnUiThread1(new Runnable() {
             @Override
             public void run() {
-                processRecvData(buffer);
-
+                try {
+                    processRecvData(buffer);
+                } catch (Exception e) {
+                    resetData();
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -102,7 +106,7 @@ public class DataReceiverThread extends Thread {
                     break;
                 case 3:
                     // C_SERMAXN
-                    if (dd > 128){
+                    if (dd > 128) {
                         iSerRxN = 0;
                     } else {
                         iSerRxN++;
@@ -137,10 +141,7 @@ public class DataReceiverThread extends Thread {
 
                             // 收到数据包
 
-                            for (int j = 0; j < SerDataRx.length; j++) {
-                                SerDataRx[j] = 0;
-                            }
-                            iSerRxN = 0;
+                            resetData();
                         }
 
                     }
@@ -148,5 +149,12 @@ public class DataReceiverThread extends Thread {
             }// switch
         } // for
 
+    }
+
+    private void resetData() {
+        for (int j = 0; j < SerDataRx.length; j++) {
+            SerDataRx[j] = 0;
+        }
+        iSerRxN = 0;
     }
 }

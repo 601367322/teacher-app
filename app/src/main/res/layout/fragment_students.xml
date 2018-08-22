@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -13,7 +12,7 @@
         android:layout_height="@dimen/m94.0"
         android:background="@drawable/match_keypad_tip_background"
         android:gravity="center"
-        android:text="请点击&quot;开始绑定&quot;进行随机分配绑定"
+        android:text="请点击&quot;开始&quot;进行随机分配绑定"
         android:textColor="#fff"
         android:textSize="@dimen/m32.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +90,6 @@
             app:icon="@drawable/icon_back_button"
             app:text="返回" />
 
-
     </LinearLayout>
 
 
@@ -99,8 +97,8 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingRight="@dimen/m85.0"
         android:clipToPadding="false"
+        android:paddingRight="@dimen/m72.0"
         android:paddingLeft="@dimen/m120.0"
         android:paddingTop="@dimen/m132.0"
         app:layout_constraintBottom_toTopOf="@+id/btnLayout"

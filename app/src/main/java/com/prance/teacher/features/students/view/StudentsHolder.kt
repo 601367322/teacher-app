@@ -1,6 +1,7 @@
 package com.prance.teacher.features.students.view
 
 import android.view.View
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.getInflate
 import com.prance.lib.teacher.base.ui.BaseRecyclerHolder
 import com.prance.teacher.R
@@ -22,6 +23,11 @@ class StudentsHolder(itemView: View) :
                     itemView.keyPadId.text = it.clickers!![0].number
                 }
             }
+            GlideApp.with(itemView)
+                    .load(it.head)
+                    .placeholder(R.drawable.default_avatar_boy)
+                    .into(itemView.avatar)
+
         }
     }
 
