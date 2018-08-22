@@ -23,12 +23,7 @@ class SunVoteService : Service() {
     //用于和外界交互
     private val binder = SunVoteServiceBinder()
 
-    inner class SunVoteServiceBinder : Binder() {
-
-        fun getUserManager(): IUsbManagerInterface {
-            return this@SunVoteService.getUserManager()
-        }
-    }
+    inner class SunVoteServiceBinder : Binder()
 
     override fun onBind(p0: Intent?): IBinder? {
         return binder
@@ -69,11 +64,8 @@ class SunVoteService : Service() {
         registerReceiver(mUsbReceiver, filter)
     }
 
-    fun getUserManager(): IUsbManagerInterface {
-        return mUsbManagerImpl
-    }
-
     override fun onUnbind(intent: Intent?): Boolean {
+        LogUtils.d("onUnbind")
         return super.onUnbind(intent)
     }
 
