@@ -3,6 +3,7 @@ package com.prance.teacher.features.redpackage.view.red
 import android.content.Context
 import android.graphics.*
 import com.blankj.utilcode.util.Utils
+import com.chillingvan.canvasgl.CanvasGL
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
@@ -90,8 +91,11 @@ class RedPackageManager {
         tipBitmapLittle = createTipBitmap(tipBitmap, "+2")
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
+//        var canvas = CanvasGL()
+//        canvas.drawBitmap(tipBitmapBig,0,0)
+
         //提前扩充内存，避免卡顿
-        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("test", ""), tipBitmapLittle)
+//        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("test", ""), tipBitmapLittle)
     }
 
     fun generateRedPack(): RedPackage? {

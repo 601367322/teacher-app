@@ -117,26 +117,28 @@ class ScoreTip {
                         .into(object : SimpleTarget<Bitmap>() {
 
                             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                //重新绘制一张空图
-                                var bg = Bitmap.createBitmap(
-                                        bitmap.width,
-                                        bitmap.height,
-                                        Bitmap.Config.ARGB_4444)
-                                val canvas = Canvas(bg)
-                                //抗锯齿
-                                canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-                                //画背景
-                                canvas.drawBitmap(bitmap, 0F, 0F, null)
-                                // 设置X，Y
-                                val matrix = Matrix()
-                                val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
-                                matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
-                                //画头像
-                                canvas.drawBitmap(resource, matrix, null)
-                                //释放原图
-                                bitmap.recycle()
-                                //设置有头像的图
-                                bitmap = bg
+                                if(!bitmap.isRecycled) {
+                                    //重新绘制一张空图
+                                    var bg = Bitmap.createBitmap(
+                                            bitmap.width,
+                                            bitmap.height,
+                                            Bitmap.Config.ARGB_4444)
+                                    val canvas = Canvas(bg)
+                                    //抗锯齿
+                                    canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
+                                    //画背景
+                                    canvas.drawBitmap(bitmap, 0F, 0F, null)
+                                    // 设置X，Y
+                                    val matrix = Matrix()
+                                    val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
+                                    matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
+                                    //画头像
+                                    canvas.drawBitmap(resource, matrix, null)
+                                    //释放原图
+                                    bitmap.recycle()
+                                    //设置有头像的图
+                                    bitmap = bg
+                                }
                             }
                         })
             } catch (e: Exception) {
