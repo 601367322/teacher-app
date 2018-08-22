@@ -73,7 +73,7 @@ class RedPackageManager {
     constructor(context: Context) {
 
         this.context = context
-
+        //初始化红包资源
         redPackageImg = mutableMapOf(
                 "A" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_a), DEFAULT_WIDTH),
                 "B" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_b), DEFAULT_WIDTH),
@@ -82,20 +82,18 @@ class RedPackageManager {
 
         val scoreMaxWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m48_0)
 
+        //初始化加积分资源
         scoreBitmaps = mutableMapOf(
                 "+" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_add), scoreMaxWidth),
                 "2" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_2), scoreMaxWidth),
                 "4" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_4), scoreMaxWidth))
 
         val tipBitmap = createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_tip_background), Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m236_0))
+
         tipBitmapLittle = createTipBitmap(tipBitmap, "+2")
         tipBitmapBig = createTipBitmap(tipBitmap, "+4")
 
-//        var canvas = CanvasGL()
-//        canvas.drawBitmap(tipBitmapBig,0,0)
-
-        //提前扩充内存，避免卡顿
-//        ScoreTip(context, 0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, StudentsEntity("test", ""), tipBitmapLittle)
+        tipBitmap.recycle()
     }
 
     fun generateRedPack(): RedPackage? {

@@ -25,8 +25,8 @@ class ScoreTip {
     var translationDistance: Int = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m40_0)
 
     //位置
-    var x: Int
-    var y: Int
+    var x: Int = 0
+    var y: Int = 0
 
     //透明度
     var alpha: Int = RedPackageManager.DEFAULT_ALPHA
@@ -75,13 +75,12 @@ class ScoreTip {
         strokeTextPaint.color = Color.parseColor("#923D00")
         strokeTextPaint.textAlign = Paint.Align.CENTER
         strokeTextPaint.strokeWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m3_0).toFloat()
-        strokeTextPaint.style = Paint.Style.FILL_AND_STROKE
+        strokeTextPaint.style = Paint.Style.STROKE
         strokeTextPaint.typeface = FontCustom.getFZY1JWFont(Utils.getApp())
         strokeTextPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m47_0).toFloat()
 
         //文字画笔
-        val textPaint = Paint()
-        textPaint.isAntiAlias = true
+        val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.color = Color.WHITE
         textPaint.typeface = FontCustom.getFZY1JWFont(Utils.getApp())
         textPaint.textAlign = Paint.Align.CENTER
@@ -112,6 +111,7 @@ class ScoreTip {
                 GlideApp.with(context)
                         .asBitmap()
                         .load(student.head)
+                        .error(R.drawable.default_avatar_boy)
                         .override(avatarWidth, avatarWidth)
                         .transform(CropCircleTransformation())
                         .into(object : SimpleTarget<Bitmap>() {
