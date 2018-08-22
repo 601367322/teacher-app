@@ -1,5 +1,6 @@
 package com.prance.teacher.features.subject.view
 
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
@@ -22,6 +25,7 @@ import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.model.KeyPadResult
+import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_start.*
 import master.flame.danmaku.controller.DrawHandler
 import master.flame.danmaku.danmaku.model.BaseDanmaku
@@ -128,14 +132,14 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
                     mResult.add(keyPadResult)
 
-                    addDanmakuShowTextAndImage()
+                    addDanmakuShowTextAndImage(studentEntity!!)
                 }
             }
             super.dispatchMessage(msg)
         }
     }
 
-    private fun initDanmu(){
+    private fun initDanmu() {
         // 设置最大显示行数
         val maxLinesPair = mutableMapOf(
                 BaseDanmaku.TYPE_SCROLL_RL to 1
@@ -173,32 +177,37 @@ class SubjectOnStartFragment : BaseFragment() {
     }
 
     private fun addDanmakuShowTextAndImage(studentsEntity: StudentsEntity) {
-//        GlideApp.with(this)
-//                .asBitmap()
-//                .load(studentsEntity.head)
-//                .override()
-        val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
-        val drawable = resources.getDrawable(R.drawable.ic_launcher)
-        drawable.setBounds(0, 0, 100, 100)
-        val spannable = createSpannable(drawable)
-        danmaku.text = spannable
-        danmaku.padding = 5
-        danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
-        danmaku.isLive = false
-        danmaku.time = danmu.currentTime
-        danmaku.textSize = 25f * (mDanmuParser.displayer.density - 0.6f)
-        danmaku.textColor = Color.RED
-        danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-        danmu.addDanmaku(danmaku)
+        GlideApp.with(this)
+                .asDrawable()
+                .load(studentsEntity.head)
+                .override(100, 100)
+                .transform(CropCircleTransformation())
+                .into(object : SimpleTarget<Drawable>() {
+                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                        val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
+                        val spannable = createSpannable(resource, studentsEntity.name)
+                        danmaku.text = spannable
+                        danmaku.padding = 5
+                        danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
+                        danmaku.isLive = false
+                        danmaku.time = danmu.currentTime
+                        context?.run {
+                            danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m25_0).toFloat()
+                        }
+                        danmaku.textColor = Color.RED
+                        danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
+                        danmu.addDanmaku(danmaku)
+                    }
+                })
     }
 
 
-    private fun createSpannable(drawable: Drawable): SpannableStringBuilder {
+    private fun createSpannable(drawable: Drawable, name: String): SpannableStringBuilder {
         val text = "bitmap"
         val spannableStringBuilder = SpannableStringBuilder(text)
         val span = CenteredImageSpan(drawable)
         spannableStringBuilder.setSpan(span, 0, text.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-        spannableStringBuilder.append("图文混排")
+        spannableStringBuilder.append("$name 做对啦~")
         return spannableStringBuilder
     }
 
