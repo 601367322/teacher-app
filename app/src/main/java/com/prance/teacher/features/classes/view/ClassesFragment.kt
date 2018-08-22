@@ -123,7 +123,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         mAdapter.notifyDataSetChanged()
 
         rightArrow.post {
-            if (layoutManager?.totalPageCount!! > 0) {
+            if (layoutManager?.totalPageCount!! > 1) {
                 rightArrow.visibility = View.VISIBLE
                 pageIndicatorView.count = layoutManager?.totalPageCount!!
             }
