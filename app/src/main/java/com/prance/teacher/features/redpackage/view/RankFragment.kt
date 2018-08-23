@@ -92,15 +92,15 @@ class RankFragment : BaseFragment() {
 
         updateTimeText()
 
-//        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
-//                .take(5)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe {
-//                    mTotalTime--
-//
-//                    updateTimeText()
-//                }
+        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
+                .take(5)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mTotalTime--
+
+                    updateTimeText()
+                }
     }
 
     private fun updateTimeText() {

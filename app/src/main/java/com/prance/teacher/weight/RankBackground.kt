@@ -76,21 +76,21 @@ class RankBackground : RelativeLayout {
         startAnim.start()
 
         //流星效果
-        val liuxingWidth = resources.getDimensionPixelOffset(R.dimen.m383_0)
-        val liuxingHeight = resources.getDimensionPixelOffset(R.dimen.m191_0)
+        val meteorWidth = resources.getDimensionPixelOffset(R.dimen.m383_0)
+        val meteorHeight = resources.getDimensionPixelOffset(R.dimen.m191_0)
         val screenWidth = resources.displayMetrics.widthPixels
-        val liuxingAnimY = ObjectAnimator.ofFloat(liuxing, AnimUtil.TRANSLATIONY, -liuxingHeight.toFloat() + resources.getDimensionPixelOffset(R.dimen.m14_0), resources.getDimensionPixelOffset(R.dimen.m772_0).toFloat())
-        liuxingAnimY.repeatCount = Animation.INFINITE
-        liuxingAnimY.repeatMode = ValueAnimator.RESTART
+        val meteorAnimY = ObjectAnimator.ofFloat(meteor, AnimUtil.TRANSLATIONY, -meteorHeight.toFloat() + resources.getDimensionPixelOffset(R.dimen.m14_0), resources.getDimensionPixelOffset(R.dimen.m772_0).toFloat())
+        meteorAnimY.repeatCount = Animation.INFINITE
+        meteorAnimY.repeatMode = ValueAnimator.RESTART
 
-        val liuxingAnimX = ObjectAnimator.ofFloat(liuxing, AnimUtil.TRANSLATIONX, -liuxingWidth.toFloat(), screenWidth.toFloat())
-        liuxingAnimX.repeatCount = Animation.INFINITE
-        liuxingAnimX.repeatMode = ValueAnimator.RESTART
+        val meteorAnimX = ObjectAnimator.ofFloat(meteor, AnimUtil.TRANSLATIONX, -meteorWidth.toFloat(), screenWidth.toFloat())
+        meteorAnimX.repeatCount = Animation.INFINITE
+        meteorAnimX.repeatMode = ValueAnimator.RESTART
 
-        val liuxingAnim = AnimatorSet()
-        liuxingAnim.playTogether(liuxingAnimX, liuxingAnimY)
-        liuxingAnim.duration = 3000
-        liuxingAnim.start()
+        val meteorAnim = AnimatorSet()
+        meteorAnim.playTogether(meteorAnimX, meteorAnimY)
+        meteorAnim.duration = 3000
+        meteorAnim.start()
     }
 
     private fun createStarAnim(view: View): ObjectAnimator {

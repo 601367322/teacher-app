@@ -7,13 +7,11 @@
     android:background="@drawable/rank_background">
 
     <ImageView
-        android:id="@+id/liuxing"
+        android:id="@+id/meteor"
         android:layout_width="@dimen/m383.0"
         android:layout_height="@dimen/m192.0"
         android:scaleType="centerInside"
-        android:src="@drawable/rank_liuxing" />
-
-
+        android:src="@drawable/rank_meteor" />
 
     <ImageView
         android:id="@+id/light"
@@ -104,6 +102,7 @@
         android:src="@drawable/rank_star_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
