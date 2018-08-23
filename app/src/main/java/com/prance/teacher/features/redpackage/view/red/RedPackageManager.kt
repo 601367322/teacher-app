@@ -175,7 +175,7 @@ class RedPackageManager {
             var big = false
 
             //每10个红包，出现一个大红包  &  最后一个红包是小红包的前提下
-            if (destroyRedPackageNum > 0 && destroyRedPackageNum % 4 == 0 && (redPackages.isNotEmpty() && !redPackages.last().big)) {
+            if (destroyRedPackageNum > 0 && destroyRedPackageNum % 10 == 0 && (redPackages.isNotEmpty() && !redPackages.last().big)) {
                 big = true
             }
 
