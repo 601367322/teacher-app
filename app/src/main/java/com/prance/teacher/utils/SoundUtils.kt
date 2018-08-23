@@ -36,9 +36,11 @@ object SoundUtils {
     }
 
     fun load() {
-        sounds["count_time"] = mSoundPoll.load(Utils.getApp(), R.raw.count_time, Int.MAX_VALUE)
-        sounds["rank_background"] = mSoundPoll.load(Utils.getApp(), R.raw.rank_background, Int.MAX_VALUE)
-        sounds["red_package_get"] = mSoundPoll.load(Utils.getApp(), R.raw.red_package_get, Int.MAX_VALUE)
+        if(sounds.isEmpty()) {
+            sounds["count_time"] = mSoundPoll.load(Utils.getApp(), R.raw.count_time, Int.MAX_VALUE)
+            sounds["rank_background"] = mSoundPoll.load(Utils.getApp(), R.raw.rank_background, Int.MAX_VALUE)
+            sounds["red_package_get"] = mSoundPoll.load(Utils.getApp(), R.raw.red_package_get, Int.MAX_VALUE)
+        }
     }
 
     private fun getRatio(): Float {

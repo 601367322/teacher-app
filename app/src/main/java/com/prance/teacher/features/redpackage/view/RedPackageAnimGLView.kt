@@ -13,7 +13,7 @@ import master.flame.danmaku.danmaku.util.SystemClock
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
-class AnimGLView : GLContinuousView {
+class RedPackageAnimGLView : GLContinuousView {
 
     private val mLocations = CopyOnWriteArrayList<RedPackage>()
 

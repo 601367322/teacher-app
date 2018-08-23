@@ -6,13 +6,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.utils.SoundUtils
+import io.reactivex.Flowable
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
 import java.io.Serializable
+import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
 class SubjectOnDestroyFragment : BaseFragment() {
@@ -43,21 +46,24 @@ class SubjectOnDestroyFragment : BaseFragment() {
 
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
 
-        rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
-        rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
+        Flowable.timer(500,TimeUnit.MILLISECONDS)
+                .mySubscribe {
 
-        mQuestionResult?.run {
+                    rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
+                    rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
 
-            if (rank.isNotEmpty()) {
-                for (i in 0..min(4, rank.size - 1)) {
-                    rankNames[i].text = rank[i].name
-                    rankAvatars[i].visibility = View.VISIBLE
-                    GlideApp.with(this@SubjectOnDestroyFragment)
-                            .load(rank[i].head)
-                            .into(rankAvatars[i])
-                }
-            }
-        }
+                    mQuestionResult?.run {
+
+                        if (rank.isNotEmpty()) {
+                            for (i in 0..min(4, rank.size - 1)) {
+                                rankNames[i].text = rank[i].name
+                                rankAvatars[i].visibility = View.VISIBLE
+                                GlideApp.with(this@SubjectOnDestroyFragment)
+                                        .load(rank[i].head)
+                                        .into(rankAvatars[i])
+                            }
+                        }
+                    } }
     }
 
     class QuestionResult : Serializable {

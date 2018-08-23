@@ -57,6 +57,10 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
         totalTime -= RedPackageManager.translationDurationTime
 
+        if (totalTime <= 0) {
+            return
+        }
+
         this.mSetting = mSetting
 
         //初始化红包管理类

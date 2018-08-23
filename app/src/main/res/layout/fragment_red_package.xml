@@ -4,7 +4,7 @@
     android:background="@drawable/redpackage_background"
     android:layout_height="match_parent">
 
-    <com.prance.teacher.features.redpackage.view.AnimGLView
+    <com.prance.teacher.features.redpackage.view.RedPackageAnimGLView
         android:id="@+id/animGlView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

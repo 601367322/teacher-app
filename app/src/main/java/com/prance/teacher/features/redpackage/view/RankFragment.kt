@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -67,15 +68,19 @@ class RankFragment : BaseFragment() {
 
         val rank = sort(scores)
 
-        for (i in 0 until min(3, rank.size)) {
-            rankNames[i].text = rank[i].student.name
-            rankScores[i].text = "${rank[i].score}分"
-            rankAvatars[i].visibility = View.VISIBLE
-            GlideApp.with(this)
-                    .load(rank[i].student.head)
-                    .placeholder(R.drawable.default_avatar_boy)
-                    .into(rankAvatars[i])
-        }
+        Flowable.timer(500,TimeUnit.MILLISECONDS)
+                .mySubscribe {
+                    for (i in 0 until min(3, rank.size)) {
+                        rankNames[i].text = rank[i].student.name
+                        rankScores[i].text = "${rank[i].score}分"
+                        rankAvatars[i].visibility = View.VISIBLE
+                        GlideApp.with(this)
+                                .load(rank[i].student.head)
+                                .placeholder(R.drawable.default_avatar_boy)
+                                .into(rankAvatars[i])
+                    }
+                }
+
 
         if (BuildConfig.DEBUG) {
 //            rankAvatar1.visibility = View.VISIBLE
@@ -87,15 +92,15 @@ class RankFragment : BaseFragment() {
 
         updateTimeText()
 
-        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
-                .take(5)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mTotalTime--
-
-                    updateTimeText()
-                }
+//        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
+//                .take(5)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe {
+//                    mTotalTime--
+//
+//                    updateTimeText()
+//                }
     }
 
     private fun updateTimeText() {
