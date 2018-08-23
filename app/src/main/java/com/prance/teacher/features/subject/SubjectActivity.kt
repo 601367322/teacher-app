@@ -2,7 +2,11 @@ package com.prance.teacher.features.subject
 
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Bundle
+import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.database.MessageEntity
@@ -82,20 +86,22 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 //                .subscribe {
 //                    onSubjectStop()
 //                }
-//            Flowable.timer(3, TimeUnit.SECONDS)
-//                    .subscribe {
-//                        onSubjectDestroy(
-//                                SubjectOnDestroyFragment
-//                                        .QuestionResult(
-//                                                1,
-//                                                SubjectOnDestroyFragment.Answer(1, 2, 3),
-//                                                "ABC",
-//                                                mutableListOf(
-//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-//                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png")
-//                                                )))
-//                    }
+            Flowable.timer(3, TimeUnit.SECONDS)
+                    .subscribe {
+                        onSubjectDestroy(
+                                SubjectOnDestroyFragment
+                                        .QuestionResult(
+                                                1,
+                                                SubjectOnDestroyFragment.Answer(1, 2, 3),
+                                                "ABC",
+                                                mutableListOf(
+                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
+                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png")
+                                                )))
+                    }
         }
     }
 

@@ -3,8 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/subject_on_destroy_background">
+    android:layout_height="match_parent">
+
+
+    <com.prance.teacher.weight.RankBackground
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.prance.teacher.weight.FZTextView
         android:id="@+id/rankText1"

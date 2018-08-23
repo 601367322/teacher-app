@@ -4,18 +4,25 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.BuildConfig
+import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_ALPHA
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_SCALE
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_WIDTH
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.lines
+import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_SCORE
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.utils.SoundUtils
+import io.reactivex.Flowable
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 class RedPackage {
 
@@ -26,6 +33,9 @@ class RedPackage {
     //位置
     var x: Int
     var y: Int
+
+    var titleX = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m120_0)
+    var titleY = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m150_0)
 
     //创建时间
     var createTime: Long
@@ -44,6 +54,14 @@ class RedPackage {
     var hideAnimator: ValueAnimator? = null
 
     var bitmap: Bitmap
+    //气泡
+    var bubble: Bitmap? = null
+    //标题abcd
+    var redPackageTitle: Bitmap
+    //当前的红包图Gif
+    var redPackage: Bitmap
+    //所有红包图Gif
+    var redPackageArray: MutableList<Bitmap>
 
     var tipBitmap: Bitmap
 
@@ -63,7 +81,27 @@ class RedPackage {
     //分数
     var score = 0
 
-    constructor(context: Context, width: Int, height: Int, title: String, lineNum: Int, big: Boolean, score: Int, bitmap: Bitmap, tipBitmap: Bitmap) {
+    //红包积分数字图
+    var scoreBitmaps: MutableMap<String, Bitmap> = mutableMapOf()
+
+    var position: Int = 0
+
+    var disposable: Disposable? = null
+
+    constructor(
+            context: Context,
+            width: Int,
+            height: Int,
+            title: String,
+            lineNum: Int,
+            big: Boolean,
+            score: Int,
+            bubble: Bitmap,
+            redPackageTitle: Bitmap,
+            redPackageArray: MutableList<Bitmap>,
+            tipBitmap: Bitmap,
+            scoreBitmaps: MutableMap<String, Bitmap>) {
+
         this.context = context
         this.x = getRedPackageStartX(lineNum).toInt()
         this.y = -height
@@ -74,28 +112,46 @@ class RedPackage {
         this.title = title
         this.big = big
         this.score = score
-        if (big) {
-            //放大红包
-            val oldWidth = bitmap.width
-            val matrix = Matrix()
-            matrix.postScale(DEFAULT_SCALE, DEFAULT_SCALE)
-            this.bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        this.bubble = bubble
+        this.redPackageTitle = redPackageTitle
+        this.redPackage = redPackageArray[0]
+        this.redPackageArray = redPackageArray
+        this.scoreBitmaps = scoreBitmaps
 
-            this.x -= ((this.bitmap.width.toFloat() - oldWidth.toFloat()) / 2F).toInt()
-            this.y = -this.bitmap.height
+//        if (big) {
+//            //放大红包
+//            val oldWidth = bitmap.width
+//            val matrix = Matrix()
+//            matrix.postScale(DEFAULT_SCALE, DEFAULT_SCALE)
+//            this.bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+//
+//            this.x -= ((this.bitmap.width.toFloat() - oldWidth.toFloat()) / 2F).toInt()
+//            this.y = -this.bitmap.height
+//
+//            this.width = this.bitmap.width
+//            this.height = this.bitmap.height
+//        }
 
-            this.width = this.bitmap.width
-            this.height = this.bitmap.height
-        } else {
-            this.bitmap = bitmap
-        }
+        this.bitmap = redPackageArray[0]
         this.tipBitmap = tipBitmap
         this.lineNum = lineNum
     }
 
     fun startFall() {
         if (translationAnimator == null) {
-            translationAnimator = ObjectAnimator.ofInt(-height.toInt(), screenHeight).setDuration(RedPackageManager.translationDurationTime)
+
+            disposable = Flowable.interval(133, TimeUnit.MILLISECONDS)
+                    .subscribe {
+                        if (position < redPackageArray.size) {
+                            redPackage = redPackageArray[position]
+                            position++
+                            if (position >= redPackageArray.size) {
+                                position = 0
+                            }
+                        }
+                    }
+
+            translationAnimator = ObjectAnimator.ofInt(-height, screenHeight).setDuration(RedPackageManager.translationDurationTime)
             translationAnimator!!.interpolator = LinearInterpolator()
             translationAnimator!!.addUpdateListener {
                 y = it.animatedValue.toString().toInt()
@@ -118,19 +174,39 @@ class RedPackage {
                     //如果该红包未被抢，则越过底部之后变为释放状态
                     if (state != RedPackageStatus.GRAB) {
                         state = RedPackageStatus.FREE
+
+                        disposable?.dispose()
+                        bubble = null
                     }
                 }
             })
+            translationAnimator!!.start()
         }
-        translationAnimator!!.start()
     }
 
     fun destroy(studentScore: StudentScore) {
         //设置为已被抢状态
         state = RedPackageStatus.GRAB
 
+        try {
+            if (!(context as Activity).isDestroyed) {
+                SoundUtils.play("red_package_get")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         //生成抢到红包提示
-        scoreTip = ScoreTip(context, x, y, width, height, studentScore.student, tipBitmap)
+        scoreTip = ScoreTip(
+                context,
+                x,
+                y,
+                width,
+                height,
+                studentScore.student,
+                DEFAULT_SCORE,
+                tipBitmap,
+                scoreBitmaps)
 
         if (hideAnimator == null) {
             hideAnimator = ObjectAnimator.ofInt(alpha, 0).setDuration(RedPackageManager.alphaDurationTime)
@@ -147,6 +223,9 @@ class RedPackage {
 
                     //动画结束之后变为释放状态
                     state = RedPackageStatus.FREE
+
+                    disposable?.dispose()
+                    bubble = null
                 }
             })
             hideAnimator!!.start()

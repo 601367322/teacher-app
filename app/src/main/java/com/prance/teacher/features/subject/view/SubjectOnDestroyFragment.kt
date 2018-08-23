@@ -5,13 +5,15 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
-import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import com.prance.teacher.utils.SoundUtils
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
 import java.io.Serializable
 import java.util.concurrent.TimeUnit
@@ -43,24 +45,28 @@ class SubjectOnDestroyFragment : BaseFragment() {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+
+        SoundUtils.play("rank_background")
+
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
+        Flowable.timer(500, TimeUnit.MILLISECONDS)
+                .mySubscribe {
+                    rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
+                    rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
 
-        rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
-        rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
+                    mQuestionResult?.run {
 
-        mQuestionResult?.run {
-
-            if (rank.isNotEmpty()) {
-                for (i in 0..min(4, rank.size - 1)) {
-                    rankNames[i].text = rank[i].name
-                    rankAvatars[i].visibility = View.VISIBLE
-                    GlideApp.with(this@SubjectOnDestroyFragment)
-                            .load(rank[i].head)
-                            .into(rankAvatars[i])
+                        if (rank.isNotEmpty()) {
+                            for (i in 0..min(4, rank.size - 1)) {
+                                rankNames[i].text = rank[i].name
+                                rankAvatars[i].visibility = View.VISIBLE
+                                GlideApp.with(this@SubjectOnDestroyFragment)
+                                        .load(rank[i].head)
+                                        .into(rankAvatars[i])
+                            }
+                        }
+                    }
                 }
-            }
-        }
-
         updateTimeText()
         mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
                 .take(5)
