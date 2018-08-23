@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -30,6 +31,7 @@ import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.utils.IntentUtils
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
@@ -102,6 +104,15 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                     Activity.RESULT_OK -> {
                         //开始Socket监听
                         mPushServicePresenter.bind()
+
+                        context?.run {
+                            try {
+                                startActivity(IntentUtils.callingXYDial())
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                ToastUtils.showShort("请使用小鱼易联")
+                            }
+                        }
                     }
                 }
             }

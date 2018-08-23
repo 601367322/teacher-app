@@ -120,14 +120,6 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         //开始连接视频
         jump.setOnClickListener {
-            context?.run {
-                try {
-                    startActivity(IntentUtils.callingXYDial())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    ToastUtils.showShort("请使用小鱼易联")
-                }
-            }
             activity?.setResult(Activity.RESULT_OK)
             activity?.finish()
         }
