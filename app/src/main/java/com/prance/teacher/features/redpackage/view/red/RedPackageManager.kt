@@ -43,7 +43,7 @@ class RedPackageManager {
         //总列数
         const val lines = 5
 
-        var DEFAULT_SCALE = 1.5F
+        var DEFAULT_SCALE = 1.3F
     }
 
 
@@ -77,6 +77,9 @@ class RedPackageManager {
     private var context: Context
 
     private var destroyRedPackageNum = 0
+
+    //间隔大红包数量
+    private var destroyIntervalNum = 10
 
     constructor(context: Context) {
 
@@ -174,8 +177,12 @@ class RedPackageManager {
 
             var big = false
 
+            if(BuildConfig.DEBUG){
+                destroyIntervalNum = 4
+            }
+
             //每10个红包，出现一个大红包  &  最后一个红包是小红包的前提下
-            if (destroyRedPackageNum > 0 && destroyRedPackageNum % 10 == 0 && (redPackages.isNotEmpty() && !redPackages.last().big)) {
+            if (destroyRedPackageNum > 0 && destroyRedPackageNum % destroyIntervalNum == 0 && (redPackages.isNotEmpty() && !redPackages.last().big)) {
                 big = true
             }
 
