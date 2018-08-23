@@ -55,12 +55,12 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                val redConfig = RedPackageSetting(1, 30, 1, 1)
 //                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
 
-            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1)
-            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
+//            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1)
+//            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
 
 
-//            val redConfig = RedPackageSetting(1,10,1,1)
-//            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+            val redConfig = RedPackageSetting(1,30,1,1)
+            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))

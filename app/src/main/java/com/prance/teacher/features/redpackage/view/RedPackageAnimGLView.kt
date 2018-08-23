@@ -17,19 +17,20 @@ class RedPackageAnimGLView : GLContinuousView {
 
     private val mLocations = CopyOnWriteArrayList<RedPackage>()
 
-    private val textureFilter = BasicTextureFilter()
-
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     override fun onGLDraw(canvas: ICanvasGL) {
         for (item in mLocations) {
+            //画红包
             if (item.state != RedPackageStatus.FREE) {
                 canvas.save()
                 canvas.setAlpha(item.alpha)
-                item.bitmap?.run {
-                    canvas.drawBitmap(this, item.x, item.y, textureFilter)
+                item.bubble?.run {
+                    canvas.drawBitmap(item.redPackage, item.x, item.y)
+                    canvas.drawBitmap(item.redPackageTitle, item.x + item.titleX, item.y + item.titleY)
+                    canvas.drawBitmap(this, item.x, item.y)
                 }
                 canvas.restore()
             }
@@ -38,10 +39,10 @@ class RedPackageAnimGLView : GLContinuousView {
                 if (it.state == RedPackageTipStatus.SHOW) {
                     canvas.save()
                     canvas.setAlpha(it.alpha)
-                    it.bitmap?.run {
+                    it.bitmap.run {
                         try {
                             if (!this.isRecycled)
-                                canvas.drawBitmap(this, it.x, it.y, textureFilter)
+                                canvas.drawBitmap(this, it.x, it.y)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

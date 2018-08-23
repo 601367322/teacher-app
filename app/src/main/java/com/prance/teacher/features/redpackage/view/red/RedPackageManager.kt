@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.Utils
+import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
@@ -55,22 +56,19 @@ class RedPackageManager {
     var studentScores = mutableListOf<StudentScore>()
 
     //红包背景
-    var redPackageImg: MutableMap<String, Bitmap>
+    var redPackageImg: MutableList<Bitmap> = mutableListOf()
+
+    //红包ABCD
+    var redPackageTitle: MutableMap<String, Bitmap> = mutableMapOf()
 
     //红包积分数字图
-    var scoreBitmaps: MutableMap<String, Bitmap>
+    var scoreBitmaps: MutableMap<String, Bitmap> = mutableMapOf()
 
-    //抢到红包提示缓存背景，防止卡顿
-//    var cacheBitmap: Bitmap
+    //气泡
+    var bubble: Bitmap
 
-    //抢到红包提示背景原图
-//    var tipBitmap: Bitmap
-
-    //抢到小红包提示背景
-    var tipBitmapLittle: Bitmap
-
-    //抢到大红包提示背景
-    var tipBitmapBig: Bitmap
+    //抢到红包提示背景
+    var tipBitmap: Bitmap
 
     private var context: Context
 
@@ -78,24 +76,89 @@ class RedPackageManager {
 
         this.context = context
 
-        redPackageImg = mutableMapOf(
-                "A" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_a), DEFAULT_WIDTH),
-                "B" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_b), DEFAULT_WIDTH),
-                "C" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_c), DEFAULT_WIDTH),
-                "D" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_d), DEFAULT_WIDTH))
+        //红包Gif资源
+        val redPackageRes = mutableListOf(
+                R.drawable.red_package_00000,
+                R.drawable.red_package_00001,
+                R.drawable.red_package_00002,
+                R.drawable.red_package_00003,
+                R.drawable.red_package_00004,
+                R.drawable.red_package_00005,
+                R.drawable.red_package_00006,
+                R.drawable.red_package_00007,
+                R.drawable.red_package_00008,
+                R.drawable.red_package_00009,
+                R.drawable.red_package_00010,
+                R.drawable.red_package_00011,
+                R.drawable.red_package_00012,
+                R.drawable.red_package_00013,
+                R.drawable.red_package_00014,
+                R.drawable.red_package_00015
+        )
 
+        for (i in redPackageRes) {
+            redPackageImg.add(
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(i)
+                            .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
+                            .get()
+            )
+        }
+
+        //红包标题 ABCD
+        val redPackageTitleRes = mutableMapOf(
+                "A" to R.drawable.red_package_title_a,
+                "B" to R.drawable.red_package_title_b,
+                "C" to R.drawable.red_package_title_c,
+                "D" to R.drawable.red_package_title_d
+        )
+
+        val titleWidth = context.resources.getDimensionPixelOffset(R.dimen.m50_0)
+
+        for (i in redPackageTitleRes) {
+            redPackageTitle[i.key] = GlideApp.with(context)
+                    .asBitmap()
+                    .load(i.value)
+                    .submit(titleWidth, titleWidth)
+                    .get()
+        }
+
+        //气泡
+        bubble = GlideApp.with(context)
+                .asBitmap()
+                .load(R.drawable.red_package_pao)
+                .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
+                .get()
+
+        //积分资源
         val scoreMaxWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m48_0)
+        val scoreRes = mutableMapOf(
+                "+" to R.drawable.red_package_score_add,
+                "1" to R.drawable.red_package_score_1,
+                "2" to R.drawable.red_package_score_2,
+                "3" to R.drawable.red_package_score_3,
+                "4" to R.drawable.red_package_score_4,
+                "5" to R.drawable.red_package_score_5,
+                "6" to R.drawable.red_package_score_6,
+                "7" to R.drawable.red_package_score_7,
+                "8" to R.drawable.red_package_score_8,
+                "9" to R.drawable.red_package_score_9
+        )
+        for (i in scoreRes) {
+            scoreBitmaps[i.key] = GlideApp.with(context)
+                    .asBitmap()
+                    .load(i.value)
+                    .submit(scoreMaxWidth, scoreMaxWidth)
+                    .get()
+        }
 
-        scoreBitmaps = mutableMapOf(
-                "+" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_add), scoreMaxWidth),
-                "2" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_2), scoreMaxWidth),
-                "4" to createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_score_4), scoreMaxWidth))
-
-        val tipBitmap = createBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.red_package_tip_background), Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m236_0))
-        tipBitmapLittle = createTipBitmap(tipBitmap, "+2")
-        tipBitmapBig = createTipBitmap(tipBitmap, "+4")
-
-        tipBitmap.recycle()
+        //抢到红包提示
+        tipBitmap = GlideApp.with(context)
+                .asBitmap()
+                .load(R.drawable.red_package_tip_background)
+                .submit(context.resources.getDimensionPixelOffset(R.dimen.m237_0), context.resources.getDimensionPixelOffset(R.dimen.m340_0))
+                .get()
     }
 
     fun generateRedPack(): RedPackage? {
@@ -112,8 +175,11 @@ class RedPackageManager {
                     DEFAULT_WIDTH.toLong(),
                     DEFAULT_HEIGHT.toLong(),
                     randomTitle,
-                    redPackageImg[randomTitle]!!,
-                    tipBitmapLittle
+                    bubble,
+                    redPackageTitle[randomTitle]!!,
+                    redPackageImg,
+                    tipBitmap,
+                    scoreBitmaps
             )
 
             redPackages.add(red)
@@ -202,44 +268,6 @@ class RedPackageManager {
         return Bitmap.createBitmap(baseBitmap, 0, 0, baseBitmap.width, baseBitmap.height, matrix, true)
     }
 
-    private fun createTipBitmap(tipBitmap: Bitmap, score: String): Bitmap {
-        //底部文字溢出长度
-        val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
-        //右部文字溢出长度
-        val rightPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m71_0)
-
-        //红包背景378
-        var bitmap = Bitmap.createBitmap(
-                tipBitmap.width + rightPadding * 2,
-                tipBitmap.height + bottomPadding,
-                Bitmap.Config.ARGB_4444)
-
-        val canvas = Canvas(bitmap)
-
-        canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-        canvas.drawBitmap(
-                tipBitmap,
-                (bitmap.width - tipBitmap.width).toFloat() / 2F,
-                0F,
-                null)
-
-        val scores = convertTextToBitmap(score)
-        var startX = bitmap.width - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m86_0).toFloat()
-        for (score in scores) {
-            //积分图
-            canvas.drawBitmap(score, startX, bitmap.height - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m98_0).toFloat() - score.height, null)
-            startX += Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m35_0)
-        }
-        return bitmap
-    }
-
-    private fun convertTextToBitmap(text: String): MutableList<Bitmap> {
-        val list = mutableListOf<Bitmap>()
-        for (i in text) {
-            list.add(this.scoreBitmaps[i.toString()]!!)
-        }
-        return list
-    }
 
     /**
      * 计算是否抢到了红包

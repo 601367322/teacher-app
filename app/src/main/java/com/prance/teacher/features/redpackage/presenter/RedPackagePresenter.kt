@@ -11,9 +11,13 @@ import com.prance.teacher.features.redpackage.model.RedPackageRecord
 import io.reactivex.disposables.Disposable
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.FlowableEmitter
+import io.reactivex.FlowableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Publisher
 import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
@@ -63,31 +67,37 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
         this.mSetting = mSetting
 
-        //初始化红包管理类
-        mRedPackageManager = RedPackageManager(mView?.getContext()!!)
-
-        //基站发送命令，可重复的单选题
-        SunARS.voteStart(SunARS.VoteType_Choice, "1,1,0,0,10,1")
-
-        //开始倒计时，take总次数
-        var time = totalTime / intervalTime
-        disposable = Flowable.interval(intervalTime, TimeUnit.MILLISECONDS)
-                .take(time)
+        Flowable
+                .create(FlowableOnSubscribe<RedPackageManager> {
+                    //初始化红包管理类
+                    it.onNext(RedPackageManager(mView?.getContext()!!))
+                }, BackpressureStrategy.BUFFER)
                 .mySubscribe {
-                    //生成红包
-                    val redPackage = mRedPackageManager.generateRedPack()
-                    redPackage?.let {
-                        mView?.onShowPackage(redPackage)
-                    }
+                    this.mRedPackageManager = it
 
-                    //最后一个红包
-                    if (it == time - 1) {
-                        //所有红包落下之后关闭界面
-                        Flowable.timer(RedPackageManager.translationDurationTime, TimeUnit.MILLISECONDS)
-                                .mySubscribe {
-                                    stopRedPackage()
+                    //基站发送命令，可重复的单选题
+                    SunARS.voteStart(SunARS.VoteType_Choice, "1,1,0,0,10,1")
+
+                    //开始倒计时，take总次数
+                    var time = totalTime / intervalTime
+                    disposable = Flowable.interval(intervalTime, TimeUnit.MILLISECONDS)
+                            .take(time)
+                            .mySubscribe {
+                                //生成红包
+                                val redPackage = mRedPackageManager.generateRedPack()
+                                redPackage?.let {
+                                    mView?.onShowPackage(redPackage)
                                 }
-                    }
+
+                                //最后一个红包
+                                if (it == time - 1) {
+                                    //所有红包落下之后关闭界面
+                                    Flowable.timer(RedPackageManager.translationDurationTime, TimeUnit.MILLISECONDS)
+                                            .mySubscribe {
+                                                stopRedPackage()
+                                            }
+                                }
+                            }
                 }
     }
 

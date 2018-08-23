@@ -39,6 +39,9 @@ class ScoreTip {
 
     var bitmap: Bitmap
 
+    //红包积分数字图
+    var scoreBitmaps: MutableMap<String, Bitmap> = mutableMapOf()
+
     //动画时长
     val translationDurationTime = 1000L
 
@@ -48,27 +51,46 @@ class ScoreTip {
     //动画集
     var animatorSet: AnimatorSet? = null
 
-    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, background: Bitmap) {
+    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, score: Int, tipBitmap: Bitmap, scoreBitmaps: MutableMap<String, Bitmap>) {
 
         this.context = context
 
         this.title = student.name
 
-        this.width = background.width
+        this.scoreBitmaps = scoreBitmaps
 
         //底部文字溢出长度
         val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
 
-        //设置空的画布
+        //右部文字溢出长度
+        val rightPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m71_0)
+
+        //红包背景378
         bitmap = Bitmap.createBitmap(
-                background.width,
-                background.height,
+                tipBitmap.width + rightPadding * 2,
+                tipBitmap.height + bottomPadding,
                 Bitmap.Config.ARGB_4444)
+
+        this.width = bitmap.width
+
         val canvas = Canvas(bitmap)
         //抗锯齿
         canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
         //画背景
-        canvas.drawBitmap(background, 0f, 0f, null)
+        canvas.drawBitmap(
+                tipBitmap,
+                (bitmap.width - tipBitmap.width).toFloat() / 2F,
+                0F,
+                null)
+
+        //画积分
+        val scores = convertTextToBitmap("+$score")
+        var startX = bitmap.width - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m86_0).toFloat()
+        for (score in scores) {
+            //积分图
+            canvas.drawBitmap(score, startX, bitmap.height - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m98_0).toFloat() - score.height, null)
+            startX += Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m35_0)
+        }
 
         //描边文字
         val strokeTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -107,7 +129,7 @@ class ScoreTip {
 
         //头像宽高
         var avatarWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m190_0)
-        if(!TextUtils.isEmpty(student.head)) {
+        if (!TextUtils.isEmpty(student.head)) {
             try {
                 GlideApp.with(context)
                         .asBitmap()
@@ -117,32 +139,47 @@ class ScoreTip {
                         .into(object : SimpleTarget<Bitmap>() {
 
                             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                var tempBitmap = bitmap
                                 //重新绘制一张空图
                                 var bg = Bitmap.createBitmap(
-                                        bitmap.width,
-                                        bitmap.height,
+                                        tempBitmap.width,
+                                        tempBitmap.height,
                                         Bitmap.Config.ARGB_4444)
                                 val canvas = Canvas(bg)
                                 //抗锯齿
                                 canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
                                 //画背景
-                                canvas.drawBitmap(bitmap, 0F, 0F, null)
+                                canvas.drawBitmap(tempBitmap, 0F, 0F, null)
                                 // 设置X，Y
                                 val matrix = Matrix()
                                 val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
                                 matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
                                 //画头像
                                 canvas.drawBitmap(resource, matrix, null)
-                                //释放原图
-                                bitmap.recycle()
                                 //设置有头像的图
                                 bitmap = bg
+                                //释放原图
+                                tempBitmap.recycle()
                             }
                         })
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
+
+
+    private fun convertTextToBitmap(text: String): MutableList<Bitmap> {
+        val list = mutableListOf<Bitmap>()
+        for (i in text) {
+            list.add(this.scoreBitmaps[i.toString()]!!)
+        }
+        return list
+    }
+
+    private fun createTipBitmap(tipBitmap: Bitmap, score: String): Bitmap {
+
+        return bitmap
     }
 
     private fun startFall() {

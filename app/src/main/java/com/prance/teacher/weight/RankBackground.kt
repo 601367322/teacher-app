@@ -10,8 +10,6 @@ import android.widget.RelativeLayout
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.getInflate
 import com.prance.teacher.R
-import com.prance.teacher.R.attr.strokeColor
-import com.prance.teacher.R.attr.strokeWidth
 import kotlinx.android.synthetic.main.layout_rank_background.view.*
 
 class RankBackground : RelativeLayout {
@@ -79,17 +77,46 @@ class RankBackground : RelativeLayout {
         val meteorWidth = resources.getDimensionPixelOffset(R.dimen.m383_0)
         val meteorHeight = resources.getDimensionPixelOffset(R.dimen.m191_0)
         val screenWidth = resources.displayMetrics.widthPixels
-        val meteorAnimY = ObjectAnimator.ofFloat(meteor, AnimUtil.TRANSLATIONY, -meteorHeight.toFloat() + resources.getDimensionPixelOffset(R.dimen.m14_0), resources.getDimensionPixelOffset(R.dimen.m772_0).toFloat())
+        val screenHeight = resources.displayMetrics.heightPixels
+
+        createMeteorAnim(
+                meteor1,
+                -meteorHeight.toFloat() + resources.getDimensionPixelOffset(R.dimen.m14_0),
+                resources.getDimensionPixelOffset(R.dimen.m772_0).toFloat(),
+                -meteorWidth.toFloat(),
+                screenWidth.toFloat(),
+                3000
+        )
+        createMeteorAnim(
+                meteor2,
+                -meteorHeight.toFloat(),
+                resources.getDimensionPixelOffset(R.dimen.m138_0).toFloat(),
+                resources.getDimensionPixelOffset(R.dimen.m1511_0) - meteorWidth.toFloat(),
+                screenWidth.toFloat(),
+                5000
+        )
+        createMeteorAnim(
+                meteor3,
+                resources.getDimensionPixelOffset(R.dimen.m673_0).toFloat()-meteorHeight.toFloat(),
+                screenHeight.toFloat(),
+                -meteorWidth.toFloat(),
+                resources.getDimensionPixelOffset(R.dimen.m990_0).toFloat(),
+                2000
+        )
+    }
+
+    private fun createMeteorAnim(view: View, startY: Float, endY: Float, startX: Float, endX: Float, duration: Long) {
+        val meteorAnimY = ObjectAnimator.ofFloat(view, AnimUtil.TRANSLATIONY, startY, endY)
         meteorAnimY.repeatCount = Animation.INFINITE
         meteorAnimY.repeatMode = ValueAnimator.RESTART
 
-        val meteorAnimX = ObjectAnimator.ofFloat(meteor, AnimUtil.TRANSLATIONX, -meteorWidth.toFloat(), screenWidth.toFloat())
+        val meteorAnimX = ObjectAnimator.ofFloat(view, AnimUtil.TRANSLATIONX, startX, endX)
         meteorAnimX.repeatCount = Animation.INFINITE
         meteorAnimX.repeatMode = ValueAnimator.RESTART
 
         val meteorAnim = AnimatorSet()
         meteorAnim.playTogether(meteorAnimX, meteorAnimY)
-        meteorAnim.duration = 3000
+        meteorAnim.duration = duration
         meteorAnim.start()
     }
 
