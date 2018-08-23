@@ -97,13 +97,12 @@ class ScoreTip {
         strokeTextPaint.color = Color.parseColor("#923D00")
         strokeTextPaint.textAlign = Paint.Align.CENTER
         strokeTextPaint.strokeWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m3_0).toFloat()
-        strokeTextPaint.style = Paint.Style.FILL_AND_STROKE
+        strokeTextPaint.style = Paint.Style.STROKE
         strokeTextPaint.typeface = FontCustom.getFZY1JWFont(Utils.getApp())
         strokeTextPaint.textSize = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m47_0).toFloat()
 
         //文字画笔
-        val textPaint = Paint()
-        textPaint.isAntiAlias = true
+        val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.color = Color.WHITE
         textPaint.typeface = FontCustom.getFZY1JWFont(Utils.getApp())
         textPaint.textAlign = Paint.Align.CENTER
@@ -139,27 +138,29 @@ class ScoreTip {
                         .into(object : SimpleTarget<Bitmap>() {
 
                             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                var tempBitmap = bitmap
-                                //重新绘制一张空图
-                                var bg = Bitmap.createBitmap(
-                                        tempBitmap.width,
-                                        tempBitmap.height,
-                                        Bitmap.Config.ARGB_4444)
-                                val canvas = Canvas(bg)
-                                //抗锯齿
-                                canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-                                //画背景
-                                canvas.drawBitmap(tempBitmap, 0F, 0F, null)
-                                // 设置X，Y
-                                val matrix = Matrix()
-                                val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
-                                matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
-                                //画头像
-                                canvas.drawBitmap(resource, matrix, null)
-                                //设置有头像的图
-                                bitmap = bg
-                                //释放原图
-                                tempBitmap.recycle()
+                                if(!bitmap.isRecycled) {
+                                    var tempBitmap = bitmap
+                                    //重新绘制一张空图
+                                    var bg = Bitmap.createBitmap(
+                                            tempBitmap.width,
+                                            tempBitmap.height,
+                                            Bitmap.Config.ARGB_4444)
+                                    val canvas = Canvas(bg)
+                                    //抗锯齿
+                                    canvas.drawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
+                                    //画背景
+                                    canvas.drawBitmap(tempBitmap, 0F, 0F, null)
+                                    // 设置X，Y
+                                    val matrix = Matrix()
+                                    val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
+                                    matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
+                                    //画头像
+                                    canvas.drawBitmap(resource, matrix, null)
+                                    //设置有头像的图
+                                    bitmap = bg
+                                    //释放原图
+                                    tempBitmap.recycle()
+                                }
                             }
                         })
             } catch (e: Exception) {
