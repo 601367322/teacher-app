@@ -102,7 +102,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
     }
 
     override fun onLogEventCallBack(sInfo: String) {
-        LogUtils.d("SDK Log:$sInfo")
+        println("SDK Log:$sInfo")
     }
 
     override fun onDataTxEventCallBack(sendData: ByteArray, dataLen: Int) {

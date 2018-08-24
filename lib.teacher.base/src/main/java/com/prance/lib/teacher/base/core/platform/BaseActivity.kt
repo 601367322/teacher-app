@@ -55,15 +55,15 @@ abstract class BaseActivity : BaseActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         when (keyCode) {
         //调大声音键
-            KeyEvent.KEYCODE_VOLUME_UP -> LogUtils.d("voice up--->")
+            KeyEvent.KEYCODE_VOLUME_UP -> return super.onKeyDown(keyCode, event)
         //降低声音键
-            KeyEvent.KEYCODE_VOLUME_DOWN -> LogUtils.d("voice down--->")
+            KeyEvent.KEYCODE_VOLUME_DOWN -> return super.onKeyDown(keyCode, event)
         //静音
-            KeyEvent.KEYCODE_MUTE -> LogUtils.d("close voice--->")
+            KeyEvent.KEYCODE_MUTE -> return super.onKeyDown(keyCode, event)
         //放大
-            KeyEvent.KEYCODE_ZOOM_IN -> LogUtils.d("放大--->")
+            KeyEvent.KEYCODE_ZOOM_IN -> return super.onKeyDown(keyCode, event)
         //缩小
-            KeyEvent.KEYCODE_ZOOM_OUT -> LogUtils.d("缩小--->")
+            KeyEvent.KEYCODE_ZOOM_OUT -> return super.onKeyDown(keyCode, event)
         //向上键
             KeyEvent.KEYCODE_DPAD_UP -> {
                 if (!onUpKeyEvent()) {

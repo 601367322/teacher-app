@@ -62,6 +62,7 @@ class SubjectOnDestroyFragment : BaseFragment() {
                                 rankAvatars[i].visibility = View.VISIBLE
                                 GlideApp.with(this@SubjectOnDestroyFragment)
                                         .load(rank[i].head)
+                                        .placeholder(R.drawable.default_avatar_boy)
                                         .into(rankAvatars[i])
                             }
                         }

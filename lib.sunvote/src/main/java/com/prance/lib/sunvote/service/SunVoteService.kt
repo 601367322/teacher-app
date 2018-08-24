@@ -8,8 +8,10 @@ import android.hardware.usb.UsbManager
 import android.os.Binder
 import android.os.IBinder
 import android.os.UserManager
+import android.util.DebugUtils
 import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
+import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.sunvote.platform.*
 
 class SunVoteService : Service() {
@@ -44,7 +46,7 @@ class SunVoteService : Service() {
             mSunARSListener = DefaultSunARSListener(mUsbManagerImpl)
             SunARS.addListener(mSunARSListener)
             val r = SunARS.license(1, "SUNARS2013")
-            SunARS.setLogOn(0)
+            SunARS.setLogOn(if (ModelUtil.isTestModel) 2 else 0)
             val filePath = applicationContext?.filesDir
             SunARS.setArchiveDir(filePath.toString())
         } catch (e: Throwable) {

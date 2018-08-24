@@ -66,31 +66,15 @@ class RedPackageActivity : BaseActivity(), MessageListener {
 
 
         if(BuildConfig.DEBUG) {
-//            Flowable.timer(3, TimeUnit.SECONDS)
-//                    .subscribe {
-//                        redPackageRank(mutableListOf(
-//                                StudentScore(
-//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-//                                        10,
-//                                        5
-//                                ),
-//                                StudentScore(
-//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-//                                        10,
-//                                        5
-//                                ),
-//                                StudentScore(
-//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-//                                        10,
-//                                        5
-//                                ),
-//                                StudentScore(
-//                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-//                                        10,
-//                                        5
-//                                )
-//                        ))
-//                    }
+            Flowable.timer(3, TimeUnit.SECONDS)
+                    .subscribe {
+                        redPackageRank(mutableListOf(
+                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5),
+                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5),
+                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5),
+                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5)
+                        ))
+                    }
         }
     }
 
