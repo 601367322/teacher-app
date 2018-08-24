@@ -53,7 +53,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
                 var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
                 context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-//                val redConfig = RedPackageSetting(1,10,1,1)
+//                val redConfig = RedPackageSetting(1,60,1,1)
 //                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {

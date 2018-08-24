@@ -176,7 +176,7 @@ class SubjectOnStartFragment : BaseFragment() {
             override fun drawingFinished() {}
             override fun danmakuShown(danmaku: BaseDanmaku) {}
             override fun prepared() {
-                danmu.start()
+                danmu?.start()
             }
         })
         danmu.prepare(mDanmuParser, mDanmuContext)
