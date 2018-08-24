@@ -93,20 +93,6 @@ class SubjectOnStartFragment : BaseFragment() {
     private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
         SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
 
-            /**
-             * 防止初始化的时候，UsbManagerImpl.baseStation是空的，当重新绑定Service的时候，再执行发一遍题目
-             * SunARS.voteStart(type!!, param) 这行代码，只执行一次，要么初始化时执行，要么绑定完Service，打开usb后执行
-             */
-            override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
-                super.onConnectEventCallBack(iBaseID, iMode, sInfo)
-                if (sInfo == SunARS.BaseStation_Connected) {
-                    mQuestion?.run {
-                        //基站开始发送题目
-                        SunARS.voteStart(type!!, param)
-                    }
-                }
-            }
-
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
                 val keyId = generateKeyPadId(KeyID)
                 when (iMode) {
@@ -214,7 +200,7 @@ class SubjectOnStartFragment : BaseFragment() {
                         errorDrawable?.let { showDanmu(it) }
                     }
 
-                    private fun showDanmu(resource: Drawable){
+                    private fun showDanmu(resource: Drawable) {
                         var interval = 0L
                         //计算弹幕出现的时间，间隔danmuInterval
                         if (System.currentTimeMillis() - lastDanmuTime < danmuInterval) {

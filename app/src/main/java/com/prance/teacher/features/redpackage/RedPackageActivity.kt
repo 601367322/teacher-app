@@ -8,10 +8,13 @@ import android.content.ServiceConnection
 import com.prance.lib.database.MessageEntity
 import android.os.Bundle
 import android.os.IBinder
+import cn.sunars.sdk.SunARS
+import cn.sunars.sdk.SunARS.removeListener
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
+import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -30,7 +33,9 @@ class RedPackageActivity : BaseActivity(), MessageListener {
      * 下发的抢红包设置
      */
     var mSetting: RedPackageSetting? = null
-    var mPushBinder: PushService.PushServiceBinder? = null
+
+    private val mPushServicePresenterPresenter by lazy { PushServicePresenter(this, this) }
+
     /**
      * 抢红包fragment
      */
@@ -54,7 +59,9 @@ class RedPackageActivity : BaseActivity(), MessageListener {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+
         mSetting = intent?.getSerializableExtra(RedPackageFragment.mSetTing) as RedPackageSetting?
+
         val bundle = Bundle()
         bundle.putSerializable(RedPackageFragment.mSetTing, mSetting)
         if (mGrabFragment!!.arguments != null) {
@@ -62,30 +69,20 @@ class RedPackageActivity : BaseActivity(), MessageListener {
         } else {
             mGrabFragment!!.arguments = bundle
         }
-        bindService(PushService.callingIntent(this), mPushServiceConnection, Service.BIND_AUTO_CREATE)
+
+        mPushServicePresenterPresenter.bind()
 
 
-        if(BuildConfig.DEBUG) {
-            Flowable.timer(3, TimeUnit.SECONDS)
-                    .subscribe {
-                        redPackageRank(mutableListOf(
-                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5),
-                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5),
-                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5),
-                                StudentScore(StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"), 10, 5)
-                        ))
-                    }
-        }
-    }
-
-    private var mPushServiceConnection = object : ServiceConnection {
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-        }
-
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            mPushBinder = service as PushService.PushServiceBinder
-            mPushBinder?.addListener(this@RedPackageActivity)
+        if (BuildConfig.DEBUG) {
+//            Flowable.timer(3, TimeUnit.SECONDS)
+//                    .subscribe {
+//                        redPackageRank(mutableListOf(
+//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5)
+//                        ))
+//                    }
         }
     }
 
@@ -104,10 +101,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     override fun onDestroy() {
         super.onDestroy()
 
-        mPushBinder?.run {
-            removeListener(this@RedPackageActivity)
-        }
-        unbindService(mPushServiceConnection)
+        mPushServicePresenterPresenter.unBind()
     }
 
     fun redPackageRank(scores: MutableList<StudentScore>) {

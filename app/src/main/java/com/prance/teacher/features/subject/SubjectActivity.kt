@@ -90,19 +90,13 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         if (BuildConfig.DEBUG) {
             Flowable.timer(5, TimeUnit.SECONDS)
                     .subscribe {
-
-                        onSubjectDestroy(
-                                SubjectOnDestroyFragment
-                                        .QuestionResult(
-                                                1,
-                                                SubjectOnDestroyFragment.Answer(1, 2, 3),
-                                                "ABC",
+                        onSubjectDestroy(SubjectOnDestroyFragment.QuestionResult(1, SubjectOnDestroyFragment.Answer(1, 2, 3), "ABC",
                                                 mutableListOf(
-                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png"),
-                                                        StudentsEntity("申兵兵", "https://www.baidu.com/img/bd_logo1.png")
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
                                                 )))
                     }
         }
@@ -136,11 +130,23 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         }
     }
 
+    /**
+     * 这里有个大坑
+     *
+     * 该方法内原代码是
+     * supportFragmentManager.inTransaction {
+     *      replace(R.id.fragmentContainer, SubjectOnDestroyFragment.forQuestionResult(questionResult))
+     * }
+     *
+     * 但是，执行完毕后，基站会自动断开。经过反复测试，推测跟内存有关。由于SubjectActivity是透明的，可能会占用更多内存，导致USB读取数据阻塞中断
+     *
+     * 改为打开一个不透明的Activity，问题解决
+     */
     private fun onSubjectDestroy(questionResult: SubjectOnDestroyFragment.QuestionResult) {
         //停止发送
         SunARS.voteStop()
-        supportFragmentManager.inTransaction {
-            replace(R.id.fragmentContainer, SubjectOnDestroyFragment.forQuestionResult(questionResult))
-        }
+        startActivity(SubjectRankActivity.callingIntent(this, questionResult))
+
+        finish()
     }
 }
