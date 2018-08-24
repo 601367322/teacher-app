@@ -42,7 +42,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
     private var disposable: Disposable? = null
 
-    private lateinit var mRedPackageManager: RedPackageManager
+    private var mRedPackageManager: RedPackageManager? = null
 
     private var mSetting: RedPackageSetting? = null
 
@@ -84,7 +84,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                             .take(time)
                             .mySubscribe {
                                 //生成红包
-                                val redPackage = mRedPackageManager.generateRedPack()
+                                val redPackage = mRedPackageManager?.generateRedPack()
                                 redPackage?.let {
                                     mView?.onShowPackage(redPackage)
                                 }
@@ -106,12 +106,15 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         //发送答题结果
         postRedPackageResult()
         //转到排行榜界面
-        mView?.onTimeEnd(mRedPackageManager.studentScores)
+        mRedPackageManager?.run {
+            mView?.onTimeEnd(studentScores)
+        }
+
     }
 
     override fun detachView() {
         super.detachView()
-        mRedPackageManager.destroy()
+        mRedPackageManager?.destroy()
         stopInterval()
     }
 
@@ -123,21 +126,23 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
     }
 
     override fun grabRedPackage(KeyID: String, sInfo: String?) {
-        mRedPackageManager.grabRedPackage(KeyID, sInfo)
+        mRedPackageManager?.grabRedPackage(KeyID, sInfo)
     }
 
     /**
      * 发送抢红包信息
      */
     private fun postRedPackageResult() {
-        val list = mutableListOf<RedPackageRecord>()
-        for (score in mRedPackageManager.studentScores) {
-            list.add(RedPackageRecord(score))
+        mRedPackageManager?.run {
+            val list = mutableListOf<RedPackageRecord>()
+            for (score in studentScores) {
+                list.add(RedPackageRecord(score))
+            }
+            mModel.postRedPackageResult(mSetting?.classId.toString(), Gson().toJson(list), mSetting?.interactId.toString())
+                    .mySubscribe {
+                        LogUtils.d("发送抢红包结果成功")
+                    }
         }
-        mModel.postRedPackageResult(mSetting?.classId.toString(), Gson().toJson(list), mSetting?.interactId.toString())
-                .mySubscribe {
-                    LogUtils.d("发送抢红包结果成功")
-                }
     }
 }
 
