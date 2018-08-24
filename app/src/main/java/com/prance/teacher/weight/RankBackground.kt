@@ -8,6 +8,7 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
 import com.prance.lib.common.utils.AnimUtil
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.getInflate
 import com.prance.teacher.R
 import kotlinx.android.synthetic.main.layout_rank_background.view.*
@@ -97,7 +98,7 @@ class RankBackground : RelativeLayout {
         )
         createMeteorAnim(
                 meteor3,
-                resources.getDimensionPixelOffset(R.dimen.m673_0).toFloat()-meteorHeight.toFloat(),
+                resources.getDimensionPixelOffset(R.dimen.m673_0).toFloat() - meteorHeight.toFloat(),
                 screenHeight.toFloat(),
                 -meteorWidth.toFloat(),
                 resources.getDimensionPixelOffset(R.dimen.m990_0).toFloat(),

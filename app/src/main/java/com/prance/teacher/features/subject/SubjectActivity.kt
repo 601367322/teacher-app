@@ -6,14 +6,18 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Bundle
+import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.redpackage.model.StudentScore
+import com.prance.teacher.features.redpackage.view.RankFragment
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
@@ -38,6 +42,8 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
     override fun onMessageResponse(msg: MessageEntity) {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
+                //停止发送
+                SunARS.voteStop()
                 //结束答题
                 val question = msg.getData(ClassesDetailFragment.Question::class.java)
                 if (question.classId == mQuestion?.classId) {
@@ -82,12 +88,9 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         mPushServicePresenterPresenter.bind()
 
         if (BuildConfig.DEBUG) {
-//        Flowable.timer(6, TimeUnit.SECONDS)
-//                .subscribe {
-//                    onSubjectStop()
-//                }
-            Flowable.timer(3, TimeUnit.SECONDS)
+            Flowable.timer(5, TimeUnit.SECONDS)
                     .subscribe {
+
                         onSubjectDestroy(
                                 SubjectOnDestroyFragment
                                         .QuestionResult(
@@ -134,6 +137,8 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
     }
 
     private fun onSubjectDestroy(questionResult: SubjectOnDestroyFragment.QuestionResult) {
+        //停止发送
+        SunARS.voteStop()
         supportFragmentManager.inTransaction {
             replace(R.id.fragmentContainer, SubjectOnDestroyFragment.forQuestionResult(questionResult))
         }

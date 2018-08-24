@@ -1,9 +1,7 @@
 package com.prance.teacher.features.redpackage.view
 
-import android.media.AudioManager
 import android.os.*
 import android.view.View
-import cn.sunars.sdk.SunARS
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
 import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -15,10 +13,10 @@ import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
-import com.prance.teacher.utils.SoundUtils
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
-import android.net.Uri
+
+
 
 
 /**
@@ -62,6 +60,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         try {
             mMediaPlayer = MediaPlayer.create(context, R.raw.red_package_background)
             mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
+            mMediaPlayer!!.isLooping = true
             mMediaPlayer!!.prepare()
         } catch (e: Exception) {
             e.printStackTrace()
