@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/m69.0"
-                android:text="本节课不好并没有学到了新知识"
+                android:text="本节课不好并没有学到新知识"
                 android:textColor="#512B90"
                 android:textSize="@dimen/m58.0" />
         </LinearLayout>
