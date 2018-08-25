@@ -13,6 +13,7 @@ import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
+import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -50,8 +51,11 @@ class MainFragment : BaseFragment(), IMainContract.View {
         startLesson.setOnClickListener {
 
             if (BuildConfig.DEBUG) {
-                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
-                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+
+            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
+
+//                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
+//                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
 //                val redConfig = RedPackageSetting(1,60,1,1)
 //                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }

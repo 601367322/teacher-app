@@ -1,5 +1,6 @@
 package com.prance.teacher.features.check.contract
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.prance.lib.base.mvp.*
 import com.prance.lib.database.KeyPadEntity
 
@@ -13,7 +14,7 @@ import com.prance.lib.database.KeyPadEntity
 interface ICheckKeyPadContract {
     interface View : IView<Presenter> {
         fun startCheck(it: MutableList<KeyPadEntity>)
-        fun renderKeyPads(it: MutableList<Any>)
+        fun renderKeyPads(it: MutableList<MultiItemEntity>)
     }
     interface Presenter : IPresenter<View, Model> {
         fun getMatchedKeyPadByBaseStationId(serialNumber: String)

@@ -43,6 +43,7 @@ dependencies {
     implementation dependencies.greendao
     implementation dependencies.rxandroid
     implementation dependencies.observablesscrollview
+    implementation dependencies.baseadapter
     implementation (dependencies.retrofit2AdapterRxJava) {
         exclude group: 'com.squareup.okhttp3'
     }

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.lib.common.utils.http.mySubscribe
@@ -42,7 +43,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
     private var mMatchKeyPadEntities: MutableList<KeyPadEntity>? = null
     private var mCheckKeyPadEntities: MutableList<KeyPadEntity> = mutableListOf()
 
-    private var mAdapter = CheckKeyPadAdapter()
+    private var mAdapter = CheckKeyPadAdapter(mutableListOf())
 
     companion object {
 
@@ -159,7 +160,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         classTip2.visibility = View.VISIBLE
     }
 
-    override fun renderKeyPads(it: MutableList<Any>) {
+    override fun renderKeyPads(it: MutableList<MultiItemEntity>) {
         hideProgress()
 
         if (it.isEmpty()) {
@@ -170,7 +171,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
             check.requestFocus()
 
-            mAdapter.data = it
+            mAdapter.setNewData(it)
             mAdapter.notifyDataSetChanged()
         }
     }

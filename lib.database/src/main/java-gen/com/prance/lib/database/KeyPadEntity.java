@@ -1,5 +1,7 @@
 package com.prance.lib.database;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
@@ -15,7 +17,7 @@ import java.io.Serializable;
  * @author bingbing
  */
 @Entity(nameInDb = "keypad_table")
-public class KeyPadEntity implements Serializable {
+public class KeyPadEntity implements Serializable, MultiItemEntity {
 
     static final long serialVersionUID = -1;
 
@@ -104,5 +106,10 @@ public class KeyPadEntity implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public int getItemType() {
+        return 2;
     }
 }

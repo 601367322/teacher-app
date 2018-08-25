@@ -1,6 +1,7 @@
 package com.prance.teacher.features.check.presenter
 
 import cn.sunars.sdk.SunARS
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.lib.base.mvp.BasePresenterKt
@@ -42,7 +43,7 @@ class CheckKeyPadPresenter : BasePresenterKt<ICheckKeyPadContract.View>(), IChec
 
     override fun generateGroup(mMatchKeyPadEntities: MutableList<KeyPadEntity>, mCheckKeyPadEntities: MutableList<KeyPadEntity>) {
 
-        Flowable.create<MutableList<Any>>({
+        Flowable.create<MutableList<MultiItemEntity>>({
 
             val offlineKeyPads = mutableListOf<KeyPadEntity>()
             val batteryKeyPads = mutableListOf<KeyPadEntity>()
@@ -66,7 +67,7 @@ class CheckKeyPadPresenter : BasePresenterKt<ICheckKeyPadContract.View>(), IChec
                 }
             }
 
-            val list = mutableListOf<Any>()
+            val list = mutableListOf<MultiItemEntity>()
             if (offlineKeyPads.isNotEmpty()) {
                 list.add(CheckKeyPadGroupTitle("未在线的答题器：", offlineKeyPads.size))
                 list.addAll(offlineKeyPads)

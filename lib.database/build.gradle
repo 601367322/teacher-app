@@ -43,4 +43,5 @@ dependencies {
     implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.utilcode
     implementation dependencies.gson
+    implementation dependencies.baseadapter
 }

@@ -209,7 +209,11 @@ public class SunARS {
     private static void onKeyEventCallBack(byte[] KeyID, int iMode, float Time, byte[] sInfo) {
         for (int i = 0; i < listeners.size(); i++) {
             SunARSListener listener = listeners.get(i);
-            listener.onKeyEventCallBack(bytesToString(KeyID), iMode, (float) Time, bytesToString(sInfo));
+            try {
+                listener.onKeyEventCallBack(bytesToString(KeyID), iMode, (float) Time, bytesToString(sInfo));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
