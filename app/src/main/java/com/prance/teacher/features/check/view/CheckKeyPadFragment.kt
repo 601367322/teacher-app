@@ -132,6 +132,8 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
             }
             showProgress("正在进行检测")
 
+            mCheckKeyPadEntities.clear()
+
             hideRecycler()
 
             mPresenter.getMatchedKeyPadByBaseStationId(UsbManagerImpl.baseStation.sn)

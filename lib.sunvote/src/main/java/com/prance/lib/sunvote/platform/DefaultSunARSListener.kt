@@ -88,11 +88,6 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
         LogUtils.d("onKeyEventCallBack>>$KeyID $iMode $Time $sInfo")
 
-        if (KeyID.length > 10) {
-            writeHDParam(0, KeyPad_IdentificationMode, "1")
-            writeHDParam(0, KeyPad_IdentificationMode, "0")
-        }
-
         when (iMode) {
         //答题结果
             SunARS.KeyResult_info -> {

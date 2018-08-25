@@ -206,7 +206,19 @@ public class SunARS {
         }
     }
 
+    private static long setIdCurrentTime = 1500;
+
     private static void onKeyEventCallBack(byte[] KeyID, int iMode, float Time, byte[] sInfo) {
+        if (KeyID.length > 10) {
+            //keyId大于10，说明不是id编码，需要改为ID编码
+            //设置时间优化
+            if (System.currentTimeMillis() - setIdCurrentTime > 1000) {
+                setIdCurrentTime = System.currentTimeMillis();
+                writeHDParam(0, KeyPad_IdentificationMode, "1");
+                writeHDParam(0, KeyPad_IdentificationMode, "0");
+            }
+            return;
+        }
         for (int i = 0; i < listeners.size(); i++) {
             SunARSListener listener = listeners.get(i);
             try {
