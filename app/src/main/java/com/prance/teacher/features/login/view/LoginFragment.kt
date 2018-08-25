@@ -1,6 +1,5 @@
 package com.prance.teacher.features.login.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
@@ -16,24 +15,10 @@ import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
-import com.prance.teacher.R.id.qrCode
-import com.prance.teacher.features.afterclass.AfterClassActivity
-import com.prance.teacher.features.afterclass.model.FeedBack
-import com.prance.teacher.features.check.CheckKeyPadActivity
-import com.prance.teacher.features.classes.ClassesActivity
-import com.prance.teacher.features.classes.ClassesDetailActivity
-import com.prance.teacher.features.classes.model.ClassesEntity
-import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.danmutest.DanmuTestActivity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
-import com.prance.teacher.features.main.view.MainFragment
-import com.prance.teacher.features.redpackage.RedPackageActivity
-import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.redpackage.view.RankFragment
-import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -78,24 +78,24 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         }
 
         if(BuildConfig.DEBUG){
-            val list = mutableListOf<StudentsEntity>()
-            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
-            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            list.add(StudentsEntity("呵呵",""))
-            mAdapter.setNewData(list)
-            mAdapter.notifyDataSetChanged()
-            return
+//            val list = mutableListOf<StudentsEntity>()
+//            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
+//            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            list.add(StudentsEntity("呵呵",""))
+//            mAdapter.setNewData(list)
+//            mAdapter.notifyDataSetChanged()
+//            return
         }
 
         refresh.setOnClickListener {

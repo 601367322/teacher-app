@@ -46,6 +46,8 @@ class PushService : Service() {
         const val QUIZ_RESULT = 6//下课提问结果
         const val INTERACT_START = 7//发起趣味互动
         const val END_INTERACTN = 8//结束趣味互动
+        const val PK_START = 9//发起PK互动
+        const val PK_END = 10 //结束PK互动
 
         const val SEND_RESPONSE_MESSAGE_WHAT = 1
         const val SEND_RESPONSE_MESSAGE_INTERVAL = 1000
@@ -118,23 +120,31 @@ class PushService : Service() {
                 return
             }
 
-            LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt() + "\n" + InetAddress.getByName(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)).hostAddress)
+            try {
+                LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt() + "\n" + InetAddress.getByName(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)).hostAddress)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
 
-            future.addListener(object : ChannelFutureListener {
-                override fun operationComplete(futureListener: ChannelFuture?) {
-                    futureListener?.run {
-                        if (isSuccess) {
-                            mChannel = channel()
-                            LogUtils.d("连接成功")
-                        } else {
-                            LogUtils.d("连接失败，3秒后重新链接")
-                            channel().eventLoop().schedule({ doConnect() }, 3, TimeUnit.SECONDS)
+            try {
+                future.addListener(object : ChannelFutureListener {
+                    override fun operationComplete(futureListener: ChannelFuture?) {
+                        futureListener?.run {
+                            if (isSuccess) {
+                                mChannel = channel()
+                                LogUtils.d("连接成功")
+                            } else {
+                                LogUtils.d("连接失败，3秒后重新链接")
+                                channel().eventLoop().schedule({ doConnect() }, 3, TimeUnit.SECONDS)
+                            }
                         }
                     }
-                }
-            })
+                })
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         override fun onMessageResponse(msg: MessageEntity) {

@@ -23,6 +23,8 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.danmutest.DanmuTestActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.pk.PKActivity
+import com.prance.teacher.features.pk.model.PKSetting
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.StudentsActivity
@@ -53,8 +55,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
         startLesson.setOnClickListener {
 
             if (BuildConfig.DEBUG) {
-
-                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
+                context?.let { startActivity(PKActivity.callingIntent(it, PKSetting(1, 1, 10, "1,0,0,0,4,1"))) }
+//                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 

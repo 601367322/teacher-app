@@ -9,8 +9,8 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
-import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.afterclass.presenter.AfterClassPresenter
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
 import kotlinx.android.synthetic.main.fragment_after_class.*
 
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_after_class.*
 class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     lateinit var mTime: TextView
-    var mFeedback: FeedBack? = null
+    var mFeedback: ClassesDetailFragment.Question? = null
 
     override var mPresenter: IAfterClassContract.Presenter = AfterClassPresenter()
 
@@ -42,7 +42,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mTime = rootView.findViewById(R.id.timer)
-        mFeedback = arguments?.getSerializable(AfterClassActivity.feedback) as FeedBack
+        mFeedback = arguments?.getSerializable(AfterClassActivity.feedback) as ClassesDetailFragment.Question
         mPresenter.startReceive(mFeedback!!)
 
         mSunVoteServicePresenter.bind()

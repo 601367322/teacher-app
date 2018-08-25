@@ -13,6 +13,7 @@ import com.prance.lib.socket.PushService
 import com.prance.lib.socket.PushService.Companion.ATTEND_CLASS
 import com.prance.lib.socket.PushService.Companion.CMD_SEND_QUESTION
 import com.prance.lib.socket.PushService.Companion.INTERACT_START
+import com.prance.lib.socket.PushService.Companion.PK_START
 import com.prance.lib.socket.PushService.Companion.QUIZ
 import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
@@ -21,11 +22,12 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
-import com.prance.teacher.features.afterclass.model.FeedBack
 import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
+import com.prance.teacher.features.pk.PKActivity
+import com.prance.teacher.features.pk.model.PKSetting
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
@@ -132,35 +134,47 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
 
     override fun onMessageResponse(msg: MessageEntity) {
-        if (msg.cmd == CMD_SEND_QUESTION) {
-            //开始答题
-            val question = msg.getData(Question::class.java)
-            if (question.classId == mClassesEntity.klass?.id) {
-                ActivityUtils.finishActivity(SubjectActivity::class.java)
-                context?.run {
-                    startActivity(SubjectActivity.callingIntent(this, question))
+        when (msg.cmd) {
+            CMD_SEND_QUESTION -> {
+                //开始答题
+                val question = msg.getData(Question::class.java)
+                if (question.classId == mClassesEntity.klass?.id) {
+                    ActivityUtils.finishActivity(SubjectActivity::class.java)
+                    context?.run {
+                        startActivity(SubjectActivity.callingIntent(this, question))
+                    }
                 }
             }
-        } else if (msg.cmd == INTERACT_START) {
-            //抢红包
-            val setting = msg.getData(RedPackageSetting::class.java)
-            if (setting.classId == mClassesEntity.klass?.id) {
-                ActivityUtils.finishActivity(RedPackageActivity::class.java)
-                context?.run {
-                    startActivity(RedPackageActivity.callingIntent(this, setting))
+            INTERACT_START -> {
+                //抢红包
+                val setting = msg.getData(RedPackageSetting::class.java)
+                if (setting.classId == mClassesEntity.klass?.id) {
+                    ActivityUtils.finishActivity(RedPackageActivity::class.java)
+                    context?.run {
+                        startActivity(RedPackageActivity.callingIntent(this, setting))
+                    }
                 }
             }
-        } else if (msg.cmd == QUIZ) {
-            //课后反馈
-            val feedBack = msg.getData(FeedBack::class.java)
-            if (feedBack.classId == mClassesEntity.klass?.id) {
-                ActivityUtils.finishActivity(AfterClassActivity::class.java)
-                context?.run {
-                    startActivity(AfterClassActivity.callingIntent(this, feedBack))
+            QUIZ -> {
+                //课后反馈
+                val feedBack = msg.getData(Question::class.java)
+                if (feedBack.classId == mClassesEntity.klass?.id) {
+                    ActivityUtils.finishActivity(AfterClassActivity::class.java)
+                    context?.run {
+                        startActivity(AfterClassActivity.callingIntent(this, feedBack))
+                    }
+                }
+            }
+            PK_START -> {
+                val pkSetting = msg.getData(PKSetting::class.java)
+                if (pkSetting.classId == mClassesEntity.klass?.id) {
+                    ActivityUtils.finishActivity(PKActivity::class.java)
+                    context?.run {
+                        startActivity(PKActivity.callingIntent(this, pkSetting))
+                    }
                 }
             }
         }
-
     }
 
     class Question : Serializable {

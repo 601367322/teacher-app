@@ -5,7 +5,7 @@ import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.afterclass.model.AfterClassModel
-import com.prance.teacher.features.afterclass.model.FeedBack
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,7 +22,7 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
     var mTime: Int = 30
     var mDisposable: Disposable? = null
     override val mModel: IAfterClassContract.Model = AfterClassModel()
-    override fun startReceive(feedback: FeedBack) {
+    override fun startReceive(feedback: ClassesDetailFragment.Question) {
         SunARS.voteStart(SunARS.VoteType_Choice, "1,0,0,0,4,1")
         mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
                 .take(30)

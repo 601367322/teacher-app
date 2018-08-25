@@ -46,7 +46,7 @@ class SunVoteService : Service() {
             mSunARSListener = DefaultSunARSListener(mUsbManagerImpl)
             SunARS.addListener(mSunARSListener)
             val r = SunARS.license(1, "SUNARS2013")
-            SunARS.setLogOn(if (ModelUtil.isTestModel) 2 else 0)
+            SunARS.setLogOn(if (ModelUtil.isTestModel) 0 else 0)
             val filePath = applicationContext?.filesDir
             SunARS.setArchiveDir(filePath.toString())
         } catch (e: Throwable) {

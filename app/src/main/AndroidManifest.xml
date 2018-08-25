@@ -64,11 +64,17 @@
         <activity
             android:name=".features.classes.ClassesDetailActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".features.afterclass.AfterClassActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".features.redpackage.RedPackageActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".features.pk.PKActivity"
             android:screenOrientation="landscape" />
 
         <activity

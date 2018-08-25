@@ -98,7 +98,7 @@ class SubjectOnStartFragment : BaseFragment() {
                 when (iMode) {
                     SunARS.KeyResult_info -> {
                         sInfo?.let {
-                            Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult(keyId, sInfo, Date().time)).sendToTarget()
+                            Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult(keyId, sInfo, System.currentTimeMillis())).sendToTarget()
                         }
                     }
                 }

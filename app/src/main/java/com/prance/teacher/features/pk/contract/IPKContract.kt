@@ -1,6 +1,9 @@
 package com.prance.teacher.features.pk.contract
 
 import com.prance.lib.base.mvp.*
+import com.prance.lib.socket.PushServicePresenter
+import com.prance.teacher.features.pk.model.PKSetting
+import com.prance.teacher.features.subject.model.KeyPadResult
 
 /**
  * Description :
@@ -11,6 +14,8 @@ import com.prance.lib.base.mvp.*
 
 interface IPKContract {
     interface View : IView<Presenter> {}
-    interface Presenter : IPresenter<View, Model> {}
+    interface Presenter : IPresenter<View, Model> {
+        fun sendAnswer(push: PushServicePresenter, result: KeyPadResult, setting: PKSetting)
+    }
     interface Model : IModel {}
 }

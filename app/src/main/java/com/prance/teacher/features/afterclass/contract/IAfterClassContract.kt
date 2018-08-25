@@ -1,9 +1,7 @@
 package com.prance.teacher.features.afterclass.contract
 
 import com.prance.lib.base.mvp.*
-import com.prance.teacher.features.afterclass.model.FeedBack
-import com.prance.teacher.features.classes.model.ClassesEntity
-import com.prance.teacher.features.login.model.QrCodeEntity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import io.reactivex.Flowable
 
 /**
@@ -30,7 +28,7 @@ interface IAfterClassContract {
         /**
          * 开始接收答题数据
          */
-        fun startReceive(mFeedback: FeedBack)
+        fun startReceive(mFeedback: ClassesDetailFragment.Question)
 
         /**
          * 停止接收
