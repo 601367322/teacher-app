@@ -1,21 +1,32 @@
 package com.prance.teacher.features.students.view
 
-import android.view.ViewGroup
-import com.blankj.utilcode.util.LogUtils
-import com.prance.lib.database.KeyPadEntity
-import com.prance.lib.teacher.base.ui.BaseLoadMoreAdapter
-import com.prance.teacher.features.match.view.MatchedKeyPadHolder
+import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
+import com.prance.lib.common.utils.GlideApp
+import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
+import kotlinx.android.synthetic.main.item_students.view.*
 
-class StudentsAdapter : BaseLoadMoreAdapter<StudentsEntity, StudentsHolder>() {
+class StudentsAdapter : BaseQuickAdapter<StudentsEntity, BaseViewHolder> {
+    constructor(layoutResId: Int) : super(layoutResId)
 
-    var isDeleteState: Boolean = false
-
-    override fun onBind(viewHolder: StudentsHolder?, position: Int, data: StudentsEntity?) {
-        viewHolder?.onBind(data)
-    }
-
-    override fun onCreate(parent: ViewGroup, viewType: Int): StudentsHolder {
-        return StudentsHolder(parent)
+    override fun convert(helper: BaseViewHolder?, bean: StudentsEntity?) {
+        bean?.run {
+            helper?.run {
+                itemView.keyPadId.visibility = View.GONE
+                itemView.name.text = name
+                clickers?.run {
+                    if (isNotEmpty()) {
+                        itemView.keyPadId.visibility = View.VISIBLE
+                        itemView.keyPadId.text = clickers!![0].number
+                    }
+                }
+                GlideApp.with(itemView)
+                        .load(head)
+                        .placeholder(R.drawable.default_avatar_boy)
+                        .into(itemView.avatar)
+            }
+        }
     }
 }

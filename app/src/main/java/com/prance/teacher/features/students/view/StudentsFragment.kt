@@ -13,6 +13,7 @@ import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
@@ -43,7 +44,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     lateinit var mClassesEntity: ClassesEntity
 
-    private var mAdapter = StudentsAdapter()
+    private var mAdapter = StudentsAdapter(R.layout.item_students)
 
     override var mPresenter: IStudentsContract.Presenter = StudentsPresenter()
 
@@ -61,12 +62,6 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         recycler.adapter = mAdapter
 
-        refresh.setOnClickListener {
-            loadData()
-        }
-
-        refresh.performClick()
-
         complete.setOnClickListener { activity?.finish() }
 
         start.setOnClickListener {
@@ -81,6 +76,33 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
                 startActivityForResult(ReplaceKeyPadActivity.callingIntent(it, mClassesEntity), 1001)
             }
         }
+
+        if(BuildConfig.DEBUG){
+            val list = mutableListOf<StudentsEntity>()
+            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
+            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            list.add(StudentsEntity("呵呵",""))
+            mAdapter.setNewData(list)
+            mAdapter.notifyDataSetChanged()
+            return
+        }
+
+        refresh.setOnClickListener {
+            loadData()
+        }
+
+        refresh.performClick()
     }
 
     private fun loadData() {
@@ -93,7 +115,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     override fun renderStudents(list: MutableList<StudentsEntity>) {
         hideProgress()
-        mAdapter.data = list
+        mAdapter.setNewData(list)
         mAdapter.notifyDataSetChanged()
 
         calculateBindStudent()

@@ -11,6 +11,7 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesPresenter
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridLayoutManager
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridSnapHelper
+import com.prance.teacher.BuildConfig
 import kotlinx.android.synthetic.main.fragment_classes.*
 
 
@@ -26,7 +27,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
     override var mPresenter: IClassesContract.Presenter = ClassesPresenter()
 
-    var mAdapter: ClassesAdapter = ClassesAdapter()
+    var mAdapter: ClassesAdapter = ClassesAdapter(R.layout.item_classes)
 
     var layoutManager: PagerGridLayoutManager? = null
 
@@ -75,6 +76,24 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         recycler.adapter = mAdapter
 
+        if(BuildConfig.DEBUG) {
+//            val list = mutableListOf<ClassesEntity>()
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            list.add(ClassesEntity("呵呵"))
+//            mAdapter.setNewData(list)
+//            mAdapter.notifyDataSetChanged()
+//            return
+        }
+
         refresh.setOnClickListener {
             loadData()
         }
@@ -119,7 +138,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
     override fun renderClasses(it: MutableList<ClassesEntity>) {
         hideProgress()
-        mAdapter.data = it
+        mAdapter.setNewData(it)
         mAdapter.notifyDataSetChanged()
 
         rightArrow.post {

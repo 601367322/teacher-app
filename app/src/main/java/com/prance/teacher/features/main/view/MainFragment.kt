@@ -18,12 +18,14 @@ import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.danmutest.DanmuTestActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.features.subject.SubjectActivity
 
 /**
@@ -52,7 +54,9 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
-            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
+                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
+
+//            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 
 //                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }

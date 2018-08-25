@@ -32,7 +32,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     override fun layoutId(): Int = R.layout.fragment_match_keypad
 
-    private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter()
+    private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter(R.layout.item_match_key_pad)
 
     private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
 
@@ -127,7 +127,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
      */
     override fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>) {
 
-        mAdapter.data = list
+        mAdapter.setNewData(list)
         mAdapter.notifyDataSetChanged()
 
         displayMoreBtn()
@@ -201,10 +201,10 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                     ToastUtils.showShort("删除成功")
                 }
 
-                var pos = mAdapter.indexOfData(it)
+                var pos = mAdapter.data.indexOf(it)
 
                 //删除答题器
-                mAdapter.removeData(it)
+                mAdapter.data.remove(it)
                 mAdapter.notifyDataSetChanged()
 
                 //当前位置项重新获取焦点
