@@ -24,7 +24,7 @@ import kotlin.math.min
  *Created by rich on 2018/8/8
  */
 
-class RankFragment : BaseFragment() {
+class RedPackageRankFragment : BaseFragment() {
 
     lateinit var scores: MutableList<StudentScore>
 
@@ -38,8 +38,8 @@ class RankFragment : BaseFragment() {
 
     companion object {
         const val SCORES = "scores"
-        fun create(scores: BundleScore): RankFragment {
-            var fragment = RankFragment()
+        fun create(scores: BundleScore): RedPackageRankFragment {
+            var fragment = RedPackageRankFragment()
             val bundle = Bundle()
             bundle.putSerializable(SCORES, scores)
             fragment.arguments = bundle

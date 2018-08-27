@@ -2,27 +2,20 @@ package com.prance.teacher.features.subject
 
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.SoundPool
 import android.os.Bundle
 import cn.sunars.sdk.SunARS
-import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.redpackage.model.StudentScore
-import com.prance.teacher.features.redpackage.view.RankFragment
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectOnCreateFragment
-import com.prance.teacher.features.subject.view.SubjectOnDestroyFragment
+import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.prance.teacher.features.subject.view.SubjectOnStopFragment
 import io.reactivex.Flowable
@@ -52,7 +45,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
             }
             PushService.QUESTION_RESULT -> {
                 //答题结果
-                val question = msg.getData(SubjectOnDestroyFragment.QuestionResult::class.java)
+                val question = msg.getData(SubjectRankFragment.QuestionResult::class.java)
                 if (question.classId == mQuestion?.classId) {
                     onSubjectDestroy(question)
                 }
@@ -90,7 +83,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         if (BuildConfig.DEBUG) {
             Flowable.timer(3, TimeUnit.SECONDS)
                     .subscribe {
-                        onSubjectDestroy(SubjectOnDestroyFragment.QuestionResult(1, SubjectOnDestroyFragment.Answer(1, 2, 3), "ABC",
+                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
                                                 mutableListOf(
                                                         StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
                                                         StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
@@ -135,14 +128,14 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
      *
      * 该方法内原代码是
      * supportFragmentManager.inTransaction {
-     *      replace(R.id.fragmentContainer, SubjectOnDestroyFragment.forQuestionResult(questionResult))
+     *      replace(R.id.fragmentContainer, SubjectRankFragment.forQuestionResult(questionResult))
      * }
      *
      * 但是，执行完毕后，基站会自动断开。经过反复测试，推测跟内存有关。由于SubjectActivity是透明的，可能会占用更多内存，导致USB读取数据阻塞中断
      *
      * 改为打开一个不透明的Activity，问题解决
      */
-    private fun onSubjectDestroy(questionResult: SubjectOnDestroyFragment.QuestionResult) {
+    private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
         //停止发送
         SunARS.voteStop()
         startActivity(SubjectRankActivity.callingIntent(this, questionResult))

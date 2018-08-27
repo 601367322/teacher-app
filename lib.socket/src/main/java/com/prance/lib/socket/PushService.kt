@@ -48,6 +48,7 @@ class PushService : Service() {
         const val END_INTERACTN = 8//结束趣味互动
         const val PK_START = 9//发起PK互动
         const val PK_END = 10 //结束PK互动
+        const val PK_RUNTIME_DATA = 11 //PK互动实时排名
 
         const val SEND_RESPONSE_MESSAGE_WHAT = 1
         const val SEND_RESPONSE_MESSAGE_INTERVAL = 1000

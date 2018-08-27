@@ -1,9 +1,15 @@
 package com.prance.teacher.features.pk.view
 
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
+import com.prance.lib.socket.PushService.Companion.PK_END
+import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
 import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
 import com.prance.lib.sunvote.service.SunVoteServicePresenter
@@ -11,9 +17,13 @@ import com.prance.teacher.features.pk.contract.IPKContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.match.view.generateKeyPadId
+import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.model.PKSetting
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.subject.model.KeyPadResult
+import io.reactivex.Flowable
+import kotlinx.android.synthetic.main.fragment_pk.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Description :
@@ -63,6 +73,13 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener {
         mPushServicePresenter.bind()
 
         SunARS.voteStart(mSetting.type, mSetting.param)
+
+        Flowable.timer(3000,TimeUnit.MILLISECONDS)
+                .mySubscribe {
+                    (activity as FragmentActivity).supportFragmentManager.inTransaction {
+                        replace(R.id.fragmentContainer, PKRankFragment())
+                    }
+                }
     }
 
     override fun onDestroy() {
@@ -73,5 +90,23 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener {
         mPushServicePresenter.unBind()
     }
 
+    override fun onMessageResponse(msg: MessageEntity) {
+        runtimeData.post {
+            when (msg.cmd) {
+                PK_RUNTIME_DATA -> {
+                    val data = msg.getData(PKRuntimeData::class.java)
+                    runtimeData.text =
+                            """平均正确率${data.correctRate}%
+                                |平均作答时间${data.averageTime}秒
+                                |第${data.order}名""".trimMargin()
+                }
+                PK_END -> {
+                    (activity as FragmentActivity).supportFragmentManager.inTransaction {
+                        replace(R.id.fragmentContainer, PKRankFragment())
+                    }
+                }
+            }
+        }
+    }
 }
 

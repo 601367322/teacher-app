@@ -19,7 +19,7 @@ import java.io.Serializable
 import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
-class SubjectOnDestroyFragment : BaseFragment() {
+class SubjectRankFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_subject_on_destroy
 
@@ -35,8 +35,8 @@ class SubjectOnDestroyFragment : BaseFragment() {
 
         const val QUESTION_RESULT = "questionResult"
 
-        fun forQuestionResult(questionResult: QuestionResult): SubjectOnDestroyFragment {
-            var fragment = SubjectOnDestroyFragment()
+        fun forQuestionResult(questionResult: QuestionResult): SubjectRankFragment {
+            var fragment = SubjectRankFragment()
             val bundle = Bundle()
             bundle.putSerializable(QUESTION_RESULT, questionResult)
             fragment.arguments = bundle
@@ -60,7 +60,7 @@ class SubjectOnDestroyFragment : BaseFragment() {
                             for (i in 0..min(4, rank.size - 1)) {
                                 rankNames[i].text = rank[i].name
                                 rankAvatars[i].visibility = View.VISIBLE
-                                GlideApp.with(this@SubjectOnDestroyFragment)
+                                GlideApp.with(this@SubjectRankFragment)
                                         .load(rank[i].head)
                                         .placeholder(R.drawable.default_avatar_boy)
                                         .into(rankAvatars[i])

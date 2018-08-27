@@ -1,15 +1,9 @@
 package com.prance.teacher.features.redpackage
 
-import android.app.Service
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import com.prance.lib.database.MessageEntity
 import android.os.Bundle
-import android.os.IBinder
-import cn.sunars.sdk.SunARS
-import cn.sunars.sdk.SunARS.removeListener
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.socket.MessageListener
@@ -20,12 +14,8 @@ import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
-import com.prance.teacher.features.redpackage.view.RankFragment
+import com.prance.teacher.features.redpackage.view.RedPackageRankFragment
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
-import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.subject.view.SubjectOnDestroyFragment
-import io.reactivex.Flowable
-import java.util.concurrent.TimeUnit
 
 class RedPackageActivity : BaseActivity(), MessageListener {
 
@@ -107,7 +97,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     fun redPackageRank(scores: MutableList<StudentScore>) {
         scores.let {
             supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, RankFragment.create(RankFragment.Companion.BundleScore(it)))
+                replace(R.id.fragmentContainer, RedPackageRankFragment.create(RedPackageRankFragment.Companion.BundleScore(it)))
             }
         }
     }
