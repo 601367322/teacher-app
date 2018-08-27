@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="RankBackground">
         <attr name="cups" format="reference" />
+        <attr name="cupsTranslationY" format="dimension" />
+        <attr name="cupsTranslationYDiff" format="dimension" />
     </declare-styleable>
 </resources>
