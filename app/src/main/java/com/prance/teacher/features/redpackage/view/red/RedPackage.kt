@@ -204,7 +204,7 @@ class RedPackage {
                 width,
                 height,
                 studentScore.student,
-                DEFAULT_SCORE,
+                if (big) DEFAULT_SCORE * 2 else DEFAULT_SCORE,
                 tipBitmap,
                 scoreBitmaps)
 
