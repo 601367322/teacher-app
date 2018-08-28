@@ -10,6 +10,7 @@ import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
 import com.prance.teacher.features.redpackage.view.red.RedPackage
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
+import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_SCALE
 import java.util.concurrent.CopyOnWriteArrayList
 
 class RedPackageAnimGLView : GLContinuousView {
@@ -29,27 +30,46 @@ class RedPackageAnimGLView : GLContinuousView {
 
                 var itemX = item.x
                 var itemY = item.y
+
                 var titleX = item.x + item.titleX
                 var titleY = item.y + item.titleY
 
                 if (item.big) {
-                    //减去1/4宽度，再除以缩放比例
-                    var widthDiff = (item.redPackage.width * RedPackageManager.DEFAULT_SCALE - item.redPackage.width) / 2 / RedPackageManager.DEFAULT_SCALE
-                    var heightDiff = (item.redPackage.height * RedPackageManager.DEFAULT_SCALE - item.redPackage.height) / 2 / RedPackageManager.DEFAULT_SCALE
-                    var titleWidthDiff = (item.redPackageTitle.width * RedPackageManager.DEFAULT_SCALE - item.redPackageTitle.width) / 2 / RedPackageManager.DEFAULT_SCALE
-                    var titleHeightDiff = (item.redPackageTitle.height * RedPackageManager.DEFAULT_SCALE - item.redPackageTitle.height) / 2 / RedPackageManager.DEFAULT_SCALE
+                    //放大后，计算x，y偏移量
+                    val bitmapMatrix: ICanvasGL.BitmapMatrix = ICanvasGL.BitmapMatrix()
 
-                    canvas.scale(RedPackageManager.DEFAULT_SCALE, RedPackageManager.DEFAULT_SCALE)
-                    itemX = (itemX.toFloat() / RedPackageManager.DEFAULT_SCALE).toInt() - widthDiff.toInt()
-                    itemY = (itemY.toFloat() / RedPackageManager.DEFAULT_SCALE).toInt() - heightDiff.toInt()
-                    titleX = (titleX.toFloat() / RedPackageManager.DEFAULT_SCALE).toInt() - titleWidthDiff.toInt()
-                    titleY = (titleY.toFloat() / RedPackageManager.DEFAULT_SCALE).toInt()
-                }
+                    val widthDiff = (item.redPackage.width * DEFAULT_SCALE - item.redPackage.width) / 2
+                    val heightDiff = (item.redPackage.height * DEFAULT_SCALE - item.redPackage.height) / 2
 
-                item.bubble?.run {
-                    canvas.drawBitmap(item.redPackage, itemX, itemY)
-                    canvas.drawBitmap(item.redPackageTitle, titleX, titleY)
-                    canvas.drawBitmap(this, itemX, itemY)
+                    itemX -= widthDiff.toInt()
+                    itemY -= heightDiff.toInt()
+
+                    titleX = (itemX + item.titleX * DEFAULT_SCALE).toInt()
+                    titleY = (itemY + item.titleY * DEFAULT_SCALE).toInt()
+
+                    item.bubble?.run {
+                        bitmapMatrix.scale(DEFAULT_SCALE, DEFAULT_SCALE)
+                        bitmapMatrix.translate(itemX.toFloat(), itemY.toFloat())
+
+                        canvas.drawBitmap(item.redPackage, bitmapMatrix)
+
+                        bitmapMatrix.reset()
+                        bitmapMatrix.scale(DEFAULT_SCALE, DEFAULT_SCALE)
+                        bitmapMatrix.translate(itemX.toFloat(), itemY.toFloat())
+
+                        canvas.drawBitmap(this, bitmapMatrix)
+
+                        bitmapMatrix.reset()
+                        bitmapMatrix.scale(DEFAULT_SCALE, DEFAULT_SCALE)
+                        bitmapMatrix.translate(titleX.toFloat(), titleY.toFloat())
+                        canvas.drawBitmap(item.redPackageTitle, bitmapMatrix)
+                    }
+                } else {
+                    item.bubble?.run {
+                        canvas.drawBitmap(item.redPackage, itemX, itemY)
+                        canvas.drawBitmap(item.redPackageTitle, titleX, titleY)
+                        canvas.drawBitmap(this, itemX, itemY)
+                    }
                 }
 
                 canvas.restore()

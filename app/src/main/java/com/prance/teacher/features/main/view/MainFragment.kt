@@ -55,7 +55,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
         startLesson.setOnClickListener {
 
             if (BuildConfig.DEBUG) {
-                context?.let { startActivity(PKActivity.callingIntent(it, PKSetting(1, 1, 10, "1,0,0,0,4,1"))) }
+//                context?.let { startActivity(PKActivity.callingIntent(it, PKSetting(1, 1, 10, "1,0,0,0,4,1"))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
@@ -63,8 +63,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-//                val redConfig = RedPackageSetting(1,60,1,1)
-//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+                val redConfig = RedPackageSetting(1,60,1,1)
+                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
