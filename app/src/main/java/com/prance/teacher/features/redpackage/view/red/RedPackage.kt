@@ -117,21 +117,6 @@ class RedPackage {
         this.redPackage = redPackageArray[0]
         this.redPackageArray = redPackageArray
         this.scoreBitmaps = scoreBitmaps
-
-//        if (big) {
-//            //放大红包
-//            val oldWidth = bitmap.width
-//            val matrix = Matrix()
-//            matrix.postScale(DEFAULT_SCALE, DEFAULT_SCALE)
-//            this.bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-//
-//            this.x -= ((this.bitmap.width.toFloat() - oldWidth.toFloat()) / 2F).toInt()
-//            this.y = -this.bitmap.height
-//
-//            this.width = this.bitmap.width
-//            this.height = this.bitmap.height
-//        }
-
         this.bitmap = redPackageArray[0]
         this.tipBitmap = tipBitmap
         this.lineNum = lineNum

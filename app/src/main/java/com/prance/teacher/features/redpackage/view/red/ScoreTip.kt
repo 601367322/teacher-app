@@ -179,11 +179,6 @@ class ScoreTip {
         return list
     }
 
-    private fun createTipBitmap(tipBitmap: Bitmap, score: String): Bitmap {
-
-        return bitmap
-    }
-
     private fun startFall() {
         val fallAnimator = ObjectAnimator.ofInt(y, y - translationDistance)
         fallAnimator!!.addUpdateListener {
