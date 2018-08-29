@@ -24,5 +24,7 @@ class PKRuntimeData : Serializable {
      * 正确率
      */
     var correctRate: Float? = null
-        get() = correctRate?.times(100)
+        get() {
+            return field?.times(100)
+        }
 }

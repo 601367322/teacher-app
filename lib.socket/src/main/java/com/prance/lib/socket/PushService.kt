@@ -40,15 +40,15 @@ class PushService : Service() {
 
         const val ATTEND_CLASS = 1 //上课
         const val CMD_SEND_QUESTION = 2 //发送练习
-        const val CMD_END_QUESTION = 3 //结束联系
+        const val CMD_END_QUESTION = 3 //结束练习
         const val QUESTION_RESULT = 4//答题结果
         const val QUIZ = 5//下课反馈提问
-        const val QUIZ_RESULT = 6//下课提问结果
+        const val PK_RESULT_SEND = 6//下课提问结果
         const val INTERACT_START = 7//发起趣味互动
         const val END_INTERACTN = 8//结束趣味互动
         const val PK_START = 9//发起PK互动
         const val PK_END = 10 //结束PK互动
-        const val PK_RUNTIME_DATA = 11 //PK互动实时排名
+        const val PK_RUNTIME_DATA = 10 //PK互动实时排名
 
         const val SEND_RESPONSE_MESSAGE_WHAT = 1
         const val SEND_RESPONSE_MESSAGE_INTERVAL = 1000

@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.prance.lib.base.extension.invisible
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
@@ -112,8 +114,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         //设置顶部提示语
         mRootView?.get()?.post {
             UsbManagerImpl.baseStation.let {
-                tip1.visibility = View.VISIBLE
-                tip2.visibility = View.GONE
+                tip1.visible()
+                tip2.invisible()
                 tip_text2.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
                 tip_text7.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
             }
@@ -147,8 +149,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     private fun displayMoreBtn() {
         if (!mAdapter.data.isEmpty()) {
-            complete.visibility = View.VISIBLE
-            delete.visibility = View.VISIBLE
+            complete.visible()
+            delete.visible()
         }
         count.text = Html.fromHtml("""已配对成功 <font color="#3AF0EE">${mAdapter.data.size}</font> 个答题器""")
         displayEmptyView()
@@ -245,8 +247,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             mAdapter.isDeleteState = true
             mAdapter.notifyDataSetChanged()
 
-            tip1.visibility = View.GONE
-            tip2.visibility = View.VISIBLE
+            tip1.invisible()
+            tip2.visible()
 
             tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
         } else {
@@ -265,20 +267,20 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     private fun displayEmptyView() {
 
         if (mAdapter.data.isEmpty()) {
-            tip3.visibility = View.VISIBLE
-            emptyImage.visibility = View.VISIBLE
-            recycler.visibility = View.GONE
-            tip.visibility = View.GONE
+            tip3.visible()
+            emptyImage.visible()
+            recycler.invisible()
+            tip.invisible()
 
             GlideApp.with(this)
                     .asGif()
                     .load(R.drawable.match_empty_view)
                     .into(emptyImage)
         } else {
-            tip3.visibility = View.GONE
-            emptyImage.visibility = View.GONE
-            recycler.visibility = View.VISIBLE
-            tip.visibility = View.VISIBLE
+            tip3.invisible()
+            emptyImage.invisible()
+            recycler.visible()
+            tip.visible()
         }
     }
 

@@ -1,10 +1,15 @@
 package com.prance.lib.database
 
+import android.text.TextUtils
+
 class MessageDaoUtils {
 
     private val mDao: MessageEntityDao = DaoManager.daoSession?.messageEntityDao!!
 
-    fun saveMessage(message: MessageEntity): MessageEntity {
+    fun saveMessage(message: MessageEntity): MessageEntity? {
+        if (TextUtils.isEmpty(message.msgId)) {
+            return null
+        }
         val id = mDao.insert(message)
         message.id = id
         return message

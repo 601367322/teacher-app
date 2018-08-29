@@ -3,11 +3,11 @@ package com.prance.teacher.features.pk.presenter
 import com.prance.teacher.features.pk.contract.IPKContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.socket.BuildConfig
+import com.prance.lib.socket.PushService
 import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.socket.generatePostMessage
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.model.PKModel
-import com.prance.teacher.features.pk.model.PKSetting
 import com.prance.teacher.features.subject.model.KeyPadResult
 import java.io.Serializable
 
@@ -24,7 +24,7 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
 
     private val mResult = mutableListOf<PKResultMessage>()
 
-    override fun sendAnswer(push: PushServicePresenter, result: KeyPadResult, setting: PKSetting) {
+    override fun sendAnswer(push: PushServicePresenter, result: KeyPadResult, setting: ClassesDetailFragment.Question) {
         val students = ClassesDetailFragment.mStudentList
         var studentId: Int? = null
         students?.run {
@@ -40,10 +40,10 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
             }
         }
         studentId?.run {
-            val result = PKResultMessage(this, setting.questionId, setting.classId, result.answer)
+            val result = PKResultMessage(this, setting.questionId!!, setting.classId!!, result.answer)
             mResult.add(result)
             result.setAvg(calculateAvg(setting))
-            push.mService?.sendMessage(generatePostMessage(1, result))
+            push.mService?.sendMessage(generatePostMessage(PushService.PK_RESULT_SEND, result))
         }
     }
 
@@ -52,7 +52,7 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
      *
      * (每个答案的答题时间 - 问题创建时间)的总和/1000毫秒/学生人数
      */
-    private fun calculateAvg(setting: PKSetting): Float {
+    private fun calculateAvg(setting: ClassesDetailFragment.Question): Float {
         var totalTime = 0L
         for (result in mResult) {
             totalTime += (result.respond?.answerTime!! - setting.createTime)
@@ -82,13 +82,13 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
         }
 
         class Respond : Serializable {
-            var reply: String? = null
+            var reply1: String? = null
             var student: IDEntity? = null
             var question: IDEntity? = null
             var answerTime = System.currentTimeMillis()
 
             constructor(studentId: Int, questionId: Int, answer: String) {
-                this.reply = answer
+                this.reply1 = answer
                 this.student = IDEntity(studentId)
                 this.question = IDEntity(questionId)
             }

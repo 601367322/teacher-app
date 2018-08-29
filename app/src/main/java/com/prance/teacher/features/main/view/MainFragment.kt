@@ -13,22 +13,16 @@ import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
-import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.main.contract.IMainContract
 import com.prance.teacher.features.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
-import com.prance.teacher.features.danmutest.DanmuTestActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.pk.model.PKSetting
-import com.prance.teacher.features.redpackage.RedPackageActivity
-import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.students.StudentsActivity
-import com.prance.teacher.features.subject.SubjectActivity
 
 /**
  * 首页
@@ -55,6 +49,10 @@ class MainFragment : BaseFragment(), IMainContract.View {
         startLesson.setOnClickListener {
 
             if (BuildConfig.DEBUG) {
+
+                val classes = ClassesEntity(1)
+                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
+
 //                context?.let { startActivity(PKActivity.callingIntent(it, PKSetting(1, 1, 10, "1,0,0,0,4,1"))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
@@ -63,8 +61,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-                val redConfig = RedPackageSetting(1,60,1,1)
-                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+//                val redConfig = RedPackageSetting(1,60,1,1)
+//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
@@ -78,13 +76,15 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         matchKeyPad.setOnClickListener {
             if (BuildConfig.DEBUG) {
+
+                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 1, "1,0,0,0,4,1", 10, "A",30))) }
 //                val redConfig = RedPackageSetting(1,10,1,1)
 //                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-//                return@setOnClickListener
+                return@setOnClickListener
             }
             if (UsbManagerImpl.baseStation.sn == null) {
                 ToastUtils.showShort("请先连接基站")

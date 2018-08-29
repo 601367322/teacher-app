@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import cn.sunars.sdk.SunARS
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.prance.lib.base.extension.invisible
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.lib.common.utils.http.mySubscribe
@@ -142,24 +144,24 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         mSunVoteServicePresenter.bind()
     }
 
-    fun showRecycler() {
-        tip.visibility = View.VISIBLE
-        recycler.visibility = View.VISIBLE
-        linearLayout.visibility = View.VISIBLE
+    private fun showRecycler() {
+        tip.visible()
+        recycler.visible()
+        linearLayout.visible()
 
-        classTip.visibility = View.GONE
-        classTip1.visibility = View.GONE
-        classTip2.visibility = View.GONE
+        classTip.invisible()
+        classTip1.invisible()
+        classTip2.invisible()
     }
 
-    fun hideRecycler() {
-        tip.visibility = View.GONE
-        recycler.visibility = View.GONE
-        linearLayout.visibility = View.GONE
+    private fun hideRecycler() {
+        tip.invisible()
+        recycler.invisible()
+        linearLayout.invisible()
 
-        classTip.visibility = View.VISIBLE
-        classTip1.visibility = View.VISIBLE
-        classTip2.visibility = View.VISIBLE
+        classTip.visible()
+        classTip1.visible()
+        classTip2.visible()
     }
 
     override fun renderKeyPads(it: MutableList<MultiItemEntity>) {

@@ -8,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
+import com.prance.lib.base.extension.invisible
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.teacher.features.students.contract.IStudentsContract
@@ -124,14 +126,14 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     }
 
     private fun displayBtn(classes: ClassesEntity) {
-        start.visibility = View.VISIBLE
+        start.visible()
         if (classes.binding > 0) {
-            complete.visibility = View.VISIBLE
-            replace.visibility = View.VISIBLE
+            complete.visible()
+            replace.visible()
 
             //本班学员都存在绑定关系后，不进入绑定状态，“开始绑定”按钮和文字提示隐藏。如下方“图2.1”；当学员0个绑定时，如“图1.3”；当学员绑定、非绑定状态都存在，如“图3.3”；
             if (classes.binding >= mAdapter.data.size) {
-                start.visibility = View.GONE
+                start.invisible()
                 complete.requestFocus()
             }
         }

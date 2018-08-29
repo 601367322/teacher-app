@@ -55,7 +55,8 @@ class ReplaceKeyPadPresenter : BasePresenterKt<IReplaceKeyPadContract.View>(), I
                                 onSubscribeError(ResultException(88003, "替换失败，请重新替换"))
                             }
                         },
-                        { mView?.replaceSuccess() }
+                        {
+                            mView?.replaceSuccess() }
                 )
     }
 }

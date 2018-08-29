@@ -4,21 +4,14 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.subject.SubjectActivity
 import kotlinx.android.synthetic.main.fragment_subject_on_create.*
-import android.media.SoundPool
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.content.Context.AUDIO_SERVICE
-import com.blankj.utilcode.util.LogUtils
 import com.prance.teacher.utils.SoundUtils
 
 

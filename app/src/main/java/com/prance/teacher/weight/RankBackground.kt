@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.getInflate
@@ -54,7 +55,7 @@ class RankBackground : RelativeLayout {
 
         lightAnim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
-                light.visibility = View.VISIBLE
+                light.visible()
             }
         })
         lightAnim.playTogether(rotationAnim, alphaAnim,
@@ -67,7 +68,7 @@ class RankBackground : RelativeLayout {
         animators.add(cupAnim)
         cupAnim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
-                cups.visibility = View.VISIBLE
+                cups.visible()
             }
 
             override fun onAnimationEnd(animation: Animator?) {

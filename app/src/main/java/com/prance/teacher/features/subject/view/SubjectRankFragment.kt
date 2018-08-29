@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -59,7 +60,7 @@ class SubjectRankFragment : BaseFragment() {
                         if (rank.isNotEmpty()) {
                             for (i in 0..min(4, rank.size - 1)) {
                                 rankNames[i].text = rank[i].name
-                                rankAvatars[i].visibility = View.VISIBLE
+                                rankAvatars[i].visible()
                                 GlideApp.with(this@SubjectRankFragment)
                                         .load(rank[i].head)
                                         .placeholder(R.drawable.default_avatar_boy)

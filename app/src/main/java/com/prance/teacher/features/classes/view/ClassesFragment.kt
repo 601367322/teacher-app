@@ -4,6 +4,8 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.prance.lib.base.extension.invisible
+import com.prance.lib.base.extension.visible
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.teacher.R
@@ -119,16 +121,16 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
             pageIndicatorView.setSelected(pageIndex)
 
             if (pageIndex == 0) {
-                leftArrow.visibility = View.GONE
+                leftArrow.invisible()
             } else {
-                leftArrow.visibility = View.VISIBLE
+                leftArrow.visible()
             }
 
 
             if (pageIndex == layoutManager?.totalPageCount!! - 1 || mAdapter.data.isEmpty()) {
-                rightArrow.visibility = View.GONE
+                rightArrow.invisible()
             } else {
-                rightArrow.visibility = View.VISIBLE
+                rightArrow.visible()
             }
 
 
@@ -143,7 +145,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         rightArrow.post {
             if (layoutManager?.totalPageCount!! > 1) {
-                rightArrow.visibility = View.VISIBLE
+                rightArrow.visible()
                 pageIndicatorView.count = layoutManager?.totalPageCount!!
             }
         }
@@ -160,13 +162,13 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
     private fun checkEmpty() {
         if (mAdapter.data.isEmpty()) {
-            emptyLayout.visibility = View.VISIBLE
-            recycler.visibility = View.GONE
+            emptyLayout.visible()
+            recycler.invisible()
 
             refresh.requestFocus()
         } else {
-            emptyLayout.visibility = View.GONE
-            recycler.visibility = View.VISIBLE
+            emptyLayout.invisible()
+            recycler.visible()
 
             recycler.requestFocus()
         }

@@ -3,6 +3,8 @@ package com.prance.teacher.features.students.view
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.prance.lib.base.extension.invisible
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentsEntity
@@ -14,11 +16,11 @@ class StudentsAdapter : BaseQuickAdapter<StudentsEntity, BaseViewHolder> {
     override fun convert(helper: BaseViewHolder?, bean: StudentsEntity?) {
         bean?.run {
             helper?.run {
-                itemView.keyPadId.visibility = View.GONE
+                itemView.keyPadId.invisible()
                 itemView.name.text = name
                 clickers?.run {
                     if (isNotEmpty()) {
-                        itemView.keyPadId.visibility = View.VISIBLE
+                        itemView.keyPadId.visible()
                         itemView.keyPadId.text = clickers!![0].number
                     }
                 }

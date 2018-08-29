@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -73,7 +74,7 @@ class RedPackageRankFragment : BaseFragment() {
                     for (i in 0 until min(3, rank.size)) {
                         rankNames[i].text = rank[i].student.name
                         rankScores[i].text = "${rank[i].score}分"
-                        rankAvatars[i].visibility = View.VISIBLE
+                        rankAvatars[i].visible()
                         GlideApp.with(this)
                                 .load(rank[i].student.head)
                                 .placeholder(R.drawable.default_avatar_boy)
@@ -83,7 +84,7 @@ class RedPackageRankFragment : BaseFragment() {
 
 
         if (BuildConfig.DEBUG) {
-//            rankAvatar1.visibility = View.VISIBLE
+//            rankAvatar1.visible()
 //            GlideApp.with(this)
 //                    .load(R.drawable.match_empty_view)
 //                    .circleCrop()

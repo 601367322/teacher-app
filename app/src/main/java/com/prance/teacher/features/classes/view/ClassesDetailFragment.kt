@@ -27,7 +27,6 @@ import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
 import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.pk.model.PKSetting
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
@@ -93,9 +92,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-//            mPushServicePresenter.bind()
+            mPushServicePresenter.bind()
 
-//            mSunVoteServicePresenter.bind()
+            mSunVoteServicePresenter.bind()
         }
     }
 
@@ -128,7 +127,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
-//            mSunVoteServicePresenter.unBind()
+            mSunVoteServicePresenter.unBind()
         }
     }
 
@@ -166,7 +165,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 }
             }
             PK_START -> {
-                val pkSetting = msg.getData(PKSetting::class.java)
+                val pkSetting = msg.getData(Question::class.java)
                 if (pkSetting.classId == mClassesEntity.klass?.id) {
                     ActivityUtils.finishActivity(PKActivity::class.java)
                     context?.run {
@@ -184,6 +183,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var param: String? = null
         var questionId: Int? = null
         var result: String? = null
+        var createTime = System.currentTimeMillis()
+        var duration: Int? = null
 
         constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?) {
             this.classId = classId
@@ -191,6 +192,15 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             this.param = param
             this.questionId = questionId
             this.result = answer
+        }
+
+        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, duration: Int?) {
+            this.classId = classId
+            this.type = type
+            this.param = param
+            this.questionId = questionId
+            this.result = answer
+            this.duration = duration
         }
     }
 
