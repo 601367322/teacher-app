@@ -31,10 +31,12 @@ class PKActivity : BaseActivity(), MessageListener {
         PushServicePresenter(this, this)
     }
 
+    var mSetting: ClassesDetailFragment.Question? = null
+
     override fun fragment(): BaseFragment? = PKFragment.forSetting(intent.getSerializableExtra(PKFragment.SETTING) as ClassesDetailFragment.Question)
 
     override fun initView(savedInstanceState: Bundle?) {
-
+        mSetting = intent.getSerializableExtra(PKFragment.SETTING) as ClassesDetailFragment.Question?
         mPushServicePresenter.bind()
 
         super.initView(savedInstanceState)
@@ -59,7 +61,7 @@ class PKActivity : BaseActivity(), MessageListener {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
                 supportFragmentManager.inTransaction {
-                    replace(R.id.fragmentContainer, PKWaitingFragment())
+                    replace(R.id.fragmentContainer, PKWaitingFragment.callingIntent(true, mSetting?.questionId!!))
                 }
             }
         }

@@ -16,9 +16,9 @@ class PKResultPresenter : BasePresenterKt<IPKResultContract.View>(), IPKResultCo
 
     override val mModel: IPKResultContract.Model = PKResultModel()
 
-    override fun getPKResult() {
+    override fun getPKResult(questionId: Int) {
         mModel
-                .getPKResult()
+                .getPKResult(questionId)
                 .mySubscribe(onSubscribeError, {
                     mView?.renderRank(it)
                 })

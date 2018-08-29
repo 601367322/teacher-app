@@ -16,9 +16,9 @@ interface IPKResultContract {
         fun renderRank(it: PKResult)
     }
     interface Presenter : IPresenter<View, Model> {
-        fun getPKResult()
+        fun getPKResult(questionId: Int)
     }
     interface Model : IModel {
-        fun getPKResult(): Flowable<PKResult>
+        fun getPKResult(questionId: Int): Flowable<PKResult>
     }
 }

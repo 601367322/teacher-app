@@ -126,5 +126,5 @@ interface ApiService {
      * PK答题结果
      */
     @GET
-    fun getPKResult(@Url url: String): Flowable<PKResult>
+    fun getPKResult(@Url url: String, @Query("questionId") questionId: Int): Flowable<PKResult>
 }

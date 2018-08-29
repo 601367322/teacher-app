@@ -68,8 +68,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
                 val keyId = generateKeyPadId(KeyID)
-                mActivity?.run {
-                    mPresenter.sendAnswer(mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
+                mActivity?.let {
+                    mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
                 }
             }
         })
@@ -153,7 +153,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         }
         activity?.run {
             this.supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, SubjectOnWaitingFragment())
+                replace(R.id.fragmentContainer, PKWaitingFragment.callingIntent(false, mSetting.questionId!!))
             }
         }
     }

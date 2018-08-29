@@ -97,6 +97,10 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
         class ClassVO : Serializable {
             var klass: IDEntity? = null
             var averageTime: Float? = null
+            var correctRate: Float? = null
+                get() {
+                    return field?.times(100)
+                }
 
             constructor(classId: Int) {
                 this.klass = IDEntity(classId)

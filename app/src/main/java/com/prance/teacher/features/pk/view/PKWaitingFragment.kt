@@ -20,7 +20,31 @@ class PKWaitingFragment : BaseFragment(), MessageListener, IPKResultContract.Vie
 
     override var mPresenter: IPKResultContract.Presenter = PKResultPresenter()
 
+    var questionId: Int? = null
+
+    companion object {
+
+        const val AUTO_LOAD = "AUTO_LOAD"
+        const val QUESTION_ID = "QUESTION_ID"
+
+        fun callingIntent(autoLoad: Boolean, questionId: Int): PKWaitingFragment {
+            var fragment = PKWaitingFragment()
+            val bundle = Bundle()
+            bundle.putBoolean(AUTO_LOAD, autoLoad)
+            bundle.putInt(QUESTION_ID, questionId)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+        questionId = arguments?.getInt(QUESTION_ID)
+        arguments?.run {
+            if (containsKey(AUTO_LOAD) && getBoolean(AUTO_LOAD)) {
+                getResult()
+            }
+        }
     }
 
     override fun onMessageResponse(msg: MessageEntity): Boolean {
@@ -35,7 +59,10 @@ class PKWaitingFragment : BaseFragment(), MessageListener, IPKResultContract.Vie
 
     private fun getResult() {
         showProgress()
-        mPresenter.getPKResult()
+        questionId?.run {
+            mPresenter.getPKResult(this)
+        }
+
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

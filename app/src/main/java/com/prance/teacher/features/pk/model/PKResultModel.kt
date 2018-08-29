@@ -15,8 +15,8 @@ import io.reactivex.Flowable
 
 class PKResultModel : BaseModelKt(), IPKResultContract.Model {
 
-    override fun getPKResult(): Flowable<PKResult> {
-        return RetrofitUtils.getApiService(ApiService::class.java).getPKResult(ApiService.getPKResult)
+    override fun getPKResult(questionId: Int): Flowable<PKResult> {
+        return RetrofitUtils.getApiService(ApiService::class.java).getPKResult(ApiService.getPKResult, questionId)
     }
 }
 
