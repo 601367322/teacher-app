@@ -2,18 +2,14 @@ package com.prance.teacher.features.pk.view
 
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.text.format.DateUtils
 import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.visible
-import com.prance.lib.common.utils.autoGenericCode
 import com.prance.lib.common.utils.dateFormat_Min_Second
 import com.prance.lib.common.utils.format
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
-import com.prance.lib.socket.PushService.Companion.CMD_END_QUESTION
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
 import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
@@ -22,8 +18,6 @@ import com.prance.teacher.features.pk.contract.IPKContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
-import com.prance.teacher.R.id.runtimeData
-import com.prance.teacher.features.afterclass.AfterClassActivity.Companion.feedback
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.pk.model.PKRuntimeData

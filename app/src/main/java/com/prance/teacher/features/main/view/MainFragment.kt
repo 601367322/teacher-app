@@ -77,7 +77,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
         matchKeyPad.setOnClickListener {
             if (BuildConfig.DEBUG) {
 
-                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 1, "1,0,0,0,4,1", 10, "A",30))) }
+                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A",30))) }
 //                val redConfig = RedPackageSetting(1,10,1,1)
 //                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
