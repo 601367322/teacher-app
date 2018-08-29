@@ -132,7 +132,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     }
 
 
-    override fun onMessageResponse(msg: MessageEntity) {
+    override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
             CMD_SEND_QUESTION -> {
                 //开始答题
@@ -174,6 +174,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 }
             }
         }
+        return false
     }
 
     class Question : Serializable {

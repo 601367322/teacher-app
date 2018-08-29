@@ -6,6 +6,7 @@ import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
+import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.students.model.StudentsEntity
 import io.reactivex.Flowable
 import retrofit2.http.*
@@ -73,6 +74,12 @@ interface ApiService {
                 "webApp/feedbackResult"
             else
                 "backend/course/webApp/feedbackResult"
+
+        val getPKResult: String
+            get() = if (UrlUtil.isLocalHost())
+                "web/interactiveResult"
+            else
+                "backend/course/web/interactiveResult"
     }
 
     @GET
@@ -114,4 +121,10 @@ interface ApiService {
     @FormUrlEncoded
     @POST
     fun postFeedbcakResult(@Url url: String, @Field("classId") classId: String, @Field("feedbackMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
+
+    /**
+     * PK答题结果
+     */
+    @GET
+    fun getPKResult(@Url url: String): Flowable<PKResult>
 }

@@ -11,13 +11,13 @@ import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.subject.SubjectActivity
-import kotlinx.android.synthetic.main.fragment_subject_on_create.*
+import kotlinx.android.synthetic.main.fragment_subject_count_time.*
 import com.prance.teacher.utils.SoundUtils
 
 
-class SubjectOnCreateFragment : BaseFragment() {
+class SubjectCountTimeFragment : BaseFragment() {
 
-    override fun layoutId(): Int = R.layout.fragment_subject_on_create
+    override fun layoutId(): Int = R.layout.fragment_subject_count_time
 
     var num = 2
 

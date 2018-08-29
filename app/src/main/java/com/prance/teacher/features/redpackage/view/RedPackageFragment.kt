@@ -87,6 +87,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     override fun onDestroy() {
         super.onDestroy()
 
+        animGlView?.destroy()
+
         mPresenter.detachView()
 
         mSunVoteServicePresenter.unBind()

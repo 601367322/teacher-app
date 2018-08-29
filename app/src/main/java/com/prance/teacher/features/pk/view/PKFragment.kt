@@ -1,7 +1,7 @@
 package com.prance.teacher.features.pk.view
 
+import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import cn.sunars.sdk.SunARS
 import com.prance.lib.base.extension.inTransaction
@@ -11,7 +11,6 @@ import com.prance.lib.common.utils.format
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
-import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
 import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.teacher.features.pk.contract.IPKContract
@@ -20,10 +19,11 @@ import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
+import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.subject.model.KeyPadResult
-import com.prance.teacher.features.subject.view.SubjectOnStopFragment
+import com.prance.teacher.features.subject.view.SubjectOnWaitingFragment
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -56,18 +56,23 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     lateinit var mSetting: ClassesDetailFragment.Question
 
+    var mActivity: PKActivity? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        this.mActivity = context as PKActivity?
+    }
+
     private val mSunVoteServicePresenter by lazy {
         SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
 
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
                 val keyId = generateKeyPadId(KeyID)
-                mPresenter.sendAnswer(mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
+                mActivity?.run {
+                    mPresenter.sendAnswer(mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
+                }
             }
         })
-    }
-
-    private val mPushServicePresenter by lazy {
-        PushServicePresenter(context!!, this)
     }
 
     override var mPresenter: IPKContract.Presenter = PKPresenter()
@@ -76,7 +81,6 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         mSetting = arguments?.getSerializable(SETTING) as ClassesDetailFragment.Question
 
         mSunVoteServicePresenter.bind()
-        mPushServicePresenter.bind()
 
         animGlView.countTimeListener = this
 
@@ -105,8 +109,9 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         super.onDestroy()
         SunARS.voteStop()
 
+        animGlView?.destroy()
+
         mSunVoteServicePresenter.unBind()
-        mPushServicePresenter.unBind()
     }
 
     //倒计时结束
@@ -146,12 +151,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 it.dispose()
             }
         }
-        (activity as FragmentActivity).supportFragmentManager.inTransaction {
-            replace(R.id.fragmentContainer, SubjectOnStopFragment())
+        activity?.run {
+            this.supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, SubjectOnWaitingFragment())
+            }
         }
     }
 
-    override fun onMessageResponse(msg: MessageEntity) {
+    override fun onMessageResponse(msg: MessageEntity): Boolean {
         runtimeData.post {
             when (msg.cmd) {
                 PK_RUNTIME_DATA -> {
@@ -163,6 +170,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 }
             }
         }
+        return super.onMessageResponse(msg)
     }
 }
 

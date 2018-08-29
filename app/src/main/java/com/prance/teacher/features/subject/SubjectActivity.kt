@@ -14,10 +14,10 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
-import com.prance.teacher.features.subject.view.SubjectOnCreateFragment
+import com.prance.teacher.features.subject.view.SubjectCountTimeFragment
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
-import com.prance.teacher.features.subject.view.SubjectOnStopFragment
+import com.prance.teacher.features.subject.view.SubjectOnWaitingFragment
 import io.reactivex.Flowable
 import java.util.concurrent.TimeUnit
 
@@ -32,7 +32,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
     private var onStartFragment: SubjectOnStartFragment? = null
 
-    override fun onMessageResponse(msg: MessageEntity) {
+    override fun onMessageResponse(msg: MessageEntity):Boolean {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
                 //停止发送
@@ -51,6 +51,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
                 }
             }
         }
+        return super.onMessageResponse(msg)
     }
 
     override fun onServiceStatusConnectChanged(statusCode: Int) {
@@ -68,7 +69,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         }
     }
 
-    override fun fragment(): BaseFragment = SubjectOnCreateFragment()
+    override fun fragment(): BaseFragment = SubjectCountTimeFragment()
 
     override fun getContext(): Context? = this
 
@@ -119,7 +120,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         }
 
         supportFragmentManager.inTransaction {
-            replace(R.id.fragmentContainer, SubjectOnStopFragment())
+            replace(R.id.fragmentContainer, SubjectOnWaitingFragment())
         }
     }
 

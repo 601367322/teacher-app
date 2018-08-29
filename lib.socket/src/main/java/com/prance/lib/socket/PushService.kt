@@ -148,12 +148,12 @@ class PushService : Service() {
             }
         }
 
-        override fun onMessageResponse(msg: MessageEntity) {
+        override fun onMessageResponse(msg: MessageEntity):Boolean {
 
             //检查是否重复消息
             val existsMessage = mMessageDaoUtils.getMessageByMsgId(msg.msgId)
             if (existsMessage != null) {
-                return
+                return false
             }
 
             //保存消息
@@ -166,6 +166,7 @@ class PushService : Service() {
                     e.printStackTrace()
                 }
             }
+            return super.onMessageResponse(msg)
         }
 
         public fun sendMessage(msg: String) {

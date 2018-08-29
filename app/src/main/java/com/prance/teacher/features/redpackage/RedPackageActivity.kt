@@ -76,13 +76,14 @@ class RedPackageActivity : BaseActivity(), MessageListener {
         }
     }
 
-    override fun onMessageResponse(msg: MessageEntity) {
+    override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
             PushService.END_INTERACTN -> {
                 mGrabFragment!!.redPackageStop()
                 finish()
             }
         }
+        return super.onMessageResponse(msg)
     }
 
     override fun onServiceStatusConnectChanged(statusCode: Int) {

@@ -9,7 +9,9 @@ interface MessageListener {
     /**
      * 对消息的处理
      */
-    fun onMessageResponse(msg: MessageEntity) {}
+    fun onMessageResponse(msg: MessageEntity): Boolean {
+        return false
+    }
 
     /**
      * 当服务状态发生变化时触发
