@@ -1,6 +1,5 @@
 package com.prance.teacher.features.subject.view
 
-import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -11,7 +10,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.view.View
 import cn.sunars.sdk.SunARS
-import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.common.utils.GlideApp
@@ -37,7 +36,6 @@ import master.flame.danmaku.danmaku.model.android.DanmakuContext
 import master.flame.danmaku.danmaku.model.android.Danmakus
 import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser
-import java.util.*
 
 /**
  * 开始答题
@@ -135,9 +133,9 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-//                        if (studentEntity == null) {
-//                            studentEntity = StudentsEntity("假数据", "")
-//                        }
+                        if (studentEntity == null) {
+                            studentEntity = StudentsEntity("假数据", "")
+                        }
                     }
                     if (studentEntity == null) {
                         return
@@ -232,10 +230,13 @@ class SubjectOnStartFragment : BaseFragment() {
                             errorDrawable?.let { showDanmu(it) }
                         }
 
+                        var inited = false
+
                         private fun showDanmu(resource: Drawable) {
-                            if (activity == null) {
+                            if (activity == null || inited) {
                                 return
                             }
+                            inited = true
                             try {
                                 val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
                                 //绘制头像
