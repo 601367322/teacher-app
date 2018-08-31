@@ -1,5 +1,6 @@
 package com.prance.teacher.features.subject.view
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.blankj.utilcode.util.ActivityUtils
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.common.utils.GlideApp
@@ -80,6 +82,7 @@ class SubjectOnStartFragment : BaseFragment() {
             }
         }
 
+        //设置进度条最大人数
         ClassesDetailFragment.mStudentList?.let {
             powerProgressbar.max = it.size
         }
@@ -148,6 +151,11 @@ class SubjectOnStartFragment : BaseFragment() {
                     addDanmakuShowTextAndImage(studentEntity!!)
 
                     powerProgressbar.progress += 1
+
+                    //进度大于70%，开启宝箱
+                    if((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70){
+                        TODO("宝箱")
+                    }
                 }
             }
             super.dispatchMessage(msg)
@@ -203,6 +211,9 @@ class SubjectOnStartFragment : BaseFragment() {
         }
         lastDanmuTime = System.currentTimeMillis() + delay
         danmu.postDelayed({
+            if(activity == null){
+                return@postDelayed
+            }
             //加载头像
             GlideApp.with(this)
                     .asDrawable()
@@ -220,6 +231,9 @@ class SubjectOnStartFragment : BaseFragment() {
                         }
 
                         private fun showDanmu(resource: Drawable) {
+                            if(activity == null){
+                                return
+                            }
                             try {
                                 val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
                                 //绘制头像
