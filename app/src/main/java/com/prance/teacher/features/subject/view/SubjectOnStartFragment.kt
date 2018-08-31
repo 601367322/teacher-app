@@ -156,7 +156,7 @@ class SubjectOnStartFragment : BaseFragment() {
 
                     //进度大于70%，开启宝箱
                     if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
-//                        TODO("宝箱")
+                        //TODO 宝箱
                     }
                 }
             }
