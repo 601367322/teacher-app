@@ -1,6 +1,8 @@
 package com.prance.lib.database;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -9,8 +11,10 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Transient;
 
 import java.io.Serializable;
-
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import org.greenrobot.greendao.annotation.Generated;
+
 
 /**
  * 收到的历史消息记录表
@@ -82,6 +86,28 @@ public class MessageEntity implements Serializable {
             setData(data);
         }
         return new Gson().fromJson(dataJson, clazz);
+    }
+
+    public <T> ArrayList<T> getArrayData(Class<T> classOfT) {
+        if (dataJson == null) {
+            setData(data);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<JsonObject>>() {
+        }.getType();
+        ArrayList<JsonObject> jsonObjs = gson.fromJson(dataJson, type);
+        ArrayList<T> listOfT = null;
+        try {
+            listOfT = new ArrayList<>();
+            for (JsonObject jsonObj : jsonObjs) {
+                listOfT.add(gson.fromJson(jsonObj, classOfT));
+            }
+            return listOfT;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void setData(Object data) {

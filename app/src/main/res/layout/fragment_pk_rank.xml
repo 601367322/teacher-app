@@ -10,4 +10,9 @@
         app:cups="@drawable/pk_cups"
         app:cupsTranslationY="@dimen/m400.0"
         app:cupsTranslationYDiff="@dimen/m100.0" />
+
+    <TextView
+        android:id="@+id/rankResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>

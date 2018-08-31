@@ -162,11 +162,30 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         runtimeData.post {
             when (msg.cmd) {
                 PK_RUNTIME_DATA -> {
-                    val data = msg.getData(PKRuntimeData::class.java)
-                    runtimeData.text =
-                            """平均正确率${data.correctRate}%
-                                |平均作答时间${data.averageTime}秒
-                                |第${data.order}名""".trimMargin()
+                    //所有班级的排名
+                    val data = msg.getArrayData(PKRuntimeData::class.java)
+
+                    //我所在班级的排名
+                    var mRank: PKRuntimeData? = null
+                    for (i in data) {
+                        if (i.klass?.id == mSetting.classId) {
+                            mRank = i
+                        }
+                    }
+
+                    if (mRank == null) {
+                        //没有学生作答
+                        runtimeData.text =
+                                """平均正确率0%
+                                |平均作答时间0秒
+                                |第- -名""".trimMargin()
+                    } else {
+                        //正常情况
+                        runtimeData.text =
+                                """平均正确率${mRank.correctRate}%
+                                |平均作答时间${mRank.averageTime}秒
+                                |第${data.indexOf(mRank)}名""".trimMargin()
+                    }
                 }
             }
         }

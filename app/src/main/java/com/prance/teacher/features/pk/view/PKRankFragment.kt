@@ -3,9 +3,11 @@ package com.prance.teacher.features.pk.view
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.LogUtils
+import com.google.gson.Gson
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.pk.model.PKResult
+import kotlinx.android.synthetic.main.fragment_pk_rank.*
 
 class PKRankFragment : BaseFragment() {
 
@@ -27,5 +29,7 @@ class PKRankFragment : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
         LogUtils.d(arguments?.getSerializable(PK_RESULT) as PKResult)
+
+        rankResult.text = Gson().toJson(arguments?.getSerializable(PK_RESULT) as PKResult)
     }
 }
