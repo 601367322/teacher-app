@@ -92,12 +92,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-            mPushServicePresenter.bind()
-
-            mSunVoteServicePresenter.bind()
-
-            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
-            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+//            mPushServicePresenter.bind()
+//
+//            mSunVoteServicePresenter.bind()
+//
+//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
+//            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
     }
 
@@ -130,7 +130,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
-            mSunVoteServicePresenter.unBind()
+//            mSunVoteServicePresenter.unBind()
         }
     }
 
