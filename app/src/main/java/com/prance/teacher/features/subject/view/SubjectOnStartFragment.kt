@@ -111,6 +111,14 @@ class SubjectOnStartFragment : BaseFragment() {
             when (msg.what) {
                 KEY_ENENT_HANDLER_WHAT -> {
                     val keyPadResult = msg.obj as KeyPadResult
+
+                    //去重
+                    for (result in mResult) {
+                        if (result.clickerId == keyPadResult.clickerId) {
+                            return
+                        }
+                    }
+
                     var studentEntity: StudentsEntity? = null
                     //根据keyId去找到对应的学生信息
                     ClassesDetailFragment.mStudentList?.let {
