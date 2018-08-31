@@ -46,6 +46,7 @@ class SubjectOnStartFragment : BaseFragment() {
     var mQuestion: ClassesDetailFragment.Question? = null
 
     var KEY_ENENT_HANDLER_WHAT = 1
+    var SHOW_DANMU_WHAT = 2
 
     lateinit var mDanmuContext: DanmakuContext
 
@@ -113,6 +114,7 @@ class SubjectOnStartFragment : BaseFragment() {
         override fun dispatchMessage(msg: Message) {
             when (msg.what) {
                 KEY_ENENT_HANDLER_WHAT -> {
+                    //答题器事件
                     val keyPadResult = msg.obj as KeyPadResult
 
                     //去重
@@ -133,9 +135,9 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-//                        if (studentEntity == null) {
-//                            studentEntity = StudentsEntity("假数据", "")
-//                        }
+                        if (studentEntity == null) {
+                            studentEntity = StudentsEntity("假数据", "")
+                        }
                     }
                     if (studentEntity == null) {
                         return
@@ -156,6 +158,55 @@ class SubjectOnStartFragment : BaseFragment() {
                     if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
                         //TODO 宝箱
                     }
+                }
+                SHOW_DANMU_WHAT -> {
+                    //显示弹幕
+                    val studentsEntity = msg.obj as StudentsEntity
+                    //加载头像
+                    GlideApp.with(this@SubjectOnStartFragment)
+                            .asDrawable()
+                            .load(studentsEntity.head)
+                            .error(R.drawable.default_avatar_boy)
+                            .override(100, 100)
+                            .transform(CropCircleTransformation())
+                            .into(object : SimpleTarget<Drawable>() {
+                                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                                    showDanmu(resource)
+                                }
+
+                                override fun onLoadFailed(errorDrawable: Drawable?) {
+                                    errorDrawable?.let { showDanmu(it) }
+                                }
+
+                                var inited = false
+
+                                private fun showDanmu(resource: Drawable) {
+                                    if (activity == null || inited) {
+                                        return
+                                    }
+                                    inited = true
+                                    try {
+                                        val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
+                                        //绘制头像
+                                        resource.setBounds(0, 0, 100, 100)
+                                        val spannable = createSpannable(resource, studentsEntity.name)
+
+                                        danmaku.text = spannable
+                                        danmaku.padding = 5
+                                        danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
+                                        danmaku.isLive = false
+                                        danmaku.time = danmu.currentTime
+                                        context?.run {
+                                            danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m25_0).toFloat()
+                                        }
+                                        danmaku.textColor = Color.RED
+                                        danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
+                                        danmu.addDanmaku(danmaku)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }
+                            })
                 }
             }
             super.dispatchMessage(msg)
@@ -210,56 +261,8 @@ class SubjectOnStartFragment : BaseFragment() {
             delay = lastDanmuTime + danmuInterval - System.currentTimeMillis()
         }
         lastDanmuTime = System.currentTimeMillis() + delay
-        danmu.postDelayed({
-            if (activity == null) {
-                return@postDelayed
-            }
-            //加载头像
-            GlideApp.with(this)
-                    .asDrawable()
-                    .load(studentsEntity.head)
-                    .error(R.drawable.default_avatar_boy)
-                    .override(100, 100)
-                    .transform(CropCircleTransformation())
-                    .into(object : SimpleTarget<Drawable>() {
-                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                            showDanmu(resource)
-                        }
 
-                        override fun onLoadFailed(errorDrawable: Drawable?) {
-                            errorDrawable?.let { showDanmu(it) }
-                        }
-
-                        var inited = false
-
-                        private fun showDanmu(resource: Drawable) {
-                            if (activity == null || inited) {
-                                return
-                            }
-                            inited = true
-                            try {
-                                val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
-                                //绘制头像
-                                resource.setBounds(0, 0, 100, 100)
-                                val spannable = createSpannable(resource, studentsEntity.name)
-
-                                danmaku.text = spannable
-                                danmaku.padding = 5
-                                danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
-                                danmaku.isLive = false
-                                danmaku.time = danmu.currentTime
-                                context?.run {
-                                    danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m25_0).toFloat()
-                                }
-                                danmaku.textColor = Color.RED
-                                danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-                                danmu.addDanmaku(danmaku)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    })
-        }, delay)
+        mHandler.sendMessageDelayed(Message.obtain(mHandler, SHOW_DANMU_WHAT, studentsEntity), delay)
     }
 
 
@@ -275,6 +278,10 @@ class SubjectOnStartFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        mHandler.removeMessages(KEY_ENENT_HANDLER_WHAT)
+        mHandler.removeMessages(SHOW_DANMU_WHAT)
+
         //停止发送
         SunARS.voteStop()
         //释放弹幕资源
