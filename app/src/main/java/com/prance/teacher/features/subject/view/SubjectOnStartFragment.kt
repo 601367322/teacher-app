@@ -84,7 +84,7 @@ class SubjectOnStartFragment : BaseFragment() {
             powerProgressbar.max = it.size
         }
         if (BuildConfig.DEBUG) {
-            powerProgressbar.max = 32
+//            powerProgressbar.max = 32
         }
 
         mSunVoteServicePresenter.bind()
@@ -122,9 +122,9 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-                        if (studentEntity == null) {
-                            studentEntity = StudentsEntity("假数据", "")
-                        }
+//                        if (studentEntity == null) {
+//                            studentEntity = StudentsEntity("假数据", "")
+//                        }
                     }
                     if (studentEntity == null) {
                         return

@@ -23,6 +23,7 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.pk.PKActivity
+import com.prance.teacher.features.students.StudentsActivity
 
 /**
  * 首页
@@ -50,8 +51,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
-                val classes = ClassesEntity(1)
-                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
+//                val classes = ClassesEntity(1)
+//                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
 
 //                context?.let { startActivity(PKActivity.callingIntent(it, PKSetting(1, 1, 10, "1,0,0,0,4,1"))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
@@ -67,7 +68,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-                return@setOnClickListener
+//                return@setOnClickListener
             }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
@@ -77,14 +78,14 @@ class MainFragment : BaseFragment(), IMainContract.View {
         matchKeyPad.setOnClickListener {
             if (BuildConfig.DEBUG) {
 
-                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A",30))) }
+//                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A",30))) }
 //                val redConfig = RedPackageSetting(1,10,1,1)
 //                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-                return@setOnClickListener
+//                return@setOnClickListener
             }
             if (UsbManagerImpl.baseStation.sn == null) {
                 ToastUtils.showShort("请先连接基站")

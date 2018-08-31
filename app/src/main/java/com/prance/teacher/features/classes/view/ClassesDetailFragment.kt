@@ -95,6 +95,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             mPushServicePresenter.bind()
 
             mSunVoteServicePresenter.bind()
+
+                            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
+                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
     }
 
