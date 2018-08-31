@@ -192,30 +192,34 @@ class SubjectOnStartFragment : BaseFragment() {
     }
 
     private fun addDanmakuShowTextAndImage(studentsEntity: StudentsEntity) {
-        //加载头像
-        GlideApp.with(this)
-                .asDrawable()
-                .load(studentsEntity.head)
-                .error(R.drawable.default_avatar_boy)
-                .override(100, 100)
-                .transform(CropCircleTransformation())
-                .into(object : SimpleTarget<Drawable>() {
-                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                        showDanmu(resource)
-                    }
 
-                    override fun onLoadFailed(errorDrawable: Drawable?) {
-                        errorDrawable?.let { showDanmu(it) }
-                    }
-
-                    private fun showDanmu(resource: Drawable) {
-                        var interval = 0L
-                        //计算弹幕出现的时间，间隔danmuInterval
-                        if (System.currentTimeMillis() - lastDanmuTime < danmuInterval) {
-                            interval = danmuInterval - (System.currentTimeMillis() - lastDanmuTime)
+        var delay = 0L
+        val diffTime = System.currentTimeMillis() - lastDanmuTime
+        //计算弹幕出现的时间，间隔danmuInterval
+        if (diffTime in 1..(danmuInterval - 1)) {
+            delay = danmuInterval - diffTime
+        } else if (diffTime < 0) {
+            delay = lastDanmuTime + danmuInterval - System.currentTimeMillis()
+        }
+        lastDanmuTime = System.currentTimeMillis() + delay
+        danmu.postDelayed({
+            //加载头像
+            GlideApp.with(this)
+                    .asDrawable()
+                    .load(studentsEntity.head)
+                    .error(R.drawable.default_avatar_boy)
+                    .override(100, 100)
+                    .transform(CropCircleTransformation())
+                    .into(object : SimpleTarget<Drawable>() {
+                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                            showDanmu(resource)
                         }
-                        lastDanmuTime = System.currentTimeMillis()
-                        danmu.postDelayed({
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            errorDrawable?.let { showDanmu(it) }
+                        }
+
+                        private fun showDanmu(resource: Drawable) {
                             try {
                                 val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
                                 //绘制头像
@@ -236,9 +240,9 @@ class SubjectOnStartFragment : BaseFragment() {
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
-                        }, interval)
-                    }
-                })
+                        }
+                    })
+        }, delay)
     }
 
 
