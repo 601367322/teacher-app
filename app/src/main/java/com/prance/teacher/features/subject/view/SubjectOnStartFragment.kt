@@ -83,9 +83,11 @@ class SubjectOnStartFragment : BaseFragment() {
         }
 
         //设置进度条最大人数
-        ClassesDetailFragment.mStudentList?.let {
-            powerProgressbar.max = it.size
+        mQuestion?.let {
+            powerProgressbar.max = it.signCount
         }
+
+
         if (BuildConfig.DEBUG) {
 //            powerProgressbar.max = 32
         }
@@ -153,8 +155,8 @@ class SubjectOnStartFragment : BaseFragment() {
                     powerProgressbar.progress += 1
 
                     //进度大于70%，开启宝箱
-                    if((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70){
-                        TODO("宝箱")
+                    if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
+//                        TODO("宝箱")
                     }
                 }
             }
@@ -211,7 +213,7 @@ class SubjectOnStartFragment : BaseFragment() {
         }
         lastDanmuTime = System.currentTimeMillis() + delay
         danmu.postDelayed({
-            if(activity == null){
+            if (activity == null) {
                 return@postDelayed
             }
             //加载头像
@@ -231,7 +233,7 @@ class SubjectOnStartFragment : BaseFragment() {
                         }
 
                         private fun showDanmu(resource: Drawable) {
-                            if(activity == null){
+                            if (activity == null) {
                                 return
                             }
                             try {

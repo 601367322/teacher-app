@@ -96,7 +96,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
             mSunVoteServicePresenter.bind()
 
-            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A")
+            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
             context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
     }
@@ -189,13 +189,15 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var result: String? = null
         var createTime = System.currentTimeMillis()
         var duration: Int? = null
+        var signCount: Int = 0
 
-        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?) {
+        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, signCount: Int) {
             this.classId = classId
             this.type = type
             this.param = param
             this.questionId = questionId
             this.result = answer
+            this.signCount = signCount
         }
 
         constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, duration: Int?) {
