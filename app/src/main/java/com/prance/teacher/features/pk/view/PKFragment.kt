@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.chillingvan.canvasgl.glview.GLContinuousView
+import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.dateFormat_Min_Second
@@ -56,6 +58,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     lateinit var mSetting: ClassesDetailFragment.Question
 
+    var mAnimGlView: GLView? = null
+
     var mActivity: PKActivity? = null
 
     override fun onAttach(context: Context?) {
@@ -79,6 +83,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mSetting = arguments?.getSerializable(SETTING) as ClassesDetailFragment.Question
+
+        mAnimGlView = rootView.findViewById(R.id.animGlView)
 
         mSunVoteServicePresenter.bind()
 
@@ -109,7 +115,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         super.onDestroy()
         SunARS.voteStop()
 
-        animGlView?.destroy()
+        mAnimGlView?.destroy()
 
         mSunVoteServicePresenter.unBind()
     }

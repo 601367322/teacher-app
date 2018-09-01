@@ -15,8 +15,7 @@ import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
-
-
+import com.chillingvan.canvasgl.glview.GLView
 
 
 /**
@@ -38,6 +37,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
      */
     var mSetting: RedPackageSetting? = null
 
+    var mAnimGlView: GLView? = null
+
     var mMediaPlayer: MediaPlayer? = null
 
     override fun layoutId(): Int = R.layout.fragment_red_package
@@ -56,6 +57,8 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mSetting = arguments?.getSerializable(mSetTing) as RedPackageSetting
+
+        mAnimGlView = rootView.findViewById(R.id.animGlView)
 
         try {
             mMediaPlayer = MediaPlayer.create(context, R.raw.red_package_background)
@@ -87,7 +90,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     override fun onDestroy() {
         super.onDestroy()
 
-        animGlView?.destroy()
+        mAnimGlView?.destroy()
 
         mPresenter.detachView()
 

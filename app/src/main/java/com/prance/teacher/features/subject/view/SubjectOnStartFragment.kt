@@ -1,6 +1,9 @@
 package com.prance.teacher.features.subject.view
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -9,10 +12,13 @@ import android.os.Message
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
 import cn.sunars.sdk.SunARS
-import com.blankj.utilcode.util.LogUtils
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
@@ -36,6 +42,7 @@ import master.flame.danmaku.danmaku.model.android.DanmakuContext
 import master.flame.danmaku.danmaku.model.android.Danmakus
 import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser
+import master.flame.danmaku.ui.widget.DanmakuView
 
 /**
  * 开始答题
@@ -53,12 +60,17 @@ class SubjectOnStartFragment : BaseFragment() {
     lateinit var mDanmuParser: BaseDanmakuParser
 
     var lastDanmuTime = 0L
+
     var danmuInterval = 2000L
+
+    var boxLightAnim: ValueAnimator? = null
+
+    var mDanmuView: DanmakuView? = null
 
     companion object {
 
         fun forQuestion(question: ClassesDetailFragment.Question): SubjectOnStartFragment {
-            var fragment = SubjectOnStartFragment()
+            val fragment = SubjectOnStartFragment()
             val bundle = Bundle()
             bundle.putSerializable(SubjectActivity.QUESTION, question)
             fragment.arguments = bundle
@@ -70,6 +82,8 @@ class SubjectOnStartFragment : BaseFragment() {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mQuestion = arguments?.getSerializable(SubjectActivity.QUESTION) as ClassesDetailFragment.Question?
+
+        mDanmuView = rootView.findViewById(R.id.danmu)
 
         //初始化弹幕组件
         initDanmu()
@@ -156,7 +170,18 @@ class SubjectOnStartFragment : BaseFragment() {
 
                     //进度大于70%，开启宝箱
                     if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
-                        //TODO 宝箱
+                        //宝箱打开动画
+                        val animationDrawable = box.drawable as AnimationDrawable
+                        animationDrawable.start()
+                        //1秒后打开宝箱灯光
+                        postDelayed({
+                            boxLight.visible()
+                            boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
+                            boxLightAnim!!.interpolator = LinearInterpolator()
+                            boxLightAnim!!.repeatCount = Animation.INFINITE
+                            boxLightAnim!!.repeatMode = ValueAnimator.RESTART
+                            boxLightAnim!!.start()
+                        }, 1000)
                     }
                 }
                 SHOW_DANMU_WHAT -> {
@@ -282,12 +307,16 @@ class SubjectOnStartFragment : BaseFragment() {
         mHandler.removeMessages(KEY_ENENT_HANDLER_WHAT)
         mHandler.removeMessages(SHOW_DANMU_WHAT)
 
+        //停止宝箱灯光动画
+        boxLightAnim?.cancel()
+        boxLightAnim = null
+
         //停止发送
         SunARS.voteStop()
+
         //释放弹幕资源
-        if (danmu != null) {
-            danmu.release()
-        }
+        mDanmuView?.release()
+
         //解绑答题器Service
         mSunVoteServicePresenter.unBind()
     }

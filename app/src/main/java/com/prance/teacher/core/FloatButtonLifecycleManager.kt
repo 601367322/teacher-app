@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.features.main.MainActivity
-import com.prance.teacher.weight.FloatButton
+import com.prance.teacher.weight.FloatIcon
 
 class FloatButtonLifecycleManager : Application.ActivityLifecycleCallbacks {
 
@@ -18,7 +18,7 @@ class FloatButtonLifecycleManager : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityStarted(activity: Activity?) {
         if (AppUtils.isAppForeground()) {
-            FloatButton.hidePopupWindow()
+            FloatIcon.hidePopupWindow()
         }
     }
 
@@ -32,7 +32,7 @@ class FloatButtonLifecycleManager : Application.ActivityLifecycleCallbacks {
 
         if (!AppUtils.isAppForeground()) {
             if (ActivityLifeManager.getInstance().contains(MainActivity::class.java.name)) {
-                FloatButton.showPopupWindow(Utils.getApp())
+                FloatIcon.showPopupWindow(Utils.getApp())
             }
         }
     }

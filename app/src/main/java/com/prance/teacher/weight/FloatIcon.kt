@@ -7,7 +7,7 @@ import android.view.*
 import com.prance.teacher.R
 
 @SuppressLint("StaticFieldLeak")
-object FloatButton {
+object FloatIcon {
 
     private var mView: View? = null
     private var mWindowManager: WindowManager? = null
