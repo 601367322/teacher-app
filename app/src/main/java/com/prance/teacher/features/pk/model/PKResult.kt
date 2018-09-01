@@ -6,7 +6,7 @@ import java.io.Serializable
 class PKResult : Serializable {
 
     var orderClasses: MutableList<PKPresenter.PKResultMessage.ClassVO>? = null
-    var mQuestionDesc: MutableList<Question>? = null
+    var questionDesc: MutableList<Question>? = null
 
     class Question : Serializable {
 
@@ -15,7 +15,7 @@ class PKResult : Serializable {
     }
 
     override fun toString(): String {
-        return "PKResult(orderClasses=$orderClasses, mQuestionDesc=$mQuestionDesc)"
+        return "PKResult(orderClasses=$orderClasses, questionDesc=$questionDesc)"
     }
 
 

@@ -18,8 +18,8 @@ class SubjectPresenter : BasePresenterKt<ISubjectContract.View>(), ISubjectContr
 
     override val mModel: ISubjectContract.Model = SubjectModel()
 
-    override fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String) {
-        mModel.sendResult(classId, mResult,questionId)
+    override fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String, i: Int) {
+        mModel.sendResult(classId, mResult, questionId, i)
                 .mySubscribe { LogUtils.d("success") }
     }
 }

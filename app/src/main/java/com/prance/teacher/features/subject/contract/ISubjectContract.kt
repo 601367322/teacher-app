@@ -19,10 +19,10 @@ interface ISubjectContract {
     }
 
     interface Presenter : IPresenter<View, Model> {
-        fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String)
+        fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String, i: Int)
     }
 
     interface Model : IModel {
-        fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String): Flowable<Any>
+        fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String, i: Int): Flowable<Any>
     }
 }

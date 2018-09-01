@@ -16,8 +16,8 @@ import io.reactivex.Flowable
 
 class SubjectModel : BaseModelKt(), ISubjectContract.Model {
 
-    override fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String): Flowable<Any> {
-        return RetrofitUtils.getApiService(ApiService::class.java).postResult(ApiService.postResult, classId.toString(), Gson().toJson(mResult), questionId)
+    override fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String, i: Int): Flowable<Any> {
+        return RetrofitUtils.getApiService(ApiService::class.java).postResult(ApiService.postResult, classId.toString(), Gson().toJson(mResult), questionId, i)
     }
 }
 

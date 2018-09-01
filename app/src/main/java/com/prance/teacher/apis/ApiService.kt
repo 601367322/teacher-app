@@ -105,7 +105,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST
-    fun postResult(@Url url: String, @Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String, @Field("questionId") questionId: String): Flowable<Any>
+    fun postResult(@Url url: String, @Field("classId") classId: String, @Field("answerMsgs") answersJsonArray: String, @Field("questionId") questionId: String, @Field("rewardState") i: Int): Flowable<Any>
 
     /**
      * 上传抢红包的数据

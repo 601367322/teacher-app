@@ -67,6 +67,8 @@ class SubjectOnStartFragment : BaseFragment() {
 
     var mDanmuView: DanmakuView? = null
 
+    var doubleScore = false
+
     companion object {
 
         fun forQuestion(question: ClassesDetailFragment.Question): SubjectOnStartFragment {
@@ -149,9 +151,9 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-                        if (studentEntity == null) {
-                            studentEntity = StudentsEntity("假数据", "")
-                        }
+//                        if (studentEntity == null) {
+//                            studentEntity = StudentsEntity("假数据", "")
+//                        }
                     }
                     if (studentEntity == null) {
                         return
@@ -170,6 +172,9 @@ class SubjectOnStartFragment : BaseFragment() {
 
                     //进度大于70%，开启宝箱
                     if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
+
+                        doubleScore = true
+
                         //宝箱打开动画
                         val animationDrawable = box.drawable as AnimationDrawable
                         animationDrawable.start()

@@ -11,15 +11,12 @@ import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectCountTimeFragment
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.prance.teacher.features.subject.view.SubjectOnWaitingFragment
-import io.reactivex.Flowable
-import java.util.concurrent.TimeUnit
 
 /**
  * 上课答题
@@ -32,7 +29,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
     private var onStartFragment: SubjectOnStartFragment? = null
 
-    override fun onMessageResponse(msg: MessageEntity):Boolean {
+    override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
                 //停止发送
@@ -115,7 +112,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
         mQuestion?.classId?.let {
             onStartFragment?.run {
-                mPresenter.sendResult(it, mResult, mQuestion?.questionId!!.toString())
+                mPresenter.sendResult(it, mResult, mQuestion?.questionId!!.toString(), if(doubleScore) 1 else 0)
             }
         }
 
