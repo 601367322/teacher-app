@@ -13,10 +13,4 @@ class PKResult : Serializable {
         var type: Int? = null
         var value: Int? = null
     }
-
-    override fun toString(): String {
-        return "PKResult(orderClasses=$orderClasses, questionDesc=$questionDesc)"
-    }
-
-
 }

@@ -40,7 +40,12 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
             }
         }
         studentId?.run {
-            val result = PKResultMessage(this, setting.questionId!!, setting.classId!!, result.answer)
+            val result = PKResultMessage(
+                    this,
+                    setting.questionId!!,
+                    setting.classId!!,
+                    ClassesDetailFragment.mClassesEntity?.klass?.name,
+                    result.answer)
             mResult.add(result)
             result.setAvg(calculateAvg(setting))
             push.mService?.sendMessage(generatePostMessage(PushService.PK_RESULT_SEND, result))
@@ -64,9 +69,9 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
         var respond: Respond? = null
         var classVO: ClassVO? = null
 
-        constructor(studentId: Int, questionId: Int, classId: Int, answer: String) {
+        constructor(studentId: Int, questionId: Int, classId: Int, className: String?, answer: String) {
             this.respond = Respond(studentId, questionId, answer)
-            this.classVO = ClassVO(classId)
+            this.classVO = ClassVO(classId, className)
         }
 
         fun setAvg(avg: Float) {
@@ -75,9 +80,15 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
 
         class IDEntity : Serializable {
             var id: Int? = null
+            var name: String? = null
 
             constructor(id: Int?) {
                 this.id = id
+            }
+
+            constructor(id: Int?, name: String?) {
+                this.id = id
+                this.name = name
             }
         }
 
@@ -98,12 +109,9 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
             var klass: IDEntity? = null
             var averageTime: Float? = null
             var correctRate: Float? = null
-                get() {
-                    return field?.times(100)
-                }
 
-            constructor(classId: Int) {
-                this.klass = IDEntity(classId)
+            constructor(classId: Int, className: String?) {
+                this.klass = IDEntity(classId, className)
             }
         }
     }

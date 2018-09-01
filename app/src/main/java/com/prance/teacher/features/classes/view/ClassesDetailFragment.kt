@@ -44,15 +44,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     override fun layoutId(): Int = R.layout.fragment_classes_detail
 
-    lateinit var mClassesEntity: ClassesEntity
-
     private val mPushServicePresenter by lazy { PushServicePresenter(context!!, this) }
 
     private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
         SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
         })
     }
-
 
     var REQUEST_CODE = 10001
 
@@ -70,12 +67,14 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
          * 班级学生列表的集合
          */
         var mStudentList: MutableList<StudentsEntity>? = null
+
+        var mClassesEntity: ClassesEntity? = null
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
         //获取学生列表
-        mPresenter.getStudentsByClassesId(mClassesEntity.klass!!.id.toString())
+        mPresenter.getStudentsByClassesId(mClassesEntity?.klass!!.id.toString())
 
         readyClass.setOnClickListener {
             context?.let {
@@ -86,9 +85,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         endClass.setOnClickListener { activity?.finish() }
 
-        classesTitle.text = mClassesEntity.klass?.name
-        classesSubTitle.text = mClassesEntity.klass?.addr
-        classesDate.text = """${mClassesEntity.klass?.startTime}-${mClassesEntity.klass?.endTime}"""
+        classesTitle.text = mClassesEntity?.klass?.name
+        classesSubTitle.text = mClassesEntity?.klass?.addr
+        classesDate.text = """${mClassesEntity?.klass?.startTime}-${mClassesEntity?.klass?.endTime}"""
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
@@ -140,7 +139,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             CMD_SEND_QUESTION -> {
                 //开始答题
                 val question = msg.getData(Question::class.java)
-                if (question.classId == mClassesEntity.klass?.id) {
+                if (question.classId == mClassesEntity?.klass?.id) {
                     ActivityUtils.finishActivity(SubjectActivity::class.java)
                     context?.run {
                         startActivity(SubjectActivity.callingIntent(this, question))
@@ -150,7 +149,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             INTERACT_START -> {
                 //抢红包
                 val setting = msg.getData(RedPackageSetting::class.java)
-                if (setting.classId == mClassesEntity.klass?.id) {
+                if (setting.classId == mClassesEntity?.klass?.id) {
                     ActivityUtils.finishActivity(RedPackageActivity::class.java)
                     context?.run {
                         startActivity(RedPackageActivity.callingIntent(this, setting))
@@ -160,7 +159,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             QUIZ -> {
                 //课后反馈
                 val feedBack = msg.getData(Question::class.java)
-                if (feedBack.classId == mClassesEntity.klass?.id) {
+                if (feedBack.classId == mClassesEntity?.klass?.id) {
                     ActivityUtils.finishActivity(AfterClassActivity::class.java)
                     context?.run {
                         startActivity(AfterClassActivity.callingIntent(this, feedBack))
@@ -169,7 +168,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
             PK_START -> {
                 val pkSetting = msg.getData(Question::class.java)
-                if (pkSetting.classId == mClassesEntity.klass?.id) {
+                if (pkSetting.classId == mClassesEntity?.klass?.id) {
                     ActivityUtils.finishActivity(PKActivity::class.java)
                     context?.run {
                         startActivity(PKActivity.callingIntent(this, pkSetting))
@@ -218,7 +217,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             MessageListener.STATUS_CONNECT_SUCCESS -> {
                 val json = JSONObject()
                 json.put(PushService.CMD, ATTEND_CLASS)
-                json.put("classId", mClassesEntity.klass?.id)
+                json.put("classId", mClassesEntity?.klass?.id)
                 mPushServicePresenter.mService?.sendMessage(json.toString())
             }
         }

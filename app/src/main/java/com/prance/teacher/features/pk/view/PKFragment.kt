@@ -181,16 +181,16 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
                     if (mRank == null) {
                         //没有学生作答
-                        runtimeData.text =
+                        runtimeData?.text =
                                 """平均正确率0%
                                 |平均作答时间0秒
                                 |第- -名""".trimMargin()
                     } else {
                         //正常情况
-                        runtimeData.text =
+                        runtimeData?.text =
                                 """平均正确率${mRank.correctRate}%
                                 |平均作答时间${mRank.averageTime}秒
-                                |第${data.indexOf(mRank)}名""".trimMargin()
+                                |第${data.indexOf(mRank) + 1}名""".trimMargin()
                     }
                 }
             }
