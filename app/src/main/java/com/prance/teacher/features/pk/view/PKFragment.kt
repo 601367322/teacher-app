@@ -1,13 +1,19 @@
 package com.prance.teacher.features.pk.view
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
 import cn.sunars.sdk.SunARS
 import com.chillingvan.canvasgl.glview.GLContinuousView
 import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.dateFormat_Min_Second
 import com.prance.lib.common.utils.format
 import com.prance.lib.database.MessageEntity
@@ -25,7 +31,6 @@ import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.subject.model.KeyPadResult
-import com.prance.teacher.features.subject.view.SubjectOnWaitingFragment
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -60,6 +65,9 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     var mAnimGlView: GLView? = null
 
+    var boxLightAnim: ValueAnimator? = null
+    var doubleScore = false
+
     var mActivity: PKActivity? = null
 
     override fun onAttach(context: Context?) {
@@ -70,10 +78,42 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
     private val mSunVoteServicePresenter by lazy {
         SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
 
+            var answerList = mutableListOf<String>()
+
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
-                val keyId = generateKeyPadId(KeyID)
-                mActivity?.let {
-                    mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
+                animGlView?.post {
+                    val keyId = generateKeyPadId(KeyID)
+
+                    //防止重复提交
+                    if(answerList.contains(keyId)){
+                        return@post
+                    }
+                    answerList.add(keyId)
+
+                    //进度条宝箱
+                    if (sInfo == mSetting.result) {
+                        powerProgressbar.progress += 1
+                    }
+                    if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
+                        doubleScore = true
+
+                        //宝箱打开动画
+                        val animationDrawable = box.drawable as AnimationDrawable
+                        animationDrawable.start()
+                        //1秒后打开宝箱灯光
+                        animGlView?.postDelayed({
+                            boxLight.visible()
+                            boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
+                            boxLightAnim!!.interpolator = LinearInterpolator()
+                            boxLightAnim!!.repeatCount = Animation.INFINITE
+                            boxLightAnim!!.repeatMode = ValueAnimator.RESTART
+                            boxLightAnim!!.start()
+                        }, 1000)
+                    }
+                    mActivity?.let {
+                        //发送答题器结果
+                        mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
+                    }
                 }
             }
         })
@@ -89,6 +129,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         mSunVoteServicePresenter.bind()
 
         animGlView.countTimeListener = this
+
+        powerProgressbar.max = mSetting.signCount
 
         if (BuildConfig.DEBUG) {
 

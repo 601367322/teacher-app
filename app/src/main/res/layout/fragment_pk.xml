@@ -43,4 +43,34 @@
         app:strokeColor="#D86410"
         app:strokeWidth="@dimen/m6.0"
         app:typeface="COMICSANSMSGRAS" />
+
+    <com.prance.teacher.weight.SimpleProgressbar
+        android:id="@+id/powerProgressbar"
+        android:layout_width="@dimen/m838.0"
+        android:layout_height="@dimen/m26.0"
+        android:layout_marginStart="@dimen/m542.0"
+        android:layout_marginTop="@dimen/m203.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/boxLight"
+        android:layout_width="@dimen/m290.0"
+        android:layout_height="@dimen/m290.0"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/m1000.0"
+        android:layout_marginTop="@dimen/m60.0"
+        android:src="@drawable/box_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/box"
+        android:layout_width="@dimen/m290.0"
+        android:layout_height="@dimen/m290.0"
+        android:layout_marginStart="@dimen/m1000.0"
+        android:layout_marginTop="@dimen/m60.0"
+        android:src="@drawable/box_anim"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -57,7 +57,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                val classes = ClassesEntity(1)
 //                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, classes)) }
 
-//                context?.let { startActivity(PKActivity.callingIntent(it, PKSetting(1, 1, 10, "1,0,0,0,4,1"))) }
+                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
@@ -71,7 +71,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-//                return@setOnClickListener
+                return@setOnClickListener
             }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))
