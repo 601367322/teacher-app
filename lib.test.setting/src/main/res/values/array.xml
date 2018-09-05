@@ -26,9 +26,12 @@
         <item>10.88.92.177</item>
         <item>10.88.91.196</item>
         <item>10.88.88.2</item>
+        <item>mq-shuangshi.tengyue360.com</item>
+        <item>mq-shuangshi.staging.tengyue360.com</item>
     </string-array>
 
     <string-array name="socket_port">
         <item>8081</item>
+        <item>9000</item>
     </string-array>
 </resources>

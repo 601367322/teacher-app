@@ -45,11 +45,11 @@ class TestSettingFragment : BaseFragment() {
         }
 
         release.setOnClickListener {
-            ok(mHost[0], mPort[0], mHost[0], mSocketPort[0])
+            ok(mHost[0], mPort[0], mHost[3], mSocketPort[1])
         }
 
         staging.setOnClickListener {
-            ok(mHost[5], mPort[0], mHost[5], mSocketPort[0])
+            ok(mHost[5], mPort[0], mHost[4], mSocketPort[1])
         }
 
         test.setOnClickListener {
