@@ -3,24 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <com.prance.teacher.features.pk.view.PKAnimView
-        android:layout_width="match_parent"
         android:id="@+id/animGlView"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/runtimeData"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@dimen/m1282.0"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:text="平均正确率"
-        app:layout_constraintBottom_toBottomOf="@+id/animGlView"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/pk_title_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,13 +29,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:paddingEnd="@dimen/m6.0"
         android:gravity="right"
+        android:paddingEnd="@dimen/m6.0"
         android:text="00:30"
-        android:visibility="gone"
         android:textColor="#FFFEFE"
         android:textSize="@dimen/m69.0"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#D86410"
@@ -46,10 +44,10 @@
 
     <com.prance.teacher.weight.SimpleProgressbar
         android:id="@+id/powerProgressbar"
-        android:layout_width="@dimen/m838.0"
+        android:layout_width="@dimen/m470.0"
         android:layout_height="@dimen/m26.0"
-        android:layout_marginStart="@dimen/m542.0"
-        android:layout_marginTop="@dimen/m203.0"
+        android:layout_marginTop="@dimen/m180.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,10 +55,10 @@
         android:id="@+id/boxLight"
         android:layout_width="@dimen/m290.0"
         android:layout_height="@dimen/m290.0"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/m1000.0"
-        android:layout_marginTop="@dimen/m60.0"
+        android:layout_marginStart="@dimen/m950.0"
+        android:layout_marginTop="@dimen/m40.0"
         android:src="@drawable/box_light"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,9 +66,110 @@
         android:id="@+id/box"
         android:layout_width="@dimen/m290.0"
         android:layout_height="@dimen/m290.0"
-        android:layout_marginStart="@dimen/m1000.0"
-        android:layout_marginTop="@dimen/m60.0"
-        android:src="@drawable/box_anim"
+        android:layout_marginStart="@dimen/m950.0"
+        android:layout_marginTop="@dimen/m40.0"
+        android:src="@drawable/ufo_anim"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="各位宇航员，飞船准备起飞啦"
+        android:textSize="@dimen/m69.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m6.0" />
+
+    <ImageView
+        android:id="@+id/scoreLayout"
+        android:layout_width="@dimen/m612.0"
+        android:layout_marginTop="@dimen/m2000.0"
+        android:layout_height="@dimen/m339.0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/pk_tip_background" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/schoolName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m62.0"
+        android:layout_marginLeft="@dimen/m90.0"
+        android:layout_marginTop="@dimen/m51.0"
+        android:text="北京市海淀区巨人培训机构"
+        android:textColor="#512B90"
+        android:textSize="@dimen/m35.0"
+        app:layout_constraintEnd_toEndOf="@id/scoreLayout"
+        app:layout_constraintStart_toStartOf="@id/scoreLayout"
+        app:layout_constraintTop_toTopOf="@id/scoreLayout" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/correctRate"
+        android:layout_width="@dimen/m180.0"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m103.0"
+        android:layout_marginTop="@dimen/m128.0"
+        android:gravity="center"
+        android:text="0%"
+        android:textColor="#D23D15"
+        android:textSize="@dimen/m46.0"
+        app:layout_constraintStart_toStartOf="@id/scoreLayout"
+        app:layout_constraintTop_toTopOf="@id/scoreLayout" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/avgTime"
+        android:layout_width="@dimen/m180.0"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m62.0"
+        android:layout_marginLeft="@dimen/m90.0"
+        android:gravity="center"
+        android:text="0.00秒"
+        android:textColor="#D23D15"
+        android:textSize="@dimen/m46.0"
+        app:layout_constraintEnd_toEndOf="@id/scoreLayout"
+        app:layout_constraintTop_toTopOf="@id/correctRate" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:layout_width="@dimen/m180.0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m10.0"
+        android:gravity="center"
+        android:text="平均正确率"
+        android:textColor="#512B90"
+        android:textSize="@dimen/m29.0"
+        app:layout_constraintEnd_toEndOf="@id/correctRate"
+        app:layout_constraintStart_toStartOf="@id/correctRate"
+        app:layout_constraintTop_toBottomOf="@id/correctRate" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:layout_width="@dimen/m180.0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m10.0"
+        android:gravity="center"
+        android:text="平均作答时间"
+        android:textColor="#512B90"
+        android:textSize="@dimen/m29.0"
+        app:layout_constraintEnd_toEndOf="@id/avgTime"
+        app:layout_constraintStart_toStartOf="@id/avgTime"
+        app:layout_constraintTop_toBottomOf="@id/avgTime" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rank"
+        android:layout_width="@dimen/m180.0"
+        android:layout_height="@dimen/m55.0"
+        android:layout_marginBottom="@dimen/m28.0"
+        android:layout_marginStart="@dimen/m250.0"
+        android:gravity="center"
+        android:text="第 x 名"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/m42.0"
+        app:layout_constraintBottom_toBottomOf="@id/scoreLayout"
+        app:layout_constraintStart_toStartOf="@id/scoreLayout"
+        app:strokeWidth="@dimen/m6.0" />
+
 </android.support.constraint.ConstraintLayout>

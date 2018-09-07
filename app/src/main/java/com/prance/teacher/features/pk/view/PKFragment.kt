@@ -1,17 +1,17 @@
 package com.prance.teacher.features.pk.view
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
+import android.animation.*
 import android.content.Context
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import cn.sunars.sdk.SunARS
-import com.chillingvan.canvasgl.glview.GLContinuousView
-import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.base.extension.invisible
+import com.prance.lib.base.extension.isVisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.dateFormat_Min_Second
@@ -30,12 +30,14 @@ import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
+import com.prance.teacher.features.pk.rocket.BigRocket
 import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_pk.*
+import org.greenrobot.eventbus.Subscribe
 import java.util.concurrent.TimeUnit
 
 /**
@@ -63,7 +65,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     lateinit var mSetting: ClassesDetailFragment.Question
 
-    var mAnimGlView: GLView? = null
+    var mAnimGlView: PKAnimView? = null
 
     var boxLightAnim: ValueAnimator? = null
     var doubleScore = false
@@ -85,7 +87,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                     val keyId = generateKeyPadId(KeyID)
 
                     //防止重复提交
-                    if(answerList.contains(keyId)){
+                    if (answerList.contains(keyId)) {
                         return@post
                     }
                     answerList.add(keyId)
@@ -143,6 +145,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         animGlView.onResume()
@@ -167,7 +170,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         mSetting.createTime = System.currentTimeMillis()
         SunARS.voteStart(mSetting.type!!, mSetting.param)
         animGlView?.post {
-            runtimeData.visible()
+            tip.invisible()
             timer.visible()
             startCountTimer()
         }
@@ -206,8 +209,22 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         }
     }
 
+    override fun needEventBus(): Boolean = true
+
+    @Subscribe
+    fun onEvent(rocket: BigRocket) {
+        timer.post {
+            if (!scoreLayout.isVisible())
+                scoreLayout.visible()
+            val layoutParams = scoreLayout.layoutParams as ConstraintLayout.LayoutParams
+            layoutParams.marginStart = rocket.startPoint.x.toInt() + rocket.bitmap?.width - resources.getDimensionPixelOffset(R.dimen.m76_0)
+            layoutParams.topMargin = rocket.startPoint.y.toInt() - resources.getDimensionPixelOffset(R.dimen.m52_0)
+            scoreLayout.layoutParams = layoutParams
+        }
+    }
+
     override fun onMessageResponse(msg: MessageEntity): Boolean {
-        runtimeData.post {
+        timer.post {
             when (msg.cmd) {
                 PK_RUNTIME_DATA -> {
                     //所有班级的排名
@@ -221,18 +238,18 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                         }
                     }
 
+                    schoolName.text = ClassesDetailFragment.mClassesEntity?.klass?.name
+
                     if (mRank == null) {
                         //没有学生作答
-                        runtimeData?.text =
-                                """平均正确率0%
-                                |平均作答时间0秒
-                                |第- -名""".trimMargin()
+                        correctRate.text = "0%"
+                        avgTime.text = "0.00秒"
+                        rank.text = "第 x 名"
                     } else {
                         //正常情况
-                        runtimeData?.text =
-                                """平均正确率${mRank.correctRate}%
-                                |平均作答时间${mRank.averageTime}秒
-                                |第${data.indexOf(mRank) + 1}名""".trimMargin()
+                        correctRate.text = "${mRank.correctRate}%"
+                        avgTime.text = "${mRank.averageTime}秒"
+                        rank.text = "第 ${data.indexOf(mRank) + 1} 名"
                     }
                 }
             }

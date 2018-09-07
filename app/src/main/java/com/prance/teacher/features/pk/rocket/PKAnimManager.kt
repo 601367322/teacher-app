@@ -3,48 +3,55 @@ package com.prance.teacher.features.pk.rocket
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PointF
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
-import java.util.*
 
 class PKAnimManager(var context: Context) {
 
     //小火箭
     var littleRocket: Bitmap = GlideApp.with(context)
             .asBitmap()
-            .load(R.drawable.little_rocket)
+            .load(R.drawable.little_rocket_stop)
             .submit().get()
 
     //大火箭
     var bigRocket: Bitmap = GlideApp.with(context)
             .asBitmap()
-            .load(R.drawable.big_rocket)
+            .load(R.drawable.big_rocket_shake_00000)
             .submit().get()
 
     //所有火箭
-    var rockets = mutableListOf<BaseRocket>()
+    var rockets = mutableListOf(
+            LittleRocket(context, PointF(getDimen(R.dimen.m224_0), getDimen(R.dimen.m862_0)), PointF(getDimen(R.dimen.m224_0), getDimen(R.dimen.m220_0)), littleRocket),
+            LittleRocket(context, PointF(getDimen(R.dimen.m386_0), getDimen(R.dimen.m823_0)), PointF(getDimen(R.dimen.m386_0), getDimen(R.dimen.m602_0)), littleRocket),
+            LittleRocket(context, PointF(getDimen(R.dimen.m542_0), getDimen(R.dimen.m807_0)), PointF(getDimen(R.dimen.m542_0), getDimen(R.dimen.m460_0)), littleRocket),
+            LittleRocket(context, PointF(getDimen(R.dimen.m1186_0), getDimen(R.dimen.m812_0)), PointF(getDimen(R.dimen.m1186_0), getDimen(R.dimen.m260_0)), littleRocket),
+            LittleRocket(context, PointF(getDimen(R.dimen.m1346_0), getDimen(R.dimen.m823_0)), PointF(getDimen(R.dimen.m1346_0), getDimen(R.dimen.m682_0)), littleRocket),
+            LittleRocket(context, PointF(getDimen(R.dimen.m1508_0), getDimen(R.dimen.m862_0)), PointF(getDimen(R.dimen.m1508_0), getDimen(R.dimen.m480_0)), littleRocket),
+            BigRocket(context, PointF(getDimen(R.dimen.m743_0), getDimen(R.dimen.m580_0)), PointF(getDimen(R.dimen.m743_0), getDimen(R.dimen.m340_0)), bigRocket)
+    )
+
+    fun getDimen(id: Int): Float {
+        return context.resources.getDimensionPixelOffset(id).toFloat()
+    }
 
     //倒计时
     var countTime: CountTime = CountTime(context)
 
-    //背景
-    var background: Bitmap =  GlideApp.with(context)
-            .asBitmap()
-            .load(R.drawable.rank_background)
-            .submit().get()
+    //星球
+    var earth = Earth(context)
+
+    //移动背景
+    var pkBackground: PKBackground = PKBackground(context)
 
     init {
-        //初始化小火箭
-        rockets.add(LittleRocket(PointF(80F, 700F),littleRocket.width / 2F, littleRocket))
-        rockets.add(LittleRocket(PointF(260F, 500F),littleRocket.width / 2F, littleRocket))
-        rockets.add(LittleRocket(PointF(420F, 650F),littleRocket.width / 2F, littleRocket))
-        rockets.add(LittleRocket(PointF(1320F, 400F),littleRocket.width / 2F, littleRocket))
-        rockets.add(LittleRocket(PointF(1500F, 700F),littleRocket.width / 2F, littleRocket))
-        rockets.add(LittleRocket(PointF(1700F, 500F),littleRocket.width / 2F, littleRocket))
-        //初始化大火箭
-        rockets.add(BigRocket(PointF(1000F, 500F),littleRocket.width / 2F, bigRocket))
+        countTime.listeners.add(earth)
+
+        for (i in rockets) {
+            countTime.listeners.add(i)
+        }
+
+        countTime.listeners.add(pkBackground)
     }
 
 

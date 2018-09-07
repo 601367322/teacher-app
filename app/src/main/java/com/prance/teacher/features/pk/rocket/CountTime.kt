@@ -12,9 +12,7 @@ import com.chillingvan.canvasgl.ICanvasGL
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 import com.prance.teacher.features.pk.view.ICountTimeListener
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.prance.teacher.utils.SoundUtils
 
 /**
  * 倒计时
@@ -31,10 +29,10 @@ class CountTime(var context: Context) {
     var num = 2
     var countDownTimerImg = mutableListOf<Bitmap>()
     var bitmap: Bitmap? = null
-    var listener: ICountTimeListener? = null
+    var listeners: MutableList<ICountTimeListener> = mutableListOf()
 
     init {
-        val width = context.resources.getDimensionPixelOffset(R.dimen.m234_0)
+        val width = context.resources.getDimensionPixelOffset(R.dimen.m100_0)
 
         for (t in mutableListOf(R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)) {
             countDownTimerImg.add(GlideApp.with(context)
@@ -47,12 +45,14 @@ class CountTime(var context: Context) {
         bitmap = countDownTimerImg[num]
 
         point.x = (context.resources.displayMetrics.widthPixels - width).toFloat() / 2F
-        point.y = (context.resources.displayMetrics.heightPixels - width).toFloat() / 2F
+        point.y = context.resources.getDimensionPixelOffset(R.dimen.m317_0).toFloat()
 
     }
 
     fun start() {
         createAnimate().start()
+
+        SoundUtils.play("count_time")
     }
 
     private fun createAnimate(): AnimatorSet {
@@ -82,7 +82,9 @@ class CountTime(var context: Context) {
                 super.onAnimationEnd(animation)
                 if (num == 0) {
                     bitmap = null
-                    listener?.onTimeCountEnd()
+                    for (l in listeners) {
+                        l.onTimeCountEnd()
+                    }
                 } else {
                     num--
                     bitmap = countDownTimerImg[num]
