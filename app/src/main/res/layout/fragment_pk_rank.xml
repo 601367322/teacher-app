@@ -9,10 +9,63 @@
         android:layout_height="match_parent"
         app:cups="@drawable/pk_cups"
         app:cupsTranslationY="@dimen/m400.0"
-        app:cupsTranslationYDiff="@dimen/m100.0" />
+        app:cupsTranslationYDiff="@dimen/m100.0">
+
+
+    </com.prance.teacher.weight.RankBackground>
 
     <TextView
         android:id="@+id/rankResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.prance.teacher.weight.FZTextView
+            android:id="@+id/className2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="河北省上海市T大班"
+            app:strokeColor="#0C0731"
+            app:strokeWidth="@dimen/m3.0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正确率"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/correctRate2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/m34.0"
+                android:text="80%"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平均时长"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/avgTime"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/m34.0"
+                android:layout_height="wrap_content"
+                android:text="正确率"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+        </LinearLayout>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

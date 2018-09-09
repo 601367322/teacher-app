@@ -95,7 +95,7 @@
         android:src="@drawable/pk_tip_background" />
 
     <com.prance.teacher.weight.FZTextView
-        android:id="@+id/schoolName"
+        android:id="@+id/className"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m62.0"

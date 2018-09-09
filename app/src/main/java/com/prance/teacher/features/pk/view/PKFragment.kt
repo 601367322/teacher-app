@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -16,6 +17,7 @@ import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.dateFormat_Min_Second
 import com.prance.lib.common.utils.format
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
@@ -28,6 +30,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.pk.PKActivity
+import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.rocket.BigRocket
@@ -136,12 +139,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         if (BuildConfig.DEBUG) {
 
-//            Flowable.timer(3000, TimeUnit.MILLISECONDS)
-//                    .mySubscribe {
-//                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
-//                            replace(R.id.fragmentContainer, PKRankFragment())
-//                        }
-//                    }
+            Flowable.timer(3000, TimeUnit.MILLISECONDS)
+                    .mySubscribe {
+                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
+                            replace(R.id.fragmentContainer, PKRankFragment.forPKResult(
+                                    PKResult()
+                            ))
+                        }
+                    }
         }
     }
 
@@ -238,7 +243,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                         }
                     }
 
-                    schoolName.text = ClassesDetailFragment.mClassesEntity?.klass?.name
+                    className.text = ClassesDetailFragment.mClassesEntity?.klass?.name
 
                     if (mRank == null) {
                         //没有学生作答
