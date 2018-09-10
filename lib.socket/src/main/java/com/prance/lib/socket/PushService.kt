@@ -127,8 +127,8 @@ class PushService : Service() {
                 e.printStackTrace()
             }
 
-//            val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
-            val future = mBootstrap.connect("47.95.192.21",8081);
+            val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
+//            val future = mBootstrap.connect("101.200.190.50", 9000);
 
             try {
                 future.addListener(object : ChannelFutureListener {
@@ -149,7 +149,7 @@ class PushService : Service() {
             }
         }
 
-        override fun onMessageResponse(msg: MessageEntity):Boolean {
+        override fun onMessageResponse(msg: MessageEntity): Boolean {
 
             //检查是否重复消息
             val existsMessage = mMessageDaoUtils.getMessageByMsgId(msg.msgId)

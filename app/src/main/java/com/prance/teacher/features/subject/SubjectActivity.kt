@@ -1,5 +1,6 @@
 package com.prance.teacher.features.subject
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.prance.teacher.features.subject.view.SubjectOnWaitingFragment
 import io.reactivex.Flowable
+import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
 /**
@@ -85,17 +87,17 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         mPushServicePresenterPresenter.bind()
 
         if (BuildConfig.DEBUG) {
-//            Flowable.timer(5, TimeUnit.SECONDS)
-//                    .subscribe {
-//                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-//                                                mutableListOf(
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-//                                                )))
-//                    }
+            Flowable.timer(5, TimeUnit.SECONDS)
+                    .subscribe {
+                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+                                mutableListOf(
+                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+                                )))
+                    }
         }
     }
 
@@ -118,7 +120,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
 
         mQuestion?.classId?.let {
             onStartFragment?.run {
-                mPresenter.sendResult(it, mResult, mQuestion?.questionId!!.toString(), if(doubleScore) 1 else 0)
+                mPresenter.sendResult(it, mResult, mQuestion?.questionId!!.toString(), if (doubleScore) 1 else 0)
             }
         }
 
@@ -144,6 +146,8 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         SunARS.voteStop()
         finish()
 
-        startActivity(SubjectRankActivity.callingIntent(this, questionResult))
+
+        //TODO 不能在此打开一个新的界面，否则会影响小鱼的视频卡死
+        EventBus.getDefault().post(questionResult)
     }
 }

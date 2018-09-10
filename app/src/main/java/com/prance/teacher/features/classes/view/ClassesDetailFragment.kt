@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.mySubscribe
@@ -38,6 +39,7 @@ import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
+import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
 import java.util.concurrent.TimeUnit
@@ -100,10 +102,41 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
             mSunVoteServicePresenter.bind()
 
+
+            context?.run {
+                try {
+                    startActivity(IntentUtils.callingXYDial())
+
+                    if (BuildConfig.DEBUG) {
+                        Flowable.timer(8, TimeUnit.SECONDS)
+                                .mySubscribe {
+                                    //                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
+//                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
+//                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+//                                                        mutableListOf(
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+//                                                        )))) }
+                                    var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
+                                    context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+                                }
+
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showShort("请使用小鱼易联")
+                }
+            }
+//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
+//            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        LogUtils.d(requestCode)
         when (requestCode) {
             REQUEST_CODE -> {
                 when (resultCode) {
@@ -126,6 +159,13 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @Subscribe
+    fun onEvent(result: SubjectRankFragment.QuestionResult) {
+        startActivity(SubjectRankActivity.callingIntent(context!!, result))
+    }
+
+    override fun needEventBus(): Boolean = true
+
     override fun onDestroy() {
         super.onDestroy()
 
@@ -144,6 +184,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 val question = msg.getData(Question::class.java)
                 if (question.classId == mClassesEntity?.klass?.id) {
                     ActivityUtils.finishActivity(SubjectActivity::class.java)
+
                     context?.run {
                         startActivity(SubjectActivity.callingIntent(this, question))
                     }
@@ -247,6 +288,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         }
 
     }
+
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         hideProgress()

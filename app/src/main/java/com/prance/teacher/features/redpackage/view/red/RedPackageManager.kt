@@ -245,7 +245,7 @@ class RedPackageManager {
                     it,
                     big,
                     score,
-                    if (big) Bubble(mutableListOf(bubble1, bubble2)) else Bubble(mutableListOf(bubble1)),
+                    if (big) Bubble(mutableListOf(bubble1, bubble2)) else Bubble(mutableListOf(bubble)),
                     redPackageTitle[randomTitle]!!,
                     if (big) bigRedPackageImg else redPackageImg,
                     tipBitmap,
