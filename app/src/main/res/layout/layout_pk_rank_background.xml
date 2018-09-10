@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rank_background">
+
+    <ImageView
+        android:id="@+id/meteor1"
+        android:layout_width="@dimen/m383.0"
+        android:layout_height="@dimen/m192.0"
+        android:scaleType="centerInside"
+        android:src="@drawable/rank_meteor" />
+
+    <ImageView
+        android:id="@+id/meteor2"
+        android:layout_width="@dimen/m383.0"
+        android:layout_height="@dimen/m192.0"
+        android:scaleType="centerInside"
+        android:src="@drawable/rank_meteor" />
+
+    <ImageView
+        android:id="@+id/meteor3"
+        android:layout_width="@dimen/m383.0"
+        android:layout_height="@dimen/m192.0"
+        android:scaleType="centerInside"
+        android:src="@drawable/rank_meteor" />
+
+    <ImageView
+        android:id="@+id/light"
+        android:layout_width="@dimen/m1920.0"
+        android:layout_height="@dimen/m1920.0"
+        android:scaleType="fitXY"
+        android:src="@drawable/rank_light_background"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/cups"
+        android:layout_width="@dimen/m1197.0"
+        android:layout_height="@dimen/m554.0"
+        android:layout_marginStart="@dimen/m94.0"
+        android:layout_marginTop="@dimen/m642.0"
+        android:adjustViewBounds="true"
+        android:visibility="gone"
+        android:src="@drawable/pk_cups"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/my_cup"
+        android:layout_width="@dimen/m420.0"
+        android:layout_height="@dimen/m446.0"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/m1414.0"
+        android:layout_marginTop="@dimen/m672.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/m420.0"
+            android:layout_height="@dimen/m446.0"
+            android:adjustViewBounds="true"
+            android:src="@drawable/pk_my_cup" />
+
+        <LinearLayout
+            android:id="@+id/rankNumberLayout"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:paddingTop="@dimen/m50.0"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/rank_earth_background"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/star1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/rank_star_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/star2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="172dp"
+        android:src="@drawable/rank_star_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/star3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="260dp"
+        android:layout_marginTop="124dp"
+        android:src="@drawable/rank_star_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/star4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="148dp"
+        android:layout_marginStart="116dp"
+        android:src="@drawable/rank_star_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/star5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="336dp"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/rank_star_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/star6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/rank_star_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/rank_title_background"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

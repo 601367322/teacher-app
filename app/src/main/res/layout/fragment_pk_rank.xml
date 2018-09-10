@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.prance.teacher.weight.RankBackground
+    <com.prance.teacher.weight.PKRankBackground
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cups="@drawable/pk_cups"
-        app:cupsTranslationY="@dimen/m400.0"
-        app:cupsTranslationYDiff="@dimen/m100.0">
-
-
-    </com.prance.teacher.weight.RankBackground>
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/rankResult"
@@ -20,15 +15,52 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/number2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="@dimen/m100.0"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/m500.0"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/m51.0"
+                android:layout_height="@dimen/m89.0"
+                android:src="@drawable/pk_light_icon" />
+
+            <ImageView
+                android:layout_width="@dimen/m105.0"
+                android:layout_height="@dimen/m49.0"
+                android:layout_marginLeft="@dimen/m20.0"
+                android:src="@drawable/pk_score" />
+
+            <ImageView
+                android:layout_width="@dimen/m48.0"
+                android:layout_height="@dimen/m48.0"
+                android:src="@drawable/red_package_score_add" />
+
+            <LinearLayout
+                android:id="@+id/scoreLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </LinearLayout>
 
         <com.prance.teacher.weight.FZTextView
             android:id="@+id/className2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="河北省上海市T大班"
+            android:autoSizeTextType="uniform"
+            android:textSize="@dimen/m38.0"
             app:strokeColor="#0C0731"
             app:strokeWidth="@dimen/m3.0" />
 
@@ -43,14 +75,16 @@
                 android:textSize="@dimen/m34.0"
                 app:strokeColor="#0C0731"
                 app:strokeWidth="@dimen/m3.0" />
+
             <com.prance.teacher.weight.FZTextView
                 android:id="@+id/correctRate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/m34.0"
                 android:text="80%"
+                android:textSize="@dimen/m34.0"
                 app:strokeColor="#D23D15"
                 app:strokeWidth="@dimen/m3.0" />
+
             <com.prance.teacher.weight.FZTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,14 +92,341 @@
                 android:textSize="@dimen/m34.0"
                 app:strokeColor="#0C0731"
                 app:strokeWidth="@dimen/m3.0" />
+
             <com.prance.teacher.weight.FZTextView
-                android:id="@+id/avgTime"
+                android:id="@+id/avgTime2"
                 android:layout_width="wrap_content"
-                android:textSize="@dimen/m34.0"
                 android:layout_height="wrap_content"
-                android:text="正确率"
+                android:text="3"
+                android:textSize="@dimen/m34.0"
                 app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
                 app:strokeWidth="@dimen/m3.0" />
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/number1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m496.0"
+        android:layout_marginTop="@dimen/m452.0"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/m51.0"
+                android:layout_height="@dimen/m89.0"
+                android:src="@drawable/pk_light_icon" />
+
+            <ImageView
+                android:layout_width="@dimen/m105.0"
+                android:layout_height="@dimen/m49.0"
+                android:layout_marginLeft="@dimen/m20.0"
+                android:src="@drawable/pk_score" />
+
+            <ImageView
+                android:layout_width="@dimen/m48.0"
+                android:layout_height="@dimen/m48.0"
+                android:src="@drawable/red_package_score_add" />
+
+            <LinearLayout
+                android:id="@+id/scoreLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.prance.teacher.weight.FZTextView
+            android:id="@+id/className1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="河北省上海市T大班"
+            android:textSize="@dimen/m38.0"
+            app:strokeColor="#0C0731"
+            app:strokeWidth="@dimen/m3.0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正确率"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/correctRate1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80%"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平均时长"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/avgTime1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/number3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m880.0"
+        android:layout_marginTop="@dimen/m516.0"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/m51.0"
+                android:layout_height="@dimen/m89.0"
+                android:src="@drawable/pk_light_icon" />
+
+            <ImageView
+                android:layout_width="@dimen/m105.0"
+                android:layout_height="@dimen/m49.0"
+                android:layout_marginLeft="@dimen/m20.0"
+                android:src="@drawable/pk_score" />
+
+            <ImageView
+                android:layout_width="@dimen/m48.0"
+                android:layout_height="@dimen/m48.0"
+                android:src="@drawable/red_package_score_add" />
+
+            <LinearLayout
+                android:id="@+id/scoreLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.prance.teacher.weight.FZTextView
+            android:id="@+id/className3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="河北省上海市T大班"
+            android:textSize="@dimen/m38.0"
+            app:strokeColor="#0C0731"
+            app:strokeWidth="@dimen/m3.0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正确率"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/correctRate3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80%"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平均时长"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/avgTime3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/number4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m1400.0"
+        android:layout_marginTop="@dimen/m653.0"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.prance.teacher.weight.FZTextView
+            android:id="@+id/className4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="河北省上海市T大班"
+            android:textSize="@dimen/m38.0"
+            app:strokeColor="#0C0731"
+            app:strokeWidth="@dimen/m3.0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正确率"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/correctRate4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80%"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平均时长"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/avgTime4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#D23D15"
+                app:strokeWidth="@dimen/m3.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒"
+                android:textSize="@dimen/m34.0"
+                app:strokeColor="#0C0731"
+                app:strokeWidth="@dimen/m3.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.prance.teacher.weight.FZTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m96.0"
+        android:layout_marginTop="@dimen/m310.0"
+        android:text="恭喜以下班级夺得前三名 "
+        android:textSize="@dimen/m51.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m3.0" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m234.0"
+        android:text="PK结束啦~~ "
+        android:textSize="@dimen/m69.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m6.0" />
+
+
+    <com.prance.teacher.weight.FZTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m187.0"
+        android:layout_marginTop="@dimen/m378.0"
+        android:text="本班成绩 "
+        android:textSize="@dimen/m51.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m3.0" />
+
+
+    <com.prance.teacher.weight.CountTimerFinish
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m40.0"
+        android:layout_marginTop="@dimen/m40.0"
+        android:letterSpacing="0.1"
+        android:text="TextView"
+        android:textColor="#FFFEFE"
+        android:textSize="@dimen/m60.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#D86410"
+        app:strokeWidth="@dimen/m5.0" />
+
 </android.support.constraint.ConstraintLayout>

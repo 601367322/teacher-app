@@ -26,9 +26,6 @@ class SubjectRankFragment : BaseFragment() {
 
     var mQuestionResult: QuestionResult? = null
 
-    var mDisposable: Disposable? = null
-    var mTotalTime = 5
-
     lateinit var rankNames: MutableList<TextView>
     lateinit var rankAvatars: MutableList<ImageView>
 
@@ -69,29 +66,7 @@ class SubjectRankFragment : BaseFragment() {
                         }
                     }
                 }
-        updateTimeText()
-        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
-                .take(5)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mTotalTime--
 
-                    updateTimeText()
-                }
-    }
-
-    private fun updateTimeText() {
-        if (mTotalTime == 0) {
-            activity?.finish()
-        }
-        time.text = "${mTotalTime}秒"
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        mDisposable?.dispose()
     }
 
     class QuestionResult : Serializable {

@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.PointF
 import com.blankj.utilcode.util.ScreenUtils
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chillingvan.canvasgl.ICanvasGL
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
@@ -35,7 +36,7 @@ class PKBackground(val context: Context) : ICountTimeListener {
         )
 
         for ((index, i) in backgroundRes.withIndex()) {
-            backgroundArray.add(GlideApp.with(context).asBitmap().load(i).submit(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight()).get())
+            backgroundArray.add(GlideApp.with(context).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).load(i).submit(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight()).get())
             points.add(PointF(0F, -index.toFloat() * ScreenUtils.getScreenHeight()))
         }
     }
@@ -72,7 +73,7 @@ class PKBackground(val context: Context) : ICountTimeListener {
     }
 
     val VY_MULTIPLIER = 0.01f // px/ms
-    val MIN_VY = 10
+    val MIN_VY = 20
 
     fun updatePosition(timeMs: Int) {
 
@@ -82,6 +83,7 @@ class PKBackground(val context: Context) : ICountTimeListener {
 
             if (p.y >= ScreenUtils.getScreenHeight()) {
                 p.y = (-2 * ScreenUtils.getScreenHeight()).toFloat()
+                p.y += y
             }
         }
         EventBus.getDefault().post(this)

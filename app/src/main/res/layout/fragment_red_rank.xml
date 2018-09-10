@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         app:cups="@drawable/rank_cups_three_background" />
 
-    <com.prance.teacher.weight.FZTextView
+    <com.prance.teacher.weight.CountTimerFinish
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

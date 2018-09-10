@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import com.blankj.utilcode.util.SizeUtils
 
 
-class FZTextView : TextView, AutoSizeableTextView {
+open class FZTextView : TextView, AutoSizeableTextView {
 
     var strokeWidth = 0
     var strokeColor = Color.BLACK
@@ -51,6 +51,10 @@ class FZTextView : TextView, AutoSizeableTextView {
                 a.recycle()
             }
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
     override fun onDraw(canvas: Canvas) {

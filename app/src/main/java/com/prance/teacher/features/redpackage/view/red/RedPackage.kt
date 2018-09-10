@@ -147,9 +147,9 @@ class RedPackage {
                 }
 
                 if (BuildConfig.DEBUG) {
-                    if (y > 600 && hideAnimator == null) {
-                        destroy(StudentScore(StudentsEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 2, 2))
-                    }
+//                    if (y > 600 && hideAnimator == null) {
+//                        destroy(StudentScore(StudentsEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 2, 2))
+//                    }
                 }
             }
             translationAnimator!!.addListener(object : AnimatorListenerAdapter() {

@@ -1,5 +1,6 @@
 package com.prance.teacher.features.classes.model
 
+import com.prance.teacher.R.id.name
 import java.io.Serializable
 
 class ClassesEntity : Serializable {
@@ -15,6 +16,12 @@ class ClassesEntity : Serializable {
     constructor(name: String) {
         klass = KlassEntity()
         klass!!.name = name
+    }
+
+    constructor(id: Int, name: String) {
+        klass = KlassEntity()
+        klass!!.name = name
+        klass!!.id = id
     }
 
     constructor(name: String, binding: Int) {

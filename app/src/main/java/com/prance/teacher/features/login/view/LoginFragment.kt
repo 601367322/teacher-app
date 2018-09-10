@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.GlideOptions
@@ -100,6 +101,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         GlideApp.with(this)
                 .load(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .apply(GlideOptions.bitmapTransform(RoundedCornersTransformation(resources.getDimensionPixelOffset(R.dimen.m16_0), 0)))
                 .into(qrCode)
 

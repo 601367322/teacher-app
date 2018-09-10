@@ -85,17 +85,17 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         mPushServicePresenterPresenter.bind()
 
         if (BuildConfig.DEBUG) {
-            Flowable.timer(5, TimeUnit.SECONDS)
-                    .subscribe {
-                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-                                                mutableListOf(
-                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-                                                )))
-                    }
+//            Flowable.timer(5, TimeUnit.SECONDS)
+//                    .subscribe {
+//                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+//                                                mutableListOf(
+//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+//                                                )))
+//                    }
         }
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PointF
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.R
@@ -48,11 +49,11 @@ class BigRocket(val context: Context,
         var height = context.resources.getDimensionPixelOffset(R.dimen.m556_0)
 
         for (i in shakeRes) {
-            shakeArray.add(GlideApp.with(context).asBitmap().load(i).submit(width, height).get())
+            shakeArray.add(GlideApp.with(context).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).load(i).submit(width, height).get())
         }
 
         for (i in runningRes) {
-            runningArray.add(GlideApp.with(context).asBitmap().load(i).submit(width, height).get())
+            runningArray.add(GlideApp.with(context).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).load(i).submit(width, height).get())
         }
 
         starShake()

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import cn.sunars.sdk.SunARS
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
@@ -101,6 +102,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         //雷达动图
         GlideApp.with(this)
                 .asGif()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(R.drawable.match_loading)
                 .into(loadingImg)
 
@@ -274,6 +276,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
             GlideApp.with(this)
                     .asGif()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(R.drawable.match_empty_view)
                     .into(emptyImage)
         } else {

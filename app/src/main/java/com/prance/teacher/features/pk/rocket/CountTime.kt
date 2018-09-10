@@ -8,6 +8,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PointF
 import android.view.animation.DecelerateInterpolator
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chillingvan.canvasgl.ICanvasGL
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
@@ -37,6 +38,7 @@ class CountTime(var context: Context) {
         for (t in mutableListOf(R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)) {
             countDownTimerImg.add(GlideApp.with(context)
                     .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(t)
                     .submit(width, width)
                     .get())

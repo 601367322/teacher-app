@@ -3,6 +3,7 @@ package com.prance.teacher.features.pk.rocket
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PointF
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 
@@ -11,12 +12,14 @@ class PKAnimManager(var context: Context) {
     //小火箭
     var littleRocket: Bitmap = GlideApp.with(context)
             .asBitmap()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .load(R.drawable.little_rocket_stop)
             .submit().get()
 
     //大火箭
     var bigRocket: Bitmap = GlideApp.with(context)
             .asBitmap()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .load(R.drawable.big_rocket_shake_00000)
             .submit().get()
 

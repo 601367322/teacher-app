@@ -1,10 +1,14 @@
 package com.prance.teacher.features.pk.view
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chillingvan.canvasgl.ICanvasGL
 import com.chillingvan.canvasgl.glview.GLContinuousView
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.teacher.R
 import com.prance.teacher.features.pk.rocket.PKAnimManager
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -16,8 +20,14 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
 
     var countTimeListener: ICountTimeListener? = null
 
+    var defaultBackground: Bitmap? = null
+
     init {
         setZOrderMediaOverlay(true)
+
+        Thread({
+            defaultBackground = GlideApp.with(context).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).load(R.drawable.pk_background_0001).submit().get()
+        }).start()
 
         //初始化资源
         Flowable
@@ -37,6 +47,11 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
     }
 
     override fun onGLDraw(canvas: ICanvasGL) {
+        if (mPKAnimManager == null && defaultBackground != null) {
+            canvas.save()
+            canvas.drawBitmap(defaultBackground, 0, 0)
+            canvas.restore()
+        }
         mPKAnimManager?.run {
 
             //画背景

@@ -25,7 +25,7 @@ android {
         //只有中文
         resConfigs "zh"
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a","x86"
         }
         // 测试开关
         manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_close")

@@ -100,36 +100,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
             mSunVoteServicePresenter.bind()
 
-
-            context?.run {
-                try {
-                    startActivity(IntentUtils.callingXYDial())
-
-                    if (BuildConfig.DEBUG) {
-                        Flowable.timer(8, TimeUnit.SECONDS)
-                                .mySubscribe {
-                                    //                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
-//                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
-//                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-//                                                        mutableListOf(
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-//                                                        )))) }
-                                    var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
-                                    context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
-                                }
-
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    ToastUtils.showShort("请使用小鱼易联")
-                }
-            }
-//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
-//            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
     }
 
@@ -144,25 +114,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                         context?.run {
                             try {
                                 startActivity(IntentUtils.callingXYDial())
-
-                                if (BuildConfig.DEBUG) {
-                                    Flowable.timer(8, TimeUnit.SECONDS)
-                                            .mySubscribe {
-//                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
-//                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
-//                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-//                                                        mutableListOf(
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-//                                                        )))) }
-                                                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
-                                                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
-                                            }
-
-                                }
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 ToastUtils.showShort("请使用小鱼易联")

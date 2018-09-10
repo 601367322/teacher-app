@@ -143,7 +143,20 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 //                    .mySubscribe {
 //                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
 //                            replace(R.id.fragmentContainer, PKRankFragment.forPKResult(
-//                                    PKResult()
+//                                    PKResult(
+//                                            mutableListOf(
+//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(1, "第一名"), 2.1F, 90.0F),
+//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(2, "第二名"), 12.1F, 60.0F),
+//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(31, "第三名"), 3.1F, 70.0F),
+//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(4, "第四名"), 4.1F, 10.0F),
+//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(5, "第无名"), 25.1F, 920.0F)
+//                                            ),
+//                                            mutableListOf(
+//                                                    PKResult.Question(3, 100),
+//                                                    PKResult.Question(4, 200),
+//                                                    PKResult.Question(5, 300)
+//                                            )
+//                                    )
 //                            ))
 //                        }
 //                    }

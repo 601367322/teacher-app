@@ -3,6 +3,7 @@ package com.prance.teacher.features.redpackage.view.red
 import android.content.Context
 import android.graphics.*
 import com.blankj.utilcode.util.Utils
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chillingvan.canvasgl.CanvasGL
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.BuildConfig
@@ -109,6 +110,7 @@ class RedPackageManager {
             redPackageImg.add(
                     GlideApp.with(context)
                             .asBitmap()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .load(i)
                             .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
                             .get()
@@ -128,6 +130,7 @@ class RedPackageManager {
         for (i in redPackageTitleRes) {
             redPackageTitle[i.key] = GlideApp.with(context)
                     .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(i.value)
                     .submit(titleWidth, titleWidth)
                     .get()
@@ -136,6 +139,7 @@ class RedPackageManager {
         //气泡
         bubble = GlideApp.with(context)
                 .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(R.drawable.red_package_pao)
                 .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
                 .get()
@@ -144,6 +148,7 @@ class RedPackageManager {
         val scoreMaxWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m48_0)
         val scoreRes = mutableMapOf(
                 "+" to R.drawable.red_package_score_add,
+                "0" to R.drawable.red_package_score_0,
                 "1" to R.drawable.red_package_score_1,
                 "2" to R.drawable.red_package_score_2,
                 "3" to R.drawable.red_package_score_3,
@@ -157,6 +162,7 @@ class RedPackageManager {
         for (i in scoreRes) {
             scoreBitmaps[i.key] = GlideApp.with(context)
                     .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(i.value)
                     .submit(scoreMaxWidth, scoreMaxWidth)
                     .get()
@@ -165,6 +171,7 @@ class RedPackageManager {
         //抢到红包提示
         tipBitmap = GlideApp.with(context)
                 .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(R.drawable.red_package_tip_background)
                 .submit(context.resources.getDimensionPixelOffset(R.dimen.m237_0), context.resources.getDimensionPixelOffset(R.dimen.m340_0))
                 .get()
@@ -206,7 +213,7 @@ class RedPackageManager {
             redPackages.add(red)
 
             if (BuildConfig.DEBUG) {
-                destroyRedPackageNum++
+//                destroyRedPackageNum++
             }
             return red
         }

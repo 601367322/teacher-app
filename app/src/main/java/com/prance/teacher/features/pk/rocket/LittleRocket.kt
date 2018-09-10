@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PointF
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.R
@@ -33,7 +34,7 @@ class LittleRocket(val context: Context,
         )
 
         for (i in runningRes) {
-            runningArray.add(GlideApp.with(context).asBitmap().load(i).submit().get())
+            runningArray.add(GlideApp.with(context).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).load(i).submit().get())
         }
     }
 

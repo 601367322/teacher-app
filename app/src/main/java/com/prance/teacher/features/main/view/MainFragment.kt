@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.sunvote.platform.UsbManagerImpl
 import com.prance.lib.sunvote.service.SunARSListenerAdapter
@@ -27,6 +28,7 @@ import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.features.subject.SubjectActivity
+import io.reactivex.Flowable
 
 /**
  * 首页
@@ -70,7 +72,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-                return@setOnClickListener
+//                return@setOnClickListener
             }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))

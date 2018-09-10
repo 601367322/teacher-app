@@ -16,7 +16,7 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_rank.*
+import kotlinx.android.synthetic.main.fragment_red_rank.*
 import java.io.Serializable
 import java.util.concurrent.TimeUnit
 import kotlin.math.min
@@ -28,10 +28,6 @@ import kotlin.math.min
 class RedPackageRankFragment : BaseFragment() {
 
     lateinit var scores: MutableList<StudentScore>
-
-    var mDisposable: Disposable? = null
-
-    var mTotalTime = 5
 
     lateinit var rankNames: MutableList<TextView>
     lateinit var rankScores: MutableList<TextView>
@@ -56,7 +52,7 @@ class RedPackageRankFragment : BaseFragment() {
         }
     }
 
-    override fun layoutId(): Int = R.layout.fragment_rank
+    override fun layoutId(): Int = R.layout.fragment_red_rank
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         scores = (arguments?.getSerializable(SCORES) as BundleScore).scores
@@ -91,30 +87,6 @@ class RedPackageRankFragment : BaseFragment() {
 //                    .into(rankAvatar1)
         }
 
-        updateTimeText()
-
-        mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
-                .take(5)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mTotalTime--
-
-                    updateTimeText()
-                }
-    }
-
-    private fun updateTimeText() {
-        if (mTotalTime == 0) {
-            activity?.finish()
-        }
-        time.text = "${mTotalTime}秒"
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        mDisposable?.dispose()
     }
 
     /**

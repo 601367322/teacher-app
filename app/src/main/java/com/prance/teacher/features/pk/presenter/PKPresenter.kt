@@ -35,9 +35,9 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
             }
         }
         if (BuildConfig.DEBUG) {
-            if (studentId == null) {
-                studentId = 1
-            }
+//            if (studentId == null) {
+//                studentId = 1
+//            }
         }
         studentId?.run {
             val result = PKResultMessage(
@@ -113,6 +113,14 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
             constructor(classId: Int, className: String?) {
                 this.klass = IDEntity(classId, className)
             }
+
+            constructor(klass: IDEntity?, averageTime: Float?, correctRate: Float?) {
+                this.klass = klass
+                this.averageTime = averageTime
+                this.correctRate = correctRate
+            }
+
+
         }
     }
 
