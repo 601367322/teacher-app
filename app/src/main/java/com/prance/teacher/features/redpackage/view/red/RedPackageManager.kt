@@ -63,6 +63,9 @@ class RedPackageManager {
     //红包背景
     var redPackageImg: MutableList<Bitmap> = mutableListOf()
 
+    //红包背景
+    var bigRedPackageImg: MutableList<Bitmap> = mutableListOf()
+
     //红包ABCD
     var redPackageTitle: MutableMap<String, Bitmap> = mutableMapOf()
 
@@ -71,6 +74,8 @@ class RedPackageManager {
 
     //气泡
     var bubble: Bitmap
+    var bubble1: Bitmap
+    var bubble2: Bitmap
 
     //抢到红包提示背景
     var tipBitmap: Bitmap
@@ -117,6 +122,29 @@ class RedPackageManager {
             )
         }
 
+        //红包Gif资源
+        val bigRedPackageRes = mutableListOf(
+                R.drawable.big_red_package_00000,
+                R.drawable.big_red_package_00001,
+                R.drawable.big_red_package_00002,
+                R.drawable.big_red_package_00003,
+                R.drawable.big_red_package_00004,
+                R.drawable.big_red_package_00005,
+                R.drawable.big_red_package_00006,
+                R.drawable.big_red_package_00007
+        )
+
+        for (i in bigRedPackageRes) {
+            bigRedPackageImg.add(
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .load(i)
+                            .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
+                            .get()
+            )
+        }
+
         //红包标题 ABCD
         val redPackageTitleRes = mutableMapOf(
                 "A" to R.drawable.red_package_title_a,
@@ -141,6 +169,20 @@ class RedPackageManager {
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(R.drawable.red_package_pao)
+                .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
+                .get()
+        //气泡
+        bubble1 = GlideApp.with(context)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .load(R.drawable.big_red_package_pao1)
+                .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
+                .get()
+        //气泡
+        bubble2 = GlideApp.with(context)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .load(R.drawable.big_red_package_pao2)
                 .submit(DEFAULT_WIDTH, DEFAULT_WIDTH)
                 .get()
 
@@ -184,7 +226,7 @@ class RedPackageManager {
 
             var big = false
 
-            if(BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 destroyIntervalNum = 4
             }
 
@@ -203,9 +245,9 @@ class RedPackageManager {
                     it,
                     big,
                     score,
-                    bubble,
+                    if (big) Bubble(mutableListOf(bubble1, bubble2)) else Bubble(mutableListOf(bubble1)),
                     redPackageTitle[randomTitle]!!,
-                    redPackageImg,
+                    if (big) bigRedPackageImg else redPackageImg,
                     tipBitmap,
                     scoreBitmaps
             )
@@ -213,7 +255,7 @@ class RedPackageManager {
             redPackages.add(red)
 
             if (BuildConfig.DEBUG) {
-//                destroyRedPackageNum++
+                destroyRedPackageNum++
             }
             return red
         }

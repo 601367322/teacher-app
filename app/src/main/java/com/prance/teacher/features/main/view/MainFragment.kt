@@ -56,7 +56,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
-                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
+//                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
 //                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
@@ -66,13 +66,13 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A",5)
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-//                val redConfig = RedPackageSetting(1,60,1,1)
-//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+                val redConfig = RedPackageSetting(1,60,1,1)
+                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-//                return@setOnClickListener
+                return@setOnClickListener
             }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))

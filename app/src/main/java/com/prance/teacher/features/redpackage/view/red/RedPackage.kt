@@ -55,7 +55,7 @@ class RedPackage {
 
     var bitmap: Bitmap
     //气泡
-    var bubble: Bitmap? = null
+    var bubble: Bubble? = null
     //标题abcd
     var redPackageTitle: Bitmap
     //当前的红包图Gif
@@ -96,7 +96,7 @@ class RedPackage {
             lineNum: Int,
             big: Boolean,
             score: Int,
-            bubble: Bitmap,
+            bubble: Bubble,
             redPackageTitle: Bitmap,
             redPackageArray: MutableList<Bitmap>,
             tipBitmap: Bitmap,
@@ -160,12 +160,13 @@ class RedPackage {
                     if (state != RedPackageStatus.GRAB) {
                         state = RedPackageStatus.FREE
 
-                        disposable?.dispose()
-                        bubble = null
+                        stopEverything()
                     }
                 }
             })
             translationAnimator!!.start()
+
+            bubble?.startAnim()
         }
     }
 
@@ -209,8 +210,7 @@ class RedPackage {
                     //动画结束之后变为释放状态
                     state = RedPackageStatus.FREE
 
-                    disposable?.dispose()
-                    bubble = null
+                    stopEverything()
                 }
             })
             hideAnimator!!.start()
@@ -232,4 +232,9 @@ class RedPackage {
         return screenWidth.toFloat() / lines.toFloat()
     }
 
+    private fun stopEverything(){
+        disposable?.dispose()
+        bubble?.destroy()
+        bubble = null
+    }
 }

@@ -57,7 +57,7 @@ class RedPackageAnimGLView : GLContinuousView {
                         bitmapMatrix.scale(DEFAULT_SCALE, DEFAULT_SCALE)
                         bitmapMatrix.translate(itemX.toFloat(), itemY.toFloat())
 
-                        canvas.drawBitmap(this, bitmapMatrix)
+                        canvas.drawBitmap(bubble, bitmapMatrix)
 
                         bitmapMatrix.reset()
                         bitmapMatrix.scale(DEFAULT_SCALE, DEFAULT_SCALE)
@@ -68,7 +68,7 @@ class RedPackageAnimGLView : GLContinuousView {
                     item.bubble?.run {
                         canvas.drawBitmap(item.redPackage, itemX, itemY)
                         canvas.drawBitmap(item.redPackageTitle, titleX, titleY)
-                        canvas.drawBitmap(this, itemX, itemY)
+                        canvas.drawBitmap(bubble, itemX, itemY)
                     }
                 }
 
