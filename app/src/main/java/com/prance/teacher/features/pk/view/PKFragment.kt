@@ -139,14 +139,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         if (BuildConfig.DEBUG) {
 
-            Flowable.timer(3000, TimeUnit.MILLISECONDS)
-                    .mySubscribe {
-                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
-                            replace(R.id.fragmentContainer, PKRankFragment.forPKResult(
-                                    PKResult()
-                            ))
-                        }
-                    }
+//            Flowable.timer(3000, TimeUnit.MILLISECONDS)
+//                    .mySubscribe {
+//                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
+//                            replace(R.id.fragmentContainer, PKRankFragment.forPKResult(
+//                                    PKResult()
+//                            ))
+//                        }
+//                    }
         }
     }
 

@@ -4,19 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import cn.sunars.sdk.SunARS
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.lib.test.setting.features.TestSettingActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectCountTimeFragment
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.prance.teacher.features.subject.view.SubjectOnWaitingFragment
+import io.reactivex.Flowable
+import java.util.concurrent.TimeUnit
 
 /**
  * 上课答题
@@ -79,17 +85,17 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         mPushServicePresenterPresenter.bind()
 
         if (BuildConfig.DEBUG) {
-//            Flowable.timer(3, TimeUnit.SECONDS)
-//                    .subscribe {
-//                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-//                                                mutableListOf(
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-//                                                )))
-//                    }
+            Flowable.timer(5, TimeUnit.SECONDS)
+                    .subscribe {
+                        onSubjectDestroy(SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+                                                mutableListOf(
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+                                                        StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+                                                )))
+                    }
         }
     }
 
@@ -136,8 +142,8 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
     private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
         //停止发送
         SunARS.voteStop()
-        startActivity(SubjectRankActivity.callingIntent(this, questionResult))
-
         finish()
+
+        startActivity(SubjectRankActivity.callingIntent(this, questionResult))
     }
 }

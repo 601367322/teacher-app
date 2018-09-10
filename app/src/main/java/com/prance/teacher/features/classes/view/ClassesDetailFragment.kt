@@ -7,6 +7,7 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -32,10 +33,14 @@ import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.features.subject.SubjectRankActivity
+import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.json.JSONObject
 import java.io.Serializable
+import java.util.concurrent.TimeUnit
 
 /**
  * 班级详情页面
@@ -91,10 +96,38 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-//            mPushServicePresenter.bind()
-//
-//            mSunVoteServicePresenter.bind()
-//
+            mPushServicePresenter.bind()
+
+            mSunVoteServicePresenter.bind()
+
+
+            context?.run {
+                try {
+                    startActivity(IntentUtils.callingXYDial())
+
+                    if (BuildConfig.DEBUG) {
+                        Flowable.timer(8, TimeUnit.SECONDS)
+                                .mySubscribe {
+                                    //                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
+//                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
+//                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+//                                                        mutableListOf(
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+//                                                        )))) }
+                                    var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
+                                    context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+                                }
+
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showShort("请使用小鱼易联")
+                }
+            }
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
 //            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
@@ -111,6 +144,25 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                         context?.run {
                             try {
                                 startActivity(IntentUtils.callingXYDial())
+
+                                if (BuildConfig.DEBUG) {
+                                    Flowable.timer(8, TimeUnit.SECONDS)
+                                            .mySubscribe {
+//                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
+//                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
+//                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+//                                                        mutableListOf(
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+//                                                        )))) }
+                                                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
+                                                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+                                            }
+
+                                }
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 ToastUtils.showShort("请使用小鱼易联")
@@ -129,7 +181,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
-//            mSunVoteServicePresenter.unBind()
+            mSunVoteServicePresenter.unBind()
         }
     }
 
