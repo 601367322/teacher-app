@@ -1,5 +1,6 @@
 package com.prance.teacher.features.redpackage.model
 
+import com.prance.teacher.features.students.model.StudentsEntity
 import java.io.Serializable
 
 /**
@@ -21,6 +22,8 @@ class RedPackageSetting : Serializable {
      * 每个红包的积分数量
      */
     var integrat: Int? = null
+
+    var signStudents: MutableList<StudentsEntity>? = null
 
     constructor(classId: Int?, lastTime: Int?, interactId: Int?, integrat: Int?) {
         this.classId = classId

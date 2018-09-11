@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.prance.lib.common.utils.Constants
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.common.utils.http.RetrofitUtils
@@ -136,9 +137,20 @@ class PushService : Service() {
                         futureListener?.run {
                             if (isSuccess) {
                                 mChannel = channel()
+
                                 LogUtils.d("连接成功")
+
+                                if (BuildConfig.DEBUG) {
+                                    ToastUtils.showLong("Socket 连接成功")
+                                } else {
+                                }
+
                             } else {
                                 LogUtils.d("连接失败，3秒后重新链接")
+
+                                if (BuildConfig.DEBUG) {
+                                    ToastUtils.showLong("Socket 连接失败，3秒后重新链接")
+                                }
                                 channel().eventLoop().schedule({ doConnect() }, 3, TimeUnit.SECONDS)
                             }
                         }
@@ -178,6 +190,9 @@ class PushService : Service() {
         override fun onServiceStatusConnectChanged(statusCode: Int) {
             if (statusCode == STATUS_CONNECT_CLOSED) {
                 LogUtils.d("断开连接")
+                if (BuildConfig.DEBUG) {
+                    ToastUtils.showLong("Socket 断开连接")
+                }
             }
 
             for (listener in mListeners) {

@@ -2,8 +2,10 @@ package com.prance.teacher.features.subject.view
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.graphics.Color
+import android.graphics.*
+import android.graphics.BitmapFactory.decodeResource
 import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -61,13 +63,15 @@ class SubjectOnStartFragment : BaseFragment() {
 
     var lastDanmuTime = 0L
 
-    var danmuInterval = 2000L
+    var danmuInterval = 3000L
 
     var boxLightAnim: ValueAnimator? = null
 
     var mDanmuView: DanmakuView? = null
 
     var doubleScore = false
+
+    lateinit var avatarBackground: Bitmap
 
     companion object {
 
@@ -85,6 +89,8 @@ class SubjectOnStartFragment : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mQuestion = arguments?.getSerializable(SubjectActivity.QUESTION) as ClassesDetailFragment.Question?
 
+        avatarBackground = BitmapFactory.decodeResource(resources, R.drawable.subject_danmu_avatar_bg)
+
         mDanmuView = rootView.findViewById(R.id.danmu)
 
         //初始化弹幕组件
@@ -99,7 +105,7 @@ class SubjectOnStartFragment : BaseFragment() {
 
         //设置进度条最大人数
         mQuestion?.let {
-            powerProgressbar.max = it.signCount
+            powerProgressbar.max = it.signStudents?.size ?: 0
         }
 
 
@@ -113,7 +119,15 @@ class SubjectOnStartFragment : BaseFragment() {
     private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
         SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
 
+            var answerList = mutableListOf<String>()
+
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+                //防止重复提交
+                if (answerList.contains(KeyID)) {
+                    return
+                }
+                answerList.add(KeyID)
+
                 val keyId = generateKeyPadId(KeyID)
                 when (iMode) {
                     SunARS.KeyResult_info -> {
@@ -133,32 +147,20 @@ class SubjectOnStartFragment : BaseFragment() {
                     //答题器事件
                     val keyPadResult = msg.obj as KeyPadResult
 
-                    //去重
-                    for (result in mResult) {
-                        if (result.clickerId == keyPadResult.clickerId) {
-                            return
-                        }
-                    }
+                    var studentEntity: StudentsEntity? = ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyPadResult.clickerId)
 
-                    var studentEntity: StudentsEntity? = null
-                    //根据keyId去找到对应的学生信息
-                    ClassesDetailFragment.mStudentList?.let {
-                        for (item in it) {
-                            if (keyPadResult.clickerId == item.getClicker()?.number) {
-                                studentEntity = item
-                            }
-                        }
-                    }
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-//                        if (studentEntity == null) {
-//                            studentEntity = StudentsEntity("假数据", "")
-//                        }
+                        if (studentEntity == null) {
+                            studentEntity = StudentsEntity(1, "假数据", "")
+                        }
                     }
                     if (studentEntity == null) {
                         return
                     }
                     mResult.add(keyPadResult)
+
+                    answerNumber.text = (answerNumber.text.toString().toInt() + 1).toString()
 
                     //判断答案是否正确
                     if (keyPadResult.answer != mQuestion?.result) {
@@ -166,7 +168,7 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
 
                     //添加弹幕
-                    addDanmakuShowTextAndImage(studentEntity!!)
+                    addDanmakuShowTextAndImage(studentEntity)
 
                     powerProgressbar.progress += 1
 
@@ -192,34 +194,49 @@ class SubjectOnStartFragment : BaseFragment() {
                 SHOW_DANMU_WHAT -> {
                     //显示弹幕
                     val studentsEntity = msg.obj as StudentsEntity
+                    val avatarHeight = resources.getDimensionPixelOffset(R.dimen.m104_0)
                     //加载头像
                     GlideApp.with(this@SubjectOnStartFragment)
-                            .asDrawable()
+                            .asBitmap()
                             .load(studentsEntity.head)
                             .error(R.drawable.default_avatar_boy)
-                            .override(100, 100)
+                            .override(avatarHeight, avatarHeight)
                             .transform(CropCircleTransformation())
-                            .into(object : SimpleTarget<Drawable>() {
-                                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                            .into(object : SimpleTarget<Bitmap>() {
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                                     showDanmu(resource)
                                 }
 
                                 override fun onLoadFailed(errorDrawable: Drawable?) {
-                                    errorDrawable?.let { showDanmu(it) }
+                                    errorDrawable?.let { showDanmu((it as BitmapDrawable).bitmap) }
                                 }
 
                                 var inited = false
 
-                                private fun showDanmu(resource: Drawable) {
+                                private fun showDanmu(resource: Bitmap) {
                                     if (activity == null || inited) {
                                         return
                                     }
                                     inited = true
                                     try {
                                         val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
+
+                                        //画头像
+                                        val avatarBgHeight = resources.getDimensionPixelOffset(R.dimen.m172_0)
+                                        val bitmap = Bitmap.createBitmap(avatarBgHeight, avatarBgHeight, Bitmap.Config.ARGB_4444)
+                                        val canvas = Canvas(bitmap)
+                                        val bgMatrix = Matrix()
+                                        bgMatrix.setScale(avatarBgHeight.toFloat() / avatarBackground.height.toFloat(), avatarBgHeight.toFloat() / avatarBackground.height.toFloat())
+                                        canvas.drawBitmap(avatarBackground, bgMatrix, null)
+                                        val resourceMatrix = Matrix()
+                                        resourceMatrix.postScale(avatarHeight.toFloat() / resource.height.toFloat(), avatarHeight.toFloat() / resource.height.toFloat())
+                                        resourceMatrix.postTranslate((avatarBgHeight - avatarHeight) / 2f, (avatarBgHeight - avatarHeight) / 2f)
+                                        canvas.drawBitmap(resource, resourceMatrix, null)
+
+                                        val drawable = BitmapDrawable(bitmap)
+                                        drawable.setBounds(0, 0, avatarBgHeight, avatarBgHeight)
                                         //绘制头像
-                                        resource.setBounds(0, 0, 100, 100)
-                                        val spannable = createSpannable(resource, studentsEntity.name)
+                                        val spannable = createSpannable(drawable, studentsEntity.name)
 
                                         danmaku.text = spannable
                                         danmaku.padding = 5
@@ -227,9 +244,9 @@ class SubjectOnStartFragment : BaseFragment() {
                                         danmaku.isLive = false
                                         danmaku.time = danmu.currentTime
                                         context?.run {
-                                            danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m25_0).toFloat()
+                                            danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m50_0).toFloat()
                                         }
-                                        danmaku.textColor = Color.RED
+                                        danmaku.textColor = Color.parseColor("#512B90")
                                         danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
                                         danmu.addDanmaku(danmaku)
                                     } catch (e: Exception) {

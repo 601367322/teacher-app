@@ -14,6 +14,12 @@ class StudentsEntity : Serializable {
         this.head = avatar
     }
 
+    constructor(id: Int?, name: String?, avatar: String?) {
+        this.name = name ?: ""
+        this.head = avatar
+        this.id = id ?: 0
+    }
+
     class Clicker : Serializable {
         var id: Int? = null
         var number: String? = null

@@ -75,6 +75,35 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
          */
         var mStudentList: MutableList<StudentsEntity>? = null
 
+        fun getSignStudents(signStudents: MutableList<StudentsEntity>?): MutableList<StudentsEntity> {
+            val mSignStudents = mutableListOf<StudentsEntity>()
+            mStudentList?.run {
+                for (s in this) {
+                    signStudents?.let {
+                        for (s1 in it) {
+                            if (s.id == s1.id) {
+                                mSignStudents.add(s)
+                            }
+                        }
+                    }
+                }
+            }
+            return mSignStudents
+        }
+
+        /**
+         * 根据答题器，检测学员是否签到
+         */
+        fun checkIsSignStudent(signStudents: MutableList<StudentsEntity>?, keyPadId: String): StudentsEntity? {
+            val mSignStudents = getSignStudents(signStudents)
+            for (s in mSignStudents) {
+                if (keyPadId == s.getClicker()?.number) {
+                    return s
+                }
+            }
+            return null
+        }
+
         var mClassesEntity: ClassesEntity? = null
     }
 
@@ -103,33 +132,33 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             mSunVoteServicePresenter.bind()
 
 
-            context?.run {
-                try {
-                    startActivity(IntentUtils.callingXYDial())
-
-                    if (BuildConfig.DEBUG) {
-                        Flowable.timer(8, TimeUnit.SECONDS)
-                                .mySubscribe {
-                                    //                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
-//                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
-//                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-//                                                        mutableListOf(
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-//                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-//                                                        )))) }
-                                    var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
-                                    context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
-                                }
-
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    ToastUtils.showShort("请使用小鱼易联")
-                }
-            }
+//            context?.run {
+//                try {
+//                    startActivity(IntentUtils.callingXYDial())
+//
+//                    if (BuildConfig.DEBUG) {
+//                        Flowable.timer(8, TimeUnit.SECONDS)
+//                                .mySubscribe {
+//                                    //                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
+////                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
+////                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
+////                                                        mutableListOf(
+////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
+////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
+////                                                        )))) }
+//                                    var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
+//                                    context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+//                                }
+//
+//                    }
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                    ToastUtils.showShort("请使用小鱼易联")
+//                }
+//            }
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
 //            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
         }
@@ -232,15 +261,15 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var result: String? = null
         var createTime = System.currentTimeMillis()
         var duration: Int? = null
-        var signCount: Int = 0
+        var signStudents: MutableList<StudentsEntity>? = null
 
-        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, signCount: Int) {
+        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, signStudents: MutableList<StudentsEntity>?) {
             this.classId = classId
             this.type = type
             this.param = param
             this.questionId = questionId
             this.result = answer
-            this.signCount = signCount
+            this.signStudents = signStudents
         }
 
         constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, duration: Int?) {

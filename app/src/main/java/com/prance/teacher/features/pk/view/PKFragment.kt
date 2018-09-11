@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -17,7 +16,6 @@ import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.dateFormat_Min_Second
 import com.prance.lib.common.utils.format
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
@@ -30,10 +28,10 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.rocket.BigRocket
+import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -66,7 +64,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     override fun layoutId(): Int = R.layout.fragment_pk
 
-    lateinit var mSetting: ClassesDetailFragment.Question
+    lateinit var mQuestion: ClassesDetailFragment.Question
 
     var mAnimGlView: PKAnimView? = null
 
@@ -86,17 +84,21 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
             var answerList = mutableListOf<String>()
 
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
+                //防止重复提交
+                if (answerList.contains(KeyID)) {
+                    return
+                }
+                answerList.add(KeyID)
+
                 animGlView?.post {
                     val keyId = generateKeyPadId(KeyID)
 
-                    //防止重复提交
-                    if (answerList.contains(keyId)) {
-                        return@post
-                    }
-                    answerList.add(keyId)
+                    //签到学员才可以答题
+                    ClassesDetailFragment.checkIsSignStudent(mQuestion.signStudents, keyId)
+                            ?: return@post
 
                     //进度条宝箱
-                    if (sInfo == mSetting.result) {
+                    if (sInfo == mQuestion.result) {
                         powerProgressbar.progress += 1
                     }
                     if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
@@ -117,7 +119,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                     }
                     mActivity?.let {
                         //发送答题器结果
-                        mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mSetting)
+                        mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mQuestion)
                     }
                 }
             }
@@ -127,7 +129,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
     override var mPresenter: IPKContract.Presenter = PKPresenter()
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        mSetting = arguments?.getSerializable(SETTING) as ClassesDetailFragment.Question
+        mQuestion = arguments?.getSerializable(SETTING) as ClassesDetailFragment.Question
 
         mAnimGlView = rootView.findViewById(R.id.animGlView)
 
@@ -135,7 +137,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         animGlView.countTimeListener = this
 
-        powerProgressbar.max = mSetting.signCount
+        powerProgressbar.max = mQuestion.signStudents?.size ?: 0
 
         if (BuildConfig.DEBUG) {
 
@@ -185,8 +187,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     //倒计时结束
     override fun onTimeCountEnd() {
-        mSetting.createTime = System.currentTimeMillis()
-        SunARS.voteStart(mSetting.type!!, mSetting.param)
+        mQuestion.createTime = System.currentTimeMillis()
+        SunARS.voteStart(mQuestion.type!!, mQuestion.param)
         animGlView?.post {
             tip.invisible()
             timer.visible()
@@ -197,7 +199,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
     private var mDisposable: Disposable? = null
 
     private fun startCountTimer() {
-        mSetting.duration?.run {
+        mQuestion.duration?.run {
             var time = this
             mDisposable = Flowable.interval(1, TimeUnit.SECONDS)
                     .take(time.toLong())
@@ -222,7 +224,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         }
         activity?.run {
             this.supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, PKWaitingFragment.callingIntent(false, mSetting.questionId!!))
+                replace(R.id.fragmentContainer, PKWaitingFragment.callingIntent(false, mQuestion.questionId!!))
             }
         }
     }
@@ -251,7 +253,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                     //我所在班级的排名
                     var mRank: PKRuntimeData? = null
                     for (i in data) {
-                        if (i.klass?.id == mSetting.classId) {
+                        if (i.klass?.id == mQuestion.classId) {
                             mRank = i
                         }
                     }

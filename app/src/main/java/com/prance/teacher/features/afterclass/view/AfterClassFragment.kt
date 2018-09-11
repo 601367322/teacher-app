@@ -12,6 +12,7 @@ import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.teacher.features.afterclass.presenter.AfterClassPresenter
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
+import com.prance.teacher.features.students.model.StudentsEntity
 import kotlinx.android.synthetic.main.fragment_after_class.*
 
 /**
@@ -24,26 +25,47 @@ import kotlinx.android.synthetic.main.fragment_after_class.*
 class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     lateinit var mTime: TextView
-    var mFeedback: ClassesDetailFragment.Question? = null
+    var mQuestion: ClassesDetailFragment.Question? = null
 
     override var mPresenter: IAfterClassContract.Presenter = AfterClassPresenter()
 
     override fun layoutId(): Int = R.layout.fragment_after_class
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private var mSignStudents: MutableList<StudentsEntity> = mutableListOf()
 
-        override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-            timer.post {
-                mPresenter.saveChoose(generateKeyPadId(KeyID), sInfo ?: "")
+    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
+        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+
+            var answerList = mutableListOf<String>()
+
+            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+                //防止重复提交
+                if (answerList.contains(KeyID)) {
+                    return
+                }
+                answerList.add(KeyID)
+
+                timer.post {
+                    val keyId = generateKeyPadId(KeyID)
+
+                    //签到学员才可以课后反馈
+                    ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyId)
+                            ?: return@post
+
+                    mPresenter.saveChoose(keyId, sInfo ?: "")
+                }
             }
-        }
 
-    })}
+        })
+    }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mTime = rootView.findViewById(R.id.timer)
-        mFeedback = arguments?.getSerializable(AfterClassActivity.feedback) as ClassesDetailFragment.Question
-        mPresenter.startReceive(mFeedback!!)
+        mQuestion = arguments?.getSerializable(AfterClassActivity.feedback) as ClassesDetailFragment.Question
+
+        mSignStudents = ClassesDetailFragment.getSignStudents(mQuestion?.signStudents)
+
+        mPresenter.startReceive(mQuestion!!)
 
         mSunVoteServicePresenter.bind()
     }

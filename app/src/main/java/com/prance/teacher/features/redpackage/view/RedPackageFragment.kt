@@ -16,6 +16,8 @@ import com.prance.teacher.features.redpackage.view.red.RedPackage
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
 import com.chillingvan.canvasgl.glview.GLView
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.students.model.StudentsEntity
 
 
 /**
@@ -35,7 +37,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     /**
      * 抢红包的设置参数
      */
-    var mSetting: RedPackageSetting? = null
+    var mQuestion: RedPackageSetting? = null
 
     var mAnimGlView: GLView? = null
 
@@ -44,10 +46,17 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     override fun layoutId(): Int = R.layout.fragment_red_package
 
     private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
+
         SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
             override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
                 animGlView.post {
-                    mPresenter.grabRedPackage(generateKeyPadId(KeyID), sInfo)
+                    val keyId = generateKeyPadId(KeyID)
+
+                    //签到学员才可以抢红包
+                    ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyId)
+                            ?: return@post
+
+                    mPresenter.grabRedPackage(keyId, sInfo)
                 }
             }
         })
@@ -56,7 +65,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     override var mPresenter: IRedPackageContract.Presenter = RedPackagePresenter()
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        mSetting = arguments?.getSerializable(mSetTing) as RedPackageSetting
+        mQuestion = arguments?.getSerializable(mSetTing) as RedPackageSetting
 
         mAnimGlView = rootView.findViewById(R.id.animGlView)
 
@@ -69,7 +78,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
             e.printStackTrace()
         }
 
-        mPresenter.startRedPackage(mSetting)
+        mPresenter.startRedPackage(mQuestion)
 
         mSunVoteServicePresenter.bind()
     }

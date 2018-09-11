@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.support.v4.widget.AutoSizeableTextView
 import android.util.AttributeSet
+import android.view.View
 import android.widget.TextView
 import com.prance.teacher.R
 import android.view.ViewGroup
@@ -51,10 +52,6 @@ open class FZTextView : TextView, AutoSizeableTextView {
                 a.recycle()
             }
         }
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
     override fun onDraw(canvas: Canvas) {
