@@ -1,6 +1,5 @@
 package com.prance.teacher.features.pk.rocket
 
-import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
@@ -19,7 +18,6 @@ class LittleRocket(val context: Context,
                    bitmap: Bitmap) : BaseRocket(startPoint, targetPoint, bitmap) {
 
     var disposable: Disposable? = null
-
 
     var runningArray = mutableListOf<Bitmap>()
 

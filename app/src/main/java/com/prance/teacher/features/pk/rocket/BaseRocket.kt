@@ -80,6 +80,8 @@ import java.util.*
         anim.interpolator = OvershootInterpolator()
         anim.addUpdateListener {
             startPoint.y = it.animatedValue.toString().toFloat()
+
+            EventBus.getDefault().post(this)
         }
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {

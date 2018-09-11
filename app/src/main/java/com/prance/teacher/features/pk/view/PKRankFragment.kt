@@ -13,6 +13,7 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.presenter.PKPresenter
+import com.prance.teacher.utils.SoundUtils
 import kotlinx.android.synthetic.main.fragment_pk_rank.*
 import kotlinx.android.synthetic.main.layout_pk_rank_background.*
 
@@ -65,6 +66,7 @@ class PKRankFragment : BaseFragment() {
     )
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+        SoundUtils.play("rank_background")
 
         numbers.add(number1)
         numbers.add(number2)

@@ -3,6 +3,7 @@ package com.prance.teacher.features.pk.view
 import android.animation.*
 import android.content.Context
 import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
@@ -70,6 +71,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     var boxLightAnim: ValueAnimator? = null
     var doubleScore = false
+
+    var mMediaPlayer: MediaPlayer? = null
 
     var mActivity: PKActivity? = null
 
@@ -180,6 +183,10 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         super.onDestroy()
         SunARS.voteStop()
 
+        mMediaPlayer?.stop()
+        mMediaPlayer?.release()
+        mMediaPlayer = null
+
         mAnimGlView?.destroy()
 
         mSunVoteServicePresenter.unBind()
@@ -190,6 +197,16 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         mQuestion.createTime = System.currentTimeMillis()
         SunARS.voteStart(mQuestion.type!!, mQuestion.param)
         animGlView?.post {
+
+            try {
+                mMediaPlayer = MediaPlayer.create(context, R.raw.pk_background)
+                mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
+                mMediaPlayer!!.isLooping = true
+                mMediaPlayer!!.prepare()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
             tip.invisible()
             timer.visible()
             startCountTimer()
@@ -234,12 +251,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
     @Subscribe
     fun onEvent(rocket: BigRocket) {
         timer.post {
-            if (!scoreLayout.isVisible())
-                scoreLayout.visible()
-            val layoutParams = scoreLayout.layoutParams as ConstraintLayout.LayoutParams
-            layoutParams.marginStart = rocket.startPoint.x.toInt() + rocket.bitmap?.width - resources.getDimensionPixelOffset(R.dimen.m76_0)
-            layoutParams.topMargin = rocket.startPoint.y.toInt() - resources.getDimensionPixelOffset(R.dimen.m52_0)
-            scoreLayout.layoutParams = layoutParams
+            scoreLayout?.run {
+                if (!scoreLayout.isVisible())
+                    scoreLayout.visible()
+                val layoutParams = scoreLayout.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.marginStart = rocket.startPoint.x.toInt() + rocket.bitmap?.width - resources.getDimensionPixelOffset(R.dimen.m76_0)
+                layoutParams.topMargin = rocket.startPoint.y.toInt() - resources.getDimensionPixelOffset(R.dimen.m52_0)
+                scoreLayout.layoutParams = layoutParams
+            }
         }
     }
 

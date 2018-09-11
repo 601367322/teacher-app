@@ -20,14 +20,8 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
 
     var countTimeListener: ICountTimeListener? = null
 
-    var defaultBackground: Bitmap? = null
-
     init {
         setZOrderMediaOverlay(true)
-
-        Thread({
-            defaultBackground = GlideApp.with(context).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).load(R.drawable.pk_background_0001).submit().get()
-        }).start()
 
         //初始化资源
         Flowable
@@ -47,12 +41,13 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
     }
 
     override fun onGLDraw(canvas: ICanvasGL) {
-        if (mPKAnimManager == null && defaultBackground != null) {
-            canvas.save()
-            canvas.drawBitmap(defaultBackground, 0, 0)
-            canvas.restore()
-        }
         mPKAnimManager?.run {
+
+            if (pkBackground == null) {
+                canvas.save()
+                canvas.drawBitmap(defaultBackground, 0, 0)
+                canvas.restore()
+            }
 
             //画背景
             pkBackground?.draw(canvas)
@@ -62,12 +57,14 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
             }
 
             //画火箭
-            for (rocket in rockets) {
-                rocket.draw(canvas)
+            rockets?.run {
+                for (rocket in this) {
+                    rocket.draw(canvas)
+                }
             }
 
             //倒计时
-            countTime?.draw(canvas)
+            countTime.draw(canvas)
 
         }
     }
