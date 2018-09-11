@@ -17,6 +17,7 @@ import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.dateFormat_Min_Second
 import com.prance.lib.common.utils.format
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
@@ -183,6 +184,9 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         super.onDestroy()
         SunARS.voteStop()
 
+        mDisposable?.dispose()
+        mDisposable = null
+
         mMediaPlayer?.stop()
         mMediaPlayer?.release()
         mMediaPlayer = null
@@ -220,9 +224,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
             var time = this
             mDisposable = Flowable.interval(1, TimeUnit.SECONDS)
                     .take(time.toLong())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
+                    .mySubscribe {
                         time--
                         timer?.text = format(dateFormat_Min_Second, time.toLong() * 1000)
                         if (time < 1) {
@@ -245,6 +247,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
             }
         }
     }
+
+
 
     override fun needEventBus(): Boolean = true
 

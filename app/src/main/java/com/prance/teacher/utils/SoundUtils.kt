@@ -51,11 +51,13 @@ object SoundUtils {
     }
 
     fun play(key: String) {
-        mSoundPoll.play(sounds[key]!!,
-                getRatio(),
-                getRatio(),
-                Int.MAX_VALUE,
-                0,
-                1F)
+        sounds[key]?.run {
+            mSoundPoll.play(this,
+                    getRatio(),
+                    getRatio(),
+                    Int.MAX_VALUE,
+                    0,
+                    1F)
+        }
     }
 }
