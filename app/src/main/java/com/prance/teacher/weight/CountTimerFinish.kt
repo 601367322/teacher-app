@@ -12,13 +12,13 @@ import java.util.concurrent.TimeUnit
 class CountTimerFinish : FZTextView {
 
     var mDisposable: Disposable? = null
-    var mTotalTime = 5
+    var mTotalTime = 10
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
 
         updateTimeText()
         mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
-                .take(5)
+                .take(mTotalTime.toLong())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {

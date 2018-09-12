@@ -43,7 +43,7 @@
         android:id="@+id/cups"
         android:layout_width="@dimen/m1197.0"
         android:layout_height="@dimen/m554.0"
-        android:layout_marginStart="@dimen/m94.0"
+        android:layout_marginStart="@dimen/m134.0"
         android:layout_marginTop="@dimen/m642.0"
         android:adjustViewBounds="true"
         android:visibility="gone"

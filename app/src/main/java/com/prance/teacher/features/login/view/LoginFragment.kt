@@ -85,6 +85,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
             activity?.finish()
         }
+        activity?.finish()
+        context?.let { startActivity(MainActivity.callingIntent(it)) }
     }
 
     /**
@@ -164,10 +166,10 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
             //设置全局用户信息
             application.mUserInfo = it
 
+            activity?.finish()
+
             //启动主页
             context?.let { startActivity(MainActivity.callingIntent(it)) }
-
-            activity?.finish()
         }
     }
 

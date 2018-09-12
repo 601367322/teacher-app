@@ -329,13 +329,13 @@ class RedPackageManager {
                 if (sInfo == redPackage.title) {
                     //抢到了
                     //添加记录
+                    //计算红包被抢到的数量
+                    destroyRedPackageNum++
                     val studentScore = saveResult(keyID, redPackage.score)
                     studentScore?.let {
                         //销毁红包
                         redPackage.destroy(it)
                     }
-                    //计算红包被抢到的数量
-                    destroyRedPackageNum++
                 }
             }
         }

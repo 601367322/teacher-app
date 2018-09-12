@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
@@ -124,9 +125,14 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
             }
         }
 
-        supportFragmentManager.inTransaction {
-            replace(R.id.fragmentContainer, SubjectOnWaitingFragment())
-        }
+        Flowable.timer(1, TimeUnit.SECONDS)
+                .mySubscribe {
+                    if (!isDestroyed) {
+                        supportFragmentManager.inTransaction {
+                            replace(R.id.fragmentContainer, SubjectOnWaitingFragment())
+                        }
+                    }
+                }
     }
 
     /**
@@ -146,6 +152,8 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
         SunARS.voteStop()
         finish()
 
+        System.gc()
+        System.runFinalization()
 
         //TODO 不能在此打开一个新的界面，否则会影响小鱼的视频卡死
         EventBus.getDefault().post(questionResult)

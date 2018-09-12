@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -30,6 +31,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.pk.PKActivity
+import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.rocket.BigRocket
@@ -145,27 +147,27 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         if (BuildConfig.DEBUG) {
 
-//            Flowable.timer(3000, TimeUnit.MILLISECONDS)
-//                    .mySubscribe {
-//                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
-//                            replace(R.id.fragmentContainer, PKRankFragment.forPKResult(
-//                                    PKResult(
-//                                            mutableListOf(
-//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(1, "第一名"), 2.1F, 90.0F),
-//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(2, "第二名"), 12.1F, 60.0F),
-//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(31, "第三名"), 3.1F, 70.0F),
-//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(4, "第四名"), 4.1F, 10.0F),
-//                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(5, "第无名"), 25.1F, 920.0F)
-//                                            ),
-//                                            mutableListOf(
-//                                                    PKResult.Question(3, 100),
-//                                                    PKResult.Question(4, 200),
-//                                                    PKResult.Question(5, 300)
-//                                            )
-//                                    )
-//                            ))
-//                        }
-//                    }
+            Flowable.timer(3000, TimeUnit.MILLISECONDS)
+                    .mySubscribe {
+                        (activity as FragmentActivity).supportFragmentManager.inTransaction {
+                            replace(R.id.fragmentContainer, PKRankFragment.forPKResult(
+                                    PKResult(
+                                            mutableListOf(
+                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(1, "第一名"), 2.1F, 90.0F),
+                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(2, "第二名"), 12.1F, 60.0F),
+                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(31, "第三名"), 3.1F, 70.0F),
+                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(4, "第四名"), 4.1F, 10.0F),
+                                                    PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(5, "第无名"), 25.1F, 920.0F)
+                                            ),
+                                            mutableListOf(
+                                                    PKResult.Question(3, 100),
+                                                    PKResult.Question(4, 200),
+                                                    PKResult.Question(5, 300)
+                                            )
+                                    )
+                            ))
+                        }
+                    }
         }
     }
 
@@ -241,13 +243,16 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 it.dispose()
             }
         }
-        activity?.run {
-            this.supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, PKWaitingFragment.callingIntent(false, mQuestion.questionId!!))
-            }
-        }
-    }
 
+        Flowable.timer(1, TimeUnit.SECONDS)
+                .mySubscribe {
+                    activity?.run {
+                        this.supportFragmentManager.inTransaction {
+                            replace(R.id.fragmentContainer, PKWaitingFragment.callingIntent(false, mQuestion.questionId!!))
+                        }
+                    }
+                }
+    }
 
 
     override fun needEventBus(): Boolean = true

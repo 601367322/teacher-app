@@ -127,9 +127,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-            mPushServicePresenter.bind()
-
-            mSunVoteServicePresenter.bind()
+//            mPushServicePresenter.bind()
+//
+//            mSunVoteServicePresenter.bind()
 
 
 //            context?.run {
@@ -198,7 +198,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun onDestroy() {
         super.onDestroy()
 
-        mPushServicePresenter.unBind()
+//        mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
             mSunVoteServicePresenter.unBind()
@@ -209,10 +209,10 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
             CMD_SEND_QUESTION -> {
+                doFinishActivity()
                 //开始答题
                 val question = msg.getData(Question::class.java)
                 if (question.classId == mClassesEntity?.klass?.id) {
-                    ActivityUtils.finishActivity(SubjectActivity::class.java)
 
                     context?.run {
                         startActivity(SubjectActivity.callingIntent(this, question))
@@ -220,29 +220,29 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 }
             }
             INTERACT_START -> {
+                doFinishActivity()
                 //抢红包
                 val setting = msg.getData(RedPackageSetting::class.java)
                 if (setting.classId == mClassesEntity?.klass?.id) {
-                    ActivityUtils.finishActivity(RedPackageActivity::class.java)
                     context?.run {
                         startActivity(RedPackageActivity.callingIntent(this, setting))
                     }
                 }
             }
             QUIZ -> {
+                doFinishActivity()
                 //课后反馈
                 val feedBack = msg.getData(Question::class.java)
                 if (feedBack.classId == mClassesEntity?.klass?.id) {
-                    ActivityUtils.finishActivity(AfterClassActivity::class.java)
                     context?.run {
                         startActivity(AfterClassActivity.callingIntent(this, feedBack))
                     }
                 }
             }
             PK_START -> {
+                doFinishActivity()
                 val pkSetting = msg.getData(Question::class.java)
                 if (pkSetting.classId == mClassesEntity?.klass?.id) {
-                    ActivityUtils.finishActivity(PKActivity::class.java)
                     context?.run {
                         startActivity(PKActivity.callingIntent(this, pkSetting))
                     }
@@ -250,6 +250,17 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
         }
         return false
+    }
+
+    fun doFinishActivity(){
+        ActivityUtils.finishActivity(SubjectActivity::class.java)
+        ActivityUtils.finishActivity(SubjectRankActivity::class.java)
+        ActivityUtils.finishActivity(AfterClassActivity::class.java)
+        ActivityUtils.finishActivity(PKActivity::class.java)
+        ActivityUtils.finishActivity(RedPackageActivity::class.java)
+
+        System.gc()
+        System.runFinalization()
     }
 
     class Question : Serializable {
