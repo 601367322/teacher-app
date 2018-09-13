@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
+import com.google.gson.Gson
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.mySubscribe
@@ -122,14 +123,19 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         endClass.setOnClickListener { activity?.finish() }
 
         classesTitle.text = mClassesEntity?.klass?.name
-        classesSubTitle.text = mClassesEntity?.klass?.addr
+        classesSubTitle.text = mClassesEntity?.klass?.course?.name
         classesDate.text = """${mClassesEntity?.klass?.startTime}-${mClassesEntity?.klass?.endTime}"""
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-//            mPushServicePresenter.bind()
-//
-//            mSunVoteServicePresenter.bind()
+            mPushServicePresenter.bind()
+
+            mSunVoteServicePresenter.bind()
+
+//            readyClass.postDelayed({
+//                val message = Gson().fromJson("{\"cmd\":2,\"msgId\":\"512eff48-0c5e-4366-b35d-5bbc0d4abcea\",\"data\":{\"result\":\"A\",\"classId\":1,\"questionId\":1202,\"param\":\"1,0,0,0,4,1\",\"type\":10,\"signStudents\":[{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":1,\"integrals\":[],\"name\":\"10\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":2,\"integrals\":[],\"name\":\"测试学员2\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":3,\"integrals\":[],\"name\":\"测试学员3\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":4,\"integrals\":[],\"name\":\"测试学员4\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":5,\"integrals\":[],\"name\":\"测试学员5\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":6,\"integrals\":[],\"name\":\"张三\",\"state\":0,\"type\":0,\"updateTime\":null}]}}",MessageEntity::class.java)
+//                onMessageResponse(message)
+//            },2000)
 
 
 //            context?.run {
@@ -198,7 +204,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun onDestroy() {
         super.onDestroy()
 
-//        mPushServicePresenter.unBind()
+        mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
             mSunVoteServicePresenter.unBind()

@@ -21,6 +21,8 @@ import android.app.ActivityManager
 import android.content.Context
 import com.blankj.utilcode.util.*
 import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.teacher.features.classes.ClassesDetailActivity
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.redpackage.RedPackageActivity
@@ -58,7 +60,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
-//                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
+                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
 //                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 30))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
@@ -76,7 +78,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-//                return@setOnClickListener
+                return@setOnClickListener
             }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))

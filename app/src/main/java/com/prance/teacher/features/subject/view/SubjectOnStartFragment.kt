@@ -152,7 +152,7 @@ class SubjectOnStartFragment : BaseFragment() {
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
                         if (studentEntity == null) {
-                            studentEntity = StudentsEntity(1, "假数据", "")
+                            studentEntity = StudentsEntity(1, "假数据", "https://upload.jianshu.io/users/upload_avatars/2897594/eb89b4338b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
                         }
                     }
                     if (studentEntity == null) {

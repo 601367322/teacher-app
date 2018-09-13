@@ -19,7 +19,7 @@ class ClassesAdapter : BaseQuickAdapter<ClassesEntity, BaseViewHolder>, View.OnC
         bean?.run {
             helper?.run {
                 itemView.title.text = klass?.name
-                itemView.secondTitle.text = klass?.addr
+                itemView.secondTitle.text = klass?.course?.name
                 itemView.date.text = """${klass?.startTime}-${klass?.endTime}"""
                 itemView.teacher.text = klass?.teacher?.name
 
