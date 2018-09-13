@@ -1,6 +1,7 @@
 package com.prance.lib.sunvote.platform;
 
 import android.os.Handler;
+import android.os.Looper;
 
 import cn.sunars.sdk.SunARS;
 
@@ -10,9 +11,12 @@ import com.prance.lib.sunvote.utils.DataUtil;
 public class DataReceiverThread extends Thread {
 
     private byte[] SerDataRx = new byte[512];
-    int iSerRxN = 0;
 
-    IUsbManagerInterface mUsbManagerInterface;
+    private int iSerRxN = 0;
+
+    private IUsbManagerInterface mUsbManagerInterface;
+
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     public DataReceiverThread(IUsbManagerInterface usbManagerInterface) {
         this.mUsbManagerInterface = usbManagerInterface;
@@ -28,7 +32,7 @@ public class DataReceiverThread extends Thread {
                 onDataReceived(buffer);
             }
             try {
-                sleep(10);
+                sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
@@ -44,28 +48,12 @@ public class DataReceiverThread extends Thread {
      */
 
     private void onDataReceived(final byte[] buffer) {
-        runOnUiThread1(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                try {
-                    processRecvData(buffer);
-                } catch (Exception e) {
-                    resetData();
-                    e.printStackTrace();
-                }
+                processRecvData(buffer);
             }
         });
-    }
-
-    private Thread mUiThread;
-    private Handler handler = new Handler();
-
-    public final void runOnUiThread1(Runnable runnable) {
-        if (Thread.currentThread() != mUiThread) {
-            handler.post(runnable);
-        } else {
-            runnable.run();
-        }
     }
 
     private void processRecvData(byte[] recvBuf) {
