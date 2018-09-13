@@ -85,8 +85,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
             activity?.finish()
         }
-        activity?.finish()
-        context?.let { startActivity(MainActivity.callingIntent(it)) }
+//        activity?.finish()
+//        context?.let { startActivity(MainActivity.callingIntent(it)) }
     }
 
     /**

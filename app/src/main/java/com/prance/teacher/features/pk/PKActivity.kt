@@ -16,6 +16,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.contract.IPKResultContract
 import com.prance.teacher.features.pk.model.PKResult
+import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.presenter.PKResultPresenter
 import com.prance.teacher.features.pk.view.PKFragment
 import com.prance.teacher.features.pk.view.PKRankFragment
@@ -48,11 +49,12 @@ class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
     override fun initView(savedInstanceState: Bundle?) {
         mSetting = intent.getSerializableExtra(PKFragment.SETTING) as ClassesDetailFragment.Question?
         mPushServicePresenter.bind()
+        inited()
 
         super.initView(savedInstanceState)
 
         if (BuildConfig.DEBUG) {
-            Flowable.timer(10, TimeUnit.SECONDS)
+            Flowable.timer(38, TimeUnit.SECONDS)
                     .mySubscribe {
                         onMessageResponse(MessageEntity(0, PushService.CMD_END_QUESTION, null, null))
                     }
@@ -78,6 +80,20 @@ class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
                 mPresenter.getPKResult(mSetting?.questionId!!)
+//                renderRank( PKResult(
+//                        mutableListOf(
+//                                PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(1, "第一名"), 2.1F, 90.0F),
+//                                PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(2, "第二名"), 12.1F, 60.0F),
+//                                PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(31, "第三名"), 3.1F, 70.0F),
+//                                PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(4, "第四名"), 4.1F, 10.0F),
+//                                PKPresenter.PKResultMessage.ClassVO(PKPresenter.PKResultMessage.IDEntity(5, "第无名"), 25.1F, 920.0F)
+//                        ),
+//                        mutableListOf(
+//                                PKResult.Question(3, 100),
+//                                PKResult.Question(4, 200),
+//                                PKResult.Question(5, 300)
+//                        )
+//                ))
             }
         }
         return super.onMessageResponse(msg)

@@ -2,6 +2,7 @@ package com.prance.teacher.features.redpackage.view.red
 
 import android.content.Context
 import android.graphics.*
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chillingvan.canvasgl.CanvasGL
@@ -83,6 +84,8 @@ class RedPackageManager {
     private var context: Context
 
     private var destroyRedPackageNum = 0
+
+    private var nextIsBig = false
 
     //间隔大红包数量
     private var destroyIntervalNum = 10
@@ -227,12 +230,13 @@ class RedPackageManager {
             var big = false
 
             if (BuildConfig.DEBUG) {
-                destroyIntervalNum = 4
+//                destroyIntervalNum = 4
             }
 
             //每10个红包，出现一个大红包  &  最后一个红包是小红包的前提下
-            if (destroyRedPackageNum > 0 && destroyRedPackageNum % destroyIntervalNum == 0 && (redPackages.isNotEmpty() && !redPackages.last().big)) {
+            if (nextIsBig) {
                 big = true
+                nextIsBig = false
             }
 
             val score = if (big) DEFAULT_SCORE * 2 else DEFAULT_SCORE
@@ -255,7 +259,7 @@ class RedPackageManager {
             redPackages.add(red)
 
             if (BuildConfig.DEBUG) {
-                destroyRedPackageNum++
+//                destroyRedPackageNum++
             }
             return red
         }
@@ -331,6 +335,9 @@ class RedPackageManager {
                     //添加记录
                     //计算红包被抢到的数量
                     destroyRedPackageNum++
+                    if(destroyRedPackageNum % destroyIntervalNum == 0){
+                        nextIsBig = true
+                    }
                     val studentScore = saveResult(keyID, redPackage.score)
                     studentScore?.let {
                         //销毁红包

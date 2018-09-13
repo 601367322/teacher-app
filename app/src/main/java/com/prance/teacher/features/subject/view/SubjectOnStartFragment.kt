@@ -114,12 +114,6 @@ class SubjectOnStartFragment : BaseFragment() {
         }
 
         mSunVoteServicePresenter.bind()
-
-        Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("0001", "A", System.currentTimeMillis())).sendToTarget()
-        Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("0002", "A", System.currentTimeMillis())).sendToTarget()
-        Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("0003", "A", System.currentTimeMillis())).sendToTarget()
-        Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("0004", "A", System.currentTimeMillis())).sendToTarget()
-        Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("0005", "A", System.currentTimeMillis())).sendToTarget()
     }
 
     private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
@@ -237,36 +231,45 @@ class SubjectOnStartFragment : BaseFragment() {
                                         lastDanmuTime = System.currentTimeMillis() + delay
 
                                         danmu.postDelayed({
-                                            val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
 
-                                            //画头像
-                                            val avatarBgHeight = resources.getDimensionPixelOffset(R.dimen.m172_0)
-                                            val bitmap = Bitmap.createBitmap(avatarBgHeight, avatarBgHeight, Bitmap.Config.ARGB_4444)
-                                            val canvas = Canvas(bitmap)
-                                            val bgMatrix = Matrix()
-                                            bgMatrix.setScale(avatarBgHeight.toFloat() / avatarBackground.height.toFloat(), avatarBgHeight.toFloat() / avatarBackground.height.toFloat())
-                                            canvas.drawBitmap(avatarBackground, bgMatrix, null)
-                                            val resourceMatrix = Matrix()
-                                            resourceMatrix.postScale(avatarHeight.toFloat() / resource.height.toFloat(), avatarHeight.toFloat() / resource.height.toFloat())
-                                            resourceMatrix.postTranslate((avatarBgHeight - avatarHeight) / 2f, (avatarBgHeight - avatarHeight) / 2f)
-                                            canvas.drawBitmap(resource, resourceMatrix, null)
-
-                                            val drawable = BitmapDrawable(bitmap)
-                                            drawable.setBounds(0, 0, avatarBgHeight, avatarBgHeight)
-                                            //绘制头像
-                                            val spannable = createSpannable(drawable, studentsEntity.name)
-
-                                            danmaku.text = spannable
-                                            danmaku.padding = 5
-                                            danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
-                                            danmaku.isLive = false
-                                            danmaku.time = danmu.currentTime
-                                            context?.run {
-                                                danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m50_0).toFloat()
+                                            if(activity == null){
+                                                return@postDelayed
                                             }
-                                            danmaku.textColor = Color.parseColor("#512B90")
-                                            danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-                                            danmu.addDanmaku(danmaku)
+
+                                            try {
+                                                val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
+
+                                                //画头像
+                                                val avatarBgHeight = resources.getDimensionPixelOffset(R.dimen.m172_0)
+                                                val bitmap = Bitmap.createBitmap(avatarBgHeight, avatarBgHeight, Bitmap.Config.ARGB_4444)
+                                                val canvas = Canvas(bitmap)
+                                                val bgMatrix = Matrix()
+                                                bgMatrix.setScale(avatarBgHeight.toFloat() / avatarBackground.height.toFloat(), avatarBgHeight.toFloat() / avatarBackground.height.toFloat())
+                                                canvas.drawBitmap(avatarBackground, bgMatrix, null)
+                                                val resourceMatrix = Matrix()
+                                                resourceMatrix.postScale(avatarHeight.toFloat() / resource.height.toFloat(), avatarHeight.toFloat() / resource.height.toFloat())
+                                                resourceMatrix.postTranslate((avatarBgHeight - avatarHeight) / 2f, (avatarBgHeight - avatarHeight) / 2f)
+                                                canvas.drawBitmap(resource, resourceMatrix, null)
+
+                                                val drawable = BitmapDrawable(bitmap)
+                                                drawable.setBounds(0, 0, avatarBgHeight, avatarBgHeight)
+                                                //绘制头像
+                                                val spannable = createSpannable(drawable, studentsEntity.name)
+
+                                                danmaku.text = spannable
+                                                danmaku.padding = 5
+                                                danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
+                                                danmaku.isLive = false
+                                                danmaku.time = danmu.currentTime
+                                                context?.run {
+                                                    danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m50_0).toFloat()
+                                                }
+                                                danmaku.textColor = Color.parseColor("#512B90")
+                                                danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
+                                                danmu.addDanmaku(danmaku)
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                            }
                                         },delay)
 
 
