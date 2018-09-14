@@ -145,6 +145,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         powerProgressbar.max = mQuestion.signStudents?.size ?: 0
 
+        className.text = ClassesDetailFragment.mClassesEntity?.klass?.name
+
         if (BuildConfig.DEBUG) {
 
 //            Flowable.timer(3000, TimeUnit.MILLISECONDS)

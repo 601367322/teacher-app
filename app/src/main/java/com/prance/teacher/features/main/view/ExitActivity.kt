@@ -20,6 +20,7 @@ class ExitActivity : BaseActivity() {
 
         exit.setOnClickListener {
             ActivityUtils.finishActivity(MainActivity::class.java)
+            ActivityUtils.finishAllActivities()
             finish()
             stopService(SunVoteService.callingIntent(this))
         }
