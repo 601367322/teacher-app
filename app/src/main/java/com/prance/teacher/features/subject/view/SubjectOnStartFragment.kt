@@ -182,12 +182,16 @@ class SubjectOnStartFragment : BaseFragment() {
                         animationDrawable.start()
                         //1秒后打开宝箱灯光
                         postDelayed({
-                            boxLight.visible()
-                            boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
-                            boxLightAnim!!.interpolator = LinearInterpolator()
-                            boxLightAnim!!.repeatCount = Animation.INFINITE
-                            boxLightAnim!!.repeatMode = ValueAnimator.RESTART
-                            boxLightAnim!!.start()
+                            try {
+                                boxLight.visible()
+                                boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
+                                boxLightAnim!!.interpolator = LinearInterpolator()
+                                boxLightAnim!!.repeatCount = Animation.INFINITE
+                                boxLightAnim!!.repeatMode = ValueAnimator.RESTART
+                                boxLightAnim!!.start()
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }, 1000)
                     }
                 }
