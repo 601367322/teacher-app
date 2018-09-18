@@ -6,10 +6,10 @@ buildscript {
     ext.greendao = '3.2.2'
 
     repositories {
+        jcenter()
         mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url "https://jitpack.io" }
-        jcenter()
         google()
     }
     dependencies {
@@ -23,10 +23,10 @@ buildscript {
 
 allprojects {
     repositories {
+        jcenter()
         mavenCentral()
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         maven { url "https://jitpack.io" }
-        jcenter()
         google()
     }
 }
