@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.google.gson.Gson
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -19,8 +17,9 @@ import com.prance.lib.socket.PushService.Companion.INTERACT_START
 import com.prance.lib.socket.PushService.Companion.PK_START
 import com.prance.lib.socket.PushService.Companion.QUIZ
 import com.prance.lib.socket.PushServicePresenter
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -38,12 +37,10 @@ import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.SubjectRankActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
-import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
 import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
-import java.util.concurrent.TimeUnit
 
 /**
  * 班级详情页面
@@ -54,8 +51,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     private val mPushServicePresenter by lazy { PushServicePresenter(context!!, this) }
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
-        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private val mSparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
         })
     }
 
@@ -115,8 +112,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         readyClass.setOnClickListener {
             context?.let {
-                //准备就绪，检查答题器
-                startActivityForResult(CheckKeyPadActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS), REQUEST_CODE)
+                try {
+                    startActivity(IntentUtils.callingXYDial())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ToastUtils.showShort("请使用小鱼易联")
+                }
             }
         }
 
@@ -130,7 +131,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             //开始Socket监听
             mPushServicePresenter.bind()
 
-            mSunVoteServicePresenter.bind()
+            mSparkServicePresenter.bind()
 
 //            readyClass.postDelayed({
 //                val message = Gson().fromJson("{\"cmd\":2,\"msgId\":\"512eff48-0c5e-4366-b35d-5bbc0d4abcea\",\"data\":{\"result\":\"A\",\"classId\":1,\"questionId\":1202,\"param\":\"1,0,0,0,4,1\",\"type\":10,\"signStudents\":[{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":1,\"integrals\":[],\"name\":\"10\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":2,\"integrals\":[],\"name\":\"测试学员2\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":3,\"integrals\":[],\"name\":\"测试学员3\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":4,\"integrals\":[],\"name\":\"测试学员4\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":5,\"integrals\":[],\"name\":\"测试学员5\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":6,\"integrals\":[],\"name\":\"张三\",\"state\":0,\"type\":0,\"updateTime\":null}]}}",MessageEntity::class.java)
@@ -207,7 +208,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
-            mSunVoteServicePresenter.unBind()
+            mSparkServicePresenter.unBind()
         }
     }
 
@@ -258,7 +259,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         return false
     }
 
-    fun doFinishActivity(){
+    fun doFinishActivity() {
         ActivityUtils.finishActivity(SubjectActivity::class.java)
         ActivityUtils.finishActivity(SubjectRankActivity::class.java)
         ActivityUtils.finishActivity(AfterClassActivity::class.java)
@@ -273,6 +274,20 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         var classId: Int? = null
         var type: Int? = null
+
+        fun getQuestionType(): SparkService.QuestionType {
+            when (type) {
+                10 -> {
+                    when (param) {
+                        "1,0,0,0,4,1" -> return SparkService.QuestionType.SINGLE
+                        "1,0,0,0,4,4" -> return SparkService.QuestionType.MULTI
+                    }
+                }
+                5 -> return SparkService.QuestionType.YES_OR_NO
+            }
+            return SparkService.QuestionType.SINGLE
+        }
+
         var param: String? = null
         var questionId: Int? = null
         var result: String? = null

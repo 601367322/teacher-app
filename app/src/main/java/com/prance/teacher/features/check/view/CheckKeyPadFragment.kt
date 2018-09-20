@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import cn.sunars.sdk.SunARS
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
@@ -14,21 +13,17 @@ import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
-import com.prance.lib.sunvote.platform.UsbManagerImpl
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.teacher.features.check.model.CheckKeyPadGroupTitle
 import com.prance.teacher.features.check.presenter.CheckKeyPadPresenter
-import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
-import com.prance.teacher.features.match.view.generateKeyPadId
-import com.prance.teacher.utils.IntentUtils
+import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.fragment_after_class.*
 import kotlinx.android.synthetic.main.fragment_check_keypad.*
 import java.util.concurrent.TimeUnit
 
@@ -62,21 +57,22 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         }
     }
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
-        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private val mSparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-                //4 2 0.0 0,0,2.92,34
-                val keyId = generateKeyPadId(KeyID)
-                when (iMode) {
-                //键盘检测结果
-                    SunARS.KeyResult_status -> {
-                        sInfo?.let {
-                            val status = it.split(",")
-                            var battery = status[2].toFloat()
-                            mCheckKeyPadEntities.add(KeyPadEntity(keyId, battery))
-                        }
-                    }
+            var answerList = mutableListOf<Long>()
+
+            override fun onAnswerReceived(answer: ReceiveAnswer) {
+                //防止重复提交
+                if (answerList.contains(answer.uid)) {
+                    return
+                }
+                answerList.add(answer.uid)
+
+                val keyId = answer.uid.toString()
+
+                if (answer.answer == "H") {
+                    mCheckKeyPadEntities.add(KeyPadEntity(keyId, 1F))
                 }
             }
 
@@ -128,7 +124,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         }
 
         check.setOnClickListener {
-            if (UsbManagerImpl.baseStation.sn == null) {
+            if (SparkService.mUsbSerialNum == null) {
                 ToastUtils.showShort("请先链接基站")
                 return@setOnClickListener
             }
@@ -138,10 +134,10 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
             hideRecycler()
 
-            mPresenter.getMatchedKeyPadByBaseStationId(UsbManagerImpl.baseStation.sn)
+            mPresenter.getMatchedKeyPadByBaseStationId(SparkService.mUsbSerialNum!!)
         }
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
     }
 
     private fun showRecycler() {
@@ -184,11 +180,11 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         mMatchKeyPadEntities = it
 
-        SunARS.checkKeyPad()
+        mSparkServicePresenter.sendQuestion(SparkService.QuestionType.RED_PACKAGE)
 
         Flowable.timer(2, TimeUnit.SECONDS)
                 .mySubscribe {
-                    SunARS.voteStop()
+                    mSparkServicePresenter.stopAnswer()
                     mPresenter.generateGroup(mMatchKeyPadEntities!!, mCheckKeyPadEntities)
                 }
     }
@@ -196,7 +192,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
     override fun onDestroy() {
         super.onDestroy()
 
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

@@ -3,16 +3,17 @@ package com.prance.teacher.features.afterclass.view
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.teacher.features.afterclass.presenter.AfterClassPresenter
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.students.model.StudentsEntity
+import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import kotlinx.android.synthetic.main.fragment_after_class.*
 
 /**
@@ -33,26 +34,26 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     private var mSignStudents: MutableList<StudentsEntity> = mutableListOf()
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
-        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private val mSparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            var answerList = mutableListOf<String>()
+            var answerList = mutableListOf<Long>()
 
-            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+            override fun onAnswerReceived(answer: ReceiveAnswer) {
                 //防止重复提交
-                if (answerList.contains(KeyID)) {
+                if (answerList.contains(answer.uid)) {
                     return
                 }
-                answerList.add(KeyID)
+                answerList.add(answer.uid)
 
                 timer.post {
-                    val keyId = generateKeyPadId(KeyID)
+                    val keyId = answer.uid.toString()
 
                     //签到学员才可以课后反馈
                     ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyId)
                             ?: return@post
 
-                    mPresenter.saveChoose(keyId, sInfo ?: "")
+                    mPresenter.saveChoose(keyId, answer.answer)
                 }
             }
 
@@ -67,7 +68,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
         mPresenter.startReceive(mQuestion!!)
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
     }
 
     override fun onTimeChange(time: String) {
@@ -76,6 +77,14 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     override fun showLoading() {
         showProgress()
+    }
+
+    override fun startSendQuestion() {
+        mSparkServicePresenter.sendQuestion(SparkService.QuestionType.SINGLE)
+    }
+
+    override fun stopSendQuestion() {
+        mSparkServicePresenter.stopAnswer()
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {
@@ -92,7 +101,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
         super.onDestroy()
         mPresenter.stopReceive()
 
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
     }
 }
 

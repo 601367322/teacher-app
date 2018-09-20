@@ -1,22 +1,16 @@
 package com.prance.teacher.features.subject
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import cn.sunars.sdk.SunARS
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
-import com.prance.lib.test.setting.features.TestSettingActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectCountTimeFragment
@@ -41,8 +35,6 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
     override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
             PushService.CMD_END_QUESTION -> {
-                //停止发送
-                SunARS.voteStop()
                 //结束答题
                 val question = msg.getData(ClassesDetailFragment.Question::class.java)
                 if (question.classId == mQuestion?.classId) {
@@ -148,8 +140,6 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
      * 改为打开一个不透明的Activity，问题解决
      */
     private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
-        //停止发送
-        SunARS.voteStop()
         finish()
 
         System.gc()

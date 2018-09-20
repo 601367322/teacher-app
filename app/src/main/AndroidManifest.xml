@@ -10,6 +10,8 @@
         android:name="android.software.leanback"
         android:required="true" />
 
+    <uses-feature android:name="android.hardware.usb.host" />
+
     <application
         android:name="com.prance.lib.teacher.base.TeacherApplication"
         android:allowBackup="true"

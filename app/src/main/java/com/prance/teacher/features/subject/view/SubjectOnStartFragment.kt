@@ -3,7 +3,6 @@ package com.prance.teacher.features.subject.view
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.*
-import android.graphics.BitmapFactory.decodeResource
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -16,24 +15,23 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import cn.sunars.sdk.SunARS
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.GlideApp
-import com.prance.lib.sunvote.platform.UsbManagerImpl
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.danmutest.CenteredImageSpan
-import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.model.KeyPadResult
+import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_start.*
 import master.flame.danmaku.controller.DrawHandler
@@ -96,10 +94,10 @@ class SubjectOnStartFragment : BaseFragment() {
         //初始化弹幕组件
         initDanmu()
 
-        UsbManagerImpl.baseStation.sn?.let {
+        SparkService.mUsbSerialNum?.let {
             mQuestion?.run {
                 //基站开始发送题目
-                SunARS.voteStart(type!!, param)
+                mSparkServicePresenter.sendQuestion(getQuestionType())
             }
         }
 
@@ -113,30 +111,26 @@ class SubjectOnStartFragment : BaseFragment() {
 //            powerProgressbar.max = 32
         }
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
     }
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
-        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private val mSparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            var answerList = mutableListOf<String>()
+            var answerList = mutableListOf<Long>()
 
-            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
+            override fun onAnswerReceived(answer: ReceiveAnswer) {
+                super.onAnswerReceived(answer)
                 //防止重复提交
-                if (answerList.contains(KeyID)) {
+                if (answerList.contains(answer.uid)) {
                     return
                 }
-                answerList.add(KeyID)
+                answerList.add(answer.uid)
 
-                val keyId = generateKeyPadId(KeyID)
-                when (iMode) {
-                    SunARS.KeyResult_info -> {
-                        sInfo?.let {
-                            Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult(keyId, sInfo, System.currentTimeMillis())).sendToTarget()
-                        }
-                    }
-                }
+                val keyId = answer.uid.toString()
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult(keyId, answer.answer, System.currentTimeMillis())).sendToTarget()
             }
+
         })
     }
 
@@ -346,13 +340,13 @@ class SubjectOnStartFragment : BaseFragment() {
         boxLightAnim = null
 
         //停止发送
-        SunARS.voteStop()
+        mSparkServicePresenter.stopAnswer()
 
         //释放弹幕资源
         mDanmuView?.release()
 
         //解绑答题器Service
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
     }
 
 

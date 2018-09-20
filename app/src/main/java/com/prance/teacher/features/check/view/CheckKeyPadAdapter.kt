@@ -35,7 +35,7 @@ class CheckKeyPadAdapter(data: List<MultiItemEntity>) : BaseMultiItemQuickAdapte
             ITEM_TYPE -> {
                 val bean = item as KeyPadEntity
                 bean.run {
-                    helper.setText(R.id.keyNumber, keyId)
+                    helper.setText(R.id.keyNumber, keyId.substring(4))
                     when (status) {
                         KeyPadEntity.OFFLINE -> helper.setImageResource(R.id.keyPadBackground, R.drawable.bg_keypad_background_offline)
                         else -> helper.setImageResource(R.id.keyPadBackground, R.drawable.bg_keypad_background_error)

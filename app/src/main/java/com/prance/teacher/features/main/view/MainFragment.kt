@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.sunvote.platform.UsbManagerImpl
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.teacher.R
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
@@ -17,18 +14,13 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
-import android.app.ActivityManager
-import android.content.Context
 import com.blankj.utilcode.util.*
 import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
-import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.redpackage.RedPackageActivity
-import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.subject.SubjectActivity
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -43,7 +35,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_main
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {}) }
+    private val mSparkServicePresenter by lazy { SparkServicePresenter(context!!, object : SparkListenerAdapter() {}) }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -97,7 +89,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                }
 //                return@setOnClickListener
             }
-            if (UsbManagerImpl.baseStation.sn == null) {
+            if (SparkService.mUsbSerialNum == null) {
                 ToastUtils.showShort("请先连接基站")
             } else {
                 context?.let {
@@ -118,7 +110,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
 
         disposable = Flowable.interval(3, TimeUnit.SECONDS)
                 .mySubscribe {
@@ -140,7 +132,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
     override fun onDestroy() {
         super.onDestroy()
 
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
 
         disposable?.dispose()
     }

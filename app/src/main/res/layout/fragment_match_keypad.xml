@@ -30,31 +30,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="请逐个长按答题器上“"
+                android:text="请将答题器放置刷卡区"
                 android:textColor="#fff"
                 android:textSize="@dimen/m32.0" />
 
-            <ImageView
-                android:layout_width="@dimen/m44.0"
-                android:layout_height="@dimen/m44.0"
-                android:src="@drawable/icon_match_down" />
 
-            <TextView
-                android:id="@+id/tip_text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="”键3秒后输入"
-                android:textColor="#fff"
-                android:textSize="@dimen/m32.0" />
-
-            <TextView
-                android:id="@+id/tip_text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textColor="#fff"
-                android:textSize="@dimen/m32.0" />
         </LinearLayout>
 
         <LinearLayout
@@ -181,31 +161,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="请逐个长按答题器上“"
+            android:text="请将答题器放置刷卡区"
             android:textColor="#fff"
             android:textSize="@dimen/m52.0" />
 
-        <ImageView
-            android:layout_width="@dimen/m62.0"
-            android:layout_height="@dimen/m62.0"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_match_down" />
-
-        <TextView
-            android:id="@+id/tip_text5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="”键3秒后输入"
-            android:textColor="#fff"
-            android:textSize="@dimen/m52.0" />
-
-        <TextView
-            android:id="@+id/tip_text7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="#fff"
-            android:textSize="@dimen/m52.0" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

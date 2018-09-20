@@ -26,10 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/m31.0"
-            android:text="0097"
+            android:layout_marginEnd="@dimen/m24.0"
+            android:text="009722"
             android:textColor="#fff"
-            android:textSize="@dimen/m48.0" />
+            android:textSize="@dimen/m40.0" />
 
     </RelativeLayout>
 </com.prance.lib.common.utils.weight.FocusRelativeLayout>

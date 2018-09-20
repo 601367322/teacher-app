@@ -1,28 +1,30 @@
 package com.prance.teacher.features.match.view
 
+import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
-import cn.sunars.sdk.SunARS
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
-import com.prance.lib.sunvote.platform.UsbManagerImpl
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
+import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import org.greenrobot.eventbus.Subscribe
 import java.io.Serializable
 
@@ -37,49 +39,38 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter(R.layout.item_match_key_pad)
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy { SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private val mSparkServicePresenter: SparkServicePresenter  by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-        override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String?) {
-            when (iMode) {
-            //基站主信道
-                SunARS.BaseStation_Channel -> {
-                    UsbManagerImpl.baseStation.stationChannel = sInfo?.toLong()
-                    setTip()
+            override fun onCardBind(reportBindCard: ReportBindCard) {
+
+                if(mAdapter.isDeleteState){
+                    return
                 }
-            }
-        }
 
-        override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-            when (iMode) {
-                SunARS.KeyResult_loginInfo, SunARS.KeyResult_match -> {
-                    launch(UI) {
-                        KeyID?.let {
-                            val keyId = generateKeyPadId(it)
-                            if (!isExists(keyId)) {
-                                //保存答题器
-                                val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(UsbManagerImpl.baseStation.sn, keyId))
+                val keyId = reportBindCard.uid.toString()
+                if (!isExists(keyId)) {
+                    //保存答题器
+                    val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(SparkService.mUsbSerialNum, keyId))
 
-                                keyPadEntity?.let {
-                                    mAdapter.addData(it)
-                                    mAdapter.notifyDataSetChanged()
-                                    recycler.post {
-                                        setLastItemRequestFocus()
-                                    }
-                                    displayMoreBtn()
-                                }
-                            }
+                    keyPadEntity?.let {
+                        mAdapter.addData(it)
+                        mAdapter.notifyDataSetChanged()
+                        recycler.post {
+                            setLastItemRequestFocus()
                         }
+                        displayMoreBtn()
                     }
                 }
             }
-        }
 
-        override fun onServiceConnected() {
-            //查找已经配对过的答题器
-            mPresenter.getMatchedKeyPadByBaseStationId(UsbManagerImpl.baseStation.sn)
-        }
+            override fun onServiceConnected() {
+                //查找已经配对过的答题器
+                mPresenter.getMatchedKeyPadByBaseStationId(SparkService.mUsbSerialNum!!)
+            }
 
-    })}
+        })
+    }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -109,17 +100,15 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         //按钮页面状态初始化
         displayMoreBtn()
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
     }
 
     private fun setTip() {
         //设置顶部提示语
         mRootView?.get()?.post {
-            UsbManagerImpl.baseStation.let {
+            SparkService.mUsbSerialNum!!.let {
                 tip1.visible()
                 tip2.invisible()
-                tip_text2.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
-                tip_text7.text = """“${it?.stationChannel}”，再按“OK”键进行配对"""
             }
         }
     }
@@ -290,6 +279,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun onDestroy() {
         super.onDestroy()
 
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
     }
 }

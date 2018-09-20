@@ -22,6 +22,8 @@ interface IRedPackageContract {
          */
         fun onShowPackage(redPackage: RedPackage)
         fun onTimeEnd(scores: MutableList<StudentScore>)
+        fun startSendRedPackage()
+        fun stopSendRedPackage()
     }
     interface Presenter : IPresenter<View, Model> {
         /**

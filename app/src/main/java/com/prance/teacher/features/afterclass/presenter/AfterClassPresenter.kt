@@ -1,6 +1,5 @@
 package com.prance.teacher.features.afterclass.presenter
 
-import cn.sunars.sdk.SunARS
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
@@ -23,7 +22,7 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
     var mDisposable: Disposable? = null
     override val mModel: IAfterClassContract.Model = AfterClassModel()
     override fun startReceive(feedback: ClassesDetailFragment.Question) {
-        SunARS.voteStart(SunARS.VoteType_Choice, "1,0,0,0,4,1")
+        mView?.startSendQuestion()
         mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
                 .take(30)
                 .subscribeOn(Schedulers.io())
@@ -54,7 +53,7 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
     }
 
     override fun stopReceive() {
-        SunARS.voteStop()
+        mView?.stopSendQuestion()
         mDisposable()
     }
 

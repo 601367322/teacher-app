@@ -6,12 +6,9 @@ import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import cn.sunars.sdk.SunARS
-import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.isVisible
 import com.prance.lib.base.extension.visible
@@ -22,25 +19,21 @@ import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.pk.contract.IPKContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.rocket.BigRocket
-import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.model.KeyPadResult
+import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_pk.*
 import org.greenrobot.eventbus.Subscribe
 import java.util.concurrent.TimeUnit
@@ -84,27 +77,27 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         this.mActivity = context as PKActivity?
     }
 
-    private val mSunVoteServicePresenter by lazy {
-        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
+    private val mSparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            var answerList = mutableListOf<String>()
+            var answerList = mutableListOf<Long>()
 
-            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
+            override fun onAnswerReceived(answer: ReceiveAnswer) {
                 //防止重复提交
-                if (answerList.contains(KeyID)) {
+                if (answerList.contains(answer.uid)) {
                     return
                 }
-                answerList.add(KeyID)
+                answerList.add(answer.uid)
 
                 animGlView?.post {
-                    val keyId = generateKeyPadId(KeyID)
+                    val keyId = answer.uid.toString()
 
                     //签到学员才可以答题
                     ClassesDetailFragment.checkIsSignStudent(mQuestion.signStudents, keyId)
                             ?: return@post
 
                     //进度条宝箱
-                    if (sInfo == mQuestion.result) {
+                    if (answer.answer == mQuestion.result) {
                         powerProgressbar.progress += 1
                     }
                     if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
@@ -125,10 +118,11 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                     }
                     mActivity?.let {
                         //发送答题器结果
-                        mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mQuestion)
+                        mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, answer.answer, System.currentTimeMillis()), mQuestion)
                     }
                 }
             }
+
         })
     }
 
@@ -139,7 +133,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         mAnimGlView = rootView.findViewById(R.id.animGlView)
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
 
         animGlView.countTimeListener = this
 
@@ -186,7 +180,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     override fun onDestroy() {
         super.onDestroy()
-        SunARS.voteStop()
+        mSparkServicePresenter.stopAnswer()
 
         mDisposable?.dispose()
         mDisposable = null
@@ -197,13 +191,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
         mAnimGlView?.destroy()
 
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
     }
 
     //倒计时结束
     override fun onTimeCountEnd() {
         mQuestion.createTime = System.currentTimeMillis()
-        SunARS.voteStart(mQuestion.type!!, mQuestion.param)
+        //发送题目
+        mSparkServicePresenter.sendQuestion(mQuestion.getQuestionType())
         animGlView?.post {
 
             try {

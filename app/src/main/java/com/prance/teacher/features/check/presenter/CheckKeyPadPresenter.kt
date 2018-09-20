@@ -1,6 +1,5 @@
 package com.prance.teacher.features.check.presenter
 
-import cn.sunars.sdk.SunARS
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
@@ -53,10 +52,6 @@ class CheckKeyPadPresenter : BasePresenterKt<ICheckKeyPadContract.View>(), IChec
                 for (checkKeyPad in mCheckKeyPadEntities) {
                     if (checkKeyPad.keyId == matchedKeyPad.keyId) {
                         matchedKeyPad.status = KeyPadEntity.BATTERY
-                        //低电量
-                        if (checkKeyPad.battery / SunARS.MAX_BATTERY < 0.05) {
-                            batteryKeyPads.add(matchedKeyPad)
-                        }
                         exists = true
                     }
                 }

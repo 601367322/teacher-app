@@ -19,7 +19,7 @@ class MatchedKeyPadAdapter : BaseQuickAdapter<KeyPadEntity, BaseViewHolder>, Vie
     override fun convert(helper: BaseViewHolder?, bean: KeyPadEntity?) {
         bean?.run {
             helper?.run {
-                itemView.keyNumber.text = """${bean?.keyId}"""
+                itemView.keyNumber.text = """${bean?.keyId.substring(4)}"""
 
                 itemView.keyPadBtn.setTag(R.id.tag_data, bean)
                 itemView.keyPadBtn.setOnClickListener(this@MatchedKeyPadAdapter)

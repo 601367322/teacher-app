@@ -2,12 +2,9 @@ package com.prance.teacher.features.redpackage.view
 
 import android.os.*
 import android.view.View
-import com.prance.lib.sunvote.service.SunARSListenerAdapter
-import com.prance.lib.sunvote.service.SunVoteServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
 import com.prance.teacher.R
-import com.prance.teacher.features.match.view.generateKeyPadId
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
@@ -16,8 +13,11 @@ import com.prance.teacher.features.redpackage.view.red.RedPackage
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
 import com.chillingvan.canvasgl.glview.GLView
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 
 
 /**
@@ -45,20 +45,20 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_red_package
 
-    private val mSunVoteServicePresenter: SunVoteServicePresenter by lazy {
+    private val mSparkServicePresenter by lazy {
 
-        SunVoteServicePresenter(context!!, object : SunARSListenerAdapter() {
-            override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String?) {
-                animGlView.post {
-                    val keyId = generateKeyPadId(KeyID)
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-                    //签到学员才可以抢红包
-                    ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyId)
-                            ?: return@post
+            override fun onAnswerReceived(answer: ReceiveAnswer) {
+                val keyId = answer.uid.toString()
 
-                    mPresenter.grabRedPackage(keyId, sInfo)
-                }
+                //签到学员才可以抢红包
+                ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyId)
+                        ?: return
+
+                mPresenter.grabRedPackage(keyId, answer.answer)
             }
+
         })
     }
 
@@ -80,7 +80,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
         mPresenter.startRedPackage(mQuestion)
 
-        mSunVoteServicePresenter.bind()
+        mSparkServicePresenter.bind()
     }
 
     override fun onShowPackage(redPackage: RedPackage) {
@@ -90,6 +90,14 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun onTimeEnd(scores: MutableList<StudentScore>) {
         (activity as RedPackageActivity).redPackageRank(scores)
+    }
+
+    override fun startSendRedPackage() {
+        mSparkServicePresenter.sendQuestion(SparkService.QuestionType.COMMON)
+    }
+
+    override fun stopSendRedPackage() {
+        mSparkServicePresenter.stopAnswer()
     }
 
     fun redPackageStop() {
@@ -103,7 +111,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
         mPresenter.detachView()
 
-        mSunVoteServicePresenter.unBind()
+        mSparkServicePresenter.unBind()
 
         mMediaPlayer?.stop()
         mMediaPlayer?.release()

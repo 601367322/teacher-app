@@ -11,10 +11,9 @@ import android.view.View
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.sunvote.platform.UsbManagerImpl
+import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -68,7 +67,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         start.setOnClickListener {
             showProgress()
-            UsbManagerImpl.baseStation.sn?.let {
+            SparkService.mUsbSerialNum?.let {
                 mPresenter.startBind(mClassesEntity.klass?.id.toString(), it)
             }
         }

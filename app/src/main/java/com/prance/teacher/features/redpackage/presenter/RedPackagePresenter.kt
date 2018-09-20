@@ -1,6 +1,5 @@
 package com.prance.teacher.features.redpackage.presenter
 
-import cn.sunars.sdk.SunARS
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.prance.teacher.features.redpackage.contract.IRedPackageContract
@@ -13,12 +12,7 @@ import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.FlowableEmitter
 import io.reactivex.FlowableOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Publisher
-import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
 
@@ -76,7 +70,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                     this.mRedPackageManager = it
 
                     //基站发送命令，可重复的单选题
-                    SunARS.voteStart(SunARS.VoteType_Choice, "1,1,0,0,10,1")
+                    mView?.startSendRedPackage()
 
                     //开始倒计时，take总次数
                     var time = totalTime / intervalTime
@@ -120,7 +114,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
     private fun stopInterval() {
         //停止接收答题器
-        SunARS.voteStop()
+        mView?.stopSendRedPackage()
         //停止计时器
         disposable?.dispose()
     }

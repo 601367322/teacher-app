@@ -14,12 +14,13 @@
     <TextView
         android:id="@+id/keyNumber"
         android:layout_width="wrap_content"
+        android:text="123123"
         android:layout_alignRight="@id/keyPadBackground"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/m22.0"
+        android:layout_marginEnd="@dimen/m5.0"
         android:textColor="#fff"
-        android:textSize="@dimen/m48.0" />
+        android:textSize="@dimen/m40.0" />
 
 
 </RelativeLayout>

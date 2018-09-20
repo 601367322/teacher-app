@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.weight.AlertDialog
-import com.prance.lib.sunvote.platform.UsbManagerImpl
+import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.replacekeypad.contract.IReplaceKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -46,7 +46,7 @@ class ReplaceKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View {
                     .setCancelButton("取消", null)
                     .setConfirmButton("确定", { _ ->
                         showProgress()
-                        UsbManagerImpl.baseStation.sn?.let {
+                        SparkService.mUsbSerialNum?.let {
                             mPresenter.replaceKeyPad(it, mClassesEntity.klass?.id.toString(), oldKeyPad.text.toString(), newKeyPad.text.toString())
                         }
                     })
