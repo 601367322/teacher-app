@@ -113,12 +113,12 @@ class SparkService : Service() {
             // 这里是非主线程
             val uid = receiveAnswer.uid!!
             var answer = receiveAnswer.answer
-            if (answer == "E") {
-                answer = " 对"
-            } else if (answer == "F") {
-                answer = " 错"
-            } else if (answer == "H") {
-                answer = " 红包"
+
+            //兼容旧答题器对错题
+            when (answer) {
+                "E" -> receiveAnswer.answer = "1"
+                "F" -> receiveAnswer.answer = "2"
+                "H" -> answer = " 红包"
             }
 
             addUid(uid)
@@ -128,6 +128,10 @@ class SparkService : Service() {
                     i.onAnswerReceived(receiveAnswer)
                 })
             }
+
+//            sendMessage("uid:$uid")
+//            sendMessage("answer:$answer")
+//            sendMessage("")
 
 //            sendMessage("uid:$uid")
 //            sendMessage("answer:$answer")

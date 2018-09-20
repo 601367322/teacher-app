@@ -15,16 +15,24 @@ import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.blankj.utilcode.util.*
+import com.google.gson.Gson
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.students.StudentsActivity
+import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.features.subject.model.KeyPadResult
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -38,6 +46,14 @@ class MainFragment : BaseFragment(), IMainContract.View {
     override fun layoutId(): Int = R.layout.fragment_main
 
     private val mSparkServicePresenter by lazy { SparkServicePresenter(context!!, object : SparkListenerAdapter() {}) }
+
+    class  o {
+        constructor(s: String) {
+            this.s = s
+        }
+
+        var s = "";
+    }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -54,6 +70,20 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
+                var mResult = mutableListOf(
+                        KeyPadResult("123123","1", Date().time),
+                        KeyPadResult("123123","2", Date().time),
+                        KeyPadResult("123123","2", Date().time),
+                        KeyPadResult("123123","1", Date().time),
+                        KeyPadResult("123123","1", Date().time)
+                )
+                var result = KeyPadResult("123123","1", Date().time);
+
+                LogUtils.d(o(result.answer).s)
+
+                LogUtils.d(result.answer)
+                LogUtils.d(Gson().toJson(mResult))
+
 //                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
 //                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 30))) }
@@ -61,13 +91,13 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 
-//                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
-//                        StudentsEntity(1,"呵呵","呵呵")
-//                ))
-//                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+                var question = ClassesDetailFragment.Question(1, 5, "1,0,0,0,4,1", 1, "A", mutableListOf(
+                        StudentsEntity(1,"呵呵","呵呵")
+                ))
+                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-                val redConfig = RedPackageSetting(1,60,1,1)
-                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+//                val redConfig = RedPackageSetting(1,60,1,1)
+//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
