@@ -21,6 +21,8 @@ import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.redpackage.RedPackageActivity
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -52,7 +54,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
-                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
+//                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
 //                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 30))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
@@ -64,8 +66,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                ))
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-//                val redConfig = RedPackageSetting(1,60,1,1)
-//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+                val redConfig = RedPackageSetting(1,60,1,1)
+                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))

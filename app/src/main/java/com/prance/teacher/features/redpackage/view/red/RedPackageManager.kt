@@ -335,7 +335,7 @@ class RedPackageManager {
                     //添加记录
                     //计算红包被抢到的数量
                     destroyRedPackageNum++
-                    if(destroyRedPackageNum % destroyIntervalNum == 0){
+                    if (destroyRedPackageNum % destroyIntervalNum == 0) {
                         nextIsBig = true
                     }
                     val studentScore = saveResult(keyID, redPackage.score)
@@ -371,6 +371,11 @@ class RedPackageManager {
                     }
                 }
             }
+
+            if (BuildConfig.DEBUG) {
+//                studentEntity = StudentsEntity("", "")
+            }
+
             //如果学生信息没有找到，则放弃处理
             if (studentEntity == null) {
                 return null

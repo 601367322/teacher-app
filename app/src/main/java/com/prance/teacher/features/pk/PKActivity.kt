@@ -54,10 +54,10 @@ class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
         super.initView(savedInstanceState)
 
         if (BuildConfig.DEBUG) {
-            Flowable.timer(38, TimeUnit.SECONDS)
-                    .mySubscribe {
-                        onMessageResponse(MessageEntity(0, PushService.CMD_END_QUESTION, null, null))
-                    }
+//            Flowable.timer(38, TimeUnit.SECONDS)
+//                    .mySubscribe {
+//                        onMessageResponse(MessageEntity(0, PushService.CMD_END_QUESTION, null, null))
+//                    }
         }
     }
 

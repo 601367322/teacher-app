@@ -16,6 +16,7 @@ import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 

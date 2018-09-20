@@ -51,13 +51,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     private val mPushServicePresenter by lazy { PushServicePresenter(context!!, this) }
 
-    private val mSparkServicePresenter by lazy {
-        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
-        })
-    }
-
-    var REQUEST_CODE = 10001
-
     companion object {
 
         fun forClasses(classes: ClassesEntity): ClassesDetailFragment {
@@ -113,6 +106,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         readyClass.setOnClickListener {
             context?.let {
                 try {
+                    //开始Socket监听
+                    mPushServicePresenter.bind()
                     startActivity(IntentUtils.callingXYDial())
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -129,9 +124,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
         if (BuildConfig.DEBUG) {
             //开始Socket监听
-            mPushServicePresenter.bind()
+//            mPushServicePresenter.bind()
 
-            mSparkServicePresenter.bind()
+//            mSparkServicePresenter.bind()
 
 //            readyClass.postDelayed({
 //                val message = Gson().fromJson("{\"cmd\":2,\"msgId\":\"512eff48-0c5e-4366-b35d-5bbc0d4abcea\",\"data\":{\"result\":\"A\",\"classId\":1,\"questionId\":1202,\"param\":\"1,0,0,0,4,1\",\"type\":10,\"signStudents\":[{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":1,\"integrals\":[],\"name\":\"10\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":2,\"integrals\":[],\"name\":\"测试学员2\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":3,\"integrals\":[],\"name\":\"测试学员3\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":4,\"integrals\":[],\"name\":\"测试学员4\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":5,\"integrals\":[],\"name\":\"测试学员5\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":6,\"integrals\":[],\"name\":\"张三\",\"state\":0,\"type\":0,\"updateTime\":null}]}}",MessageEntity::class.java)
@@ -171,30 +166,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        LogUtils.d(requestCode)
-        when (requestCode) {
-            REQUEST_CODE -> {
-                when (resultCode) {
-                    Activity.RESULT_OK -> {
-                        //开始Socket监听
-                        mPushServicePresenter.bind()
-
-                        context?.run {
-                            try {
-                                startActivity(IntentUtils.callingXYDial())
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                ToastUtils.showShort("请使用小鱼易联")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     @Subscribe
     fun onEvent(result: SubjectRankFragment.QuestionResult) {
         startActivity(SubjectRankActivity.callingIntent(context!!, result))
@@ -208,7 +179,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
 
         if (BuildConfig.DEBUG) {
-            mSparkServicePresenter.unBind()
+//            mSparkServicePresenter.unBind()
         }
     }
 
