@@ -21,4 +21,10 @@ class KeyPadResult : Serializable {
         this.answer = answer
         this.answerTime = answerTime
     }
+
+    override fun toString(): String {
+        return "KeyPadResult(clickerId='$clickerId', answerTime=$answerTime)"
+    }
+
+
 }

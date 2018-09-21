@@ -15,6 +15,7 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import com.blankj.utilcode.util.LogUtils
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.base.extension.visible
@@ -94,18 +95,10 @@ class SubjectOnStartFragment : BaseFragment() {
         //初始化弹幕组件
         initDanmu()
 
-        SparkService.mUsbSerialNum?.let {
-            mQuestion?.run {
-                //基站开始发送题目
-                mSparkServicePresenter.sendQuestion(getQuestionType())
-            }
-        }
-
         //设置进度条最大人数
         mQuestion?.let {
             powerProgressbar.max = it.signStudents?.size ?: 0
         }
-
 
         if (BuildConfig.DEBUG) {
 //            powerProgressbar.max = 32
@@ -114,23 +107,23 @@ class SubjectOnStartFragment : BaseFragment() {
         mSparkServicePresenter.bind()
     }
 
-    private val mSparkServicePresenter by lazy {
+    private val mSparkServicePresenter: SparkServicePresenter by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            var answerList = mutableListOf<Long>()
-
-            override fun onAnswerReceived(answer: ReceiveAnswer) {
-                super.onAnswerReceived(answer)
-                //防止重复提交
-                if (answerList.contains(answer.uid)) {
-                    return
-                }
-                answerList.add(answer.uid)
-
+            override fun onAnswer(answer: ReceiveAnswer) {
                 val keyId = answer.uid.toString()
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult(keyId, answer.answer, System.currentTimeMillis())).sendToTarget()
             }
 
+            override fun onServiceConnected() {
+                SparkService.mUsbSerialNum?.let {
+                    mQuestion?.run {
+                        //基站开始发送题目
+                        LogUtils.d("开始发送题目")
+                        mSparkServicePresenter.sendQuestion(getQuestionType())
+                    }
+                }
+            }
         })
     }
 
@@ -230,7 +223,7 @@ class SubjectOnStartFragment : BaseFragment() {
 
                                         danmu.postDelayed({
 
-                                            if(activity == null){
+                                            if (activity == null) {
                                                 return@postDelayed
                                             }
 
@@ -268,7 +261,7 @@ class SubjectOnStartFragment : BaseFragment() {
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
                                             }
-                                        },delay)
+                                        }, delay)
 
 
                                     } catch (e: Exception) {

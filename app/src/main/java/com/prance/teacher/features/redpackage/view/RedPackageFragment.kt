@@ -48,9 +48,9 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     private val mSparkServicePresenter by lazy {
 
-        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter(true) {
 
-            override fun onAnswerReceived(answer: ReceiveAnswer) {
+            override fun onAnswer(answer: ReceiveAnswer) {
                 val keyId = answer.uid.toString()
 
                 //签到学员才可以抢红包

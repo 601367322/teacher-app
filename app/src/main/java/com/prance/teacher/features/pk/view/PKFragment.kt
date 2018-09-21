@@ -80,14 +80,7 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
     private val mSparkServicePresenter by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            var answerList = mutableListOf<Long>()
-
-            override fun onAnswerReceived(answer: ReceiveAnswer) {
-                //防止重复提交
-                if (answerList.contains(answer.uid)) {
-                    return
-                }
-                answerList.add(answer.uid)
+            override fun onAnswer(answer: ReceiveAnswer) {
 
                 animGlView?.post {
                     val keyId = answer.uid.toString()

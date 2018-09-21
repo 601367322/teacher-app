@@ -37,15 +37,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
     private val mSparkServicePresenter by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
 
-            var answerList = mutableListOf<Long>()
-
-            override fun onAnswerReceived(answer: ReceiveAnswer) {
-                //防止重复提交
-                if (answerList.contains(answer.uid)) {
-                    return
-                }
-                answerList.add(answer.uid)
-
+            override fun onAnswer(answer: ReceiveAnswer) {
                 timer.post {
                     val keyId = answer.uid.toString()
 

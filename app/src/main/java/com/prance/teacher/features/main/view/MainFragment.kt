@@ -70,20 +70,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
             if (BuildConfig.DEBUG) {
 
-                var mResult = mutableListOf(
-                        KeyPadResult("123123","1", Date().time),
-                        KeyPadResult("123123","2", Date().time),
-                        KeyPadResult("123123","2", Date().time),
-                        KeyPadResult("123123","1", Date().time),
-                        KeyPadResult("123123","1", Date().time)
-                )
-                var result = KeyPadResult("123123","1", Date().time);
-
-                LogUtils.d(o(result.answer).s)
-
-                LogUtils.d(result.answer)
-                LogUtils.d(Gson().toJson(mResult))
-
 //                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
 //                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 30))) }
@@ -91,7 +77,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 
-                var question = ClassesDetailFragment.Question(1, 5, "1,0,0,0,4,1", 1, "A", mutableListOf(
+                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
                         StudentsEntity(1,"呵呵","呵呵")
                 ))
                 context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }

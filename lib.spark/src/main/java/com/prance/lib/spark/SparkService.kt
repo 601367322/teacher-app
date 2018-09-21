@@ -10,6 +10,7 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import com.blankj.utilcode.util.LogUtils
 import com.spark.teaching.answertool.usb.helper.CommunicateHelper
 import com.spark.teaching.answertool.usb.helper.ConnectHelper
 import com.spark.teaching.answertool.usb.helper.UsbListener
@@ -70,7 +71,6 @@ class SparkService : Service() {
 
     private val mUsbListener = object : UsbListener {
         override fun onConnected(usbDeviceConnection: UsbDeviceConnection, `in`: UsbEndpoint, out: UsbEndpoint, serialNum: String) {
-            KLog.i(TAG, "usb onConnected", true)
 
             mIsUsbConnected = true
             mUsbSerialNum = serialNum
@@ -90,7 +90,6 @@ class SparkService : Service() {
         }
 
         override fun onDisConnected() {
-            KLog.i(TAG, "usb onDisConnected", true)
 
             mIsUsbConnected = false
             mUsbSerialNum = null
@@ -108,7 +107,10 @@ class SparkService : Service() {
         }
 
         override fun onAnswerReceived(receiveAnswer: ReceiveAnswer) {
-            KLog.i(TAG, "usb onAnswerReceived $receiveAnswer", false)
+
+            if(!canReceiveAnswer){
+                return
+            }
 
             // 这里是非主线程
             val uid = receiveAnswer.uid!!
@@ -123,23 +125,16 @@ class SparkService : Service() {
 
             addUid(uid)
 
+            LogUtils.d(receiveAnswer)
+
             mHandler.post {
                 mListener.forEach({ i ->
                     i.onAnswerReceived(receiveAnswer)
                 })
             }
-
-//            sendMessage("uid:$uid")
-//            sendMessage("answer:$answer")
-//            sendMessage("")
-
-//            sendMessage("uid:$uid")
-//            sendMessage("answer:$answer")
-//            sendMessage("")
         }
 
         override fun onCardBind(reportBindCard: ReportBindCard) {
-            KLog.i(TAG, "usb onCardBind $reportBindCard", false)
 
             // 这里是非主线程
             val uid = reportBindCard.uid!!
@@ -153,13 +148,11 @@ class SparkService : Service() {
                     i.onCardBind(reportBindCard)
                 })
             }
-//            sendMessage("uid:" + uid + "绑定")
-//            sendMessage("")
         }
 
         private fun startBindCard() {
             val openBindCard = OpenBindCard()
-            send(openBindCard)
+            CommunicateHelper.getInstance().sendAsync(openBindCard)
         }
 
         private fun addUid(uid: Long) {
@@ -169,26 +162,29 @@ class SparkService : Service() {
         }
     }
 
+    var canReceiveAnswer = false
+
     /**
      * 停止作答
      */
     private fun stopAnswer() {
+        canReceiveAnswer = false
         val ques = SendQuestion()
         ques.questionType = 0x80.toByte()
         ques.time = Date(System.currentTimeMillis())
         ques.seq = 1.toByte()
-        send(ques)
+        CommunicateHelper.getInstance().sendAsync(ques)
     }
 
     /**
      * 单选题
      */
     private fun sendSingle() {
-        val single = SendQuestion()
-        single.questionType = 0x01.toByte()
-        single.time = Date()
-        single.seq = 1.toByte()
-        send(single)
+        val ques = SendQuestion()
+        ques.questionType = 0x01.toByte()
+        ques.time = Date()
+        ques.seq = 1.toByte()
+        send(ques)
     }
 
     /**
@@ -247,6 +243,7 @@ class SparkService : Service() {
     }
 
     private fun send(dp: DataPackage) {
+        canReceiveAnswer = true
         CommunicateHelper.getInstance().sendAsync(dp)
     }
 

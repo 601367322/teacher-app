@@ -106,6 +106,14 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         readyClass.setOnClickListener {
             context?.let {
                 try {
+
+                    if (BuildConfig.DEBUG) {
+//                        var question = ClassesDetailFragment.Question(1, 5, "1,0,0,0,4,1", 1, "A", mutableListOf(
+//                                StudentsEntity(1,"呵呵","呵呵")
+//                        ))
+//                        context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+                    }
+
                     //开始Socket监听
                     mPushServicePresenter.bind()
                     startActivity(IntentUtils.callingXYDial())
