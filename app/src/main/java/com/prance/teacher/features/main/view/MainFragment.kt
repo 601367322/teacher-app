@@ -130,19 +130,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         mSparkServicePresenter.bind()
 
-        disposable = Flowable.interval(3, TimeUnit.SECONDS)
-                .mySubscribe {
-                    val M = 1024 * 1024
-                    val r = Runtime.getRuntime()
-
-//                    var sb = StringBuilder()
-//                    sb.append("最大可用内存:" + r.maxMemory() / M + "M\n")
-//                    sb.append("当前可用内存:" + r.totalMemory() / M + "M\n")
-//                    sb.append("当前空闲内存:" + r.freeMemory() / M + "M\n")
-//                    sb.append("当前已使用内存:" + (r.totalMemory() - r.freeMemory()) / M + "M\n")
-//                    LogUtils.d(sb.toString())
-
-                }
     }
 
     var disposable: Disposable? = null
@@ -152,7 +139,6 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
         mSparkServicePresenter.unBind()
 
-        disposable?.dispose()
     }
 
 

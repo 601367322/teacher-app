@@ -20,6 +20,7 @@ import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -19,13 +19,13 @@ interface ApiService {
             get() = if (UrlUtil.isLocalHost())
                 "unauth/app/qrCode"
             else
-                "backend/user/unauth/app/qrCode"
+                "backend/assistant/unauth/app/qrCode"
 
         val checkQrCode: String
             get() = if (UrlUtil.isLocalHost())
                 "unauth/app/login"
             else
-                "backend/user/unauth/app/login"
+                "backend/assistant/unauth/app/login"
 
         val allClasses: String
             get() = if (UrlUtil.isLocalHost())
@@ -86,7 +86,7 @@ interface ApiService {
     fun qrCodeDetail(@Url url: String): Flowable<QrCodeEntity>
 
     @POST
-    fun checkQrCode(@Url url: String, @Query("timestamp") timestamp: Long, @Query("token") token: String, @Query("log") log: String): Flowable<UserEntity>
+    fun checkQrCode(@Url url: String, @Query("timestamp") timestamp: Long, @Query("token") token: String, @Query("logsss") log: String): Flowable<UserEntity>
 
     @GET
     fun allClasses(@Url url: String): Flowable<ResponseBody<ClassesEntity>>

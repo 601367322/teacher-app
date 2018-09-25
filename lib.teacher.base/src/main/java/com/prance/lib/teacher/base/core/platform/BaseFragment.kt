@@ -15,8 +15,13 @@
  */
 package com.prance.lib.teacher.base.core.platform
 
+import android.content.Intent
 import android.support.v4.app.Fragment
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.Utils.getApp
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.teacher.base.TeacherApplication
 
 /**
@@ -28,5 +33,15 @@ abstract class BaseFragment : BaseFragment() {
 
     val application by lazy(mode = LazyThreadSafetyMode.NONE) {
         (context?.applicationContext as TeacherApplication)
+    }
+
+    override fun exitToLogin() {
+        ToastUtils.showShort("登录状态已过期，请重新登录")
+        ActivityUtils.finishAllActivities()
+        val packageManager = getApp().packageManager
+        val intent = packageManager.getLaunchIntentForPackage(getApp().packageName) ?: return
+        val componentName = intent.component
+        val mainIntent = Intent.makeRestartActivityTask(componentName)
+        getApp().startActivity(mainIntent)
     }
 }

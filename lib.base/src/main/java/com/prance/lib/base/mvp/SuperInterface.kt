@@ -19,6 +19,7 @@ interface ITopView : LifecycleOwner {
     fun inited() {}
 
     fun onNetworkError(throwable: Throwable): Boolean = false
+    fun exitToLogin(){}
 }
 
 interface ITopPresenter : LifecycleObserver {

@@ -21,6 +21,7 @@ import com.google.gson.TypeAdapter
 import java.io.IOException
 
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Converter
 
 internal class GsonResponseBodyConverter<T>(private val gson: Gson, private val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
@@ -31,10 +32,13 @@ internal class GsonResponseBodyConverter<T>(private val gson: Gson, private val 
             val resultStr = value.string()
             val result = gson.fromJson(resultStr, CallBackResult::class.java)
 
-            return if (result.status == StatusConstant.SUCCESS) {
+            return if (result.errno == StatusConstant.SUCCESS) {
+                if(result.data == null || result.data == ""){
+                    result.data = JSONObject()
+                }
                 adapter.fromJson(gson.toJson(result.data))
             } else {
-                throw ResultException(result.status, result.msg)
+                throw ResultException(result.errno, result.error)
             }
         }
     }

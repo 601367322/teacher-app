@@ -125,8 +125,6 @@ class SparkService : Service() {
 
             addUid(uid)
 
-            LogUtils.d(receiveAnswer)
-
             mHandler.post {
                 mListener.forEach({ i ->
                     i.onAnswerReceived(receiveAnswer)

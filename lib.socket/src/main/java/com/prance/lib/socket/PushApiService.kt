@@ -16,7 +16,7 @@ interface PushApiService {
 
     @FormUrlEncoded
     @POST
-    fun messageReceivedCallBack(@Url url: String, @Field("msgId") msgId: String, @Query("log") log: String): Flowable<Any>
+    fun messageReceivedCallBack(@Url url: String, @Field("msgId") msgId: String, @Query("logsss") log: String): Flowable<Any>
 
 
 }

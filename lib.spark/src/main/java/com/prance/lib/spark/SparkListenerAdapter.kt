@@ -3,6 +3,7 @@ package com.prance.lib.spark
 
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbEndpoint
+import com.blankj.utilcode.util.LogUtils
 
 import com.spark.teaching.answertool.usb.helper.UsbListener
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
@@ -31,6 +32,8 @@ abstract class SparkListenerAdapter(var duplicate: Boolean = false) : UsbListene
             answerList.add(answer.uid)
         }
 
+
+        LogUtils.d(answer)
         onAnswer(answer)
     }
 

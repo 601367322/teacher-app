@@ -37,6 +37,9 @@ dependencies {
     implementation dependencies.rxandroid
     implementation dependencies.utilcode
     implementation dependencies.eventbus
+    implementation (dependencies.retrofit2) {
+        exclude group: 'com.squareup.okhttp3'
+    }
 
     implementation project(":lib.common")
 }
