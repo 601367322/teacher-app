@@ -97,39 +97,43 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 answerList.add(KeyID)
 
                 animGlView?.post {
-                    val keyId = generateKeyPadId(KeyID)
+                    try {
+                        val keyId = generateKeyPadId(KeyID)
 
-                    //签到学员才可以答题
-                    ClassesDetailFragment.checkIsSignStudent(mQuestion.signStudents, keyId)
-                            ?: return@post
+                        //签到学员才可以答题
+                        ClassesDetailFragment.checkIsSignStudent(mQuestion.signStudents, keyId)
+                                ?: return@post
 
-                    //进度条宝箱
-                    if (sInfo == mQuestion.result) {
-                        powerProgressbar.progress += 1
-                    }
-                    if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
-                        doubleScore = true
+                        //进度条宝箱
+                        if (sInfo == mQuestion.result) {
+                            powerProgressbar.progress += 1
+                        }
+                        if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
+                            doubleScore = true
 
-                        //宝箱打开动画
-                        val animationDrawable = box.drawable as AnimationDrawable
-                        animationDrawable.start()
-                        //1秒后打开宝箱灯光
-                        animGlView?.postDelayed({
-                            try {
-                                boxLight.visible()
-                                boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
-                                boxLightAnim!!.interpolator = LinearInterpolator()
-                                boxLightAnim!!.repeatCount = Animation.INFINITE
-                                boxLightAnim!!.repeatMode = ValueAnimator.RESTART
-                                boxLightAnim!!.start()
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }, 1000)
-                    }
-                    mActivity?.let {
-                        //发送答题器结果
-                        mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mQuestion)
+                            //宝箱打开动画
+                            val animationDrawable = box.drawable as AnimationDrawable
+                            animationDrawable.start()
+                            //1秒后打开宝箱灯光
+                            animGlView?.postDelayed({
+                                try {
+                                    boxLight.visible()
+                                    boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
+                                    boxLightAnim!!.interpolator = LinearInterpolator()
+                                    boxLightAnim!!.repeatCount = Animation.INFINITE
+                                    boxLightAnim!!.repeatMode = ValueAnimator.RESTART
+                                    boxLightAnim!!.start()
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }, 1000)
+                        }
+                        mActivity?.let {
+                            //发送答题器结果
+                            mPresenter.sendAnswer(it.mPushServicePresenter, KeyPadResult(keyId, sInfo, System.currentTimeMillis()), mQuestion)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
             }
