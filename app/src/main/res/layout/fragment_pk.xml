@@ -54,19 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/tip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="各位宇航员，飞船准备起飞啦"
-        android:textSize="@dimen/m69.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
-        app:strokeColor="#0C0731"
-        app:strokeWidth="@dimen/m6.0" />
-
     <ImageView
         android:id="@+id/scoreLayout"
         android:layout_width="@dimen/m612.0"

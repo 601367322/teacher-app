@@ -211,7 +211,6 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 e.printStackTrace()
             }
 
-            tip.invisible()
             startCountTimer()
         }
     }
@@ -229,6 +228,8 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
     private fun endPK() {
         activity?.run {
             try {
+                isEnd = true
+
                 //隐藏倒计时
                 timer.invisible()
 
@@ -252,16 +253,18 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     override fun needEventBus(): Boolean = true
 
+    var isEnd = false
+
     @Subscribe
     fun onEvent(rocket: BigRocket) {
         timer.post {
             scoreLayout?.run {
-                if (!scoreLayout.isVisible())
-                    scoreLayout.visible()
-                val layoutParams = scoreLayout.layoutParams as ConstraintLayout.LayoutParams
-                layoutParams.marginStart = rocket.startPoint.x.toInt() + rocket.bitmap?.width - resources.getDimensionPixelOffset(R.dimen.m76_0)
-                layoutParams.topMargin = rocket.startPoint.y.toInt() - resources.getDimensionPixelOffset(R.dimen.m52_0)
-                scoreLayout.layoutParams = layoutParams
+                if (!isEnd) {
+                    val layoutParams = scoreLayout.layoutParams as ConstraintLayout.LayoutParams
+                    layoutParams.marginStart = rocket.startPoint.x.toInt() + rocket.bitmap?.width - resources.getDimensionPixelOffset(R.dimen.m76_0)
+                    layoutParams.topMargin = rocket.startPoint.y.toInt() - resources.getDimensionPixelOffset(R.dimen.m52_0)
+                    scoreLayout.layoutParams = layoutParams
+                }
             }
         }
     }
