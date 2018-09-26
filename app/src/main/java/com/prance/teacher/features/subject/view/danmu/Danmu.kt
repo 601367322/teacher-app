@@ -118,7 +118,7 @@ class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rock
                 }
     }
 
-    fun startRunning(){
+    private fun startRunning(){
         val translationAnimator = ObjectAnimator.ofInt(ScreenUtils.getScreenWidth(), -rocket.width - avatarBitmap!!.width).setDuration(RedPackageManager.translationDurationTime)
         translationAnimator!!.interpolator = LinearInterpolator()
         translationAnimator.addUpdateListener {
