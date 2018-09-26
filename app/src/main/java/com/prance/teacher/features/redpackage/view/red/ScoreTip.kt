@@ -12,6 +12,8 @@ import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.weight.FontCustom
 import android.graphics.PaintFlagsDrawFilter
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.SimpleTarget
@@ -52,7 +54,7 @@ class ScoreTip {
     //动画集
     var animatorSet: AnimatorSet? = null
 
-    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity,score: Int, tipBitmap: Bitmap, scoreBitmaps: MutableMap<String, Bitmap>) {
+    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, score: Int, tipBitmap: Bitmap, scoreBitmaps: MutableMap<String, Bitmap>) {
 
         this.context = context
 
@@ -61,10 +63,10 @@ class ScoreTip {
         this.scoreBitmaps = scoreBitmaps
 
         //底部文字溢出长度
-        val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m30_0)
+        val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m45_0)
 
         //右部文字溢出长度
-        val rightPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m71_0)
+        val rightPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m40_0)
 
         //红包背景378
         bitmap = Bitmap.createBitmap(
@@ -115,7 +117,7 @@ class ScoreTip {
         val targetRect = Rect(0, 0, width, textRect.height())
         val fontMetrics = textPaint.fontMetricsInt
         val baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2
-        val textStartY = bitmap.height - baseline.toFloat() + bottomPadding
+        val textStartY = bitmap.height - baseline.toFloat() + bottomPadding - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m13_0).toFloat()
         //写名字和描边
         canvas.drawText(student.name, targetRect.centerX().toFloat(), textStartY, strokeTextPaint)
         canvas.drawText(student.name, targetRect.centerX().toFloat(), textStartY, textPaint)
@@ -128,19 +130,30 @@ class ScoreTip {
         startFall()
 
         //头像宽高
-        var avatarWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m190_0)
+        var avatarWidth = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m108_0)
         if (!TextUtils.isEmpty(student.head)) {
             try {
                 GlideApp.with(context)
                         .asBitmap()
                         .load(student.head)
-                        .error(R.drawable.default_avatar_boy)
+                        .placeholder(R.drawable.red_package_score_tip_default_avatar)
+                        .error(R.drawable.red_package_score_tip_default_avatar)
                         .override(avatarWidth, avatarWidth)
                         .transform(CropCircleTransformation())
                         .into(object : SimpleTarget<Bitmap>() {
 
                             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                if(!bitmap.isRecycled) {
+                                draw(resource)
+                            }
+
+                            override fun onLoadFailed(errorDrawable: Drawable?) {
+                                super.onLoadFailed(errorDrawable)
+
+                                draw((errorDrawable as BitmapDrawable).bitmap)
+                            }
+
+                            fun draw(resource: Bitmap) {
+                                if (!bitmap.isRecycled) {
                                     var tempBitmap = bitmap
                                     //重新绘制一张空图
                                     var bg = Bitmap.createBitmap(
@@ -154,8 +167,8 @@ class ScoreTip {
                                     canvas.drawBitmap(tempBitmap, 0F, 0F, null)
                                     // 设置X，Y
                                     val matrix = Matrix()
-                                    val bottomPadding = Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m56_0) + avatarWidth
-                                    matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F, (bg.height - bottomPadding).toFloat())
+                                    matrix.postScale(avatarWidth / resource.width.toFloat(), avatarWidth / resource.height.toFloat())
+                                    matrix.postTranslate((bg.width.toFloat() - avatarWidth.toFloat()) / 2F - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m4_0), (bitmap.height - bottomPadding - avatarWidth - Utils.getApp().resources.getDimensionPixelOffset(R.dimen.m15_0)).toFloat())
                                     //画头像
                                     canvas.drawBitmap(resource, matrix, null)
                                     //设置有头像的图

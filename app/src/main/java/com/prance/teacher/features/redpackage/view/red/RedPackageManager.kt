@@ -218,7 +218,7 @@ class RedPackageManager {
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(R.drawable.red_package_tip_background)
-                .submit(context.resources.getDimensionPixelOffset(R.dimen.m237_0), context.resources.getDimensionPixelOffset(R.dimen.m340_0))
+                .submit(context.resources.getDimensionPixelOffset(R.dimen.m210_0), context.resources.getDimensionPixelOffset(R.dimen.m214_0))
                 .get()
     }
 
