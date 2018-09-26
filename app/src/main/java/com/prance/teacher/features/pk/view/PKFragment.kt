@@ -115,12 +115,16 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                         animationDrawable.start()
                         //1秒后打开宝箱灯光
                         animGlView?.postDelayed({
-                            boxLight.visible()
-                            boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
-                            boxLightAnim!!.interpolator = LinearInterpolator()
-                            boxLightAnim!!.repeatCount = Animation.INFINITE
-                            boxLightAnim!!.repeatMode = ValueAnimator.RESTART
-                            boxLightAnim!!.start()
+                            try {
+                                boxLight.visible()
+                                boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
+                                boxLightAnim!!.interpolator = LinearInterpolator()
+                                boxLightAnim!!.repeatCount = Animation.INFINITE
+                                boxLightAnim!!.repeatMode = ValueAnimator.RESTART
+                                boxLightAnim!!.start()
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }, 1000)
                     }
                     mActivity?.let {
@@ -273,28 +277,32 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
             when (msg.cmd) {
                 PK_RUNTIME_DATA -> {
                     //所有班级的排名
-                    val data = msg.getArrayData(PKRuntimeData::class.java)
+                    try {
+                        val data = msg.getArrayData(PKRuntimeData::class.java)
 
-                    //我所在班级的排名
-                    var mRank: PKRuntimeData? = null
-                    for (i in data) {
-                        if (i.klass?.id == mQuestion.classId) {
-                            mRank = i
+                        //我所在班级的排名
+                        var mRank: PKRuntimeData? = null
+                        for (i in data) {
+                            if (i.klass?.id == mQuestion.classId) {
+                                mRank = i
+                            }
                         }
-                    }
 
-                    className.text = ClassesDetailFragment.mClassesEntity?.klass?.name
+                        className.text = ClassesDetailFragment.mClassesEntity?.klass?.name
 
-                    if (mRank == null) {
-                        //没有学生作答
-                        correctRate.text = "0%"
-                        avgTime.text = "0.00秒"
-                        rank.text = "第 x 名"
-                    } else {
-                        //正常情况
-                        correctRate.text = "${mRank.correctRate}%"
-                        avgTime.text = "${mRank.averageTime}秒"
-                        rank.text = "第 ${data.indexOf(mRank) + 1} 名"
+                        if (mRank == null) {
+                            //没有学生作答
+                            correctRate.text = "0%"
+                            avgTime.text = "0.00秒"
+                            rank.text = "第 x 名"
+                        } else {
+                            //正常情况
+                            correctRate.text = "${mRank.correctRate}%"
+                            avgTime.text = "${mRank.averageTime}秒"
+                            rank.text = "第 ${data.indexOf(mRank) + 1} 名"
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
             }
