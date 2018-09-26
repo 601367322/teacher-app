@@ -119,7 +119,6 @@ dependencies {
     implementation dependencies.eventbus
     implementation dependencies.pageindicatorview
     implementation dependencies.glideTransformations
-    implementation dependencies.danmu
     implementation dependencies.baseadapter
     implementation (dependencies.retrofit2) {
         exclude group: 'com.squareup.okhttp3'

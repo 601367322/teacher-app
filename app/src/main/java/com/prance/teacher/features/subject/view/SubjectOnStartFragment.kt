@@ -10,8 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.text.Spannable
-import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -28,22 +26,13 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.danmutest.CenteredImageSpan
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.model.KeyPadResult
+import com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_start.*
-import master.flame.danmaku.controller.DrawHandler
-import master.flame.danmaku.danmaku.model.BaseDanmaku
-import master.flame.danmaku.danmaku.model.DanmakuTimer
-import master.flame.danmaku.danmaku.model.IDisplayer
-import master.flame.danmaku.danmaku.model.android.DanmakuContext
-import master.flame.danmaku.danmaku.model.android.Danmakus
-import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer
-import master.flame.danmaku.danmaku.parser.BaseDanmakuParser
-import master.flame.danmaku.ui.widget.DanmakuView
 
 /**
  * 开始答题
@@ -56,17 +45,13 @@ class SubjectOnStartFragment : BaseFragment() {
     var KEY_ENENT_HANDLER_WHAT = 1
     var SHOW_DANMU_WHAT = 2
 
-    lateinit var mDanmuContext: DanmakuContext
-
-    lateinit var mDanmuParser: BaseDanmakuParser
-
     var lastDanmuTime = 0L
 
     var danmuInterval = 3000L
 
     var boxLightAnim: ValueAnimator? = null
 
-    var mDanmuView: DanmakuView? = null
+    var mDanmuView: DanmuAnimGLView? = null
 
     var doubleScore = false
 
@@ -91,9 +76,6 @@ class SubjectOnStartFragment : BaseFragment() {
         avatarBackground = BitmapFactory.decodeResource(resources, R.drawable.subject_danmu_avatar_bg)
 
         mDanmuView = rootView.findViewById(R.id.danmu)
-
-        //初始化弹幕组件
-        initDanmu()
 
         //设置进度条最大人数
         mQuestion?.let {
@@ -138,9 +120,9 @@ class SubjectOnStartFragment : BaseFragment() {
 
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-//                        if (studentEntity == null) {
-//                            studentEntity = StudentsEntity(1, "假数据", "https://upload.jianshu.io/users/upload_avatars/2897594/eb89b4338b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
-//                        }
+                        if (studentEntity == null) {
+                            studentEntity = StudentsEntity(1, "假数据", "https://upload.jianshu.io/users/upload_avatars/2897594/eb89b4338b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
+                        }
                     }
                     if (studentEntity == null) {
                         return
@@ -190,7 +172,7 @@ class SubjectOnStartFragment : BaseFragment() {
                     GlideApp.with(this@SubjectOnStartFragment)
                             .asBitmap()
                             .load(studentsEntity.head)
-                            .error(R.drawable.default_avatar_boy)
+                            .error(R.drawable.danmu_default_avatar)
                             .override(avatarHeight, avatarHeight)
                             .transform(CropCircleTransformation())
                             .into(object : SimpleTarget<Bitmap>() {
@@ -228,36 +210,7 @@ class SubjectOnStartFragment : BaseFragment() {
                                             }
 
                                             try {
-                                                val danmaku = mDanmuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)
-
-                                                //画头像
-                                                val avatarBgHeight = resources.getDimensionPixelOffset(R.dimen.m172_0)
-                                                val bitmap = Bitmap.createBitmap(avatarBgHeight, avatarBgHeight, Bitmap.Config.ARGB_4444)
-                                                val canvas = Canvas(bitmap)
-                                                val bgMatrix = Matrix()
-                                                bgMatrix.setScale(avatarBgHeight.toFloat() / avatarBackground.height.toFloat(), avatarBgHeight.toFloat() / avatarBackground.height.toFloat())
-                                                canvas.drawBitmap(avatarBackground, bgMatrix, null)
-                                                val resourceMatrix = Matrix()
-                                                resourceMatrix.postScale(avatarHeight.toFloat() / resource.height.toFloat(), avatarHeight.toFloat() / resource.height.toFloat())
-                                                resourceMatrix.postTranslate((avatarBgHeight - avatarHeight) / 2f, (avatarBgHeight - avatarHeight) / 2f)
-                                                canvas.drawBitmap(resource, resourceMatrix, null)
-
-                                                val drawable = BitmapDrawable(bitmap)
-                                                drawable.setBounds(0, 0, avatarBgHeight, avatarBgHeight)
-                                                //绘制头像
-                                                val spannable = createSpannable(drawable, studentsEntity.name)
-
-                                                danmaku.text = spannable
-                                                danmaku.padding = 5
-                                                danmaku.priority = 1  // 一定会显示, 一般用于本机发送的弹幕
-                                                danmaku.isLive = false
-                                                danmaku.time = danmu.currentTime
-                                                context?.run {
-                                                    danmaku.textSize = resources.getDimensionPixelOffset(R.dimen.m50_0).toFloat()
-                                                }
-                                                danmaku.textColor = Color.parseColor("#512B90")
-                                                danmaku.textShadowColor = 0 // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-                                                danmu.addDanmaku(danmaku)
+                                                danmu.mDanmuManager?.add(resource, studentsEntity.name)
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
                                             }
@@ -275,53 +228,6 @@ class SubjectOnStartFragment : BaseFragment() {
         }
     }
 
-    private fun initDanmu() {
-        // 设置最大显示行数
-        val maxLinesPair = mutableMapOf(
-                BaseDanmaku.TYPE_SCROLL_RL to 1
-        )
-
-        // 设置是否禁止重叠
-        val overlappingEnablePair = mutableMapOf(
-                BaseDanmaku.TYPE_SCROLL_RL to true,
-                BaseDanmaku.TYPE_FIX_TOP to true
-        )
-
-        mDanmuContext = DanmakuContext.create()
-        mDanmuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3F)
-                .setDuplicateMergingEnabled(false)
-                .setScrollSpeedFactor(1.2f)
-                .setCacheStuffer(SpannedCacheStuffer(), null)
-                .setScaleTextSize(1.2f)
-                .setMaximumLines(maxLinesPair)
-                .preventOverlapping(overlappingEnablePair).setDanmakuMargin(40)
-        mDanmuParser = object : BaseDanmakuParser() {
-            override fun parse(): Danmakus {
-                return Danmakus()
-            }
-        }
-        danmu.setCallback(object : DrawHandler.Callback {
-            override fun updateTimer(timer: DanmakuTimer) {}
-            override fun drawingFinished() {}
-            override fun danmakuShown(danmaku: BaseDanmaku) {}
-            override fun prepared() {
-                danmu?.start()
-            }
-        })
-        danmu.prepare(mDanmuParser, mDanmuContext)
-        danmu.enableDanmakuDrawingCache(true)
-    }
-
-    private fun createSpannable(drawable: Drawable, name: String): SpannableStringBuilder {
-        val text = "bitmap"
-        val spannableStringBuilder = SpannableStringBuilder(text)
-        val span = CenteredImageSpan(drawable)
-        spannableStringBuilder.setSpan(span, 0, text.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-        spannableStringBuilder.append("$name 做对啦~")
-        return spannableStringBuilder
-    }
-
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -334,9 +240,6 @@ class SubjectOnStartFragment : BaseFragment() {
 
         //停止发送
         mSparkServicePresenter.stopAnswer()
-
-        //释放弹幕资源
-        mDanmuView?.release()
 
         //解绑答题器Service
         mSparkServicePresenter.unBind()

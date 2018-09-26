@@ -6,6 +6,12 @@
     android:clipChildren="false"
     android:layout_height="match_parent">
 
+    <com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/m20.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="@dimen/m200.0" />
 
     <com.prance.teacher.features.main.view.MainFocusRelativeLayout
         android:id="@+id/startLesson"

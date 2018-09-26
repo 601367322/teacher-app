@@ -9,24 +9,19 @@
 
     <com.prance.teacher.weight.SimpleProgressbar
         android:id="@+id/powerProgressbar"
-        android:layout_width="@dimen/m838.0"
-        android:layout_height="@dimen/m26.0"
-        android:layout_marginStart="@dimen/m542.0"
-        android:layout_marginTop="@dimen/m203.0"
+        android:layout_width="@dimen/m325.0"
+        android:layout_height="@dimen/m16.0"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="@dimen/m123.0"
+        android:max="100"
+        android:progress="30"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="@dimen/m15.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <master.flame.danmaku.ui.widget.DanmakuView
+    <com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
         android:id="@+id/danmu"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/m200.0"
-        android:layout_marginTop="@dimen/m20.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/powerProgressbar" />
-
-    <com.prance.teacher.features.subject.view.DanmuAnimGLView
         android:layout_width="0dp"
         android:layout_marginTop="@dimen/m20.0"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,22 +31,22 @@
 
     <ImageView
         android:id="@+id/boxLight"
-        android:layout_width="@dimen/m290.0"
-        android:layout_height="@dimen/m290.0"
-        android:layout_marginStart="@dimen/m1000.0"
-        android:layout_marginTop="@dimen/m60.0"
-        android:src="@drawable/box_light"
+        android:layout_width="@dimen/m220.0"
+        android:layout_height="@dimen/m220.0"
+        android:layout_marginStart="@dimen/m920.0"
+        android:layout_marginTop="@dimen/m15.0"
         android:visibility="gone"
+        android:src="@drawable/box_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/box"
-        android:layout_width="@dimen/m290.0"
-        android:layout_height="@dimen/m290.0"
-        android:layout_marginStart="@dimen/m1000.0"
-        android:layout_marginTop="@dimen/m60.0"
-        android:src="@drawable/ufo_anim"
+        android:layout_width="@dimen/m212.0"
+        android:layout_height="@dimen/m140.0"
+        android:layout_marginStart="@dimen/m920.0"
+        android:layout_marginTop="@dimen/m55.0"
+        android:src="@drawable/little_ufo_anim"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,8 +64,8 @@
         android:id="@+id/imageView4"
         android:layout_width="@dimen/m51.0"
         android:layout_height="@dimen/m89.0"
-        android:layout_marginStart="@dimen/m440.0"
-        android:layout_marginTop="@dimen/m176.0"
+        android:layout_marginStart="@dimen/m720.0"
+        android:layout_marginTop="@dimen/m80.0"
         android:src="@drawable/pk_light_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
