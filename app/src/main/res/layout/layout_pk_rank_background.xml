@@ -40,27 +40,28 @@
 
     <ImageView
         android:id="@+id/cups"
-        android:layout_width="@dimen/m1197.0"
-        android:layout_height="@dimen/m554.0"
-        android:layout_marginStart="@dimen/m134.0"
-        android:layout_marginTop="@dimen/m642.0"
+        android:layout_width="@dimen/m1200.0"
+        android:layout_height="@dimen/m830.0"
+        android:layout_marginStart="@dimen/m95.0"
+        android:layout_marginTop="@dimen/m270.0"
         android:adjustViewBounds="true"
+        android:visibility="gone"
         android:src="@drawable/pk_cups"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/my_cup"
-        android:layout_width="@dimen/m420.0"
-        android:layout_height="@dimen/m446.0"
+        android:layout_width="@dimen/m424.0"
+        android:layout_height="@dimen/m830.0"
         android:layout_marginStart="@dimen/m1414.0"
-        android:layout_marginTop="@dimen/m672.0"
+        android:layout_marginTop="@dimen/m392.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="@dimen/m420.0"
-            android:layout_height="@dimen/m446.0"
+            android:layout_width="@dimen/m424.0"
+            android:layout_height="@dimen/m830.0"
             android:adjustViewBounds="true"
             android:src="@drawable/pk_my_cup" />
 
@@ -69,7 +70,7 @@
             android:layout_width="wrap_content"
             android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:paddingTop="@dimen/m50.0"
+            android:paddingTop="@dimen/m250.0"
             android:gravity="center"
             android:layout_height="wrap_content">
 

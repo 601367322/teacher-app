@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/number"
+    android:layout_width="@dimen/m260.0"
+    android:layout_height="@dimen/m380.0"
+    android:gravity="center_horizontal"
+    android:visibility="gone"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/other_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/m84.0"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/m84.0"
+            android:layout_height="@dimen/m84.0"
+            android:src="@drawable/pk_rank_coin" />
+
+        <ImageView
+            android:layout_width="@dimen/m48.0"
+            android:layout_height="@dimen/m48.0"
+            android:layout_marginLeft="@dimen/m15.0"
+            android:src="@drawable/red_package_score_add" />
+
+        <LinearLayout
+            android:id="@+id/scoreLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/my_tip"
+        android:layout_width="wrap_content"
+        android:textColor="#fff"
+        android:visibility="gone"
+        android:text="本班成绩"
+        android:gravity="center"
+        android:textSize="@dimen/m51.0"
+        android:layout_height="@dimen/m84.0" />
+
+    <TextView
+        android:id="@+id/className"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/m90.0"
+        android:layout_marginTop="@dimen/m60.0"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="@dimen/m10.0"
+        android:maxLines="2"
+        android:text="河北省上海市T大班河北班"
+        android:textColor="#AB4E1C"
+        android:textSize="@dimen/m30.0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m10.0"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="正确率"
+            android:textColor="#18124C"
+            android:textSize="@dimen/m26.0" />
+
+        <TextView
+            android:id="@+id/correctRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="80%"
+            android:textColor="#D23D15"
+            android:textSize="@dimen/m26.0" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m20.0"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="平均答题时长"
+            android:textColor="#18124C"
+            android:textSize="@dimen/m26.0" />
+
+        <TextView
+            android:id="@+id/avgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textColor="#D23D15"
+            android:textSize="@dimen/m26.0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m8.0"
+            android:text="秒"
+            android:textColor="#8F8B8A"
+            android:textSize="@dimen/m26.0" />
+    </LinearLayout>
+</LinearLayout>

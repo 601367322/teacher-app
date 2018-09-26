@@ -5,16 +5,19 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.R.id.*
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.utils.SoundUtils
 import kotlinx.android.synthetic.main.fragment_pk_rank.*
+import kotlinx.android.synthetic.main.include_pk_rank.view.*
 import kotlinx.android.synthetic.main.layout_pk_rank_background.*
 
 class PKRankFragment : BaseFragment() {
@@ -68,25 +71,14 @@ class PKRankFragment : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         SoundUtils.play("rank_background")
 
-        numbers.add(number1)
-        numbers.add(number2)
-        numbers.add(number3)
-
-        classNames.add(className1)
-        classNames.add(className2)
-        classNames.add(className3)
-
-        correctRates.add(correctRate1)
-        correctRates.add(correctRate2)
-        correctRates.add(correctRate3)
-
-        avgTimes.add(avgTime1)
-        avgTimes.add(avgTime2)
-        avgTimes.add(avgTime3)
-
-        scores.add(scoreLayout1)
-        scores.add(scoreLayout2)
-        scores.add(scoreLayout3)
+        var ranks = mutableListOf(rank1,rank2,rank3,rank4)
+        for(rank in ranks){
+            numbers.add(rank)
+            classNames.add(rank.className)
+            correctRates.add(rank.correctRate)
+            avgTimes.add(rank.avgTime)
+            scores.add(rank.scoreLayout)
+        }
 
         val result = arguments?.getSerializable(PK_RESULT) as PKResult?
 
@@ -94,9 +86,9 @@ class PKRankFragment : BaseFragment() {
         var myClass = ClassesDetailFragment.mClassesEntity
 
         if (BuildConfig.DEBUG) {
-//            if (myClass == null) {
-//                myClass = ClassesEntity(1, "第一名")
-//            }
+            if (myClass == null) {
+                myClass = ClassesEntity(1, "第一名")
+            }
         }
 
         var classVO: PKPresenter.PKResultMessage.ClassVO? = null
@@ -122,14 +114,15 @@ class PKRankFragment : BaseFragment() {
         }
 
         myClass?.let {
-            number4.visible()
-
-            className4.text = myClass.klass?.name
+            rank4.visible()
+            rank4.other_tip.invisible()
+            rank4.my_tip.visible()
+            rank4.className.text = myClass.klass?.name
             if (classVO == null) {
                 classVO = PKPresenter.PKResultMessage.ClassVO(null, 0F, 0F)
             }
-            correctRate4.text = "${classVO?.correctRate}%"
-            avgTime4.text = classVO?.averageTime.toString()
+            rank4.correctRate.text = "${classVO?.correctRate}%"
+            rank4.avgTime.text = classVO?.averageTime.toString()
             for (c in myNumber.toString()) {
                 val image = ImageView(context)
                 rankRes[c.toString()]?.let { image.setImageResource(it) }
