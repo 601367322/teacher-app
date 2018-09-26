@@ -23,6 +23,7 @@ import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
@@ -72,7 +73,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 //                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
-//                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 30))) }
+//                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 8))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
@@ -82,7 +83,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                ))
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-                val redConfig = RedPackageSetting(1,60,1,1)
+                val redConfig = RedPackageSetting(1,15,1,1)
                 context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {

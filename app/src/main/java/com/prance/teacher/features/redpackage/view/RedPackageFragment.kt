@@ -18,6 +18,7 @@ import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.redpackage.view.red.RedPackageManager
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 
 
@@ -99,6 +100,10 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun stopSendRedPackage() {
         mSparkServicePresenter.stopAnswer()
+    }
+
+    override fun startTimer(totalTime: Long) {
+        timer.start(totalTime.toInt())
     }
 
     fun redPackageStop() {

@@ -23,24 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/timer"
-        android:layout_width="@dimen/m300.0"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="right"
-        android:paddingEnd="@dimen/m6.0"
-        android:text="00:30"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m69.0"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#D86410"
-        app:strokeWidth="@dimen/m6.0"
-        app:typeface="COMICSANSMSGRAS" />
 
     <com.prance.teacher.weight.SimpleProgressbar
         android:id="@+id/powerProgressbar"
@@ -181,4 +163,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.prance.teacher.weight.CountTimer
+        android:layout_width="wrap_content"
+        android:id="@+id/timer"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"></com.prance.teacher.weight.CountTimer>
 </android.support.constraint.ConstraintLayout>

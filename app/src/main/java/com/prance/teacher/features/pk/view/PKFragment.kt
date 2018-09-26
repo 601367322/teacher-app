@@ -204,7 +204,6 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
             }
 
             tip.invisible()
-            timer.visible()
             startCountTimer()
         }
     }
@@ -213,26 +212,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
     private fun startCountTimer() {
         mQuestion.duration?.run {
-            var time = this
-            mDisposable = Flowable.interval(1, TimeUnit.SECONDS)
-                    .take(time.toLong())
-                    .mySubscribe {
-                        time--
-                        timer?.text = format(dateFormat_Min_Second, time.toLong() * 1000)
-                        if (time < 1) {
-                            endPK()
-                        }
-                    }
+            timer.start(this) {
+                endPK()
+            }
         }
 
     }
 
     private fun endPK() {
-        mDisposable?.let {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
-        }
 
         activity?.run {
             (activity as PKActivity).endPk()

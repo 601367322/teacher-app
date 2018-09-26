@@ -53,8 +53,6 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
             RedPackageManager.DEFAULT_SCORE = it.integrat!!
         }
 
-        totalTime -= RedPackageManager.translationDurationTime
-
         if (totalTime <= 0) {
             return
         }
@@ -74,6 +72,9 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
                     //开始倒计时，take总次数
                     var time = totalTime / intervalTime
+
+                    mView?.startTimer(mSetting!!.lastTime!!.toLong())
+
                     disposable = Flowable.interval(intervalTime, TimeUnit.MILLISECONDS)
                             .take(time)
                             .mySubscribe {
@@ -85,11 +86,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
 
                                 //最后一个红包
                                 if (it == time - 1) {
-                                    //所有红包落下之后关闭界面
-                                    Flowable.timer(RedPackageManager.translationDurationTime, TimeUnit.MILLISECONDS)
-                                            .mySubscribe {
-                                                stopRedPackage()
-                                            }
+                                    stopRedPackage()
                                 }
                             }
                 }
@@ -133,7 +130,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                 list.add(RedPackageRecord(score))
             }
             mModel.postRedPackageResult(mSetting?.classId.toString(), Gson().toJson(list), mSetting?.interactId.toString())
-                    .mySubscribe(onSubscribeError,{LogUtils.d("发送抢红包结果成功")})
+                    .mySubscribe(onSubscribeError, { LogUtils.d("发送抢红包结果成功") })
         }
     }
 }

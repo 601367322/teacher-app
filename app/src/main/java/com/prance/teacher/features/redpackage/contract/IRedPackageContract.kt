@@ -24,6 +24,7 @@ interface IRedPackageContract {
         fun onTimeEnd(scores: MutableList<StudentScore>)
         fun startSendRedPackage()
         fun stopSendRedPackage()
+        fun startTimer(totalTime: Long)
     }
     interface Presenter : IPresenter<View, Model> {
         /**

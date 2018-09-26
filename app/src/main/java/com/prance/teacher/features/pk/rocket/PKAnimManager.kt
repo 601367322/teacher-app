@@ -23,7 +23,7 @@ class PKAnimManager(var context: Context) {
     }
 
     //倒计时
-    var countTime: CountTime = CountTime(context)
+    var countTime: PKCountTime = PKCountTime(context)
 
     //星球
     var earth: Earth? = null

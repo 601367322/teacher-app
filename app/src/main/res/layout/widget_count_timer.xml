@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="@dimen/m64.0">
+
+    <ImageView
+        android:layout_width="@dimen/m284.0"
+        android:layout_height="@dimen/m66.0"
+        android:src="@drawable/icon_count_timer_des" />
+
+    <LinearLayout
+        android:id="@+id/timeLayout"
+        android:layout_width="@dimen/m90.0"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m126.0"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+</RelativeLayout>

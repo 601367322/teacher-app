@@ -52,28 +52,12 @@ class PKBackground(val context: Context) : ICountTimeListener {
         canvas.restore()
     }
 
-    fun startAnim() {
-//        disposable = Flowable.interval(5, TimeUnit.MILLISECONDS)
-//                .mySubscribe {
-//                    val y = 1
-//                    for ((index, p) in points.withIndex()) {
-//                        p.y += y
-//                        if (p.y >= ScreenUtils.getScreenHeight()) {
-//                            p.y = -2 * ScreenUtils.getScreenHeight()
-//                        }
-//                    }
-//                    if ((context as Activity).isDestroyed) {
-//                        disposable?.dispose()
-//                    }
-//                }
-    }
-
     override fun onTimeCountEnd() {
         shouldUpdatePosition = true
     }
 
     val VY_MULTIPLIER = 0.01f // px/ms
-    val MIN_VY = 20
+    val MIN_VY = 15
 
     fun updatePosition(timeMs: Int) {
 

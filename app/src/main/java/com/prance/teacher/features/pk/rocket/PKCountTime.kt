@@ -21,7 +21,7 @@ import com.prance.teacher.utils.SoundUtils
  * @author 申兵兵
  * @date 2018-08-29
  */
-class CountTime(var context: Context) {
+class PKCountTime(var context: Context) {
 
     var alpha = 255
     var point: PointF = PointF()
