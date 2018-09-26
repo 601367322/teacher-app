@@ -14,4 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"></com.prance.teacher.weight.CountTimer>
+
+    <com.prance.teacher.weight.GameOver
+        android:id="@+id/gameOver"
+        android:layout_width="@dimen/m1040.0"
+        android:visibility="gone"
+        android:layout_height="@dimen/m620.0"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

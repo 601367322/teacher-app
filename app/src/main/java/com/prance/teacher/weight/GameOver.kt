@@ -1,12 +1,35 @@
 package com.prance.teacher.weight
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
+import com.prance.lib.common.utils.AnimUtil
+import com.prance.teacher.R
 
-class GameOver :ImageView{
+class GameOver(context: Context?, attrs: AttributeSet?) : ImageView(context, attrs) {
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs){
+    init {
+        setImageResource(R.drawable.game_over)
+    }
 
+    fun start(onAnimEnd: (() -> Unit)) {
+        val animatorX = ObjectAnimator.ofFloat(this, AnimUtil.SCALEX, 0.2F, 1F)
+        val animatorY = ObjectAnimator.ofFloat(this, AnimUtil.SCALEY, 0.2F, 1F)
+
+        val animationSet = AnimatorSet()
+        animationSet.playTogether(animatorX, animatorY)
+        animationSet.interpolator = DecelerateInterpolator()
+        animationSet.duration = 1000
+        animationSet.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                onAnimEnd.invoke()
+            }
+        })
+        animationSet.start()
     }
 }
