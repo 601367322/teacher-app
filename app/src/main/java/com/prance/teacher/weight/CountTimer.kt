@@ -15,13 +15,13 @@ import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.R
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.fragment_classes.view.*
 import kotlinx.android.synthetic.main.widget_count_timer.view.*
 import java.util.concurrent.TimeUnit
 
 class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
 
-    //红包积分数字图
-    var scoreBitmaps: MutableMap<String, Int> = mutableMapOf(
+    var timeRes: MutableMap<String, Int> = mutableMapOf(
             "0" to R.drawable.count_time_0,
             "1" to R.drawable.count_time_1,
             "2" to R.drawable.count_time_2,
@@ -33,6 +33,13 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
             "8" to R.drawable.count_time_8,
             "9" to R.drawable.count_time_9
     )
+    var lastTimeRes: MutableMap<String, Int> = mutableMapOf(
+            "1" to R.drawable.count_time_01,
+            "2" to R.drawable.count_time_02,
+            "3" to R.drawable.count_time_03,
+            "4" to R.drawable.count_time_04,
+            "5" to R.drawable.count_time_05
+    )
 
     var mDisposable: Disposable? = null
 
@@ -42,10 +49,14 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
         addView(getInflate(this, R.layout.widget_count_timer))
     }
 
-    private fun convertTextToBitmap(text: String): MutableList<Int> {
+    private fun convertTextToBitmap(countNum: Int, preCountNum: Int = 5, text: String): MutableList<Int> {
         val list = mutableListOf<Int>()
         for (i in text) {
-            list.add(this.scoreBitmaps[i.toString()]!!)
+            if (countNum <= preCountNum) {
+                list.add(this.lastTimeRes[i.toString()]!!)
+            } else {
+                list.add(this.timeRes[i.toString()]!!)
+            }
         }
         return list
     }
@@ -56,7 +67,7 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
         mDisposable = Flowable.interval(0, 1, TimeUnit.SECONDS)
                 .take(countNum.toLong())
                 .mySubscribe {
-                    val scores = convertTextToBitmap(this.count.toString())
+                    val scores = convertTextToBitmap(this.count, preCountNum, this.count.toString())
                     timeLayout.removeAllViews()
                     for (score in scores) {
                         val image = ImageView(context)

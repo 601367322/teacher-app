@@ -14,7 +14,6 @@ import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_ALPHA
-import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_SCALE
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_WIDTH
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.lines
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_SCORE
@@ -88,6 +87,9 @@ class RedPackage {
 
     var disposable: Disposable? = null
 
+    //快速红包
+    var fast: Boolean = false
+
     constructor(
             context: Context,
             width: Int,
@@ -100,7 +102,8 @@ class RedPackage {
             redPackageTitle: Bitmap,
             redPackageArray: MutableList<Bitmap>,
             tipBitmap: Bitmap,
-            scoreBitmaps: MutableMap<String, Bitmap>) {
+            scoreBitmaps: MutableMap<String, Bitmap>,
+            fast: Boolean) {
 
         this.context = context
         this.x = getRedPackageStartX(lineNum).toInt()
@@ -120,6 +123,7 @@ class RedPackage {
         this.bitmap = redPackageArray[0]
         this.tipBitmap = tipBitmap
         this.lineNum = lineNum
+        this.fast = fast
     }
 
     fun startFall() {
@@ -136,7 +140,7 @@ class RedPackage {
                         }
                     }
 
-            translationAnimator = ObjectAnimator.ofInt(-height, screenHeight).setDuration(RedPackageManager.translationDurationTime)
+            translationAnimator = ObjectAnimator.ofInt(-height, screenHeight).setDuration(if (fast) RedPackageManager.fastTranslationDurationTime else RedPackageManager.translationDurationTime)
             translationAnimator!!.interpolator = LinearInterpolator()
             translationAnimator!!.addUpdateListener {
                 y = it.animatedValue.toString().toInt()
@@ -232,7 +236,7 @@ class RedPackage {
         return screenWidth.toFloat() / lines.toFloat()
     }
 
-    private fun stopEverything(){
+    private fun stopEverything() {
         disposable?.dispose()
         bubble?.destroy()
         bubble = null

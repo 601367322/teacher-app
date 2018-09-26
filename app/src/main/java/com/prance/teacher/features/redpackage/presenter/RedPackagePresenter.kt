@@ -71,7 +71,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                     mView?.startSendRedPackage()
 
                     //开始倒计时，take总次数
-                    var time = totalTime / intervalTime
+                    val time = totalTime / intervalTime
 
                     mView?.startTimer(mSetting!!.lastTime!!.toLong())
 
@@ -79,7 +79,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                             .take(time)
                             .mySubscribe {
                                 //生成红包
-                                val redPackage = mRedPackageManager?.generateRedPack()
+                                val redPackage = mRedPackageManager?.generateRedPack(time - it <= 10)
                                 redPackage?.let {
                                     mView?.onShowPackage(redPackage)
                                 }

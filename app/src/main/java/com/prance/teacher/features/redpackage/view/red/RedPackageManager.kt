@@ -2,10 +2,8 @@ package com.prance.teacher.features.redpackage.view.red
 
 import android.content.Context
 import android.graphics.*
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.chillingvan.canvasgl.CanvasGL
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -13,9 +11,6 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.utils.SoundUtils
-import com.prance.teacher.weight.FontCustom
-import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -31,6 +26,7 @@ class RedPackageManager {
 
         //红包的动画总长
         const val translationDurationTime = 6000L
+        const val fastTranslationDurationTime = 4500L
 
         const val alphaDurationTime = 200L
 
@@ -222,7 +218,7 @@ class RedPackageManager {
                 .get()
     }
 
-    fun generateRedPack(): RedPackage? {
+    fun generateRedPack(fast: Boolean = false): RedPackage? {
         getAvailableLine()?.let {
 
             val randomTitle = titles[(Math.random() * (titles.size)).toInt()]
@@ -253,7 +249,8 @@ class RedPackageManager {
                     redPackageTitle[randomTitle]!!,
                     if (big) bigRedPackageImg else redPackageImg,
                     tipBitmap,
-                    scoreBitmaps
+                    scoreBitmaps,
+                    fast
             )
 
             redPackages.add(red)
