@@ -94,4 +94,8 @@ class RedPackageAnimGLView : GLContinuousView {
     fun addItem(redPackage: RedPackage) {
         mLocations.add(redPackage)
     }
+
+    fun clear(){
+        mLocations.clear()
+    }
 }

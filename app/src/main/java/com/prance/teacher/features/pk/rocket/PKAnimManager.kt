@@ -78,4 +78,7 @@ class PKAnimManager(var context: Context) {
     }
 
 
+    fun clear() {
+        rockets?.clear()
+    }
 }

@@ -1,5 +1,7 @@
 package com.prance.teacher.weight
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -69,6 +71,9 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
                 .mySubscribe {
                     val scores = convertTextToBitmap(this.count, preCountNum, this.count.toString())
                     timeLayout.removeAllViews()
+
+                    var animationSet: AnimatorSet? = null
+
                     for (score in scores) {
                         val image = ImageView(context)
                         image.layoutParams = LinearLayout.LayoutParams(resources.getDimensionPixelOffset(R.dimen.m45_0), resources.getDimensionPixelOffset(R.dimen.m70_0))
@@ -80,20 +85,29 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
                             val animatorX = ObjectAnimator.ofFloat(image, AnimUtil.SCALEX, 1.5F, 0.5F)
                             val animatorY = ObjectAnimator.ofFloat(image, AnimUtil.SCALEY, 1.5F, 0.5F)
 
-                            val animationSet = AnimatorSet()
+                            animationSet = AnimatorSet()
                             animationSet.playTogether(animatorA, animatorX, animatorY)
                             animationSet.interpolator = DecelerateInterpolator()
                             animationSet.duration = 1000
-                            animationSet.start()
                         }
                     }
 
                     this.count--
 
                     if (this.count < 1) {
-                        end()
-                        onTimeEnd?.invoke()
+                        if (animationSet != null) {
+                            animationSet.addListener(object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator?) {
+                                    end()
+                                    onTimeEnd?.invoke()
+                                }
+                            })
+                        }else {
+                            end()
+                            onTimeEnd?.invoke()
+                        }
                     }
+                    animationSet?.start()
                 }
     }
 

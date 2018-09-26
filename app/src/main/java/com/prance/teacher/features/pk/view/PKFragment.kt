@@ -224,16 +224,31 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 endPK()
             }
         }
-
     }
 
     private fun endPK() {
-
         activity?.run {
-            (activity as PKActivity).endPk()
+            try {
+                //隐藏倒计时
+                timer.invisible()
+
+                //清理火箭
+                animGlView.clear()
+
+                //隐藏计分板
+                val layoutParams = scoreLayout.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.m2000_0)
+                scoreLayout.layoutParams = layoutParams
+
+                //开始游戏结束动画
+                gameOver.start {
+                    (activity as PKActivity).endPk()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
-
 
     override fun needEventBus(): Boolean = true
 

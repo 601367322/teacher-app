@@ -13,6 +13,7 @@ import com.prance.teacher.features.redpackage.view.red.RedPackage
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
 import com.chillingvan.canvasgl.glview.GLView
+import com.prance.lib.base.extension.invisible
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
@@ -90,8 +91,19 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         redPackage.startFall()
     }
 
+    /**
+     * 结束
+     */
     override fun onTimeEnd(scores: MutableList<StudentScore>) {
-        (activity as RedPackageActivity).redPackageRank(scores)
+        animGlView?.clear()
+        timer.invisible()
+        gameOver.start {
+            try {
+                (activity as RedPackageActivity).redPackageRank(scores)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun startSendRedPackage() {

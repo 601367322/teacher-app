@@ -1,14 +1,10 @@
 package com.prance.teacher.features.pk.view
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.AttributeSet
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chillingvan.canvasgl.ICanvasGL
 import com.chillingvan.canvasgl.glview.GLContinuousView
-import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
-import com.prance.teacher.R
 import com.prance.teacher.features.pk.rocket.PKAnimManager
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -67,6 +63,10 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
             countTime.draw(canvas)
 
         }
+    }
+
+    fun clear() {
+        mPKAnimManager?.clear()
     }
 
 }

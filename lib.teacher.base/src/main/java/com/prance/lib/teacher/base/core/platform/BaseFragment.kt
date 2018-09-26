@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils.getApp
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.teacher.base.BuildConfig
 import com.prance.lib.teacher.base.TeacherApplication
 
 /**
@@ -36,6 +37,9 @@ abstract class BaseFragment : BaseFragment() {
     }
 
     override fun exitToLogin() {
+        if (BuildConfig.DEBUG) {
+            return
+        }
         ToastUtils.showShort("登录状态已过期，请重新登录")
         ActivityUtils.finishAllActivities()
         val packageManager = getApp().packageManager

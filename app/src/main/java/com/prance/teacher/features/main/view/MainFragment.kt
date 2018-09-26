@@ -73,7 +73,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 //                context?.let { startActivity(ClassesDetailActivity.callingIntent(it, ClassesEntity(1))) }
 
-//                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 8))) }
+                context?.let { startActivity(PKActivity.callingIntent(it, ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 8))) }
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
@@ -83,8 +83,8 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                ))
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-                val redConfig = RedPackageSetting(1,15,1,1)
-                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+//                val redConfig = RedPackageSetting(1,10,1,1)
+//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))

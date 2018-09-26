@@ -113,12 +113,9 @@ class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
     }
 
     fun endPk() {
-        Flowable.timer(1, TimeUnit.SECONDS)
-                .mySubscribe {
-                    if (result == null)
-                        this.supportFragmentManager.inTransaction {
-                            replace(R.id.fragmentContainer, PKWaitingFragment())
-                        }
-                }
+        if (result == null)
+            this.supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, PKWaitingFragment())
+            }
     }
 }

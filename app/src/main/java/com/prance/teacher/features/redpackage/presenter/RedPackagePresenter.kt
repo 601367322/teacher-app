@@ -96,6 +96,8 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
         stopInterval()
         //发送答题结果
         postRedPackageResult()
+        //清空红包
+        mRedPackageManager?.destroy()
         //转到排行榜界面
         mRedPackageManager?.run {
             mView?.onTimeEnd(studentScores)
@@ -130,7 +132,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                 list.add(RedPackageRecord(score))
             }
             mModel.postRedPackageResult(mSetting?.classId.toString(), Gson().toJson(list), mSetting?.interactId.toString())
-                    .mySubscribe(onSubscribeError, { LogUtils.d("发送抢红包结果成功") })
+                    .mySubscribe(onSubscribeError) { LogUtils.d("发送抢红包结果成功") }
         }
     }
 }

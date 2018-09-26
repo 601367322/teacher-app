@@ -391,5 +391,6 @@ class RedPackageManager {
     }
 
     fun destroy() {
+        redPackages.clear()
     }
 }
