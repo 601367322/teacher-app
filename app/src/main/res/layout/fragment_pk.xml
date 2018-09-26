@@ -70,7 +70,6 @@
         android:layout_marginEnd="@dimen/m62.0"
         android:layout_marginLeft="@dimen/m90.0"
         android:layout_marginTop="@dimen/m51.0"
-        android:text="北京市海淀区巨人培训机构"
         android:textColor="#512B90"
         android:textSize="@dimen/m35.0"
         app:layout_constraintEnd_toEndOf="@id/scoreLayout"
