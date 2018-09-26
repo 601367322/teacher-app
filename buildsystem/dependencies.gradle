@@ -7,7 +7,7 @@ allprojects {
 ext {
 
     compileSdkVersion = 27//编译版本
-    buildToolsVersion = "27.0.3"//编译工具版本
+    buildToolsVersion = "28.0.3"//编译工具版本
     checkReleaseBuilds = false//打包时是否检测
     abortOnError = false//
     targetSdkVersion = 24//支持最大版本号

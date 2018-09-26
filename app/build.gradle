@@ -13,7 +13,6 @@ props.load(new FileInputStream(file("../buildsystem/signing.properties")))
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.prance.teacher"
