@@ -19,14 +19,14 @@ class SubjectCountTimeFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_subject_count_time
 
-    var num = 2
+    var num = 3
 
-    var countDownTimerImg = mutableListOf(R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)
+    var countDownTimerImg = mutableListOf(R.drawable.count_down_timer_go, R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         createAnimate().start()
 
-        SoundUtils.play("count_time")
+        SoundUtils.play("four_count_time")
     }
 
     private fun createAnimate(): AnimatorSet {

@@ -27,7 +27,7 @@ class PKCountTime(var context: Context) {
     var point: PointF = PointF()
     var scaleX: Float = 1F
     var scaleY: Float = 1F
-    var num = 2
+    var num = 3
     var countDownTimerImg = mutableListOf<Bitmap>()
     var bitmap: Bitmap? = null
     var listeners: MutableList<ICountTimeListener> = mutableListOf()
@@ -35,7 +35,7 @@ class PKCountTime(var context: Context) {
     init {
         val width = context.resources.getDimensionPixelOffset(R.dimen.m100_0)
 
-        for (t in mutableListOf(R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)) {
+        for (t in mutableListOf(R.drawable.count_down_timer_go,R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)) {
             countDownTimerImg.add(GlideApp.with(context)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -54,7 +54,7 @@ class PKCountTime(var context: Context) {
     fun start() {
         createAnimate().start()
 
-        SoundUtils.play("count_time")
+        SoundUtils.play("four_count_time")
     }
 
     private fun createAnimate(): AnimatorSet {

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.media.SoundPool
 import android.util.AttributeSet
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.getInflate
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.R
+import com.prance.teacher.utils.SoundUtils
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_classes.view.*
@@ -89,6 +91,10 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
                             animationSet.playTogether(animatorA, animatorX, animatorY)
                             animationSet.interpolator = DecelerateInterpolator()
                             animationSet.duration = 1000
+
+                            if(this.count == preCountNum){
+                                SoundUtils.play("five_count_time")
+                            }
                         }
                     }
 
