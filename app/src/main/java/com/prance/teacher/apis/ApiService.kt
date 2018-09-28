@@ -19,13 +19,13 @@ interface ApiService {
             get() = if (UrlUtil.isLocalHost())
                 "unauth/app/qrCode"
             else
-                "backend/assistant/unauth/app/qrCode"
+                "backend/user/unauth/app/qrCode"
 
         val checkQrCode: String
             get() = if (UrlUtil.isLocalHost())
                 "unauth/app/login"
             else
-                "backend/assistant/unauth/app/login"
+                "backend/user/unauth/app/login"
 
         val allClasses: String
             get() = if (UrlUtil.isLocalHost())

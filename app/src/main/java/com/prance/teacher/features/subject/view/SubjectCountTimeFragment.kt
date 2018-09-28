@@ -57,4 +57,9 @@ class SubjectCountTimeFragment : BaseFragment() {
         })
         return animationSet
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        SoundUtils.stop("four_count_time")
+    }
 }

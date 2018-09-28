@@ -36,7 +36,7 @@ object SoundUtils {
     }
 
     fun load() {
-        if(sounds.isEmpty()) {
+        if (sounds.isEmpty()) {
             sounds["four_count_time"] = mSoundPoll.load(Utils.getApp(), R.raw.four_count_time, Int.MAX_VALUE)
             sounds["rank_background"] = mSoundPoll.load(Utils.getApp(), R.raw.rank_background, Int.MAX_VALUE)
             sounds["red_package_get"] = mSoundPoll.load(Utils.getApp(), R.raw.red_package_get, Int.MAX_VALUE)
@@ -59,6 +59,12 @@ object SoundUtils {
                     Int.MAX_VALUE,
                     0,
                     1F)
+        }
+    }
+
+    fun stop(key: String) {
+        sounds[key]?.run {
+            mSoundPoll.stop(this)
         }
     }
 }
