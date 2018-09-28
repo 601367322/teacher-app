@@ -14,6 +14,7 @@ import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
+import com.prance.teacher.features.redpackage.view.RedPackageCountTimeFragment
 import com.prance.teacher.features.redpackage.view.RedPackageRankFragment
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
 
@@ -29,36 +30,23 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     /**
      * 抢红包fragment
      */
-    var mGrabFragment: RedPackageFragment? = null
+    var mRedPackageFragment: RedPackageFragment? = null
 
     companion object {
         fun callingIntent(context: Context, redPackage: RedPackageSetting): Intent {
             val intent = Intent(context, RedPackageActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            intent.putExtra(RedPackageFragment.mSetTing, redPackage)
+            intent.putExtra(RedPackageFragment.SETTING, redPackage)
             return intent
         }
     }
 
-    override fun fragment(): BaseFragment {
-        if (mGrabFragment == null) {
-            mGrabFragment = RedPackageFragment()
-        }
-        return mGrabFragment!!
-    }
+    override fun fragment(): BaseFragment = RedPackageCountTimeFragment()
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mSetting = intent?.getSerializableExtra(RedPackageFragment.mSetTing) as RedPackageSetting?
-
-        val bundle = Bundle()
-        bundle.putSerializable(RedPackageFragment.mSetTing, mSetting)
-        if (mGrabFragment!!.arguments != null) {
-            mGrabFragment!!.arguments?.putAll(bundle)
-        } else {
-            mGrabFragment!!.arguments = bundle
-        }
+        mSetting = intent?.getSerializableExtra(RedPackageFragment.SETTING) as RedPackageSetting?
 
         mPushServicePresenterPresenter.bind()
 
@@ -79,7 +67,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
             PushService.END_INTERACTN -> {
-                mGrabFragment!!.redPackageStop()
+                mRedPackageFragment?.redPackageStop()
                 finish()
             }
         }
@@ -101,5 +89,15 @@ class RedPackageActivity : BaseActivity(), MessageListener {
                 replace(R.id.fragmentContainer, RedPackageRankFragment.create(RedPackageRankFragment.Companion.BundleScore(it)))
             }
         }
+    }
+
+    fun onRedPackageStart() {
+        mSetting?.run {
+            mRedPackageFragment = RedPackageFragment.forSetting(this)
+            supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, mRedPackageFragment)
+            }
+        }
+
     }
 }

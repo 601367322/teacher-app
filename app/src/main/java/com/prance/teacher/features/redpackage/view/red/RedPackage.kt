@@ -174,6 +174,11 @@ class RedPackage {
         }
     }
 
+    fun destroy() {
+        //取消下落动画
+        translationAnimator?.cancel()
+    }
+
     fun destroy(studentScore: StudentScore) {
         //设置为已被抢状态
         state = RedPackageStatus.GRAB

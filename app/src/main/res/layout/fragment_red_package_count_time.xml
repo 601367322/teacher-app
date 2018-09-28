@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/red_package_on_create_background"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/countDown"
+        android:layout_width="@dimen/m234.0"
+        android:layout_height="@dimen/m234.0"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/m440.0"
+        android:gravity="center"
+        android:src="@drawable/count_down_timer_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

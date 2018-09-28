@@ -20,7 +20,7 @@ object SoundUtils {
         val volumnRatio = volumnCurrent / audioMaxVolumn
 
         mSoundPoll = SoundPool.Builder()
-                .setMaxStreams(4)
+                .setMaxStreams(10)
                 .setAudioAttributes(
                         AudioAttributes.Builder()
                                 .setLegacyStreamType(AudioManager.STREAM_MUSIC)

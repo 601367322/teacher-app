@@ -60,7 +60,7 @@ abstract class BaseActivity : FragmentActivity() {
         val fragment = fragment()
         fragment?.let {
             savedInstanceState ?: supportFragmentManager.inTransaction {
-                add(R.id.fragmentContainer, fragment())
+                add(R.id.fragmentContainer, it)
             }
         }
     }

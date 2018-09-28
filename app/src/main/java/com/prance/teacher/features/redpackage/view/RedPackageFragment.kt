@@ -17,9 +17,9 @@ import com.prance.lib.base.extension.invisible
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
-import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.redpackage.view.red.RedPackageManager
+import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 
 
@@ -34,7 +34,15 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
 
     companion object {
-        const val mSetTing: String = "settting"
+        const val SETTING: String = "settting"
+
+        fun forSetting(setting: RedPackageSetting): RedPackageFragment {
+            val fragment = RedPackageFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(SETTING, setting)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     /**
@@ -68,7 +76,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     override var mPresenter: IRedPackageContract.Presenter = RedPackagePresenter()
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        mQuestion = arguments?.getSerializable(mSetTing) as RedPackageSetting
+        mQuestion = arguments?.getSerializable(SETTING) as RedPackageSetting
 
         mAnimGlView = rootView.findViewById(R.id.animGlView)
 

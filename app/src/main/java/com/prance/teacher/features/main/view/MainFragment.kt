@@ -4,37 +4,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.teacher.R
-import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.teacher.BuildConfig
-import com.prance.teacher.features.main.contract.IMainContract
-import com.prance.teacher.features.main.presenter.MainPresenter
-import kotlinx.android.synthetic.main.fragment_main.*
-import com.prance.teacher.features.classes.ClassesActivity
-import com.prance.teacher.features.classes.view.ClassesFragment
-import com.prance.teacher.features.match.MatchKeyPadActivity
-import com.blankj.utilcode.util.*
-import com.google.gson.Gson
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
-import com.prance.teacher.features.classes.ClassesDetailActivity
-import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
+import com.prance.teacher.R
+import com.prance.teacher.features.classes.ClassesActivity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.pk.presenter.PKPresenter
+import com.prance.teacher.features.classes.view.ClassesFragment
+import com.prance.teacher.features.main.contract.IMainContract
+import com.prance.teacher.features.main.presenter.MainPresenter
+import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.SubjectActivity
-import com.prance.teacher.features.subject.model.KeyPadResult
-import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
-import java.util.*
-import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 /**
@@ -78,13 +68,13 @@ class MainFragment : BaseFragment(), IMainContract.View {
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 
-                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
-                        StudentsEntity(1,"呵呵","呵呵")
-                ))
-                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+//                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
+//                        StudentsEntity(1,"呵呵","呵呵")
+//                ))
+//                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-//                val redConfig = RedPackageSetting(1,10,1,1)
-//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+                val redConfig = RedPackageSetting(1,10,1,1)
+                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
