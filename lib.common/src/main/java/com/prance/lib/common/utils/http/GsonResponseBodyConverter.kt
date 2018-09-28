@@ -32,13 +32,24 @@ internal class GsonResponseBodyConverter<T>(private val gson: Gson, private val 
             val resultStr = value.string()
             val result = gson.fromJson(resultStr, CallBackResult::class.java)
 
-            return if (result.errno == StatusConstant.SUCCESS) {
-                if(result.data == null || result.data == ""){
-                    result.data = JSONObject()
+            if (result.status != null) {
+                return if (result.status == StatusConstant.SUCCESS) {
+                    if (result.data == null || result.data == "") {
+                        result.data = JSONObject()
+                    }
+                    adapter.fromJson(gson.toJson(result.data))
+                } else {
+                    throw ResultException(result.status ?: 0, result.msg)
                 }
-                adapter.fromJson(gson.toJson(result.data))
             } else {
-                throw ResultException(result.errno, result.error)
+                return if ((result.errno == StatusConstant.SUCCESS) || (result.status == StatusConstant.SUCCESS)) {
+                    if (result.data == null || result.data == "") {
+                        result.data = JSONObject()
+                    }
+                    adapter.fromJson(gson.toJson(result.data))
+                } else {
+                    throw ResultException(result.errno ?: 0, result.error)
+                }
             }
         }
     }
