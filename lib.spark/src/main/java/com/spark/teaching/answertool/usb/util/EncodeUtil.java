@@ -1,5 +1,6 @@
 package com.spark.teaching.answertool.usb.util;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.spark.teaching.answertool.usb.constrant.QuestionTypeConstrant;
 import com.spark.teaching.answertool.usb.model.DataPackage;
 import com.spark.teaching.answertool.usb.model.SendQuestion;
@@ -67,7 +68,7 @@ public class EncodeUtil {
         for (int i = 0; i < 64; i++) {
             stringBuilder.append(String.format("%02X ", bytes[i]));
         }
-        KLog.i(TAG, stringBuilder.toString(), false);
+        LogUtils.d( stringBuilder.toString(), false);
         return bytes;
     }
 

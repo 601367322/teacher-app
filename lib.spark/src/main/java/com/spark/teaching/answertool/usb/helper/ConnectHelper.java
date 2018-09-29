@@ -11,6 +11,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.spark.teaching.answertool.util.KLog;
 
 import java.util.HashMap;
@@ -32,8 +33,10 @@ public class ConnectHelper {
         return SingletonHolder.INSTANCE;
     }
 
-    private static final int VendorID = 1155;
-    private static final int ProductID = 23115;
+    private static final int VendorID = 1155;//3725
+    private static final int ProductID = 23115;//30368
+    private static final int VendorID2 = 3725;//3725
+    private static final int ProductID2 = 30368;//30368
     private static final String ACTION_USB_PERMISSION = "com.spark.teaching.answertool.USB_PERMISSION"; // 请求usb权限的action
 
     private UsbListener mUsbListener;
@@ -49,7 +52,7 @@ public class ConnectHelper {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            KLog.i(TAG, "onReceive " + action, true);
+            LogUtils.d( "onReceive " + action, true);
 
             if (action.equals(ACTION_USB_PERMISSION)) { // 请求usb权限
                 synchronized (this) {
@@ -59,7 +62,7 @@ public class ConnectHelper {
                         mUsbDevice = usbDevice;
                         afterUsbPermission();
                     } else {
-                        KLog.d(TAG, "usbPremission:" + usbPremission + "  " + usbDevice);
+                        LogUtils.d( "usbPremission:" + usbPremission + "  " + usbDevice);
                     }
                 }
             } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED)) { // usb插入
@@ -69,11 +72,11 @@ public class ConnectHelper {
                     if (mUsbManager.hasPermission(usbDevice)) {
                         afterUsbPermission();
                     } else {
-                        KLog.i(TAG, "attached usb no permission", false);
+                        LogUtils.d( "attached usb no permission", false);
                         getUsbPermission(context);
                     }
                 } else {
-                    KLog.d(TAG, "not wanted usb attached");
+                    LogUtils.d( "not wanted usb attached");
                 }
             } else if (action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
                 UsbDevice usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
@@ -83,7 +86,7 @@ public class ConnectHelper {
                         mUsbListener.onDisConnected();
                     }
                 } else {
-                    KLog.d(TAG, "not wanted usb detached");
+                    LogUtils.d( "not wanted usb detached");
                 }
             }
         }
@@ -104,22 +107,22 @@ public class ConnectHelper {
         mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
         if (deviceList.isEmpty()) {
-            KLog.d(TAG, "device list empty");
+            LogUtils.d( "device list empty");
             return;
         } else {
             for (UsbDevice device : deviceList.values()) {
-                if (device.getVendorId() == VendorID && device.getProductId() == ProductID) {
+                if ((device.getVendorId() == VendorID && device.getProductId() == ProductID)||(device.getVendorId() == VendorID2 && device.getProductId() == ProductID2)) {
                     mUsbDevice = device;
                     if (mUsbManager.hasPermission(device)) {
                         afterUsbPermission();
                     } else {
-                        KLog.d(TAG, "no usb permission");
+                        LogUtils.d( "no usb permission");
                         getUsbPermission(context);
                     }
                     return;
                 }
             }
-            KLog.d(TAG, "device not found");
+            LogUtils.d( "device not found");
             return;
         }
     }
@@ -138,7 +141,7 @@ public class ConnectHelper {
     private void afterUsbPermission() {
         try {
             int interfaceCount = mUsbDevice.getInterfaceCount(); // 获取设备接口，一般都是一个接口，在这个接口上有两个端点，OUT 和 IN
-            KLog.d(TAG, "interfaceCount:" + interfaceCount);
+            LogUtils.d( "interfaceCount:" + interfaceCount);
             if (interfaceCount <= 0) {
                 throw new RuntimeException("interfaceCount <= 0");
             }

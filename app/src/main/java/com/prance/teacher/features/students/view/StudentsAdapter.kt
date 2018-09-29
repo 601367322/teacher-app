@@ -21,7 +21,7 @@ class StudentsAdapter : BaseQuickAdapter<StudentsEntity, BaseViewHolder> {
                 clickers?.run {
                     if (isNotEmpty()) {
                         itemView.keyPadId.visible()
-                        itemView.keyPadId.text = clickers!![0].number
+                        itemView.keyPadId.text = clickers!![0].number?.substring(4)
                     }
                 }
                 GlideApp.with(itemView)

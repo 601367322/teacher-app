@@ -3,6 +3,7 @@ package com.spark.teaching.answertool.usb.helper;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.spark.teaching.answertool.usb.model.DataPackage;
 import com.spark.teaching.answertool.usb.util.BufferUtils;
 import com.spark.teaching.answertool.util.KLog;
@@ -119,7 +120,7 @@ public class CommunicateHelper {
             int length = mUsbDeviceConnection.bulkTransfer(mInUsbEndpoint, receives, receives.length, TIME_OUT_READ);
 
             if (length > 0) {
-                KLog.d(TAG, "read length " + length);
+                LogUtils.d( "read length " + length);
 
                 ByteBuffer buffer = ByteBuffer.wrap(receives, 0, length);
                 return buffer;
@@ -130,18 +131,18 @@ public class CommunicateHelper {
     }
 
     public void write(byte[] data, int timeOut) {
-        KLog.d(TAG, "write " + System.currentTimeMillis());
+        LogUtils.d( "write " + System.currentTimeMillis());
         synchronized (mSynchronizedWriteObj) {
             ByteBuffer buffer = BufferUtils.allocateByteBuffer(data.length);
             buffer.put(data);
             int length = mUsbDeviceConnection.bulkTransfer(mOutUsbEndpoint, data, data.length, timeOut);
-            KLog.d(TAG, "write length " + System.currentTimeMillis() + " " + length);
+            LogUtils.d( "write length " + System.currentTimeMillis() + " " + length);
         }
     }
 
     public void sendAsync(DataPackage dataPackage) {
         if (null == mUsbDeviceConnection || null == mInUsbEndpoint || null == mOutUsbEndpoint || null == mSendDispatcher) {
-            KLog.d(TAG, "send before connected");
+            LogUtils.d( "send before connected");
             return;
         }
 

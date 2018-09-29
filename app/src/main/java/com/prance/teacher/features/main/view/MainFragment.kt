@@ -13,7 +13,9 @@ import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.main.contract.IMainContract
@@ -21,6 +23,8 @@ import com.prance.teacher.features.main.presenter.MainPresenter
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
+import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.subject.SubjectActivity
 import io.reactivex.disposables.Disposable
@@ -67,14 +71,15 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
+            context?.let { startActivity(ReplaceKeyPadActivity.callingIntent(it,ClassesEntity(1))) }
 
 //                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
 //                        StudentsEntity(1,"呵呵","呵呵")
 //                ))
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
 
-                val redConfig = RedPackageSetting(1,10,1,1)
-                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+//                val redConfig = RedPackageSetting(1,10,1,1)
+//                context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
 
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))

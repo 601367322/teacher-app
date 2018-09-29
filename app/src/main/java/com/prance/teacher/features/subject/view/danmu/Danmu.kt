@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
-class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rockets: MutableList<Bitmap>,  avatarBg: Bitmap) {
+class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rockets: MutableList<Bitmap>, avatarBg: Bitmap) {
 
     var avatarBitmap: Bitmap? = null
     var rocket: Bitmap
@@ -54,7 +54,7 @@ class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rock
 
         val text1 = "恭喜"
         val text2 = name
-        val text3 = "小朋友答题正确"
+        val text3 = "答题正确"
         val text = "$text1$text2$text3"
 
         //计算文字宽高
@@ -118,8 +118,8 @@ class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rock
                 }
     }
 
-    private fun startRunning(){
-        val translationAnimator = ObjectAnimator.ofInt(ScreenUtils.getScreenWidth(), -rocket.width - avatarBitmap!!.width).setDuration(RedPackageManager.translationDurationTime)
+    private fun startRunning() {
+        val translationAnimator = ObjectAnimator.ofInt(ScreenUtils.getScreenWidth(), -rocket.width - avatarBitmap!!.width).setDuration(8 * 1000)
         translationAnimator!!.interpolator = LinearInterpolator()
         translationAnimator.addUpdateListener {
             x = it.animatedValue.toString().toInt()
