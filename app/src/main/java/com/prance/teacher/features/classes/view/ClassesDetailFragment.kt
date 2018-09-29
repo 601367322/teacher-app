@@ -37,7 +37,9 @@ import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.SubjectRankActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
+import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
+import kotlinx.android.synthetic.main.fragment_replace.*
 import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
@@ -50,6 +52,13 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     override fun layoutId(): Int = R.layout.fragment_classes_detail
 
     private val mPushServicePresenter by lazy { PushServicePresenter(context!!, this) }
+
+    private val mSparkServicePresenter: SparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
+        })
+    }
+
+    override var mPresenter: IClassesDetailContract.Presenter = ClassesDetailPresenter()
 
     companion object {
 
@@ -106,12 +115,13 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         readyClass.setOnClickListener {
             context?.let {
                 try {
-
-                    if (BuildConfig.DEBUG) {
-//                        var question = ClassesDetailFragment.Question(1, 5, "1,0,0,0,4,1", 1, "A", mutableListOf(
-//                                StudentsEntity(1,"呵呵","呵呵")
-//                        ))
-//                        context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+                    //发送学生名称
+                    mStudentList?.run {
+                        for (s in this) {
+                            s.getClicker()?.number?.let {
+                                mSparkServicePresenter.sendData(s.name, it)
+                            }
+                        }
                     }
 
                     //开始Socket监听
@@ -124,6 +134,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
         }
 
+        mSparkServicePresenter.bind()
+
         endClass.setOnClickListener { activity?.finish() }
 
         classesTitle.text = mClassesEntity?.klass?.name
@@ -131,10 +143,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         classesDate.text = """${mClassesEntity?.klass?.startTime}-${mClassesEntity?.klass?.endTime}"""
 
         if (BuildConfig.DEBUG) {
-            //开始Socket监听
-//            mPushServicePresenter.bind()
 
-//            mSparkServicePresenter.bind()
+//            mPushServicePresenter.bind()
 
 //            readyClass.postDelayed({
 //                val message = Gson().fromJson("{\"cmd\":2,\"msgId\":\"512eff48-0c5e-4366-b35d-5bbc0d4abcea\",\"data\":{\"result\":\"A\",\"classId\":1,\"questionId\":1202,\"param\":\"1,0,0,0,4,1\",\"type\":10,\"signStudents\":[{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":1,\"integrals\":[],\"name\":\"10\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":2,\"integrals\":[],\"name\":\"测试学员2\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":3,\"integrals\":[],\"name\":\"测试学员3\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":4,\"integrals\":[],\"name\":\"测试学员4\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":5,\"integrals\":[],\"name\":\"测试学员5\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":6,\"integrals\":[],\"name\":\"张三\",\"state\":0,\"type\":0,\"updateTime\":null}]}}",MessageEntity::class.java)
@@ -185,10 +195,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         super.onDestroy()
 
         mPushServicePresenter.unBind()
-
-        if (BuildConfig.DEBUG) {
-//            mSparkServicePresenter.unBind()
-        }
+        mSparkServicePresenter.unBind()
     }
 
 
@@ -307,14 +314,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         }
     }
 
-    override var mPresenter: IClassesDetailContract.Presenter = ClassesDetailPresenter()
-
-    override fun showLoding() {
-        showProgress()
-    }
-
     override fun studentList(list: MutableList<StudentsEntity>) {
-        hideProgress()
         mStudentList = list
 
         //提前下载学生头像缓存

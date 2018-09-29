@@ -1,8 +1,10 @@
 package com.prance.lib.spark
 
+import android.app.AlertDialog
 import android.app.Service
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbEndpoint
@@ -26,7 +28,7 @@ class SparkService : Service() {
     var mListener = mutableListOf<SparkListenerAdapter>()
 
     enum class QuestionType {
-        SINGLE, MULTI, YES_OR_NO, COMMON, MULTI_SINGLE, RED_PACKAGE
+        SINGLE, MULTI, YES_OR_NO, COMMON, MULTI_SINGLE, RED_PACKAGE, SEND_DATA
     }
 
     inner class SparkServiceBinder : Binder() {
@@ -52,6 +54,10 @@ class SparkService : Service() {
                 QuestionType.MULTI_SINGLE -> sendMultiSingle()
                 QuestionType.RED_PACKAGE -> sendPackage()
             }
+        }
+
+        fun sendData(data: String, uid: String) {
+            this@SparkService.sendData(data, uid)
         }
     }
 
@@ -108,7 +114,7 @@ class SparkService : Service() {
 
         override fun onAnswerReceived(receiveAnswer: ReceiveAnswer) {
 
-            if(!canReceiveAnswer){
+            if (!canReceiveAnswer) {
                 return
             }
 
@@ -238,6 +244,17 @@ class SparkService : Service() {
         ques.time = Date(System.currentTimeMillis())
         ques.seq = 1.toByte()
         send(ques)
+    }
+
+    /**
+     * 发送数据
+     */
+    private fun sendData(data: String, uid: String) {
+        val ra = Echo()
+        ra.uid = uid.toLong()
+        ra.show_info = data
+
+        CommunicateHelper.getInstance().sendAsync(ra)
     }
 
     private fun send(dp: DataPackage) {

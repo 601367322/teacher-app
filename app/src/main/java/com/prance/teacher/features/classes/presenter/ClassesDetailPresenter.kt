@@ -16,9 +16,9 @@ class ClassesDetailPresenter : BasePresenterKt<IClassesDetailContract.View>(), I
     override val mModel: IClassesDetailContract.Model = ClassesDetailModel()
     override fun getStudentsByClassesId(id: String) {
         mModel.getStudentsByClassesId(id)
-                .mySubscribe(onSubscribeError, {
+                .mySubscribe(onSubscribeError) {
                     mView?.studentList(it.list)
-                })
+                }
     }
 }
 

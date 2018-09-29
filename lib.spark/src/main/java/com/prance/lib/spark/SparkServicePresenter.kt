@@ -27,4 +27,8 @@ class SparkServicePresenter(context: Context, private var listener: SparkListene
     fun sendQuestion(type: SparkService.QuestionType) {
         mService?.sendQuestion(type)
     }
+
+    fun sendData(data: String, uid: String) {
+        mService?.sendData(data, uid)
+    }
 }

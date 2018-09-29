@@ -15,7 +15,6 @@ import io.reactivex.Flowable
 
 interface IClassesDetailContract {
     interface View : IView<Presenter> {
-        fun showLoding()
         /**
          * 获取到了学生列表的集合
          */
