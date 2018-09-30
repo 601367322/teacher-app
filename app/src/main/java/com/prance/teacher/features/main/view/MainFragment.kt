@@ -71,9 +71,9 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
-            context?.let { startActivity(ReplaceKeyPadActivity.callingIntent(it,ClassesEntity(1))) }
+//            context?.let { startActivity(ReplaceKeyPadActivity.callingIntent(it,ClassesEntity(1))) }
 
-//                var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
+//                val question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", mutableListOf(
 //                        StudentsEntity(1,"呵呵","呵呵")
 //                ))
 //                context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
@@ -84,7 +84,7 @@ class MainFragment : BaseFragment(), IMainContract.View {
 //                context?.let {
 //                    startActivity(Intent(it,DanmuTestActivity::class.java))
 //                }
-                return@setOnClickListener
+//                return@setOnClickListener
             }
             context?.let {
                 startActivity(ClassesActivity.callingIntent(it, ClassesFragment.ACTION_TO_CLASS))

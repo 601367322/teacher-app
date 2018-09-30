@@ -11,5 +11,4 @@ include ':app', ':lib.spark',
         ':lib.teacher.base',
         ':lib.interfaces',
         ':lib.bugly',
-        ':lib.sharedpreferences',
-        ':app.tv'
+        ':lib.sharedpreferences'
