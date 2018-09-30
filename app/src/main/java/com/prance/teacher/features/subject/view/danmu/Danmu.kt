@@ -53,7 +53,7 @@ class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rock
         bgPaint.color = Color.parseColor("#374090")
 
         val text1 = "恭喜"
-        val text2 = name
+        val text2 = name.trim()
         val text3 = "答题正确"
         val text = "$text1$text2$text3"
 
