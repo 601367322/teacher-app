@@ -63,9 +63,9 @@ class Danmu(var context: Context, var avatar: Bitmap, var name: String, var rock
         val textRect = Rect()
         textPaint.getTextBounds(text, 0, text.length, textRect)
         val textRect1 = Rect()
-        textPaint.getTextBounds(text, 0, text1.length, textRect1)
+        textPaint.getTextBounds(text1, 0, text1.length, textRect1)
         val textRect2 = Rect()
-        textPaint.getTextBounds(text, 0, text2.length, textRect2)
+        textPaint.getTextBounds(text2, 0, text2.length, textRect2)
 
         val bitmap = Bitmap.createBitmap(paddingLeft + avatarBgWidth + avatarRightMargin + textRect.width() + paddingRight, height, Bitmap.Config.ARGB_4444)
         val canvas = Canvas(bitmap)
