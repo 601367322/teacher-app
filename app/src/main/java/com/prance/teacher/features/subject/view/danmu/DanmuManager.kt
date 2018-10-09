@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
+import java.util.concurrent.CopyOnWriteArrayList
 
 class DanmuManager(var context: Context) {
 
@@ -17,7 +18,7 @@ class DanmuManager(var context: Context) {
             .submit()
             .get()
 
-    var danmus: MutableList<Danmu> = mutableListOf()
+    var danmus: CopyOnWriteArrayList<Danmu> = CopyOnWriteArrayList()
 
     init {
 
