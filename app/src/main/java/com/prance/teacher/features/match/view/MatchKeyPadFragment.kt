@@ -9,7 +9,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
-import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
@@ -21,8 +20,6 @@ import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
-import org.greenrobot.eventbus.Subscribe
-import java.io.Serializable
 
 /**
  * 配对答题器
@@ -52,9 +49,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                     keyPadEntity?.let {
                         mAdapter.addData(it)
                         mAdapter.notifyDataSetChanged()
-                        recycler.post {
-                            setLastItemRequestFocus()
-                        }
                         displayMoreBtn()
                     }
                 }
@@ -69,8 +63,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-
-        setTip()
 
         //设置显示格式
         recycler.layoutManager = FocusGridLayoutManager(context!!, 6)
@@ -90,14 +82,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         displayMoreBtn()
 
         mSparkServicePresenter.bind()
-    }
-
-    private fun setTip() {
-        //设置顶部提示语
-        mRootView?.get()?.post {
-            SparkService.mUsbSerialNum!!.let {
-            }
-        }
     }
 
     /**
@@ -142,60 +126,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
     }
 
-    /**
-     * 最后一个获取焦点
-     */
-    private fun setLastItemRequestFocus() {
-        val lastItem = recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1);
-        if (lastItem == null) {
-            recycler.smoothScrollToPosition(mAdapter.data.size - 1)
-
-            recycler.postDelayed({
-                //最后一个答题器获取焦点
-                recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).requestFocus()
-            }, 250)
-        } else {
-            lastItem.requestFocus()
-        }
-    }
-
     override fun needEventBus(): Boolean = true
 
-    @Subscribe
-    fun onEvent(bean: DeleteKeyPadEntityEvent) {
-        recycler.post {
-            //删除答题器
-            bean.keyPadEntity?.let {
-                if (mPresenter.deleteKeyPad(it)) {
-                    ToastUtils.showShort("删除成功")
-                }
-
-                var pos = mAdapter.data.indexOf(it)
-
-                //删除答题器
-                mAdapter.data.remove(it)
-                mAdapter.notifyDataSetChanged()
-
-                //当前位置项重新获取焦点
-                if (pos >= mAdapter.data.size) {
-                    pos -= 1
-                }
-                if (pos >= 0) {
-                    recycler.post {
-                        recycler.layoutManager.findViewByPosition(pos).requestFocus()
-                    }
-                }
-            }
-
-            displayMoreBtn()
-        }
-    }
-
-    class DeleteKeyPadEntityEvent(val keyPadEntity: KeyPadEntity?) : Serializable
-
-    override fun onSaveKeyPadSuccess() {
-        activity?.finish()
-    }
 
 
     /**

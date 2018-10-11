@@ -35,15 +35,6 @@ class MatchKeyPadPresenter : BasePresenterKt<IMatchKeyPadContract.View>(), IMatc
 
     }
 
-    override fun saveAllMatchedKeyPad(serialNumber: String, data: List<KeyPadEntity>) {
-        Flowable.create<Boolean>({
-            mModel.deleteKeyPad(serialNumber)
-            if (mModel.saveAllMatchedKeyPad(data)) {
-                it.onNext(true)
-            }
-        }, BackpressureStrategy.BUFFER)
-                .mySubscribe { mView?.onSaveKeyPadSuccess() }
-    }
 
     override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
         return mModel.saveMatchedKeyPad(keyPadEntity)
