@@ -146,6 +146,7 @@ public class DownloadTask {
                     }
                 } catch (IOException e) {
                     Log.d("DownloadTask", "Socket closed");
+                    listener.onError(-1, new DownloadError(DownloadConst.Error.FAIL, e.getMessage()));
                 }
             }
         });

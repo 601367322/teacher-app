@@ -14,11 +14,4 @@ class MatchKeyPadActivity : BaseActivity() {
 
     override fun fragment(): BaseFragment = MatchKeyPadFragment()
 
-    override fun onBackKeyEvent(): Boolean {
-        supportFragmentManager.fragments?.let {
-            if (!it.isEmpty())
-                return (it[0] as MatchKeyPadFragment).onBackKeyEvent()
-        }
-        return false
-    }
 }

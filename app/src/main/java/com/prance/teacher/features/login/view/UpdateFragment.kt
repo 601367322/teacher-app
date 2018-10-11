@@ -8,19 +8,19 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.FileProvider
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.ServiceUtils
-import com.blankj.utilcode.util.ServiceUtils.stopService
-import com.blankj.utilcode.util.ServiceUtils.unbindService
 import com.leo.download.DownloadError
 import com.leo.download.DownloadListener
 import com.prance.lib.base.extension.appContext
-import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.features.common.NetErrorFragment
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.services.UpdateService
 import kotlinx.android.synthetic.main.fragment_update.*
@@ -46,17 +46,22 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     override fun layoutId(): Int = R.layout.fragment_update
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+        arguments?.run {
+            if (containsKey(VERSION_ENTITY)) {
+                mVersionEntity = getSerializable(VERSION_ENTITY) as VersionEntity
 
-        mVersionEntity = arguments?.getSerializable(VERSION_ENTITY) as VersionEntity
+                startUpdate(mVersionEntity)
+            }
+        }
+    }
 
-        //加载动图
-        GlideApp
-                .with(this)
-                .asGif()
-                .load(R.drawable.update_loading_bar)
-                .into(loadingBar)
+    fun startUpdate(ve: VersionEntity) {
+        mVersionEntity = ve
 
-        desc.text = """您当前的版本为v${AppUtils.getAppVersionName()}，已检测到新版本${mVersionEntity.appVersion}，正在进行更新请稍等……"""
+        updateLayout.visible()
+        loadingImg.invalidate()
+
+        desc.text = """检测到新版本，版本号${mVersionEntity.appVersion}，自动更新中…"""
 
         //启动下载服务
         activity?.bindService(UpdateService.callingIntent(context!!), mDownloadServiceConnection, Service.BIND_AUTO_CREATE)
@@ -94,6 +99,8 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     }
 
     override fun onProgress(id: Int, currSize: Long, totalSize: Long) {
+        loadingProgress.max = totalSize.toInt()
+        loadingProgress.progress = currSize.toInt()
     }
 
     override fun onRestart(id: Int, currSize: Long, totalSize: Long) {
@@ -113,21 +120,18 @@ class UpdateFragment : BaseFragment(), DownloadListener {
 
     override fun onError(id: Int, error: DownloadError?) {
         context?.let {
-            AlertDialog(it)
-                    .setConfirmButton("重新更新", {
-                        //开始下载
-                        activity?.startService(UpdateService.callingIntent(context!!, mVersionEntity.path))
-                    })
-                    .setCancelButton("取消", {
-                        finish()
-                    })
-                    .setMessage("更新失败，可退出程序重新进入 进行更新")
-                    .show()
+            (activity as FragmentActivity).supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, NetErrorFragment.callIntent(NetErrorFragment.Retry {
+                    (it as FragmentActivity).supportFragmentManager.inTransaction {
+                        replace(R.id.fragmentContainer, UpdateFragment.forVersion(mVersionEntity))
+                    }
+                }))
+            }
         }
 
     }
 
-    fun finish(){
+    fun finish() {
         activity?.run {
             supportFragmentManager.beginTransaction().remove(this@UpdateFragment).commitAllowingStateLoss()
         }
@@ -136,7 +140,11 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     override fun onDestroy() {
         super.onDestroy()
         context?.run {
-            unbindService(mDownloadServiceConnection)
+            try {
+                unbindService(mDownloadServiceConnection)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             stopService(UpdateService.callingIntent(this))
         }
     }

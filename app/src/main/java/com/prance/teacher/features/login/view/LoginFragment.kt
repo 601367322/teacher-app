@@ -12,6 +12,9 @@ import com.prance.lib.database.UserEntity
 import com.prance.lib.qrcode.QrCodeUtils
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.spark.SparkListenerAdapter
+import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
@@ -20,6 +23,7 @@ import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
+import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
@@ -52,6 +56,11 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     var mCheckTimeTemp: Long = 0
 
+    private val mSparkServicePresenter by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
+        })
+    }
+
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
         //显示loading
@@ -67,12 +76,19 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         CommonShared.setPreVersion(AppUtils.getAppVersionCode())
 
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
+
+        match.setOnClickListener {
+            activity?.run { startActivity(MatchKeyPadActivity.callingIntent(this)) }
+        }
+
+        mSparkServicePresenter.bind()
+
         //启动主页
         if (BuildConfig.DEBUG) {
 //            val classes = ClassesEntity(7)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
-            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(MainActivity.callingIntent(it)) }
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
 
@@ -84,7 +100,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-            activity?.finish()
+//            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }
@@ -201,6 +217,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        mSparkServicePresenter.unBind()
 
         stopGetNewQrCode()
         stopStartCheckQrCode()

@@ -6,7 +6,7 @@ import android.content.Intent
 import com.prance.lib.third.inter.ITeacher
 import com.prance.teacher.core.ActivityLifeManager
 import com.prance.teacher.core.FloatButtonLifecycleManager
-import com.prance.teacher.features.login.LoginActivity
+import com.prance.teacher.features.welcome.WelcomeActivity
 
 class TeacherImpl : ITeacher {
     override fun getMainIntent(context: Context): Intent {
@@ -14,7 +14,7 @@ class TeacherImpl : ITeacher {
         val foregroundIntent = Intent()
         foregroundIntent.action = Intent.ACTION_MAIN
         foregroundIntent.addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER)
-        foregroundIntent.setClass(context, LoginActivity::class.java)
+        foregroundIntent.setClass(context, WelcomeActivity::class.java)
         foregroundIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         return foregroundIntent
     }

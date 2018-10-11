@@ -7,15 +7,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.Utils
-import com.prance.teacher.BuildConfig
-import com.prance.teacher.features.main.view.MainFragment
+import com.prance.lib.common.utils.weight.AlertDialog
+import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.utils.SoundUtils
 import com.prance.teacher.weight.FloatIcon
 import com.prance.teacher.weight.FontCustom
 
 class MainActivity : BaseActivity() {
 
-    override fun fragment(): BaseFragment = MainFragment()
+    override fun fragment(): BaseFragment = ClassesFragment.forAction(ClassesFragment.ACTION_TO_CLASS)
 
     companion object {
 
@@ -41,7 +41,13 @@ class MainActivity : BaseActivity() {
 
     override fun onBackBtnClick(view: View?) {
         if (supportFragmentManager.fragments.size == 1) {
-            moveTaskToBack(true)
+            AlertDialog(this)
+                    .setMessage("确认退出此账号？")
+                    .setCancelButton("取消", null)
+                    .setConfirmButton("退出") { _ ->
+                        finish()
+                    }
+                    .show()
         } else {
             supportFragmentManager.popBackStack()
         }

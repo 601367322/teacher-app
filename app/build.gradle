@@ -111,6 +111,7 @@ dependencies {
     implementation dependencies.recyclerview
     implementation dependencies.openGlCanvas
     implementation dependencies.okhttp3
+    implementation dependencies.cardview
     implementation dependencies.rxjava
     implementation dependencies.rxandroid
     implementation dependencies.gson

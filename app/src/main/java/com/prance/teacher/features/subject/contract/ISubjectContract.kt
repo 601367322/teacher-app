@@ -13,10 +13,6 @@ import io.reactivex.Flowable
 
 interface ISubjectContract {
     interface View : IView<Presenter> {}
-    interface FragmentView {
-
-        fun setPresenter(presenter: Presenter)
-    }
 
     interface Presenter : IPresenter<View, Model> {
         fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String, i: Int)

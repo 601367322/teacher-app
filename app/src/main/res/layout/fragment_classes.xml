@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/m90.0"
         android:layout_marginEnd="@dimen/m120.0"
+        android:visibility="gone"
         android:onClick="onBackBtnClick"
         app:icon="@drawable/icon_back_button"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,6 +62,7 @@
     <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/m120.0"
         app:icon="@drawable/icon_refresh_button"

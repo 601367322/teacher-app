@@ -7,6 +7,7 @@ import android.os.Binder
 import android.os.IBinder
 
 import com.blankj.utilcode.util.LogUtils
+import com.leo.download.BuildConfig
 import com.leo.download.DownloadError
 import com.leo.download.DownloadListener
 import com.leo.download.DownloadManager
@@ -58,9 +59,14 @@ class UpdateService : Service() {
             updateDir.mkdirs()
         }
 
+        if (BuildConfig.DEBUG) {
+            DownloadManager.getInstance(applicationContext).deleteRecord(url)
+        }
+
+
         DownloadManager.getInstance(applicationContext).enquene(url, updateDir.path, object : DownloadListener {
 
-            internal var currentTime: Long = 0
+            var currentTime: Long = 0
 
             override fun onStart(id: Int, size: Long) {
                 LogUtils.d("onStart")

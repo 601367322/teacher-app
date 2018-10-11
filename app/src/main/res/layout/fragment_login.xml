@@ -37,23 +37,27 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m118.0"
-        android:text="提示：请使用辅导老师小程序扫码登录"
+        android:width="@dimen/m600.0"
+        android:height="@dimen/m120.0"
+        android:background="@drawable/login_tip_background"
+        android:gravity="center"
+        android:text="请使用教师端扫码登录\n只有助教身份能成功扫码"
+        android:lineSpacingExtra="@dimen/m8.0"
         android:textSize="@dimen/m40.0"
-        app:layout_constraintBottom_toBottomOf="@+id/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/back" />
+        app:layout_constraintBottom_toBottomOf="@+id/match"
+        app:layout_constraintEnd_toEndOf="@+id/qrCode"
+        app:layout_constraintStart_toStartOf="@+id/qrCode"
+        app:layout_constraintTop_toTopOf="@+id/match" />
 
     <com.prance.lib.common.utils.weight.MyButton
-        android:id="@+id/back"
+        android:id="@+id/match"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/m85.0"
         android:layout_marginEnd="@dimen/m113.0"
-        android:onClick="onBackBtnClick"
-        app:icon="@drawable/icon_back_button"
-        app:text="返回"
+        app:icon="@drawable/icon_replace_button"
+        app:text="配对答题器"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -63,9 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m74.0"
         android:layout_marginTop="@dimen/m59.0"
-        android:text="TextView"
         android:textSize="@dimen/m30.0"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

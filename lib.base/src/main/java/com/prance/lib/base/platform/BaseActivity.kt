@@ -49,6 +49,15 @@ abstract class BaseActivity : FragmentActivity() {
         addFragment(savedInstanceState)
     }
 
+    open fun retry(){
+        val fragment = fragment()
+        fragment?.let {
+            supportFragmentManager.inTransaction {
+                add(R.id.fragmentContainer, it)
+            }
+        }
+    }
+
     override fun onBackPressed() {
         if (supportFragmentManager.fragments.size > 0)
             (supportFragmentManager.findFragmentById(

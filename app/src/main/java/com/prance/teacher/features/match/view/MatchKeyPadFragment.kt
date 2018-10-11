@@ -1,11 +1,7 @@
 package com.prance.teacher.features.match.view
 
-import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
@@ -81,21 +77,14 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
         recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-                outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m36_0)
+                outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m40_0)
             }
         })
         //添加数据源
         recycler.adapter = mAdapter
 
         complete.setOnClickListener(this)
-        delete.setOnClickListener(this)
-
-        //雷达动图
-        GlideApp.with(this)
-                .asGif()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .load(R.drawable.match_loading)
-                .into(loadingImg)
+        replace.setOnClickListener(this)
 
         //按钮页面状态初始化
         displayMoreBtn()
@@ -107,8 +96,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         //设置顶部提示语
         mRootView?.get()?.post {
             SparkService.mUsbSerialNum!!.let {
-                tip1.visible()
-                tip2.invisible()
             }
         }
     }
@@ -141,9 +128,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     private fun displayMoreBtn() {
         if (!mAdapter.data.isEmpty()) {
             complete.visible()
-            delete.visible()
+            replace.visible()
         }
-        count.text = Html.fromHtml("""已配对成功 <font color="#3AF0EE">${mAdapter.data.size}</font> 个答题器""")
+        count.text = Html.fromHtml("""已配对 <font color="#3AF0EE">${mAdapter.data.size}</font>""")
         displayEmptyView()
     }
 
@@ -151,17 +138,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         when (v) {
             complete -> {
                 activity?.finish()
-            }
-            delete -> {
-                changeDeleteState(true)
-                recycler.post {
-                    setLastItemRequestFocus()
-
-                    recycler.post {
-                        complete.isEnabled = false
-                        delete.isEnabled = false
-                    }
-                }
             }
         }
     }
@@ -221,36 +197,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         activity?.finish()
     }
 
-    fun onBackKeyEvent(): Boolean {
-        if (mAdapter.isDeleteState) {
-            changeDeleteState(false)
-            return true
-        }
-        return false
-    }
-
-    /**
-     * 切换删除状态时按钮
-     */
-    private fun changeDeleteState(b: Boolean) {
-        if (b) {
-            //删除状态
-            mAdapter.isDeleteState = true
-            mAdapter.notifyDataSetChanged()
-
-            tip1.invisible()
-            tip2.visible()
-
-            tip_text3.text = "请用方向键选择，并按“OK”键进行删除，按返回键继续配对。"
-        } else {
-            mAdapter.isDeleteState = false
-            mAdapter.notifyDataSetChanged()
-            complete.isEnabled = true
-            delete.isEnabled = true
-
-            setTip()
-        }
-    }
 
     /**
      * 空状态展示
@@ -258,10 +204,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     private fun displayEmptyView() {
 
         if (mAdapter.data.isEmpty()) {
-            tip3.visible()
             emptyImage.visible()
             recycler.invisible()
-            tip.invisible()
 
             GlideApp.with(this)
                     .asGif()
@@ -269,10 +213,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                     .load(R.drawable.match_empty_view)
                     .into(emptyImage)
         } else {
-            tip3.invisible()
             emptyImage.invisible()
             recycler.visible()
-            tip.visible()
         }
     }
 
