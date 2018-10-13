@@ -6,57 +6,66 @@
     android:background="#B2041319">
 
     <LinearLayout
+        android:id="@+id/loadingImg"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.prance.lib.common.utils.weight.LoadingView
-            android:id="@+id/loadingImg"
             android:layout_width="@dimen/m160.0"
             android:layout_height="@dimen/m160.0" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:textSize="@dimen/m48.0"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/m40.0"
             android:text="版本检测中…"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/m48.0" />
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/updateLayout"
-        android:layout_width="@dimen/m960.0"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/toast_background"
-        android:elevation="@dimen/m10.0"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/m120.0"
-        android:paddingVertical="@dimen/m83.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/progressTip"
+            android:layout_width="@dimen/m130.0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m130.0"
+            android:textColor="#fff"
+            android:textSize="@dimen/m52.0" />
 
         <ProgressBar
             android:id="@+id/loadingProgress"
-            android:layout_width="@dimen/m710.0"
-            android:layout_height="@dimen/m10.0"
-            style="@android:style/Widget.ProgressBar.Horizontal" />
+            style="@style/UpdateProgress"
+            android:layout_width="@dimen/m1120.0"
+            android:layout_height="@dimen/m61.0"
+            android:layout_marginTop="@dimen/m29.0"
+            android:layout_marginRight="@dimen/m130.0"
+            android:layout_marginLeft="@dimen/m130.0"
+            android:max="100"
+            android:progress="30" />
 
         <TextView
             android:id="@+id/desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m101.0"
             android:gravity="center"
+            android:text="检测到新版本"
             android:textColor="#fff"
-            android:textSize="@dimen/m40.0" />
+            android:textSize="@dimen/m52.0" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

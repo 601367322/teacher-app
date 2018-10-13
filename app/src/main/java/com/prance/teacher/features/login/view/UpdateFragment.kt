@@ -11,11 +11,13 @@ import android.os.IBinder
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.FileProvider
 import android.view.View
+import android.widget.LinearLayout
 import com.blankj.utilcode.util.AppUtils
 import com.leo.download.DownloadError
 import com.leo.download.DownloadListener
 import com.prance.lib.base.extension.appContext
 import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -60,7 +62,7 @@ class UpdateFragment : BaseFragment(), DownloadListener {
         mVersionEntity = ve
 
         updateLayout.visible()
-        loadingImg.invalidate()
+        loadingImg.invisible()
 
         desc.text = """检测到新版本，版本号${mVersionEntity.appVersion}，自动更新中…"""
 
@@ -93,6 +95,8 @@ class UpdateFragment : BaseFragment(), DownloadListener {
             install.setDataAndType(Uri.fromFile(downloadFile), "application/vnd.android.package-archive")
         }
         startActivity(install)
+
+        finish()
     }
 
 
@@ -100,8 +104,19 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     }
 
     override fun onProgress(id: Int, currSize: Long, totalSize: Long) {
-        loadingProgress.max = totalSize.toInt()
-        loadingProgress.progress = currSize.toInt()
+        loadingProgress?.run {
+            loadingProgress.max = totalSize.toInt()
+            loadingProgress.progress = currSize.toInt()
+
+            progressTip.text = (currSize.toFloat() / totalSize.toFloat() * 100).toInt().toString() + "%"
+
+            val maxWidth = resources.getDimensionPixelOffset(R.dimen.m1120_0)
+            val nowWidth = maxWidth.toFloat() * (currSize.toFloat() / totalSize.toFloat())
+            val params = progressTip.layoutParams as LinearLayout.LayoutParams
+            params.leftMargin = nowWidth.toInt() + resources.getDimensionPixelOffset(R.dimen.m130_0)
+            progressTip.layoutParams = params
+        }
+
     }
 
     override fun onRestart(id: Int, currSize: Long, totalSize: Long) {
