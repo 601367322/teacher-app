@@ -2,6 +2,7 @@ package com.prance.lib.teacher.base
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Intent
 import com.blankj.utilcode.util.*
 import com.prance.lib.third.inter.PluginsManager
 import com.squareup.leakcanary.LeakCanary

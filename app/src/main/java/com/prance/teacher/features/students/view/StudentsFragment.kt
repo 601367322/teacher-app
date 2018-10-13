@@ -17,7 +17,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
-import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
+import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.presenter.StudentsPresenter
 import kotlinx.android.synthetic.main.fragment_students.*
@@ -74,7 +74,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         replace.setOnClickListener {
             context?.let {
-                startActivityForResult(ReplaceKeyPadActivity.callingIntent(it), 1001)
+                startActivityForResult(DeleteKeyPadActivity.callingIntent(it), 1001)
             }
         }
 

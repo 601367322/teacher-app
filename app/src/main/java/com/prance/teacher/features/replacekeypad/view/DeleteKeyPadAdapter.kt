@@ -7,7 +7,7 @@ import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.R
 import kotlinx.android.synthetic.main.item_match_key_pad.view.*
 
-class ReplaceKeyPadAdapter(layoutResId: Int, var itemClickListener: View.OnClickListener) : BaseQuickAdapter<KeyPadEntity, BaseViewHolder>(layoutResId) {
+class DeleteKeyPadAdapter(layoutResId: Int, var itemClickListener: View.OnClickListener) : BaseQuickAdapter<KeyPadEntity, BaseViewHolder>(layoutResId) {
 
     override fun convert(helper: BaseViewHolder?, bean: KeyPadEntity?) {
         bean?.run {

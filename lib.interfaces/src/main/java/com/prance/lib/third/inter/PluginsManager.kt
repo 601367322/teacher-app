@@ -9,12 +9,14 @@ class PluginsManager {
     internal var mTestSetting: ITestSetting? = null
     internal var mBugly: IBugly? = null
     internal var mTeacher: ITeacher? = null
+    internal var mSpark: ISpark? = null
 
     init {
         try {
             mTestSetting = getImpl<ITestSetting>("com.prance.third.impl.TestSettingImpl")
             mBugly = getImpl<IBugly>("com.prance.third.impl.BuglyImpl")
             mTeacher = getImpl<ITeacher>("com.prance.third.impl.TeacherImpl")
+            mSpark = getImpl<ISpark>("com.prance.third.impl.SparkImpl")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -53,7 +55,11 @@ class PluginsManager {
 
         val bugly: IBugly?
             get() = instance.mBugly
+
         val teacher: ITeacher?
             get() = instance.mTeacher
+
+        val spark: ISpark?
+            get() = instance.mSpark
     }
 }

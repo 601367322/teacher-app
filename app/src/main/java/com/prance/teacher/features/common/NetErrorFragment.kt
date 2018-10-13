@@ -5,36 +5,31 @@ import android.os.Bundle
 import android.view.View
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.R.id.retry
 import kotlinx.android.synthetic.main.fragment_neterror.*
-import java.io.Serializable
 
 class NetErrorFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_neterror
 
+    private var onRetry: ((context: Context) -> Unit)? = null
+
     companion object {
 
         const val RETRY = "retry"
 
-        fun callIntent(retry: Retry): NetErrorFragment {
+        fun callIntent(onRetry: ((context: Context) -> Unit)?): NetErrorFragment {
             val fragment = NetErrorFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(RETRY, retry)
-            fragment.arguments = bundle
+            fragment.onRetry = onRetry
             return fragment
         }
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-
-        var retryBean = arguments?.getSerializable(RETRY) as Retry
-
         retry.setOnClickListener {
-            activity?.run { retryBean.onRetry?.invoke(this) }
+            activity?.run { onRetry?.invoke(this) }
 
         }
     }
-
-    class Retry(var onRetry: ((context: Context) -> Unit)? = null) : Serializable
 
 }

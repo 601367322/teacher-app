@@ -34,4 +34,5 @@ dependencies {
     implementation dependencies.utilcode
 
     implementation project(":lib.base")
+    implementation project(":lib.interfaces")
 }

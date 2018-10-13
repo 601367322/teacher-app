@@ -23,6 +23,7 @@ import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.utils.ping.PingNet
 import com.prance.teacher.utils.ping.PingNetEntity
 import kotlinx.android.synthetic.main.fragment_check_keypad.*
+import java.util.ArrayList
 
 /**
  * 答题器检测

@@ -19,7 +19,7 @@ import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
-import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
+import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
 
@@ -126,7 +126,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             }
             replace -> {
                 context?.run {
-                    startActivity(ReplaceKeyPadActivity.callingIntent(this))
+                    startActivity(DeleteKeyPadActivity.callingIntent(this))
                 }
             }
         }

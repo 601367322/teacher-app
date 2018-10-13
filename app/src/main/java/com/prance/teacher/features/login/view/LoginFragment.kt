@@ -21,6 +21,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.common.NetErrorFragment
+import com.prance.teacher.features.common.Retry
 import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
@@ -240,9 +241,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         activity?.run {
             supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, NetErrorFragment.callIntent(NetErrorFragment.Retry {
+                replace(R.id.fragmentContainer, NetErrorFragment.callIntent {
                     (this@run as BaseActivity).retry()
-                }))
+                })
             }
         }
         return true

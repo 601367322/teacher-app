@@ -61,7 +61,7 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".features.replacekeypad.ReplaceKeyPadActivity"
+            android:name=".features.replacekeypad.DeleteKeyPadActivity"
             android:screenOrientation="landscape" />
 
         <activity

@@ -33,13 +33,13 @@ import kotlinx.android.synthetic.main.item_replace_key_pad.*
  * 								 - generate by MvpAutoCodePlus plugin.
  */
 
-class ReplaceKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.OnClickListener {
+class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.OnClickListener {
 
     override var mPresenter: IReplaceKeyPadContract.Presenter = ReplaceKeyPadPresenter()
 
     override fun layoutId(): Int = R.layout.fragment_replace
 
-    private var mAdapter: ReplaceKeyPadAdapter = ReplaceKeyPadAdapter(R.layout.item_replace_key_pad, this)
+    private var mAdapter: DeleteKeyPadAdapter = DeleteKeyPadAdapter(R.layout.item_replace_key_pad, this)
 
     private val mSparkServicePresenter: SparkServicePresenter  by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
@@ -108,7 +108,7 @@ class ReplaceKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.
                 context?.run {
                     AlertDialog(this)
                             .setMessage(
-                                    Html.fromHtml("""替换/删除编号为 <font color="#3AF0EE">${keyPad.keyId.substring(4)}</font> 的答题器吗？<br/>若答题器已绑定学生，则同时替换/删除绑定关系"""))
+                                    Html.fromHtml("""删除编号为 <font color="#3AF0EE">${keyPad.keyId.substring(4)}</font> 的答题器吗？<br/>若答题器已绑定学生，删除后需重新为学生更换绑定的答题器"""))
                             .setCancelButton("取消", null)
                             .setConfirmButton("删除") { _ ->
                                 mAdapter.data.remove(keyPad)

@@ -21,6 +21,7 @@ import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.common.NetErrorFragment
+import com.prance.teacher.features.common.Retry
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.services.UpdateService
 import kotlinx.android.synthetic.main.fragment_update.*
@@ -121,11 +122,11 @@ class UpdateFragment : BaseFragment(), DownloadListener {
     override fun onError(id: Int, error: DownloadError?) {
         context?.let {
             (activity as FragmentActivity).supportFragmentManager.inTransaction {
-                replace(R.id.fragmentContainer, NetErrorFragment.callIntent(NetErrorFragment.Retry {
+                replace(R.id.fragmentContainer, NetErrorFragment.callIntent {
                     (it as FragmentActivity).supportFragmentManager.inTransaction {
-                        replace(R.id.fragmentContainer, UpdateFragment.forVersion(mVersionEntity))
+                        replace(R.id.fragmentContainer, forVersion(mVersionEntity))
                     }
-                }))
+                })
             }
         }
 
