@@ -23,62 +23,62 @@ class CheckKeyPadPresenter : BasePresenterKt<ICheckKeyPadContract.View>(), IChec
 
     override val mModel: ICheckKeyPadContract.Model = CheckKeyPadModel()
 
-    private val mMatchKeyPadModel = MatchKeyPadModel()
-
-    override fun getMatchedKeyPadByBaseStationId(serialNumber: String) {
-        Flowable.create<MutableList<KeyPadEntity>>({
-            val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
-            if (list != null && list.isNotEmpty()) {
-                it.onNext(list)
-                it.onComplete()
-            } else {
-                it.onError(ResultException(88002, "请先配对答题器"))
-            }
-        }, BackpressureStrategy.BUFFER)
-                .mySubscribe(onSubscribeError, {
-                    mView?.startCheck(it)
-                })
-    }
-
-    override fun generateGroup(mMatchKeyPadEntities: MutableList<KeyPadEntity>, mCheckKeyPadEntities: MutableList<KeyPadEntity>) {
-
-        Flowable.create<MutableList<MultiItemEntity>>({
-
-            val offlineKeyPads = mutableListOf<KeyPadEntity>()
-            val batteryKeyPads = mutableListOf<KeyPadEntity>()
-
-            for (matchedKeyPad in mMatchKeyPadEntities) {
-                var exists = false
-                for (checkKeyPad in mCheckKeyPadEntities) {
-                    if (checkKeyPad.keyId == matchedKeyPad.keyId) {
-                        matchedKeyPad.status = KeyPadEntity.BATTERY
-                        exists = true
-                    }
-                }
-                if (!exists) {
-                    //未在线
-                    matchedKeyPad.status = KeyPadEntity.OFFLINE
-                    offlineKeyPads.add(matchedKeyPad)
-                }
-            }
-
-            val list = mutableListOf<MultiItemEntity>()
-            if (offlineKeyPads.isNotEmpty()) {
-                list.add(CheckKeyPadGroupTitle("未在线的答题器：", offlineKeyPads.size))
-                list.addAll(offlineKeyPads)
-            }
-            if (batteryKeyPads.isNotEmpty()) {
-                list.add(CheckKeyPadGroupTitle("在线但电量不足的答题器：", batteryKeyPads.size))
-                list.addAll(batteryKeyPads)
-            }
-
-            it.onNext(list)
-            it.onComplete()
-        }, BackpressureStrategy.BUFFER)
-                .mySubscribe {
-                    mView?.renderKeyPads(it)
-                }
-
-    }
+//    private val mMatchKeyPadModel = MatchKeyPadModel()
+//
+//    override fun getMatchedKeyPadByBaseStationId(serialNumber: String) {
+//        Flowable.create<MutableList<KeyPadEntity>>({
+//            val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
+//            if (list != null && list.isNotEmpty()) {
+//                it.onNext(list)
+//                it.onComplete()
+//            } else {
+//                it.onError(ResultException(88002, "请先配对答题器"))
+//            }
+//        }, BackpressureStrategy.BUFFER)
+//                .mySubscribe(onSubscribeError, {
+//                    mView?.startCheck(it)
+//                })
+//    }
+//
+//    override fun generateGroup(mMatchKeyPadEntities: MutableList<KeyPadEntity>, mCheckKeyPadEntities: MutableList<KeyPadEntity>) {
+//
+//        Flowable.create<MutableList<MultiItemEntity>>({
+//
+//            val offlineKeyPads = mutableListOf<KeyPadEntity>()
+//            val batteryKeyPads = mutableListOf<KeyPadEntity>()
+//
+//            for (matchedKeyPad in mMatchKeyPadEntities) {
+//                var exists = false
+//                for (checkKeyPad in mCheckKeyPadEntities) {
+//                    if (checkKeyPad.keyId == matchedKeyPad.keyId) {
+//                        matchedKeyPad.status = KeyPadEntity.BATTERY
+//                        exists = true
+//                    }
+//                }
+//                if (!exists) {
+//                    //未在线
+//                    matchedKeyPad.status = KeyPadEntity.OFFLINE
+//                    offlineKeyPads.add(matchedKeyPad)
+//                }
+//            }
+//
+//            val list = mutableListOf<MultiItemEntity>()
+//            if (offlineKeyPads.isNotEmpty()) {
+//                list.add(CheckKeyPadGroupTitle("未在线的答题器：", offlineKeyPads.size))
+//                list.addAll(offlineKeyPads)
+//            }
+//            if (batteryKeyPads.isNotEmpty()) {
+//                list.add(CheckKeyPadGroupTitle("在线但电量不足的答题器：", batteryKeyPads.size))
+//                list.addAll(batteryKeyPads)
+//            }
+//
+//            it.onNext(list)
+//            it.onComplete()
+//        }, BackpressureStrategy.BUFFER)
+//                .mySubscribe {
+//                    mView?.renderKeyPads(it)
+//                }
+//
+//    }
 }
 

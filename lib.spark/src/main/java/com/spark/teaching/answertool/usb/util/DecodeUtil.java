@@ -5,6 +5,7 @@ import com.spark.teaching.answertool.usb.helper.CommunicateHelper;
 import com.spark.teaching.answertool.usb.helper.UsbListener;
 import com.spark.teaching.answertool.usb.model.ClearDeviceConfigureRep;
 import com.spark.teaching.answertool.usb.model.CloseBindCardRep;
+import com.spark.teaching.answertool.usb.model.DeviceConfigureRep;
 import com.spark.teaching.answertool.usb.model.EchoRep;
 import com.spark.teaching.answertool.usb.model.OpenBindCardRep;
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer;
@@ -48,13 +49,13 @@ public class DecodeUtil {
                 SendQuestionRep sendQuestionRep = new SendQuestionRep();
                 sendQuestionRep.decoding(data);
                 msg = "发送(停止)题目响应：" + sendQuestionRep.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
                 break;
             case 0x02://答题器上报答案
                 ReceiveAnswer receiveAnswer = new ReceiveAnswer();
                 receiveAnswer.decoding(data);
                 msg = "答题器上报答案：" + receiveAnswer.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
 
                 // 收到指令后要告诉接收器我收到了
                 ReceiveAnswerRep receiveAnswerRep = new ReceiveAnswerRep();
@@ -69,25 +70,31 @@ public class DecodeUtil {
                 EchoRep echoRep = new EchoRep();
                 echoRep.decoding(data);
                 msg = "答题器回显设置响应：" + echoRep.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
                 break;
             case 0x94://清除配置信息指令响应
                 ClearDeviceConfigureRep clearDeviceConfigureRep = new ClearDeviceConfigureRep();
                 clearDeviceConfigureRep.decoding(data);
                 msg = "清除配置信息指令响应：" + clearDeviceConfigureRep.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
                 break;
             case 0x95://开启刷卡绑卡指令响应
                 OpenBindCardRep openBindCardRep = new OpenBindCardRep();
                 openBindCardRep.decoding(data);
                 msg = "开启刷卡绑卡指令响应：" + openBindCardRep.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
+                break;
+            case 0x13:
+                DeviceConfigureRep deviceConfigureRep = new DeviceConfigureRep();
+                deviceConfigureRep.decoding(data);
+                msg = "查询答题器信息指令响应：" + deviceConfigureRep.toString();
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
                 break;
             case 0x16://接收器上报刷卡绑定结果
                 ReportBindCard reportBindCard = new ReportBindCard();
                 reportBindCard.decoding(data);
                 msg = "上报刷卡绑定结果：" + reportBindCard.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
 
                 // 收到指令后要告诉接收器我收到了
                 ReportBindCardRep reportBindCardRep = new ReportBindCardRep();
@@ -102,11 +109,11 @@ public class DecodeUtil {
                 CloseBindCardRep closeBindCardRep = new CloseBindCardRep();
                 closeBindCardRep.decoding(data);
                 msg = "停止刷卡绑定指令响应：" + closeBindCardRep.toString();
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
                 break;
             default://出现异常指令
                 msg = "cmd: " + (cmd & 0xff);
-                LogUtils.d( msg + "\n" + stringBuilder.toString(), false);
+                LogUtils.d(msg + "\n" + stringBuilder.toString(), false);
                 break;
         }
     }

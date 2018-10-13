@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:clipChildren="false"
     android:layout_height="match_parent">
 
     <ImageView
+        android:src="@drawable/icon_neterror_icon"
         android:id="@+id/imageView7"
-        android:layout_width="@dimen/m200.0"
-        android:layout_height="@dimen/m200.0"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="@dimen/m372.0"
+        android:layout_height="@dimen/m385.0"
+        android:layout_marginTop="@dimen/m188.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,21 +21,25 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:textSize="@dimen/m52.0"
+        android:textColor="#fff"
+        android:layout_marginTop="@dimen/m81.0"
         android:text="当前网络不可用，请检查网络！"
         app:layout_constraintEnd_toEndOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-    <Button
+    <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/retry"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/m300.0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:text="重试"
+        android:focusable="true"
+        android:layout_marginTop="@dimen/m99.0"
+        app:text="重试"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" >
+        <requestFocus/>
+    </com.prance.lib.common.utils.weight.MyButton>
 </android.support.constraint.ConstraintLayout>

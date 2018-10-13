@@ -3,106 +3,112 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:layout_height="match_parent">
+    android:clipToPadding="false">
 
     <TextView
-        android:id="@+id/classTip"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m25.0"
-        android:layout_marginStart="@dimen/m118.0"
-        android:text="检测提示："
+        android:layout_marginTop="@dimen/m200.0"
+        android:text="提示：此过程为检查设备网络连接状态及答题器连接状态，请等待检查完毕再做其他操作"
         android:textSize="@dimen/m32.0"
-        app:layout_constraintBottom_toTopOf="@+id/classTip1"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/classTip1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m25.0"
-        android:text="1.检测前请按答题器任意键进行唤醒"
-        android:textSize="@dimen/m32.0"
-        app:layout_constraintBottom_toTopOf="@+id/classTip2"
-        app:layout_constraintStart_toStartOf="@+id/classTip" />
-
-    <TextView
-        android:id="@+id/classTip2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m87.0"
-        android:text="2.检测已配对答题器是否在线、电量是否充足"
-        android:textSize="@dimen/m32.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/classTip1" />
-
-    <TextView
-        android:id="@+id/tip"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/m93.0"
-        android:background="#478BE1"
-        android:gravity="center"
-        android:text="检测完毕！未在线答题器请重新配对、电量不足的答题器请更换电池，之后再次进行检测。"
-        android:textColor="#fff"
-        android:textSize="@dimen/m32.0"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="@dimen/m83.0"
-        android:paddingTop="@dimen/m40.0"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tip" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <com.prance.teacher.weight.RoundProgressBarWidthNumber
+        android:id="@+id/networkProgress"
+        android:layout_width="@dimen/m260.0"
+        android:layout_height="@dimen/m260.0"
+        android:layout_marginStart="@dimen/m450.0"
+        android:layout_marginTop="@dimen/m118.0"
+        android:max="100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:progress_reached_bar_height="@dimen/m20.0"
+        app:progress_reached_color="#0D7AFF"
+        app:progress_reached_complete_color="#37D93F"
+        app:progress_reached_error_color="#FD4F4F"
+        app:progress_text_color="#fff"
+        app:progress_text_size="@dimen/m52.0"
+        app:progress_unreached_bar_height="@dimen/m10.0"
+        app:progress_unreached_color="#fff" />
+
+    <com.prance.teacher.weight.RoundProgressBarWidthNumber
+        android:id="@+id/stationProgress"
+        android:layout_width="@dimen/m260.0"
+        android:layout_height="@dimen/m260.0"
+        android:layout_marginEnd="@dimen/m450.0"
+        android:max="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/networkProgress"
+        app:progress_reached_bar_height="@dimen/m20.0"
+        app:progress_reached_color="#0D7AFF"
+        app:progress_reached_complete_color="#37D93F"
+        app:progress_reached_error_color="#FD4F4F"
+        app:progress_text_color="#fff"
+        app:progress_text_size="@dimen/m52.0"
+        app:progress_unreached_bar_height="@dimen/m10.0"
+        app:progress_unreached_color="#fff" />
+
+    <TextView
+        android:id="@+id/versionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/m20.0"
-        android:paddingTop="@dimen/m20.0"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/m90.0"
-        android:paddingEnd="@dimen/m120.0"
-        android:clipChildren="false"
-        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/m59.0"
+        android:layout_marginEnd="@dimen/m74.0"
+        android:textColor="#fff"
+        android:textSize="@dimen/m30.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m95.0"
+        android:text="网络"
+        android:textColor="#fff"
+        android:textSize="@dimen/m52.0"
+        app:layout_constraintEnd_toEndOf="@+id/networkProgress"
+        app:layout_constraintStart_toStartOf="@+id/networkProgress"
+        app:layout_constraintTop_toBottomOf="@+id/networkProgress" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m95.0"
+        android:text="答题器"
+        android:textColor="#fff"
+        android:textSize="@dimen/m52.0"
+        app:layout_constraintEnd_toEndOf="@+id/stationProgress"
+        app:layout_constraintStart_toStartOf="@+id/stationProgress"
+        app:layout_constraintTop_toBottomOf="@+id/stationProgress" />
+
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/nextStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m120.0"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/m90.0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:text="下一步" />
 
-        <com.prance.lib.common.utils.weight.MyButton
-            android:id="@+id/check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m32.0"
-            app:icon="@drawable/icon_check_button"
-            app:text="重新检测" />
-
-        <com.prance.lib.common.utils.weight.MyButton
-            android:id="@+id/jump"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/m32.0"
-            app:icon="@drawable/icon_jump_button"
-            app:text="下一步" />
-
-        <com.prance.lib.common.utils.weight.MyButton
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onBackBtnClick"
-            app:icon="@drawable/icon_back_button"
-            app:text="返回" />
-    </LinearLayout>
-
+    <com.prance.lib.common.utils.weight.MyButton
+        android:id="@+id/reCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m120.0"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/m90.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:text="重新检测" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_focused="true">
-        <shape android:shape="rectangle">
-            <stroke android:width="@dimen/m2.0" android:color="#fff" />
-            <corners android:radius="@dimen/m4.0" />
-        </shape>
+    <item android:state_focused="true" android:drawable="@drawable/key_pad_focus_green_border">
     </item>
 
     <item>

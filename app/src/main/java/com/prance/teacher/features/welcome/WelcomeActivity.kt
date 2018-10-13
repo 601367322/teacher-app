@@ -9,6 +9,7 @@ import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.http.ResultException
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
+import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.common.NetErrorFragment
 import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.login.model.VersionEntity
@@ -54,16 +55,14 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
                             replace(R.id.fragmentContainer, UpdateFragment.forVersion(it))
                         }
             } else {
-                startActivity(LoginActivity.callingIntent(this))
-                finish()
+                nextStep()
             }
         }
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         if (throwable is ResultException) {
-            startActivity(LoginActivity.callingIntent(this))
-            finish()
+            nextStep()
             return true
         }
         supportFragmentManager.inTransaction {
@@ -73,5 +72,10 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
             }))
         }
         return true
+    }
+
+    private fun nextStep(){
+        startActivity(CheckKeyPadActivity.callingIntent(this))
+        finish()
     }
 }

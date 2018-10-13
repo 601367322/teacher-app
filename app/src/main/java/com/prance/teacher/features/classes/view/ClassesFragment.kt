@@ -2,8 +2,13 @@ package com.prance.teacher.features.classes.view
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.solver.widgets.ConstraintTableLayout
 import android.support.v7.widget.RecyclerView
+import android.text.Html
+import android.text.Html.fromHtml
 import android.view.View
+import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -13,6 +18,7 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesPresenter
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridLayoutManager
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridSnapHelper
+import com.prance.lib.spark.SparkService
 import com.prance.teacher.BuildConfig
 import kotlinx.android.synthetic.main.fragment_classes.*
 
@@ -76,9 +82,11 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
             }
         })
 
+        recycler.setPadding(0, (ScreenUtils.getScreenHeight() - resources.getDimensionPixelOffset(R.dimen.m860_0)) / 2, 0, (ScreenUtils.getScreenHeight() - resources.getDimensionPixelOffset(R.dimen.m860_0)) / 2)
+
         recycler.adapter = mAdapter
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
 //            val list = mutableListOf<ClassesEntity>()
 //            list.add(ClassesEntity("呵呵"))
 //            list.add(ClassesEntity("呵呵"))
@@ -107,6 +115,11 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         showProgress()
 
         mPresenter.getAllClasses()
+
+        SparkService.mUsbSerialNum?.run {
+            keyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
+        }
+
     }
 
     override fun onPageSizeChanged(pageSize: Int) {

@@ -18,7 +18,7 @@ interface IMatchKeyPadContract {
     interface Presenter : IPresenter<View, Model> {
         fun getMatchedKeyPadByBaseStationId(serialNumber: String)
         fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity?
-        fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean
+        fun saveAllKeyPad(data: List<KeyPadEntity>)
     }
 
     interface Model : IModel {

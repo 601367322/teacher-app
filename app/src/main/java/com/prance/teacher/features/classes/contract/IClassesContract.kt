@@ -16,9 +16,12 @@ interface IClassesContract {
     interface View : IView<Presenter> {
         fun renderClasses(it: MutableList<ClassesEntity>)
     }
+
     interface Presenter : IPresenter<View, Model> {
         fun getAllClasses()
+        fun getKeyPadCount(stationId: String): Int
     }
+
     interface Model : IModel {
         fun getAllClasses(): Flowable<ResponseBody<ClassesEntity>>
     }

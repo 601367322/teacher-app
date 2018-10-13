@@ -4,6 +4,7 @@ import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.teacher.features.classes.model.ClassesModel
+import com.prance.teacher.features.match.model.MatchKeyPadModel
 
 /**
  * Description :
@@ -16,11 +17,17 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
 
     override val mModel: IClassesContract.Model = ClassesModel()
 
+    val keyPadModel: MatchKeyPadModel = MatchKeyPadModel()
+
     override fun getAllClasses() {
         mModel.getAllClasses()
-                .mySubscribe(onSubscribeError, {
+                .mySubscribe(onSubscribeError) {
                     mView?.renderClasses(it.list)
-                })
+                }
+    }
+
+    override fun getKeyPadCount(stationId: String): Int {
+        return keyPadModel.getAllKeyPadByBaseStationSN(stationId)?.size ?: 0
     }
 }
 

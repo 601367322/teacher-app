@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
+import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
@@ -18,6 +19,7 @@ import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
+import com.prance.teacher.features.replacekeypad.ReplaceKeyPadActivity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
 
@@ -37,26 +39,23 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
             override fun onCardBind(reportBindCard: ReportBindCard) {
 
-                if(mAdapter.isDeleteState){
-                    return
-                }
 
                 val keyId = reportBindCard.uid.toString()
                 if (!isExists(keyId)) {
-                    //保存答题器
-                    val keyPadEntity = mPresenter.saveMatchedKeyPad(KeyPadEntity(SparkService.mUsbSerialNum, keyId))
 
-                    keyPadEntity?.let {
-                        mAdapter.addData(it)
-                        mAdapter.notifyDataSetChanged()
-                        displayMoreBtn()
-                    }
+                    val keyPadEntity = KeyPadEntity(SparkService.mUsbSerialNum, keyId)
+
+                    mAdapter.addData(keyPadEntity)
+                    mAdapter.notifyDataSetChanged()
+                    displayMoreBtn()
                 }
             }
 
             override fun onServiceConnected() {
                 //查找已经配对过的答题器
-                mPresenter.getMatchedKeyPadByBaseStationId(SparkService.mUsbSerialNum!!)
+                SparkService.mUsbSerialNum?.run {
+                    mPresenter.getMatchedKeyPadByBaseStationId(this)
+                }
             }
 
         })
@@ -121,14 +120,34 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun onClick(v: View?) {
         when (v) {
             complete -> {
+                //保存答题器
+                mPresenter.saveAllKeyPad(mAdapter.data)
                 activity?.finish()
+            }
+            replace -> {
+                context?.run {
+                    startActivity(ReplaceKeyPadActivity.callingIntent(this))
+                }
             }
         }
     }
 
+    override fun onBackPressed(): Boolean {
+        context?.run {
+            AlertDialog(this)
+                    .setMessage(
+                            "直接退出将不会保存已配对的答题器信息\n确认退出吗？")
+                    .setCancelButton("取消", null)
+                    .setConfirmButton("退出") { _ ->
+                        activity?.finish()
+                    }
+                    .show()
+            return true
+        }
+        return false
+    }
+
     override fun needEventBus(): Boolean = true
-
-
 
     /**
      * 空状态展示
@@ -142,7 +161,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             GlideApp.with(this)
                     .asGif()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .load(R.drawable.match_empty_view)
+                    .load(R.drawable.match_empty_view1)
                     .into(emptyImage)
         } else {
             emptyImage.invisible()

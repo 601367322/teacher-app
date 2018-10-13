@@ -13,8 +13,11 @@
         android:layout_marginTop="@dimen/m70.0"
         android:text="配对答题器"
         android:textSize="@dimen/m48.0"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+        <requestFocus/>
+    </TextView>
 
 
     <com.prance.lib.common.utils.weight.MyButton
@@ -62,8 +65,8 @@
         android:id="@+id/emptyImage"
         android:layout_width="@dimen/m1040.0"
         android:layout_height="@dimen/m380.0"
-        android:layout_marginTop="@dimen/m212.0"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

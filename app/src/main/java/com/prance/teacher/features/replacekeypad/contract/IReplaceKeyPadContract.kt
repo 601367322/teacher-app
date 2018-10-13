@@ -1,6 +1,7 @@
 package com.prance.teacher.features.replacekeypad.contract
 
 import com.prance.lib.base.mvp.*
+import com.prance.lib.database.KeyPadEntity
 import io.reactivex.Flowable
 
 /**
@@ -12,13 +13,13 @@ import io.reactivex.Flowable
 
 interface IReplaceKeyPadContract {
     interface View : IView<Presenter> {
-        fun replaceSuccess()
+        fun renderKeyPadItemFromDatabase(it: MutableList<KeyPadEntity>)
     }
     interface Presenter : IPresenter<View, Model> {
-        fun replaceKeyPad(baseStationId: String, classesId: String, oldKeyPadId: String, newKeyPadId: String)
+        fun getMatchedKeyPadByBaseStationId(mUsbSerialNum: String)
+        fun deleteKeyPad(keyPad: KeyPadEntity): Boolean
     }
 
     interface Model : IModel {
-        fun replaceKeyPad(classesId: String, oldKeyPadId: String, newKeyPadId: String): Flowable<Any>
     }
 }

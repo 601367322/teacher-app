@@ -56,9 +56,6 @@ abstract class BaseFragment : Fragment(), ITopView {
         if (!inited) {
             val rootView = mRootView!!.get()
             rootView?.let {
-                if (needEventBus()) {
-                    EventBus.getDefault().register(this)
-                }
 
                 inited()
                 inited = true
@@ -68,7 +65,7 @@ abstract class BaseFragment : Fragment(), ITopView {
         }
     }
 
-    open fun onBackPressed() {}
+    open fun onBackPressed():Boolean = false
 
     protected fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
@@ -106,9 +103,6 @@ abstract class BaseFragment : Fragment(), ITopView {
 
     override fun onDestroy() {
         super.onDestroy()
-
-        if (needEventBus())
-            EventBus.getDefault().unregister(this)
 
         hideProgress()
     }

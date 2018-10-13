@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.prance.teacher.weight.GreenBorderFocusRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyPadBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true">
+
+
+    <RelativeLayout
+        android:layout_width="@dimen/m246.0"
+        android:layout_height="@dimen/m104.0"
+        android:duplicateParentState="true">
+
+        <ImageView
+            android:id="@+id/keyImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:duplicateParentState="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_keypad_background_normal" />
+
+        <TextView
+            android:id="@+id/keyNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/m28.0"
+            android:text="009722"
+            android:textColor="#fff"
+            android:textSize="@dimen/m36.0" />
+
+    </RelativeLayout>
+</com.prance.teacher.weight.GreenBorderFocusRelativeLayout>

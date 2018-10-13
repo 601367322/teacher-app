@@ -74,7 +74,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         replace.setOnClickListener {
             context?.let {
-                startActivityForResult(ReplaceKeyPadActivity.callingIntent(it, mClassesEntity), 1001)
+                startActivityForResult(ReplaceKeyPadActivity.callingIntent(it), 1001)
             }
         }
 

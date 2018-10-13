@@ -8,7 +8,10 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.Utils
 import com.prance.lib.common.utils.weight.AlertDialog
+import com.prance.teacher.features.classes.ClassesDetailActivity
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesFragment
+import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.utils.SoundUtils
 import com.prance.teacher.weight.FloatIcon
 import com.prance.teacher.weight.FontCustom
@@ -58,4 +61,5 @@ class MainActivity : BaseActivity() {
 
         FloatIcon.hidePopupWindow()
     }
+
 }

@@ -11,13 +11,7 @@ class CheckKeyPadActivity : BaseActivity() {
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, CheckKeyPadActivity::class.java)
-
-        fun callingIntent(context: Context, action: Int): Intent {
-            val intent = Intent(context, CheckKeyPadActivity::class.java)
-            intent.putExtra(ClassesFragment.ACTION, action)
-            return intent
-        }
     }
 
-    override fun fragment(): BaseFragment = CheckKeyPadFragment.forAction(intent?.getIntExtra(ClassesFragment.ACTION, CheckKeyPadFragment.ACTION_JUST_CHECK))
+    override fun fragment(): BaseFragment = CheckKeyPadFragment()
 }

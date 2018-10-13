@@ -5,6 +5,7 @@ import com.prance.teacher.features.replacekeypad.contract.IReplaceKeyPadContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
+import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.model.MatchKeyPadModel
 import com.prance.teacher.features.replacekeypad.model.ReplaceKeyPadModel
 import io.reactivex.BackpressureStrategy
@@ -23,41 +24,28 @@ class ReplaceKeyPadPresenter : BasePresenterKt<IReplaceKeyPadContract.View>(), I
 
     private val mMatchKeyPadModel = MatchKeyPadModel()
 
-    override fun replaceKeyPad(baseStationId: String, classesId: String, oldKeyPadId: String, newKeyPadId: String) {
 
-        Flowable
-                .create<MutableList<KeyPadEntity>>({
-                    val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(baseStationId)
-                    if (list != null && list.isNotEmpty()) {
-                        var existsKeyPad: KeyPadEntity? = null
-                        for (keyPad in list) {
-                            if (keyPad.keyId == newKeyPadId) {
-                                existsKeyPad = keyPad
-                            }
-                        }
-                        if (existsKeyPad == null) {
-                            it.onError(ResultException(88002, "请先进行答题器配对"))
-                        } else {
-                            it.onNext(list)
-                        }
-                    } else {
-                        it.onError(ResultException(88002, "请先进行答题器配对"))
-                    }
-                }, BackpressureStrategy.BUFFER)
-                .flatMap({
-                    mModel.replaceKeyPad(classesId, oldKeyPadId, newKeyPadId)
-                })
-                .mySubscribe(
-                        {
-                            if (it is ResultException) {
-                                onSubscribeError(it)
-                            } else {
-                                onSubscribeError(ResultException(88003, "替换失败，请重新替换"))
-                            }
-                        },
-                        {
-                            mView?.replaceSuccess() }
-                )
+    override fun getMatchedKeyPadByBaseStationId(serialNumber: String) {
+        Flowable.create<MutableList<KeyPadEntity>>({
+            val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
+            if (list?.isNotEmpty()!!) {
+                it.onNext(list)
+                it.onComplete()
+            }
+        }, BackpressureStrategy.BUFFER)
+                .mySubscribe {
+                    mView?.renderKeyPadItemFromDatabase(it)
+                }
+
+    }
+
+
+//    override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
+//        return mModel.saveMatchedKeyPad(keyPadEntity)
+//    }
+//
+    override fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean {
+        return mMatchKeyPadModel.deleteKeyPad(keyPadEntity)
     }
 }
 

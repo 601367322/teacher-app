@@ -8,41 +8,41 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="@dimen/m928.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.prance.lib.teacher.base.weight.PageTvRecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/m50.0"
-            android:paddingTop="@dimen/m132.0" />
+            android:layout_centerInParent="true"
+            android:clipToPadding="false" />
 
         <LinearLayout
             android:id="@+id/emptyLayout"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_height="match_parent">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="@dimen/m572.0"
+                android:layout_height="@dimen/m374.0"
                 android:scaleType="fitXY"
-                android:src="@drawable/empty_classes"
-                android:layout_height="@dimen/m374.0" />
+                android:src="@drawable/empty_classes" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:text="班级暂无数据~"
-                android:textSize="@dimen/m52.0"
-                android:textColor="#fff"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/m108.0"
-                android:layout_height="wrap_content" />
+                android:text="班级暂无数据~"
+                android:textColor="#fff"
+                android:textSize="@dimen/m52.0" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -76,7 +76,7 @@
         android:layout_width="@dimen/m42.0"
         android:layout_height="@dimen/m74.0"
         android:layout_marginEnd="@dimen/m45.0"
-        android:layout_marginTop="@dimen/m426.0"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
         android:src="@drawable/icon_classes_right_arrow"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,21 +88,22 @@
         android:layout_height="@dimen/m74.0"
         android:visibility="gone"
         android:layout_marginStart="@dimen/m45.0"
-        android:layout_marginTop="@dimen/m426.0"
         android:src="@drawable/icon_classes_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.rd.PageIndicatorView
         android:id="@+id/pageIndicatorView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/m30.0"
-        android:clipToPadding="false"
-        android:paddingTop="@dimen/m2.0"
-        android:paddingLeft="@dimen/m2.0"
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/m16.0"
-        app:layout_constraintBottom_toTopOf="@+id/back"
+        android:layout_marginBottom="@dimen/m48.0"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/m2.0"
+        android:paddingTop="@dimen/m2.0"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:piv_animationType="fill"
@@ -110,7 +111,26 @@
         app:piv_interactiveAnimation="true"
         app:piv_padding="@dimen/m16.0"
         app:piv_radius="@dimen/m12.0"
-        app:piv_strokeWidth="@dimen/m3.0"
         app:piv_selectedColor="#3A81F0"
+        app:piv_strokeWidth="@dimen/m3.0"
         app:piv_unselectedColor="#FFFFFF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m121.0"
+        android:text="提示：使用↔键切换班级，点击确认键选择班级"
+        app:layout_constraintBottom_toBottomOf="@+id/pageIndicatorView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pageIndicatorView" />
+
+    <TextView
+        android:id="@+id/keyPadCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m121.0"
+        android:text="答题器数："
+        app:layout_constraintBottom_toBottomOf="@+id/pageIndicatorView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pageIndicatorView" />
 </android.support.constraint.ConstraintLayout>

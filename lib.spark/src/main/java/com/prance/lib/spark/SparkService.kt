@@ -89,9 +89,9 @@ class SparkService : Service() {
             startBindCard()
 
             mHandler.post {
-                mListener.forEach({ i ->
+                mListener.forEach { i ->
                     i.onConnected(usbDeviceConnection, `in`, out, serialNum)
-                })
+                }
             }
         }
 
@@ -264,7 +264,7 @@ class SparkService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-
+        LogUtils.d("onDestroy")
         ConnectHelper.getInstance().onServiceDestroy(this)
         CommunicateHelper.getInstance().stop()
     }

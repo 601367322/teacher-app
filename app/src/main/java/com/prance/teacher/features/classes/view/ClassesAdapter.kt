@@ -5,7 +5,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.ClassesActivity
+import com.prance.teacher.features.classes.ClassesDetailActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.main.MainActivity
 import kotlinx.android.synthetic.main.item_classes.view.*
 
 class ClassesAdapter : BaseQuickAdapter<ClassesEntity, BaseViewHolder>, View.OnClickListener {
@@ -40,9 +42,7 @@ class ClassesAdapter : BaseQuickAdapter<ClassesEntity, BaseViewHolder>, View.OnC
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.container -> {
-                if (v.context is ClassesActivity) {
-                    (v.context as ClassesActivity).toNext(v.getTag(R.id.tag_data) as ClassesEntity)
-                }
+                v.context.startActivity(ClassesDetailActivity.callingIntent(v.context, v.getTag(R.id.tag_data) as ClassesEntity))
             }
         }
     }

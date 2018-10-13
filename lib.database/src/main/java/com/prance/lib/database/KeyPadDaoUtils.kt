@@ -1,8 +1,5 @@
 package com.prance.lib.database
 
-import android.provider.SyncStateContract.Helpers.insert
-
-
 class KeyPadDaoUtils {
 
     private val mDao: KeyPadEntityDao = DaoManager.daoSession?.keyPadEntityDao!!

@@ -13,12 +13,8 @@ import com.prance.lib.database.KeyPadEntity
 
 interface ICheckKeyPadContract {
     interface View : IView<Presenter> {
-        fun startCheck(it: MutableList<KeyPadEntity>)
-        fun renderKeyPads(it: MutableList<MultiItemEntity>)
     }
     interface Presenter : IPresenter<View, Model> {
-        fun getMatchedKeyPadByBaseStationId(serialNumber: String)
-        fun generateGroup(mMatchKeyPadEntities: MutableList<KeyPadEntity>, mCheckKeyPadEntities: MutableList<KeyPadEntity>)
     }
     interface Model : IModel {}
 }

@@ -15,10 +15,13 @@ import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
+import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.features.common.NetErrorFragment
+import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
@@ -78,6 +81,10 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
 
         match.setOnClickListener {
+            if (SparkService.mUsbSerialNum == null) {
+                ToastUtils.showShort("请先连接接收器")
+                return@setOnClickListener
+            }
             activity?.run { startActivity(MatchKeyPadActivity.callingIntent(this)) }
         }
 
@@ -226,7 +233,19 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         hideProgress()
-        return false
+
+        if (throwable is ResultException) {
+            return false
+        }
+
+        activity?.run {
+            supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, NetErrorFragment.callIntent(NetErrorFragment.Retry {
+                    (this@run as BaseActivity).retry()
+                }))
+            }
+        }
+        return true
     }
 
     /**

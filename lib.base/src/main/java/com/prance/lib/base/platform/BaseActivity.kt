@@ -49,7 +49,7 @@ abstract class BaseActivity : FragmentActivity() {
         addFragment(savedInstanceState)
     }
 
-    open fun retry(){
+    open fun retry() {
         val fragment = fragment()
         fragment?.let {
             supportFragmentManager.inTransaction {
@@ -59,10 +59,12 @@ abstract class BaseActivity : FragmentActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.fragments.size > 0)
-            (supportFragmentManager.findFragmentById(
-                    R.id.fragmentContainer) as BaseFragment).onBackPressed()
-        super.onBackPressed()
+        if (supportFragmentManager.fragments.size > 0 && (supportFragmentManager.findFragmentById(
+                        R.id.fragmentContainer) as BaseFragment).onBackPressed()) {
+            return
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun addFragment(savedInstanceState: Bundle?) {

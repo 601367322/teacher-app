@@ -14,7 +14,6 @@
         <RelativeLayout
             android:layout_width="@dimen/m246.0"
             android:layout_height="@dimen/m104.0"
-            android:background="@drawable/match_keypad_focus_background"
             android:duplicateParentState="true">
 
             <ImageView
@@ -31,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/m24.0"
+                android:layout_marginEnd="@dimen/m28.0"
                 android:text="009722"
                 android:textColor="#fff"
                 android:textSize="@dimen/m36.0" />
