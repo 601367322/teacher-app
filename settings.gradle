@@ -1,4 +1,4 @@
-include ':app', ':lib.spark',
+include ':app', ':lib.spark', ':lib.server.vo',
         ':lib.qrcode',
         ':lib.socket',
         ':lib.dimens',
