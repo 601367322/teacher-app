@@ -91,8 +91,10 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
                 if (pingNetEntity.isResult && !TextUtils.isEmpty(SparkService.mUsbSerialNum)) {
                     nextStep.visible()
+                    nextStep.requestFocus()
                 } else {
                     reCheck.visible()
+                    reCheck.requestFocus()
                 }
             }
         })

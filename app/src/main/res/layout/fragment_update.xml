@@ -5,14 +5,28 @@
     android:layout_height="match_parent"
     android:background="#B2041319">
 
-    <com.prance.lib.common.utils.weight.LoadingView
-        android:id="@+id/loadingImg"
-        android:layout_width="@dimen/m160.0"
+    <LinearLayout
+        android:layout_width="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="@dimen/m160.0" />
+        android:layout_height="wrap_content">
+
+        <com.prance.lib.common.utils.weight.LoadingView
+            android:id="@+id/loadingImg"
+            android:layout_width="@dimen/m160.0"
+            android:layout_height="@dimen/m160.0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/m48.0"
+            android:layout_marginTop="@dimen/m40.0"
+            android:text="版本检测中…"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:visibility="gone"
