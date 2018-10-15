@@ -25,29 +25,29 @@ class StudentsPresenter : BasePresenterKt<IStudentsContract.View>(), IStudentsCo
 
     override fun getStudentsByClassesId(id: String) {
         mModel.getStudentsByClassesId(id)
-                .mySubscribe(onSubscribeError, {
+                .mySubscribe(onSubscribeError) {
                     mView?.renderStudents(it.list)
-                })
+                }
     }
 
     override fun startBind(classesId: String, serialNumber: String) {
         Flowable
                 .create<MutableList<KeyPadEntity>>({
                     val allKeyPad = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
-                    if (allKeyPad == null || allKeyPad.isEmpty()) {
+                    if (allKeyPad.isEmpty()) {
                         it.onError(ResultException(88001, "请先配对答题器，再绑定学员"))
                         it.onComplete()
                     } else {
                         it.onNext(allKeyPad)
                     }
                 }, BackpressureStrategy.BUFFER)
-                .flatMap({
+                .flatMap {
                     val ids = mutableListOf<String>()
                     for (keyPad in it) {
                         ids.add(keyPad.keyId)
                     }
                     mModel.startBind(classesId, ids)
-                })
+                }
                 .mySubscribe({
                     mView?.bindFail()
                 }, {
@@ -55,6 +55,10 @@ class StudentsPresenter : BasePresenterKt<IStudentsContract.View>(), IStudentsCo
                     mView?.checkMatch()
                 })
 
+    }
+
+    override fun getKeyPadCount(mUsbSerialNum: String): Int {
+        return mMatchKeyPadModel.getAllKeyPadByBaseStationSN(mUsbSerialNum).size
     }
 }
 

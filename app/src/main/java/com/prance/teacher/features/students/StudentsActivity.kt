@@ -7,6 +7,7 @@ import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.spark.SparkService
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.students.view.StudentsFragment
 
@@ -22,7 +23,7 @@ class StudentsActivity : BaseActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        if (SparkService.mUsbSerialNum == null) {
+        if (!BuildConfig.DEBUG && SparkService.mUsbSerialNum == null) {
             ToastUtils.showShort("请先连接基站")
             finish()
             return

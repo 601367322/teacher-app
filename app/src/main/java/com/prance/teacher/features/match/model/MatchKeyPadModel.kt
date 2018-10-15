@@ -32,7 +32,7 @@ class MatchKeyPadModel : BaseModelKt(), IMatchKeyPadContract.Model {
         return mKeyPadDaoUtils.saveKeyPad(keyPadEntity)
     }
 
-    override fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
+    override fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity> {
         return mKeyPadDaoUtils.getAllKeyPadByBaseStationSN(serialNumber)
     }
 }

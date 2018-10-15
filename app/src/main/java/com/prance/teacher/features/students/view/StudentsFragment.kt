@@ -11,6 +11,7 @@ import android.view.View
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.common.utils.weight.LoadingDialog
 import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -45,6 +46,12 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     lateinit var mClassesEntity: ClassesEntity
 
+    val bindProgress by lazy(mode = LazyThreadSafetyMode.NONE) {
+        context?.run {
+            BindLoadingDialog(this)
+        }
+    }
+
     private var mAdapter = StudentsAdapter(R.layout.item_students)
 
     override var mPresenter: IStudentsContract.Presenter = StudentsPresenter()
@@ -66,7 +73,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         complete.setOnClickListener { activity?.finish() }
 
         start.setOnClickListener {
-            showProgress()
+            showBindProgress()
             SparkService.mUsbSerialNum?.let {
                 mPresenter.startBind(mClassesEntity.klass?.id.toString(), it)
             }
@@ -78,32 +85,32 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
             }
         }
 
-        if(BuildConfig.DEBUG){
-//            val list = mutableListOf<StudentsEntity>()
-//            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
-//            list.add(StudentsEntity("呵呵","http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            list.add(StudentsEntity("呵呵",""))
-//            mAdapter.setNewData(list)
-//            mAdapter.notifyDataSetChanged()
-//            return
+        SparkService.mUsbSerialNum?.run {
+            matchKeyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
         }
 
-        refresh.setOnClickListener {
-            loadData()
+        if (BuildConfig.DEBUG) {
+            val list = mutableListOf<StudentsEntity>()
+            list.add(StudentsEntity("呵呵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
+            list.add(StudentsEntity("呵呵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            list.add(StudentsEntity("呵呵", ""))
+            mAdapter.setNewData(list)
+            mAdapter.notifyDataSetChanged()
+            return
         }
 
-        refresh.performClick()
+        loadData()
     }
 
     private fun loadData() {
@@ -114,10 +121,20 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         }
     }
 
+    private fun showBindProgress(){
+        bindProgress?.show()
+    }
+
+    private fun hideBindProgress(){
+        bindProgress?.dismiss()
+    }
+
     override fun renderStudents(list: MutableList<StudentsEntity>) {
         hideProgress()
         mAdapter.setNewData(list)
         mAdapter.notifyDataSetChanged()
+
+        studentCount.text = Html.fromHtml("""班级人数 <font color="#3AF0EE">${list.size}</font>""")
 
         calculateBindStudent()
 
@@ -146,7 +163,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     }
 
     override fun bindFail() {
-        hideProgress()
+        hideBindProgress()
         ToastUtils.showShort("绑定失败，请按“OK”键重新绑定")
         start.requestFocus()
     }
@@ -155,7 +172,6 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1001) {
             if (resultCode == Activity.RESULT_OK) {
-                refresh.performClick()
             }
         }
     }
@@ -167,7 +183,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
                 count++
             }
         }
-        bindStudentCount.text = Html.fromHtml("""已绑定 <font color="#3AF0EE">$count</font> 名学生""")
+        bindStudentCount.text = Html.fromHtml("""已绑定人数 <font color="#3AF0EE">$count</font>""")
     }
 
     override fun checkMatch() {

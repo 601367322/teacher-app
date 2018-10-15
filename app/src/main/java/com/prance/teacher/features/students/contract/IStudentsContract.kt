@@ -21,6 +21,7 @@ interface IStudentsContract {
     interface Presenter : IPresenter<View, Model> {
         fun getStudentsByClassesId(id: String)
         fun startBind(classesId: String,serialNumber: String)
+        fun getKeyPadCount(mUsbSerialNum: String): Int
     }
     interface Model : IModel {
         fun getStudentsByClassesId(id: String):Flowable<ResponseBody<StudentsEntity>>

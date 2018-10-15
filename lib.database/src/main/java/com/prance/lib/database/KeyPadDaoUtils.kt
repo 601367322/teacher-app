@@ -4,7 +4,7 @@ class KeyPadDaoUtils {
 
     private val mDao: KeyPadEntityDao = DaoManager.daoSession?.keyPadEntityDao!!
 
-    fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity>? {
+    fun getAllKeyPadByBaseStationSN(serialNumber: String): MutableList<KeyPadEntity> {
         return mDao.queryBuilder()
                 .where(KeyPadEntityDao.Properties.BaseStationSN.eq(serialNumber))
                 .list()

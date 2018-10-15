@@ -16,14 +16,16 @@ import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.teacher.features.check.presenter.CheckKeyPadPresenter
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.LoginActivity
+import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.utils.ping.PingNet
 import com.prance.teacher.utils.ping.PingNetEntity
 import kotlinx.android.synthetic.main.fragment_check_keypad.*
-import java.util.ArrayList
 
 /**
  * 答题器检测
@@ -60,6 +62,19 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         }
 
         reCheck.setOnClickListener {
+            if (BuildConfig.DEBUG) {
+//                context?.run {
+//                    startActivity(LoginActivity.callingIntent(this))
+//                }
+                                context?.run {
+                    startActivity(StudentsActivity.callingIntent(this, ClassesEntity(1)))
+                }
+
+                activity?.finish()
+
+
+                return@setOnClickListener
+            }
             check()
         }
 
