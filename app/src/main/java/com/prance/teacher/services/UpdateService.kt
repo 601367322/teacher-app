@@ -1,19 +1,35 @@
 package com.prance.teacher.services
 
+import android.app.DownloadManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.support.v4.app.FragmentActivity
+import android.widget.LinearLayout
 
 import com.blankj.utilcode.util.LogUtils
-import com.leo.download.BuildConfig
-import com.leo.download.DownloadError
-import com.leo.download.DownloadListener
-import com.leo.download.DownloadManager
+import com.liulishuo.okdownload.DownloadListener
+import com.liulishuo.okdownload.DownloadTask
+import com.liulishuo.okdownload.OkDownload
 import com.prance.lib.common.utils.DiskPathUtils
 
 import java.io.File
+import com.liulishuo.okdownload.core.cause.EndCause
+import com.liulishuo.okdownload.core.cause.ResumeFailedCause
+import com.liulishuo.okdownload.core.listener.DownloadListener1
+import com.liulishuo.okdownload.core.listener.DownloadListener3
+import com.liulishuo.okdownload.core.listener.assist.Listener1Assist
+import com.prance.lib.base.extension.inTransaction
+import com.prance.teacher.BuildConfig
+import com.prance.teacher.R
+import com.prance.teacher.R.id.*
+import com.prance.teacher.features.common.NetErrorFragment
+import com.prance.teacher.features.login.view.UpdateFragment
+import kotlinx.android.synthetic.main.fragment_update.*
+import java.lang.Exception
+
 
 /**
  * Created by bingbing on 2016/10/20.
@@ -23,14 +39,14 @@ class UpdateService : Service() {
 
     private var url: String? = null
     private var downloadFile: File? = null
-    private var mListener: DownloadListener? = null
-
+    private var mListener: MyDownloadListener? = null
+    private var mTask: DownloadTask? = null
     //用于和外界交互
     private val binder = UpdateServiceBinder()
 
     inner class UpdateServiceBinder : Binder() {
 
-        fun setListener(listener: DownloadListener) {
+        fun setListener(listener: MyDownloadListener) {
             this@UpdateService.mListener = listener
         }
     }
@@ -59,71 +75,76 @@ class UpdateService : Service() {
             updateDir.mkdirs()
         }
 
-        if (BuildConfig.DEBUG) {
-            DownloadManager.getInstance(applicationContext).deleteRecord(url)
-        }
+        url?.run {
+            mTask = DownloadTask.Builder(this, updateDir)
+                    .setFilename("""${this.hashCode()}.apk""")
+                    // the minimal interval millisecond for callback progress
+                    .setMinIntervalMillisCallbackProcess(50)
+                    // do re-download even if the task has already been completed in the past.
+                    .setPassIfAlreadyCompleted(true)
+                    .build()
 
-
-        DownloadManager.getInstance(applicationContext).enquene(url, updateDir.path, object : DownloadListener {
-
-            var currentTime: Long = 0
-
-            override fun onStart(id: Int, size: Long) {
-                LogUtils.d("onStart")
-                currentTime = System.currentTimeMillis()
-
-                mListener?.onStart(id, size)
-            }
-
-            override fun onProgress(id: Int, currSize: Long, totalSize: Long) {
-                if (System.currentTimeMillis() - currentTime >= 1000) {
-                    currentTime = System.currentTimeMillis()
+            mTask?.run {
+                if (BuildConfig.DEBUG) {
+//                    OkDownload.with().downloadDispatcher().cancel(id)
+//                    OkDownload.with().breakpointStore().remove(id)
+//                    file?.delete()
                 }
 
-                mListener?.onProgress(id, currSize, totalSize)
+                enqueue(object : DownloadListener3() {
+
+                    override fun warn(task: DownloadTask) {
+
+                    }
+
+                    override fun started(task: DownloadTask) {
+                        mListener?.onStartDownload()
+                    }
+
+                    override fun completed(task: DownloadTask) {
+                        task.filename?.run {
+                            mListener?.onComplete(task.parentFile.path, this)
+                        }
+                    }
+
+                    override fun error(task: DownloadTask, e: Exception) {
+                        mListener?.onError()
+                    }
+
+                    override fun canceled(task: DownloadTask) {
+
+                    }
+
+                    override fun connected(task: DownloadTask, blockCount: Int, currentOffset: Long, totalLength: Long) {
+
+                    }
+
+                    override fun retry(task: DownloadTask, cause: ResumeFailedCause) {
+
+                    }
+
+                    override fun progress(task: DownloadTask, currentOffset: Long, totalLength: Long) {
+                        mListener?.onProgress(currentOffset, totalLength)
+                    }
+                })
             }
 
-            override fun onRestart(id: Int, currSize: Long, totalSize: Long) {
-                LogUtils.d("onRestart")
-
-                mListener?.onRestart(id, currSize, totalSize)
-            }
-
-            override fun onPause(id: Int, currSize: Long) {
-                LogUtils.d("onPause")
-
-                mListener?.onPause(id, currSize)
-            }
-
-            override fun onComplete(id: Int, dir: String, name: String) {
-                LogUtils.d("onComplete")
-
-                downloadFile = File(dir, name)
-                url = null
-
-                mListener?.onComplete(id, dir, name)
-            }
-
-            override fun onCancel(id: Int) {
-                LogUtils.d("onCancel")
-
-                mListener?.onCancel(id)
-            }
-
-            override fun onError(id: Int, error: DownloadError) {
-                LogUtils.d("onError")
-                url = null
-
-                mListener?.onError(id, error)
-            }
-        })
+        }
 
         return super.onStartCommand(intent, 0, startId)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        mTask?.cancel()
         LogUtils.d("onDestroy")
+    }
+
+    interface MyDownloadListener {
+        fun onStartDownload() {}
+        fun onProgress(currSize: Long, totalSize: Long)
+        fun onComplete(dir: String, name: String)
+        fun onError()
     }
 
     companion object {

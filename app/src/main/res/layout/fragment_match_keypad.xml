@@ -63,6 +63,7 @@
         android:layout_width="@dimen/m1040.0"
         android:layout_height="@dimen/m380.0"
         android:visibility="gone"
+        android:src="@drawable/match_key_pad"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

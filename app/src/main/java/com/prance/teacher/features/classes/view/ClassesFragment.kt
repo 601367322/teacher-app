@@ -7,6 +7,10 @@ import android.support.constraint.solver.widgets.ConstraintTableLayout
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.Html.fromHtml
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.DynamicDrawableSpan
+import android.text.style.ImageSpan
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.base.extension.invisible
@@ -85,6 +89,13 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         recycler.setPadding(0, (ScreenUtils.getScreenHeight() - resources.getDimensionPixelOffset(R.dimen.m860_0)) / 2, 0, (ScreenUtils.getScreenHeight() - resources.getDimensionPixelOffset(R.dimen.m860_0)) / 2)
 
         recycler.adapter = mAdapter
+
+//        var span3 =  SpannableString("提示：使用↔键切换班级，点击确认键选择班级")
+//        var image =  ImageSpan(this,R.drawable.collect, DynamicDrawableSpan.ALIGN_BOTTOM)
+//        span3.setSpan(image,3,4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        tv3.setText(span3)
+//
+//        classesTip.text
 
         if (BuildConfig.DEBUG) {
 //            val list = mutableListOf<ClassesEntity>()

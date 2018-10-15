@@ -3,14 +3,14 @@ package com.prance.teacher.features.match.view
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import android.widget.ImageView
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
-import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.spark.SparkListenerAdapter
@@ -38,6 +38,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     private val DELETE_REQUESTCODE = 10086
 
     private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter(R.layout.item_match_key_pad)
+
+    lateinit var mEmptyView:ImageView
 
     private val mSparkServicePresenter: SparkServicePresenter  by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
@@ -67,6 +69,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+
+        mEmptyView = rootView.findViewById(R.id.emptyImage)
 
         //设置显示格式
         recycler.layoutManager = FocusGridLayoutManager(context!!, 6)
@@ -182,12 +186,9 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             emptyImage.visible()
             recycler.invisible()
 
-//            emptyImage.setImageResource(R.drawable.match_empty_view1)
-            GlideApp.with(this)
-                    .asGif()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .load(R.drawable.match_empty_view1)
-                    .into(emptyImage)
+            //宝箱打开动画
+            val animationDrawable = emptyImage.drawable as AnimationDrawable
+            animationDrawable.start()
         } else {
             emptyImage.invisible()
             recycler.visible()
@@ -198,5 +199,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         super.onDestroy()
 
         mSparkServicePresenter.unBind()
+
+        val animationDrawable = mEmptyView.drawable as AnimationDrawable
+        animationDrawable.stop()
     }
 }

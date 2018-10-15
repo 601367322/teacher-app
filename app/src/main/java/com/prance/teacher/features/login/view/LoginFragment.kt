@@ -82,7 +82,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         versionName.text = "版本号：v" + AppUtils.getAppVersionName()
 
         match.setOnClickListener {
-            if (SparkService.mUsbSerialNum == null) {
+            if (!BuildConfig.DEBUG && SparkService.mUsbSerialNum == null) {
                 ToastUtils.showShort("请先连接接收器")
                 return@setOnClickListener
             }
@@ -96,7 +96,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            val classes = ClassesEntity(7)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
-//            context?.let { startActivity(MainActivity.callingIntent(it)) }
+            context?.let { startActivity(MainActivity.callingIntent(it)) }
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
 
@@ -108,7 +108,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-//            activity?.finish()
+            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }
@@ -126,14 +126,14 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         //隐藏loading
         hideProgress()
 
+        //显示二维码
         GlideApp.with(this)
                 .load(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .apply(GlideOptions.bitmapTransform(RoundedCornersTransformation(resources.getDimensionPixelOffset(R.dimen.m16_0), 0)))
                 .into(qrCode)
 
-        //显示二维码
-//        qrCode.setImageBitmap(QrCodeUtils.createQRImage(code.toJson(), SizeUtils.dp2px(300f), SizeUtils.dp2px(300f)))
+        loginTip.text = "请使用教师端扫码登录\n只有助教身份能成功扫码"
 
         //开启定时检查二维码有效性
         startCheckQrCode(CHECK_INTERVAL)
@@ -211,7 +211,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
                     return
                 }
                 574 -> {
-
+                    loginTip.text = "已登录\n在腾跃教师端确认登录"
                 }
             }
         }

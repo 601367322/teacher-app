@@ -68,6 +68,7 @@ ext {
     openGlCanvas = 'v1.4.1.0'
     danmu = '0.9.25'
     baseadapter = '2.9.30'
+    downloader = "1.0.4"
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -195,6 +196,10 @@ ext {
             openGlCanvas                  : "com.github.ChillingVan:android-openGL-canvas:${openGlCanvas}",
 
             danmu                         : "com.github.ctiao:DanmakuFlameMaster:${danmu}",
-            baseadapter                   : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseadapter}"
+            baseadapter                   : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseadapter}",
+
+            downloader                    : "com.liulishuo.okdownload:okdownload:${downloader}",
+            downloaderSqlite              : "com.liulishuo.okdownload:sqlite:${downloader}",
+            downloaderOkHttp              : "com.liulishuo.okdownload:okhttp:${downloader}",
     ]
 }

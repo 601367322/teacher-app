@@ -2,6 +2,7 @@ package com.prance.teacher.features.login.view
 
 import android.app.Service
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.net.Uri
@@ -12,24 +13,19 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.content.FileProvider
 import android.view.View
 import android.widget.LinearLayout
-import com.blankj.utilcode.util.AppUtils
-import com.leo.download.DownloadError
-import com.leo.download.DownloadListener
 import com.prance.lib.base.extension.appContext
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
-import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.common.NetErrorFragment
-import com.prance.teacher.features.common.Retry
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.services.UpdateService
 import kotlinx.android.synthetic.main.fragment_update.*
 import java.io.File
 
-class UpdateFragment : BaseFragment(), DownloadListener {
+class UpdateFragment : BaseFragment(), UpdateService.MyDownloadListener {
 
     lateinit var mVersionEntity: VersionEntity
 
@@ -95,15 +91,9 @@ class UpdateFragment : BaseFragment(), DownloadListener {
             install.setDataAndType(Uri.fromFile(downloadFile), "application/vnd.android.package-archive")
         }
         startActivity(install)
-
-        finish()
     }
 
-
-    override fun onStart(id: Int, size: Long) {
-    }
-
-    override fun onProgress(id: Int, currSize: Long, totalSize: Long) {
+    override fun onProgress(currSize: Long, totalSize: Long) {
         loadingProgress?.run {
             loadingProgress.max = totalSize.toInt()
             loadingProgress.progress = currSize.toInt()
@@ -119,22 +109,14 @@ class UpdateFragment : BaseFragment(), DownloadListener {
 
     }
 
-    override fun onRestart(id: Int, currSize: Long, totalSize: Long) {
-    }
-
-    override fun onPause(id: Int, currSize: Long) {
-    }
-
-    override fun onComplete(id: Int, dir: String?, name: String?) {
+    override fun onComplete(dir: String, name: String) {
         startInstall(File(dir, name))
 
-        finish()
+        activity?.finish()
     }
 
-    override fun onCancel(id: Int) {
-    }
 
-    override fun onError(id: Int, error: DownloadError?) {
+    override fun onError() {
         context?.let {
             (activity as FragmentActivity).supportFragmentManager.inTransaction {
                 replace(R.id.fragmentContainer, NetErrorFragment.callIntent {
@@ -147,15 +129,16 @@ class UpdateFragment : BaseFragment(), DownloadListener {
 
     }
 
-    fun finish() {
-        activity?.run {
-            supportFragmentManager.beginTransaction().remove(this@UpdateFragment).commitAllowingStateLoss()
-        }
+    lateinit var mActivity: FragmentActivity
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        mActivity = context as FragmentActivity
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        context?.run {
+        mActivity?.run {
             try {
                 unbindService(mDownloadServiceConnection)
             } catch (e: Exception) {
@@ -163,5 +146,6 @@ class UpdateFragment : BaseFragment(), DownloadListener {
             }
             stopService(UpdateService.callingIntent(this))
         }
+        super.onDestroy()
     }
 }
