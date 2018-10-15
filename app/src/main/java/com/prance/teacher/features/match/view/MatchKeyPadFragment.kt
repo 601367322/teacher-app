@@ -182,6 +182,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             emptyImage.visible()
             recycler.invisible()
 
+//            emptyImage.setImageResource(R.drawable.match_empty_view1)
             GlideApp.with(this)
                     .asGif()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)

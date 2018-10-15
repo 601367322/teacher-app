@@ -210,6 +210,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
                     getNewQrCode(0)
                     return
                 }
+                574 -> {
+
+                }
             }
         }
 
