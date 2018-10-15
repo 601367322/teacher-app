@@ -1,33 +1,19 @@
 package com.prance.teacher.services
 
-import android.app.DownloadManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.support.v4.app.FragmentActivity
-import android.widget.LinearLayout
 
 import com.blankj.utilcode.util.LogUtils
-import com.liulishuo.okdownload.DownloadListener
 import com.liulishuo.okdownload.DownloadTask
-import com.liulishuo.okdownload.OkDownload
 import com.prance.lib.common.utils.DiskPathUtils
 
 import java.io.File
-import com.liulishuo.okdownload.core.cause.EndCause
 import com.liulishuo.okdownload.core.cause.ResumeFailedCause
-import com.liulishuo.okdownload.core.listener.DownloadListener1
 import com.liulishuo.okdownload.core.listener.DownloadListener3
-import com.liulishuo.okdownload.core.listener.assist.Listener1Assist
-import com.prance.lib.base.extension.inTransaction
 import com.prance.teacher.BuildConfig
-import com.prance.teacher.R
-import com.prance.teacher.R.id.*
-import com.prance.teacher.features.common.NetErrorFragment
-import com.prance.teacher.features.login.view.UpdateFragment
-import kotlinx.android.synthetic.main.fragment_update.*
 import java.lang.Exception
 
 

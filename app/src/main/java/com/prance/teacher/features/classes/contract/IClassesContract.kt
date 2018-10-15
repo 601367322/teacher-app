@@ -2,7 +2,7 @@ package com.prance.teacher.features.classes.contract
 
 import com.prance.lib.base.mvp.*
 import com.prance.lib.common.utils.http.ResponseBody
-import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.lib.server.vo.teacher.ClassVo
 import io.reactivex.Flowable
 
 /**
@@ -14,7 +14,7 @@ import io.reactivex.Flowable
 
 interface IClassesContract {
     interface View : IView<Presenter> {
-        fun renderClasses(it: MutableList<ClassesEntity>)
+        fun renderClasses(it: MutableList<ClassVo>)
     }
 
     interface Presenter : IPresenter<View, Model> {
@@ -23,6 +23,6 @@ interface IClassesContract {
     }
 
     interface Model : IModel {
-        fun getAllClasses(): Flowable<ResponseBody<ClassesEntity>>
+        fun getAllClasses(): Flowable<ResponseBody<ClassVo>>
     }
 }

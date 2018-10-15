@@ -4,6 +4,7 @@ import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.lib.base.mvp.BaseModelKt
 import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.lib.common.utils.http.RetrofitUtils
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.teacher.apis.ApiService
 import io.reactivex.Flowable
 
@@ -16,7 +17,7 @@ import io.reactivex.Flowable
 
 class ClassesModel : BaseModelKt(), IClassesContract.Model {
 
-    override fun getAllClasses(): Flowable<ResponseBody<ClassesEntity>> {
+    override fun getAllClasses(): Flowable<ResponseBody<ClassVo>> {
         return RetrofitUtils.getApiService(ApiService::class.java).allClasses(ApiService.allClasses)
     }
 }

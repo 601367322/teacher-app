@@ -3,7 +3,7 @@ package com.prance.teacher.apis
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.database.UserEntity
 import com.prance.lib.common.utils.http.ResponseBody
-import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.pk.model.PKResult
@@ -31,7 +31,7 @@ interface ApiService {
             get() = if (UrlUtil.isLocalHost())
                 "app/classList"
             else
-                "backend/course/app/classList"
+                "backend/course/app/classes"
 
         val studentsForClasses: String
             get() = if (UrlUtil.isLocalHost())
@@ -89,7 +89,7 @@ interface ApiService {
     fun checkQrCode(@Url url: String, @Query("timestamp") timestamp: Long, @Query("token") token: String, @Query("logsss") log: String): Flowable<UserEntity>
 
     @GET
-    fun allClasses(@Url url: String): Flowable<ResponseBody<ClassesEntity>>
+    fun allClasses(@Url url: String): Flowable<ResponseBody<ClassVo>>
 
     @GET
     fun studentsForClasses(@Url url: String, @Query("classId") classId: String): Flowable<ResponseBody<StudentsEntity>>

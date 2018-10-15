@@ -2,13 +2,11 @@ package com.prance.teacher.features.classes.view
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.solver.widgets.ConstraintTableLayout
 import android.support.v7.widget.RecyclerView
 import android.text.Html
-import android.text.Html.fromHtml
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.DynamicDrawableSpan
 import android.text.style.ImageSpan
 import android.view.View
@@ -18,13 +16,14 @@ import com.prance.lib.base.extension.visible
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.teacher.R
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesPresenter
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridLayoutManager
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridSnapHelper
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.teacher.BuildConfig
 import kotlinx.android.synthetic.main.fragment_classes.*
+import java.util.regex.Matcher
 
 
 /**
@@ -89,13 +88,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         recycler.setPadding(0, (ScreenUtils.getScreenHeight() - resources.getDimensionPixelOffset(R.dimen.m860_0)) / 2, 0, (ScreenUtils.getScreenHeight() - resources.getDimensionPixelOffset(R.dimen.m860_0)) / 2)
 
         recycler.adapter = mAdapter
-
-//        var span3 =  SpannableString("提示：使用↔键切换班级，点击确认键选择班级")
-//        var image =  ImageSpan(this,R.drawable.collect, DynamicDrawableSpan.ALIGN_BOTTOM)
-//        span3.setSpan(image,3,4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-//        tv3.setText(span3)
-//
-//        classesTip.text
 
         if (BuildConfig.DEBUG) {
 //            val list = mutableListOf<ClassesEntity>()
@@ -162,7 +154,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     }
 
 
-    override fun renderClasses(it: MutableList<ClassesEntity>) {
+    override fun renderClasses(it: MutableList<ClassVo>) {
         hideProgress()
         mAdapter.setNewData(it)
         mAdapter.notifyDataSetChanged()

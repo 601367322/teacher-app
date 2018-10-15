@@ -17,7 +17,7 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
 
     override val mModel: IClassesContract.Model = ClassesModel()
 
-    val keyPadModel: MatchKeyPadModel = MatchKeyPadModel()
+    private val keyPadModel: MatchKeyPadModel = MatchKeyPadModel()
 
     override fun getAllClasses() {
         mModel.getAllClasses()
@@ -27,7 +27,7 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
     }
 
     override fun getKeyPadCount(stationId: String): Int {
-        return keyPadModel.getAllKeyPadByBaseStationSN(stationId)?.size ?: 0
+        return keyPadModel.getAllKeyPadByBaseStationSN(stationId).size
     }
 }
 
