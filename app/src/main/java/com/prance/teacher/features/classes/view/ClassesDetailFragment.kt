@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -75,6 +76,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
          */
         var mStudentList: MutableList<StudentsEntity>? = null
 
+        var mKeyPadList: MutableList<KeyPadEntity>? = null
+
         fun getSignStudents(signStudents: MutableList<StudentsEntity>?): MutableList<StudentsEntity> {
             val mSignStudents = mutableListOf<StudentsEntity>()
             mStudentList?.run {
@@ -95,6 +98,11 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
          * 根据答题器，检测学员是否签到
          */
         fun checkIsSignStudent(signStudents: MutableList<StudentsEntity>?, keyPadId: String): StudentsEntity? {
+
+            if (!checkIsMatchedKeyPad(keyPadId)) {
+                return null
+            }
+
             val mSignStudents = getSignStudents(signStudents)
             for (s in mSignStudents) {
                 if (keyPadId == s.getClicker()?.number) {
@@ -104,13 +112,31 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             return null
         }
 
+        private fun checkIsMatchedKeyPad(keyPadId: String): Boolean {
+            mKeyPadList?.run {
+                for (k in this) {
+                    if (k.keyId == keyPadId) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+
         var mClassesEntity: ClassesEntity? = null
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
+
         //获取学生列表
         mPresenter.getStudentsByClassesId(mClassesEntity?.klass!!.id.toString())
+
+        //获取所有配对的答题器
+        SparkService.mUsbSerialNum?.run {
+            mKeyPadList = mPresenter.getKeyPadList(this)
+        }
+
 
         readyClass.setOnClickListener {
             context?.let {

@@ -25,6 +25,9 @@ interface IClassesDetailContract {
          * 获取学生列表
          */
         fun getStudentsByClassesId(id: String)
+
+        fun getKeyPadList(s: String): MutableList<KeyPadEntity>
+
     }
     interface Model : IModel {
         fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>>
