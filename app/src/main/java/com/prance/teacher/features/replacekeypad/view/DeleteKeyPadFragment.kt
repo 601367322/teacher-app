@@ -1,30 +1,23 @@
 package com.prance.teacher.features.replacekeypad.view
 
-import android.app.Dialog
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.text.Html
-import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
-import com.prance.lib.spark.SparkListenerAdapter
-import com.prance.lib.spark.SparkService
-import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.features.replacekeypad.contract.IReplaceKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
+import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.replacekeypad.presenter.ReplaceKeyPadPresenter
-import com.spark.teaching.answertool.usb.model.ReportBindCard
-import kotlinx.android.synthetic.main.alert_bind_keypad.*
 import kotlinx.android.synthetic.main.fragment_replace.*
 import kotlinx.android.synthetic.main.item_replace_key_pad.*
+import java.io.Serializable
 
 /**
  * Description :
@@ -39,24 +32,24 @@ class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.O
 
     override fun layoutId(): Int = R.layout.fragment_replace
 
-    private var mAdapter: DeleteKeyPadAdapter = DeleteKeyPadAdapter(R.layout.item_replace_key_pad, this)
+    companion object {
 
-    private val mSparkServicePresenter: SparkServicePresenter  by lazy {
-        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
+        const val  KEYPAD_LIST = "keypad_list"
 
-            override fun onCardBind(reportBindCard: ReportBindCard) {
-
-            }
-
-            override fun onServiceConnected() {
-                //查找已经配对过的答题器
-                mPresenter.getMatchedKeyPadByBaseStationId(SparkService.mUsbSerialNum!!)
-            }
-
-        })
+        fun forData(list: Serializable?): DeleteKeyPadFragment {
+            val fragment = DeleteKeyPadFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(KEYPAD_LIST, list)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
+    private var mAdapter: DeleteKeyPadAdapter = DeleteKeyPadAdapter(R.layout.item_replace_key_pad, this)
+
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+
+        val list = (arguments?.getSerializable(KEYPAD_LIST) as DeleteKeyPadActivity.SerializableList<KeyPadEntity>).list
 
         //设置显示格式
         recycler.layoutManager = FocusGridLayoutManager(context!!, 6)
@@ -66,6 +59,8 @@ class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.O
                 outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m40_0)
             }
         })
+
+        mAdapter.setNewData(list)
         //添加数据源
         recycler.adapter = mAdapter
 
@@ -75,20 +70,6 @@ class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.O
         //按钮页面状态初始化
         displayCountText()
 
-        mSparkServicePresenter.bind()
-    }
-
-    /**
-     * 渲染答题器
-     *
-     * list 绑定过的答题器列表
-     */
-    override fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>) {
-
-        mAdapter.setNewData(list)
-        mAdapter.notifyDataSetChanged()
-
-        displayCountText()
     }
 
     private fun displayCountText() {
@@ -98,6 +79,9 @@ class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.O
     override fun onClick(v: View?) {
         when (v) {
             complete -> {
+                val intent = Intent()
+                intent.putExtra(DeleteKeyPadFragment.KEYPAD_LIST, DeleteKeyPadActivity.SerializableList(mAdapter.data))
+                activity?.setResult(Activity.RESULT_OK, intent)
                 activity?.finish()
             }
             cancelBtn -> {
@@ -112,6 +96,9 @@ class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.O
                             .setCancelButton("取消", null)
                             .setConfirmButton("删除") { _ ->
                                 mAdapter.data.remove(keyPad)
+                                mAdapter.notifyDataSetChanged()
+
+                                displayCountText()
                             }
                             .show()
                 }
@@ -133,38 +120,6 @@ class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.O
             return true
         }
         return false
-    }
-
-    override fun needEventBus(): Boolean = true
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        mSparkServicePresenter.unBind()
-    }
-
-    class BindDialog(context: Context) : Dialog(context, com.prance.lib.common.R.style.DialogStyle) {
-
-
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-
-            val window = window
-            val lp = window.attributes
-            lp.gravity = Gravity.CENTER
-            lp.width = WindowManager.LayoutParams.WRAP_CONTENT//宽高可设置具体大小
-
-            setContentView(R.layout.alert_bind_keypad)
-
-            GlideApp.with(context)
-                    .asGif()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .load(R.drawable.match_empty_view)
-                    .into(emptyImage)
-
-        }
-
-
     }
 
 }

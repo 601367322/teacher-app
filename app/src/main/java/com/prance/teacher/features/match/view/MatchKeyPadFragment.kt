@@ -1,5 +1,7 @@
 package com.prance.teacher.features.match.view
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -20,6 +22,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
+import com.prance.teacher.features.replacekeypad.view.DeleteKeyPadFragment
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
 
@@ -31,6 +34,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override var mPresenter: IMatchKeyPadContract.Presenter = MatchKeyPadPresenter()
 
     override fun layoutId(): Int = R.layout.fragment_match_keypad
+
+    private val DELETE_REQUESTCODE = 10086
 
     private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter(R.layout.item_match_key_pad)
 
@@ -121,12 +126,31 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         when (v) {
             complete -> {
                 //保存答题器
-                mPresenter.saveAllKeyPad(mAdapter.data)
+                SparkService.mUsbSerialNum?.run {
+                    mPresenter.saveAllKeyPad(this, mAdapter.data)
+                }
                 activity?.finish()
             }
             replace -> {
                 context?.run {
-                    startActivity(DeleteKeyPadActivity.callingIntent(this))
+                    startActivityForResult(DeleteKeyPadActivity.callingIntent(this, mAdapter.data), DELETE_REQUESTCODE)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            DELETE_REQUESTCODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.run {
+                        val list = (getSerializableExtra(DeleteKeyPadFragment.KEYPAD_LIST) as DeleteKeyPadActivity.SerializableList<KeyPadEntity>).list
+                        mAdapter.setNewData(list)
+                        mAdapter.notifyDataSetChanged()
+
+                        displayMoreBtn()
+                    }
                 }
             }
         }

@@ -53,6 +53,7 @@ class StudentsPresenter : BasePresenterKt<IStudentsContract.View>(), IStudentsCo
                 }, {
                     mView?.renderStudents(it.list)
                     mView?.checkMatch()
+                    mView?.bindSuccess()
                 })
 
     }

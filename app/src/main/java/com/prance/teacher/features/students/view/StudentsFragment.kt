@@ -11,7 +11,7 @@ import android.view.View
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
-import com.prance.lib.common.utils.weight.LoadingDialog
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -21,7 +21,9 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.presenter.StudentsPresenter
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_students.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Description :
@@ -52,6 +54,12 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         }
     }
 
+    val bindSuccessDialog by lazy(mode = LazyThreadSafetyMode.NONE) {
+        context?.run {
+            BindSuccessDialog(this)
+        }
+    }
+
     private var mAdapter = StudentsAdapter(R.layout.item_students)
 
     override var mPresenter: IStudentsContract.Presenter = StudentsPresenter()
@@ -70,18 +78,18 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         recycler.adapter = mAdapter
 
-        complete.setOnClickListener { activity?.finish() }
+        startClass.setOnClickListener { activity?.finish() }
 
         start.setOnClickListener {
-            showBindProgress()
             SparkService.mUsbSerialNum?.let {
+                showBindProgress()
                 mPresenter.startBind(mClassesEntity.klass?.id.toString(), it)
             }
         }
 
         replace.setOnClickListener {
             context?.let {
-                startActivityForResult(DeleteKeyPadActivity.callingIntent(it), 1001)
+//                startActivityForResult(DeleteKeyPadActivity.callingIntent(it), 1001)
             }
         }
 
@@ -107,6 +115,8 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
             list.add(StudentsEntity("呵呵", ""))
             mAdapter.setNewData(list)
             mAdapter.notifyDataSetChanged()
+
+
             return
         }
 
@@ -144,13 +154,13 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     private fun displayBtn(classes: ClassesEntity) {
         start.visible()
         if (classes.binding > 0) {
-            complete.visible()
+            startClass.visible()
             replace.visible()
 
             //本班学员都存在绑定关系后，不进入绑定状态，“开始绑定”按钮和文字提示隐藏。如下方“图2.1”；当学员0个绑定时，如“图1.3”；当学员绑定、非绑定状态都存在，如“图3.3”；
             if (classes.binding >= mAdapter.data.size) {
                 start.invisible()
-                complete.requestFocus()
+                startClass.requestFocus()
             }
         }
     }
@@ -166,6 +176,14 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         hideBindProgress()
         ToastUtils.showShort("绑定失败，请按“OK”键重新绑定")
         start.requestFocus()
+    }
+
+    override fun bindSuccess() {
+        bindSuccessDialog?.show()
+        Flowable.timer(3,TimeUnit.SECONDS)
+                .mySubscribe {
+                    bindSuccessDialog?.dismiss()
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -196,7 +214,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         hasNoKeyPadStudent?.let {
             ToastUtils.showShort("答题器数量不够，请去配对足够的答题器对未绑定的学员进行绑定操作")
         }
-        complete.requestFocus()
+        startClass.requestFocus()
     }
 }
 

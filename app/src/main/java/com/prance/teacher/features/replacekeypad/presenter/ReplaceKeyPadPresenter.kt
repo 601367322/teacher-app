@@ -22,30 +22,7 @@ class ReplaceKeyPadPresenter : BasePresenterKt<IReplaceKeyPadContract.View>(), I
 
     override val mModel: IReplaceKeyPadContract.Model = ReplaceKeyPadModel()
 
-    private val mMatchKeyPadModel = MatchKeyPadModel()
 
 
-    override fun getMatchedKeyPadByBaseStationId(serialNumber: String) {
-        Flowable.create<MutableList<KeyPadEntity>>({
-            val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
-            if (list?.isNotEmpty()!!) {
-                it.onNext(list)
-                it.onComplete()
-            }
-        }, BackpressureStrategy.BUFFER)
-                .mySubscribe {
-                    mView?.renderKeyPadItemFromDatabase(it)
-                }
-
-    }
-
-
-//    override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
-//        return mModel.saveMatchedKeyPad(keyPadEntity)
-//    }
-//
-    override fun deleteKeyPad(keyPadEntity: KeyPadEntity): Boolean {
-        return mMatchKeyPadModel.deleteKeyPad(keyPadEntity)
-    }
 }
 

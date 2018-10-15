@@ -17,6 +17,7 @@ interface IStudentsContract {
         fun renderStudents(list: MutableList<StudentsEntity>)
         fun checkMatch()
         fun bindFail()
+        fun bindSuccess()
     }
     interface Presenter : IPresenter<View, Model> {
         fun getStudentsByClassesId(id: String)

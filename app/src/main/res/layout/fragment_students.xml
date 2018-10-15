@@ -40,7 +40,7 @@
 
 
         <com.prance.lib.common.utils.weight.MyButton
-            android:id="@+id/complete"
+            android:id="@+id/startClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m48.0"
