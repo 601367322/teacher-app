@@ -17,6 +17,7 @@ import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
+import com.prance.teacher.features.modifybind.ChooseKeyPadActivity
 import com.prance.teacher.features.modifybind.contract.IStudentsModifyBindContract
 import com.prance.teacher.features.modifybind.presenter.StudentsModifyBindPresenter
 import com.prance.teacher.features.students.model.StudentsEntity
@@ -89,7 +90,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
                         .setMessage("确认修改该绑定关系吗？")
                         .setCancelButton("取消", null)
                         .setConfirmButton("确认") { _ ->
-
+                            startActivity(ChooseKeyPadActivity.callingIntent(this, DeleteKeyPadActivity.SerializableList(mAdapter.data)))
                         }
                         .show()
             }

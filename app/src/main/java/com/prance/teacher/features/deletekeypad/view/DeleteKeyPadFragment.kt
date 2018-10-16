@@ -13,6 +13,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
+import com.prance.teacher.features.match.view.MatchedKeyPadAdapter
 import kotlinx.android.synthetic.main.fragment_delete_keypad.*
 import java.io.Serializable
 
@@ -41,7 +42,7 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private var mAdapter: DeleteKeyPadAdapter = DeleteKeyPadAdapter(R.layout.item_delete_key_pad )
+    private var mAdapter = MatchedKeyPadAdapter(R.layout.item_delete_key_pad )
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 

@@ -14,9 +14,7 @@ class MatchedKeyPadAdapter : BaseQuickAdapter<KeyPadEntity, BaseViewHolder> {
         bean?.run {
             helper?.run {
                 itemView.keyNumber.text = """${bean?.keyId.substring(4)}"""
-
                 itemView.keyPadBtn.setTag(R.id.tag_data, bean)
-
                 itemView.keyImage.setImageResource(R.drawable.match_keypad_focus_icon)
             }
         }
