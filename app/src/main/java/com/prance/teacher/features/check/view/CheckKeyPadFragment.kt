@@ -66,10 +66,6 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
                 context?.run {
                     startActivity(LoginActivity.callingIntent(this))
                 }
-//                context?.run {
-//                    startActivity(StudentsActivity.callingIntent(this, ClassesEntity(1)))
-//                }
-//
                 activity?.finish()
                 return@setOnClickListener
             }

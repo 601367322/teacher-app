@@ -1,4 +1,4 @@
-package com.prance.teacher.features.replacekeypad.view
+package com.prance.teacher.features.deletekeypad.view
 
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter

@@ -1,12 +1,12 @@
-package com.prance.teacher.features.replacekeypad
+package com.prance.teacher.features.deletekeypad
 
 import android.content.Context
 import android.content.Intent
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseActivity
-import com.prance.teacher.features.replacekeypad.view.DeleteKeyPadFragment
-import com.prance.teacher.features.replacekeypad.view.DeleteKeyPadFragment.Companion.KEYPAD_LIST
+import com.prance.teacher.features.deletekeypad.view.DeleteKeyPadFragment
+import com.prance.teacher.features.deletekeypad.view.DeleteKeyPadFragment.Companion.KEYPAD_LIST
 import java.io.Serializable
 
 

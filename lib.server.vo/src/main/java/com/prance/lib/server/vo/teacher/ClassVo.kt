@@ -17,31 +17,31 @@ class ClassVo : ClassEntity(), Serializable {
     /**
      * 课程对象
      */
-    val course: CourseEntity? = null
+    var course: CourseEntity? = null
 
     /**
      * 最近课次
      */
-    val lesson: LessonEntity? = null
+    var lesson: LessonEntity? = null
 
     /**
      * 主讲老师
      */
-    val teacher: UserEntity? = null
+    var teacher: UserEntity? = null
 
     /**
      * 辅导老师
      */
-    val assistant: SpeakerAssistantEntity? = null
+    var assistant: SpeakerAssistantEntity? = null
 
     /**
      * 学生数量
      */
-    val studentCount: Int = 0
+    var studentCount: Int = 0
 
     /**
      * 答题器绑定人数
      */
-    val bindingCount: Int = 0
+    var bindingCount: Int = 0
 
 }

@@ -5,19 +5,16 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.prance.lib.common.utils.getInflate
-import android.widget.RelativeLayout
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import com.prance.lib.common.R
 import kotlinx.android.synthetic.main.weight_my_button_with_icon.view.*
 
 
-class MyButton : FocusRelativeLayout {
+open class MyButton : FocusRelativeLayout {
 
-    private var mShadowWidth: Float = 0F
     private var mRadius: Float = 0F
     private var mDisableIcon: Int? = -1
     private var mIcon: Int? = -1
-    private var mInitShadow: Boolean = false
+    protected var mText: String = ""
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
 
@@ -34,9 +31,9 @@ class MyButton : FocusRelativeLayout {
                 icon?.visibility = View.GONE
             }
             mDisableIcon = a.getResourceId(R.styleable.MyButton_disable_icon, -1)
-            val textStr = a.getString(R.styleable.MyButton_text)
-            if (textStr.isNotEmpty()) {
-                text.text = textStr
+            mText = a.getString(R.styleable.MyButton_text)
+            if (mText.isNotEmpty()) {
+                text.text = mText
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -55,25 +52,6 @@ class MyButton : FocusRelativeLayout {
 
 
     }
-
-//    private fun addShadow() {
-//        mInitShadow = true
-//        val viewTreeObserver = container.viewTreeObserver
-//        viewTreeObserver
-//                .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-//                    override fun onGlobalLayout() {
-//                        container.viewTreeObserver
-//                                .removeOnGlobalLayoutListener(this)
-//
-//                        val buttonBackground = ButtonBackground(context)
-//                        val layoutParams = RelativeLayout.LayoutParams(container.width + mShadowWidth.toInt() * 2, container.height + mShadowWidth.toInt() * 2)
-//                        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
-//                        buttonBackground.layoutParams = layoutParams
-//                        ((container.parent) as RelativeLayout).addView(buttonBackground, 0)
-//
-//                    }
-//                })
-//    }
 
     fun setText(str: String) {
         text.text = str

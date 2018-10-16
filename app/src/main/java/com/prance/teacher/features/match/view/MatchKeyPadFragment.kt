@@ -21,8 +21,8 @@ import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
-import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
-import com.prance.teacher.features.replacekeypad.view.DeleteKeyPadFragment
+import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
+import com.prance.teacher.features.deletekeypad.view.DeleteKeyPadFragment
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
 

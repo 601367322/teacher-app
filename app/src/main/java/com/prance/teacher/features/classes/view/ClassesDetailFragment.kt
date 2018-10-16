@@ -137,83 +137,17 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             mKeyPadList = mPresenter.getKeyPadList(this)
         }
 
-
-        readyClass.setOnClickListener {
-            context?.let {
-                try {
-                    //发送学生名称
-                    mStudentList?.run {
-                        for (s in this) {
-                            s.getClicker()?.number?.let {
-                                mSparkServicePresenter.sendData(s.name, it)
-                            }
-                        }
-                    }
-
-                    if (BuildConfig.DEBUG) {
-//                        val question = ClassesDetailFragment.Question(1, 5, "1,0,0,0,4,1", 1, "A", mutableListOf(
-//                                StudentsEntity(1,"呵呵","呵呵")
-//                        ))
-//                        context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
-                    }
-
-                    //开始Socket监听
-                    mPushServicePresenter.bind()
-                    startActivity(IntentUtils.callingXYDial())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    ToastUtils.showShort("请使用小鱼易联")
-                }
-            }
-        }
-
         mSparkServicePresenter.bind()
+    }
 
-        endClass.setOnClickListener { activity?.finish() }
-
-        classesTitle.text = mClassesEntity?.klass?.name
-        classesSubTitle.text = mClassesEntity?.klass?.course?.name
-        classesDate.text = """${mClassesEntity?.klass?.startTime}-${mClassesEntity?.klass?.endTime}"""
-
-        if (BuildConfig.DEBUG) {
-
-//            mPushServicePresenter.bind()
-
-//            readyClass.postDelayed({
-//                val message = Gson().fromJson("{\"cmd\":2,\"msgId\":\"512eff48-0c5e-4366-b35d-5bbc0d4abcea\",\"data\":{\"result\":\"A\",\"classId\":1,\"questionId\":1202,\"param\":\"1,0,0,0,4,1\",\"type\":10,\"signStudents\":[{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":1,\"integrals\":[],\"name\":\"10\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":2,\"integrals\":[],\"name\":\"测试学员2\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":3,\"integrals\":[],\"name\":\"测试学员3\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":4,\"integrals\":[],\"name\":\"测试学员4\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":5,\"integrals\":[],\"name\":\"测试学员5\",\"state\":0,\"type\":0,\"updateTime\":null},{\"classes\":[],\"clickers\":[],\"createTime\":null,\"head\":\"\",\"id\":6,\"integrals\":[],\"name\":\"张三\",\"state\":0,\"type\":0,\"updateTime\":null}]}}",MessageEntity::class.java)
-//                onMessageResponse(message)
-//            },2000)
-
-
-//            context?.run {
-//                try {
-//                    startActivity(IntentUtils.callingXYDial())
-//
-//                    if (BuildConfig.DEBUG) {
-//                        Flowable.timer(8, TimeUnit.SECONDS)
-//                                .mySubscribe {
-//                                    //                                                val redConfig = RedPackageSetting(1, 10, 1, 1)
-////                                                context?.let { startActivity(RedPackageActivity.callingIntent(it, redConfig)) }
-////                                                context?.let { startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(1, SubjectRankFragment.Answer(1, 2, 3), "ABC",
-////                                                        mutableListOf(
-////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"),
-////                                                                StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png")
-////                                                        )))) }
-//                                    var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 5)
-//                                    context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
-//                                }
-//
-//                    }
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                    ToastUtils.showShort("请使用小鱼易联")
-//                }
-//            }
-//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 0)
-//            context?.let { startActivity(SubjectActivity.callingIntent(it, question)) }
+    fun startClass() {
+        try {
+            //开始Socket监听
+            mPushServicePresenter.bind()
+            startActivity(IntentUtils.callingXYDial())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ToastUtils.showShort("请使用小鱼易联")
         }
     }
 
@@ -230,7 +164,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mPushServicePresenter.unBind()
         mSparkServicePresenter.unBind()
     }
-
 
     override fun onMessageResponse(msg: MessageEntity): Boolean {
         when (msg.cmd) {
@@ -278,7 +211,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         return false
     }
 
-    fun doFinishActivity() {
+    private fun doFinishActivity() {
         ActivityUtils.finishActivity(SubjectActivity::class.java)
         ActivityUtils.finishActivity(SubjectRankActivity::class.java)
         ActivityUtils.finishActivity(AfterClassActivity::class.java)
@@ -360,11 +293,18 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
         }
 
+        //发送学生名称
+        mStudentList?.run {
+            for (s in this) {
+                s.getClicker()?.number?.let {
+                    mSparkServicePresenter.sendData(s.name, it)
+                }
+            }
+        }
     }
 
 
     override fun onNetworkError(throwable: Throwable): Boolean {
-        hideProgress()
         return true
     }
 }

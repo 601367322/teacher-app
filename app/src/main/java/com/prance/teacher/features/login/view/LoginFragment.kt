@@ -20,6 +20,7 @@ import com.prance.teacher.features.login.contract.ILoginContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.common.NetErrorFragment
 import com.prance.teacher.features.common.Retry
 import com.prance.teacher.features.login.LoginActivity
@@ -29,6 +30,7 @@ import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -97,6 +99,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
             context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(StudentsActivity.callingIntent(it, ClassesEntity(1))) }
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
 

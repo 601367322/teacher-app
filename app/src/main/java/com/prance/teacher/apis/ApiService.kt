@@ -31,7 +31,7 @@ interface ApiService {
             get() = if (UrlUtil.isLocalHost())
                 "app/classList"
             else
-                "backend/course/app/classes"
+                "backend/teacher/android/classes"
 
         val studentsForClasses: String
             get() = if (UrlUtil.isLocalHost())

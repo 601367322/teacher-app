@@ -7,6 +7,9 @@ import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.features.check.view.CheckKeyPadFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 
+/**
+ * 硬件检测
+ */
 class CheckKeyPadActivity : BaseActivity() {
 
     companion object {

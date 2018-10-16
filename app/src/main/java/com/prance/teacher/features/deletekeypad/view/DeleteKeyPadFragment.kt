@@ -1,4 +1,4 @@
-package com.prance.teacher.features.replacekeypad.view
+package com.prance.teacher.features.deletekeypad.view
 
 import android.app.Activity
 import android.content.Intent
@@ -9,12 +9,10 @@ import android.text.Html
 import android.view.View
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
-import com.prance.teacher.features.replacekeypad.contract.IReplaceKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
-import com.prance.teacher.features.replacekeypad.DeleteKeyPadActivity
-import com.prance.teacher.features.replacekeypad.presenter.ReplaceKeyPadPresenter
+import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import kotlinx.android.synthetic.main.fragment_replace.*
 import kotlinx.android.synthetic.main.item_replace_key_pad.*
 import java.io.Serializable
@@ -26,9 +24,8 @@ import java.io.Serializable
  * 								 - generate by MvpAutoCodePlus plugin.
  */
 
-class DeleteKeyPadFragment : BaseFragment(), IReplaceKeyPadContract.View, View.OnClickListener {
+class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
 
-    override var mPresenter: IReplaceKeyPadContract.Presenter = ReplaceKeyPadPresenter()
 
     override fun layoutId(): Int = R.layout.fragment_replace
 

@@ -4,15 +4,11 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.DynamicDrawableSpan
-import android.text.style.ImageSpan
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.teacher.R
@@ -22,8 +18,11 @@ import com.prance.lib.common.utils.weight.layoutmanager.PagerGridSnapHelper
 import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.teacher.BuildConfig
+import com.prance.teacher.features.classes.ClassesNextStepActivity
+import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_classes.*
-import java.util.regex.Matcher
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -68,6 +67,22 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         layoutManager!!.setPageListener(this)
         layoutManager!!.isAllowContinuousScroll = false
+
+        mAdapter.setOnItemClickListener { _, _, position ->
+            val classVo = mAdapter.getItem(position)
+
+            if (!BuildConfig.DEBUG && SparkService.mUsbSerialNum == null) {
+                ToastUtils.showShort("请连接接收器")
+                return@setOnItemClickListener
+            }
+
+            classVo?.run {
+                EventBus.getDefault().post(MainActivity.EventMainClassesEntity(ClassesEntity(id!!, name!!)))
+                activity?.run {
+                    startActivity(ClassesNextStepActivity.callingIntent(this, classVo))
+                }
+            }
+        }
 
         recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
 

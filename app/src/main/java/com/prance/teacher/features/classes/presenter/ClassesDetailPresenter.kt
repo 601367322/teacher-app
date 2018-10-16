@@ -18,7 +18,7 @@ class ClassesDetailPresenter : BasePresenterKt<IClassesDetailContract.View>(), I
 
     override val mModel: IClassesDetailContract.Model = ClassesDetailModel()
 
-    val mMatchKeyPadModel = MatchKeyPadModel()
+    private val mMatchKeyPadModel = MatchKeyPadModel()
 
     override fun getStudentsByClassesId(id: String) {
         mModel.getStudentsByClassesId(id)

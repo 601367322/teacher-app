@@ -12,103 +12,146 @@
         android:layout_height="@dimen/m410.0"
         android:background="@drawable/classes_background"
         android:duplicateParentState="true"
-        android:paddingHorizontal="@dimen/m30.0"
-        android:paddingVertical="@dimen/m30.0">
+        android:paddingLeft="@dimen/m40.0"
+        android:paddingTop="@dimen/m30.0"
+        android:paddingRight="@dimen/m40.0">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:textStyle="bold"
-            android:minHeight="@dimen/m87.0"
+            android:includeFontPadding="false"
+            android:maxLines="1"
             android:shadowColor="#2F66BC"
             android:shadowDx="1"
+            android:shadowDy="3"
             android:shadowRadius="2"
-            android:shadowDy="4"
-            android:text="2017年一年级语文暑假配有班2017年一年级语文暑假配有班"
             android:textColor="#fff"
             android:textSize="@dimen/m40.0"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/subTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m28.0"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowDy="3"
+            android:shadowRadius="2"
+            android:textColor="#fff"
+            android:textSize="@dimen/m30.0"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <TextView
             android:id="@+id/secondTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/m10.0"
+            android:layout_marginTop="@dimen/m28.0"
             android:ellipsize="end"
+            android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="北京学而思xxxx班"
-            android:shadowRadius="2"
-            android:textStyle="bold"
-            android:textColor="#fff"
             android:shadowColor="#2F66BC"
             android:shadowDx="1"
-            android:shadowDy="4"
-            android:textSize="@dimen/m34.0"
+            android:shadowDy="3"
+            android:shadowRadius="2"
+            android:textColor="#fff"
+            android:textSize="@dimen/m28.0"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/subTitle" />
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/m28.0"
+            android:layout_marginTop="@dimen/m28.0"
             android:height="@dimen/m37.0"
             android:gravity="center_vertical"
-            android:shadowRadius="2"
-            android:textStyle="bold"
+            android:includeFontPadding="false"
             android:shadowColor="#2F66BC"
             android:shadowDx="1"
-            android:shadowDy="4"
-            android:text="2018.02.02-2018.03.04"
+            android:shadowDy="3"
+            android:shadowRadius="2"
             android:textColor="#fff"
-            android:textSize="@dimen/m26.0"
-            app:layout_constraintBottom_toTopOf="@+id/teacher"
-            app:layout_constraintStart_toStartOf="@+id/title" />
+            android:textSize="@dimen/m24.0"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/secondTitle" />
 
         <TextView
             android:id="@+id/teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="阿穆老师"
-            android:shadowRadius="2"
+            android:layout_marginTop="@dimen/m25.0"
+            android:includeFontPadding="false"
             android:shadowColor="#2F66BC"
-            android:textStyle="bold"
             android:shadowDx="1"
-            android:shadowDy="4"
+            android:shadowDy="3"
+            android:shadowRadius="2"
             android:textColor="#fff"
-            android:textSize="@dimen/m25.0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/title" />
-
-        <ImageView
-            android:id="@+id/bindStateIcon"
-            android:layout_width="@dimen/m32.0"
-            android:layout_height="@dimen/m32.0"
-            android:layout_marginEnd="@dimen/m15.0"
-            android:src="@drawable/icon_classes_unbind_left_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/bindStateText"
-            app:layout_constraintEnd_toStartOf="@+id/bindStateText"
-            app:layout_constraintTop_toTopOf="@+id/bindStateText" />
+            android:textSize="@dimen/m24.0"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
 
         <TextView
-            android:id="@+id/bindStateText"
+            android:id="@+id/assistantTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="未绑定"
+            android:layout_marginStart="@dimen/m58.0"
+            android:includeFontPadding="false"
             android:shadowColor="#2F66BC"
             android:shadowDx="1"
+            android:shadowDy="3"
             android:shadowRadius="2"
-            android:shadowDy="4"
+            android:textSize="@dimen/m24.0"
+            app:layout_constraintBottom_toBottomOf="@+id/teacher"
+            app:layout_constraintStart_toEndOf="@+id/teacher"
+            app:layout_constraintTop_toTopOf="@+id/teacher" />
+
+        <TextView
+            android:id="@+id/studentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m25.0"
+            android:includeFontPadding="false"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowDy="3"
+            android:shadowRadius="2"
             android:textColor="#fff"
+            android:textSize="@dimen/m24.0"
             android:textStyle="bold"
-            android:textSize="@dimen/m26.0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/teacher" />
+
+        <TextView
+            android:id="@+id/bindStudentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/m58.0"
+            android:includeFontPadding="false"
+            android:shadowColor="#2F66BC"
+            android:shadowDx="1"
+            android:shadowDy="3"
+            android:shadowRadius="2"
+            android:textSize="@dimen/m24.0"
+            app:layout_constraintBottom_toBottomOf="@+id/studentCount"
+            app:layout_constraintStart_toEndOf="@+id/studentCount"
+            app:layout_constraintTop_toTopOf="@+id/studentCount" />
+
 
     </android.support.constraint.ConstraintLayout>
 </com.prance.lib.common.utils.weight.FocusRelativeLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="@dimen/m200.0"
+        android:layout_height="@dimen/m200.0"
+        android:layout_marginTop="@dimen/m200.0"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_success_dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m101.0"
+        android:text="答题器数不足，点击下方按钮前往配对答题器"
+        android:textColor="#fff"
+        android:textSize="@dimen/m52.0"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:clipChildren="false"
+        android:layout_marginTop="@dimen/m149.0"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textView2">
+
+        <com.prance.teacher.weight.CountTimeButton
+            android:id="@+id/startClass"
+            android:layout_width="@dimen/m300.0"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/m200.0"
+            android:gravity="center"
+            app:text="配对答题器" />
+
+        <com.prance.lib.common.utils.weight.MyButton
+            android:id="@+id/jump"
+            android:layout_width="@dimen/m300.0"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:text="跳过" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/keyPadCount"
+        android:textColor="#fff"
+        android:textSize="@dimen/m40.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m121.0"
+        android:layout_marginBottom="@dimen/m90.0"
+        android:text="答题器数"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

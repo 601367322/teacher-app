@@ -57,11 +57,15 @@
             android:screenOrientation="landscape" />
 
         <activity
+            android:name=".features.classes.ClassesNextStepActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
             android:name=".features.students.StudentsActivity"
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".features.replacekeypad.DeleteKeyPadActivity"
+            android:name=".features.deletekeypad.DeleteKeyPadActivity"
             android:screenOrientation="landscape" />
 
         <activity
@@ -89,9 +93,6 @@
             android:name=".features.subject.SubjectRankActivity"
             android:screenOrientation="landscape" />
 
-        <activity
-            android:name=".features.main.view.ExitActivity"
-            android:screenOrientation="landscape" />
 
         <service
             android:name=".services.UpdateService"
