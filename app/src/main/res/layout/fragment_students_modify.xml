@@ -12,14 +12,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/m121.0"
         android:layout_marginTop="@dimen/m70.0"
-        android:focusable="true"
         android:text="修改绑定关系"
         android:textSize="@dimen/m48.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <requestFocus />
-    </TextView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:layout_marginBottom="@dimen/m62.0"
+        app:layout_constraintBottom_toTopOf="@+id/btnLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <com.prance.lib.teacher.base.weight.TvRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/m120.0"
+            android:paddingTop="@dimen/m60.0"
+            android:paddingRight="@dimen/m72.0" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -34,7 +50,6 @@
             android:id="@+id/matchKeyPadCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/m40.0"
             android:textColor="#fff"
             android:textSize="@dimen/m40.0" />
 
@@ -93,24 +108,5 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipChildren="true"
-        android:clipToPadding="true"
-        android:layout_marginBottom="@dimen/m62.0"
-        app:layout_constraintBottom_toTopOf="@+id/btnLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:paddingLeft="@dimen/m120.0"
-            android:paddingTop="@dimen/m132.0"
-            android:paddingRight="@dimen/m72.0" />
-    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -13,8 +13,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
-import kotlinx.android.synthetic.main.fragment_replace.*
-import kotlinx.android.synthetic.main.item_replace_key_pad.*
+import kotlinx.android.synthetic.main.fragment_delete_keypad.*
 import java.io.Serializable
 
 /**
@@ -27,7 +26,7 @@ import java.io.Serializable
 class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
 
 
-    override fun layoutId(): Int = R.layout.fragment_replace
+    override fun layoutId(): Int = R.layout.fragment_delete_keypad
 
     companion object {
 
@@ -42,7 +41,7 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private var mAdapter: DeleteKeyPadAdapter = DeleteKeyPadAdapter(R.layout.item_replace_key_pad, this)
+    private var mAdapter: DeleteKeyPadAdapter = DeleteKeyPadAdapter(R.layout.item_delete_key_pad )
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -56,6 +55,25 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
                 outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m40_0)
             }
         })
+
+        mAdapter.setOnItemClickListener { _, _, position ->
+            val keyPad = mAdapter.getItem(position)
+            keyPad?.run {
+                context?.run {
+                    AlertDialog(this)
+                            .setMessage(
+                                    Html.fromHtml("""删除编号为 <font color="#3AF0EE">${keyPad.keyId.substring(4)}</font> 的答题器吗？<br/>若答题器已绑定学生，删除后需重新为学生更换绑定的答题器"""))
+                            .setCancelButton("取消", null)
+                            .setConfirmButton("删除") { _ ->
+                                mAdapter.data.remove(keyPad)
+                                mAdapter.notifyDataSetChanged()
+
+                                displayCountText()
+                            }
+                            .show()
+                }
+            }
+        }
 
         mAdapter.setNewData(list)
         //添加数据源
@@ -83,22 +101,6 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
             }
             cancelBtn -> {
                 activity?.finish()
-            }
-            keyPadBtn -> {
-                val keyPad = v?.getTag(R.id.tag_data) as KeyPadEntity
-                context?.run {
-                    AlertDialog(this)
-                            .setMessage(
-                                    Html.fromHtml("""删除编号为 <font color="#3AF0EE">${keyPad.keyId.substring(4)}</font> 的答题器吗？<br/>若答题器已绑定学生，删除后需重新为学生更换绑定的答题器"""))
-                            .setCancelButton("取消", null)
-                            .setConfirmButton("删除") { _ ->
-                                mAdapter.data.remove(keyPad)
-                                mAdapter.notifyDataSetChanged()
-
-                                displayCountText()
-                            }
-                            .show()
-                }
             }
         }
     }

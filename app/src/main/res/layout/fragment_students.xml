@@ -49,7 +49,7 @@
             app:text="开始上课" />
 
         <com.prance.lib.common.utils.weight.MyButton
-            android:id="@+id/replace"
+            android:id="@+id/modifyBind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -71,7 +71,6 @@
             android:id="@+id/matchKeyPadCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/m40.0"
             android:textColor="#fff"
             android:textSize="@dimen/m40.0" />
 

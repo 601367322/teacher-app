@@ -28,6 +28,8 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
 
     override var mPresenter: IClassesNextStepContract.Presenter = ClassesNextStepPresenter()
 
+    var mClassEntity: ClassesEntity? = null
+
     companion object {
         const val CLASS = "class"
 
@@ -47,16 +49,10 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
 
         val classVo = intent.getSerializableExtra(CLASS) as ClassVo
 
-        if (BuildConfig.DEBUG) {
-            SparkService.mUsbSerialNum = "1"
-        }
+        mClassEntity = ClassesEntity(classVo.id!!, classVo.name!!)
 
         SparkService.mUsbSerialNum?.run {
             var keyPadCount = mPresenter.getKeyPadCount(this)
-
-            if (BuildConfig.DEBUG) {
-                keyPadCount = 1
-            }
 
             classVo.run {
                 when {

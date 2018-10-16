@@ -15,10 +15,10 @@
     <application
         android:name="com.prance.lib.teacher.base.TeacherApplication"
         android:allowBackup="true"
-        android:largeHeap="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
 
         <activity
@@ -27,7 +27,7 @@
 
         <activity
             android:name=".features.login.LoginActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".features.welcome.WelcomeActivity"
@@ -62,6 +62,10 @@
 
         <activity
             android:name=".features.students.StudentsActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".features.modifybind.StudentsModifyBindActivity"
             android:screenOrientation="landscape" />
 
         <activity

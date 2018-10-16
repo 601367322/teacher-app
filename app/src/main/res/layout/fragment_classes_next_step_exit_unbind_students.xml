@@ -12,7 +12,7 @@
         android:layout_height="@dimen/m200.0"
         android:layout_marginTop="@dimen/m200.0"
         android:scaleType="centerInside"
-        android:src="@drawable/icon_success_dialog"
+        android:src="@drawable/icon_error_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/textView2">
 
         <com.prance.teacher.weight.CountTimeButton
-            android:id="@+id/startClass"
+            android:id="@+id/startBind"
             android:layout_width="@dimen/m300.0"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/m200.0"

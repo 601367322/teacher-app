@@ -45,7 +45,6 @@ public class FocusRelativeLayout extends RelativeLayout {
 //        mDrawable = getResources().getDrawable(R.drawable.btn_common_focused);
         setChildrenDrawingOrderEnabled(true);
         setClipToPadding(false);
-        setClickable(true);
         setClipChildren(false);
         setFocusable(true);
         setFocusableInTouchMode(true);

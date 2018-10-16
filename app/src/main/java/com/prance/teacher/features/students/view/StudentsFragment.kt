@@ -18,6 +18,9 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
+import com.prance.teacher.features.modifybind.StudentsModifyBindActivity
+import com.prance.teacher.features.modifybind.view.StudentsModifyBindFragment
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.presenter.StudentsPresenter
 import io.reactivex.Flowable
@@ -47,19 +50,21 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     lateinit var mClassesEntity: ClassesEntity
 
-    val bindProgress by lazy(mode = LazyThreadSafetyMode.NONE) {
+    private val bindProgress by lazy(mode = LazyThreadSafetyMode.NONE) {
         context?.run {
             BindLoadingDialog(this)
         }
     }
 
-    val bindSuccessDialog by lazy(mode = LazyThreadSafetyMode.NONE) {
+    private val bindSuccessDialog by lazy(mode = LazyThreadSafetyMode.NONE) {
         context?.run {
             BindSuccessDialog(this)
         }
     }
 
     private var mAdapter = StudentsAdapter(R.layout.item_students)
+
+    private var mModifyBindRequestCode = 10086
 
     override var mPresenter: IStudentsContract.Presenter = StudentsPresenter()
 
@@ -86,37 +91,14 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
             }
         }
 
-        replace.setOnClickListener {
+        modifyBind.setOnClickListener {
             context?.let {
-//                startActivityForResult(DeleteKeyPadActivity.callingIntent(it), 1001)
+                startActivityForResult(StudentsModifyBindActivity.callingIntent(it, mClassesEntity), mModifyBindRequestCode)
             }
         }
 
         SparkService.mUsbSerialNum?.run {
             matchKeyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
-        }
-
-        if (BuildConfig.DEBUG) {
-            val list = mutableListOf<StudentsEntity>()
-            list.add(StudentsEntity("呵呵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
-            list.add(StudentsEntity("呵呵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            list.add(StudentsEntity("呵呵", ""))
-            mAdapter.setNewData(list)
-            mAdapter.notifyDataSetChanged()
-
-
-            return
         }
 
         loadData()
@@ -130,11 +112,11 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         }
     }
 
-    private fun showBindProgress(){
+    private fun showBindProgress() {
         bindProgress?.show()
     }
 
-    private fun hideBindProgress(){
+    private fun hideBindProgress() {
         bindProgress?.dismiss()
     }
 
@@ -147,20 +129,30 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         calculateBindStudent()
 
-        displayBtn(mClassesEntity)
+        displayBtn()
     }
 
-    private fun displayBtn(classes: ClassesEntity) {
-        start.visible()
-        if (classes.binding > 0) {
-            startClass.visible()
-            replace.visible()
+    /**
+     * 按钮展示逻辑，全部绑定后，才有开始上课按钮
+     */
+    private fun displayBtn() {
+        var existUnBindStudent = false
 
-            //本班学员都存在绑定关系后，不进入绑定状态，“开始绑定”按钮和文字提示隐藏。如下方“图2.1”；当学员0个绑定时，如“图1.3”；当学员绑定、非绑定状态都存在，如“图3.3”；
-            if (classes.binding >= mAdapter.data.size) {
-                start.invisible()
-                startClass.requestFocus()
+        for (s in mAdapter.data) {
+            if (s.getClicker() == null) {
+                existUnBindStudent = true
             }
+        }
+
+        if (existUnBindStudent) {
+            start.visible()
+            startClass.invisible()
+            modifyBind.invisible()
+            startClass.requestFocus()
+        } else {
+            startClass.visible()
+            modifyBind.visible()
+            start.invisible()
         }
     }
 
@@ -178,8 +170,9 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     }
 
     override fun bindSuccess() {
+        hideBindProgress()
         bindSuccessDialog?.show()
-        Flowable.timer(3,TimeUnit.SECONDS)
+        Flowable.timer(3, TimeUnit.SECONDS)
                 .mySubscribe {
                     bindSuccessDialog?.dismiss()
                 }
@@ -187,8 +180,13 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1001) {
+        if (requestCode == mModifyBindRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
+                data?.run {
+                    val students = (getSerializableExtra(StudentsModifyBindFragment.STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
+                    mAdapter.setNewData(students)
+                    mAdapter.notifyDataSetChanged()
+                }
             }
         }
     }

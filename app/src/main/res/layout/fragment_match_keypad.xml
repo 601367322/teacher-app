@@ -12,6 +12,8 @@
         android:layout_marginStart="@dimen/m121.0"
         android:layout_marginTop="@dimen/m70.0"
         android:text="配对答题器"
+        android:nextFocusDown="@id/complete"
+        android:nextFocusRight="@id/complete"
         android:focusable="true"
         android:textSize="@dimen/m48.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.prance.teacher.weight.GreenBorderFocusPaddingRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.prance.lib.common.utils.weight.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/m88.0"
+            android:layout_height="@dimen/m88.0"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/m20.0"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/avatar">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxWidth="@dimen/m180.0"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textColor="#fff"
+                android:textSize="@dimen/m28.0" />
+
+            <TextView
+                android:id="@+id/keyPadId"
+                android:layout_width="@dimen/m91.0"
+                android:layout_height="@dimen/m35.0"
+                android:layout_marginTop="@dimen/m12.0"
+                android:background="@drawable/students_keypad_id_background"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="#fff"
+                android:textSize="@dimen/m22.0" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</com.prance.teacher.weight.GreenBorderFocusPaddingRelativeLayout>

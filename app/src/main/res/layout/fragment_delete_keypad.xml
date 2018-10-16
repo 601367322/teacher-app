@@ -16,6 +16,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/m20.0"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/complete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <com.prance.lib.teacher.base.weight.TvRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/m120.0"
+            android:paddingTop="@dimen/m60.0"
+            android:paddingRight="@dimen/m84.0"
+            android:paddingBottom="@dimen/m64.0" />
+    </RelativeLayout>
 
     <com.prance.lib.common.utils.weight.MyButton
         android:id="@+id/complete"
@@ -54,24 +74,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/complete" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/m20.0"
-        android:clipChildren="true"
-        android:clipToPadding="true"
-        app:layout_constraintBottom_toTopOf="@+id/complete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-        <com.prance.lib.teacher.base.weight.TvRecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/m120.0"
-            android:paddingTop="@dimen/m60.0"
-            android:paddingRight="@dimen/m84.0"
-            android:paddingBottom="@dimen/m64.0" />
-    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

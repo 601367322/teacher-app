@@ -15,12 +15,16 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.presenter.ClassesPresenter
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridLayoutManager
 import com.prance.lib.common.utils.weight.layoutmanager.PagerGridSnapHelper
+import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.server.vo.teacher.ClassVo
+import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
+import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.features.classes.ClassesNextStepActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.main.MainActivity
+import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_classes.*
 import org.greenrobot.eventbus.EventBus
 
@@ -40,6 +44,16 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     var mAdapter: ClassesAdapter = ClassesAdapter(R.layout.item_classes)
 
     var layoutManager: PagerGridLayoutManager? = null
+
+    private val mSparkServicePresenter: SparkServicePresenter  by lazy {
+        SparkServicePresenter(context!!, object : SparkListenerAdapter() {
+            override fun onServiceConnected() {
+                super.onServiceConnected()
+
+                updateKeyPadCountTip()
+            }
+        })
+    }
 
     companion object {
         const val ACTION = "action"
@@ -104,40 +118,19 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         recycler.adapter = mAdapter
 
-        if (BuildConfig.DEBUG) {
-//            val list = mutableListOf<ClassesEntity>()
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            list.add(ClassesEntity("呵呵"))
-//            mAdapter.setNewData(list)
-//            mAdapter.notifyDataSetChanged()
-//            return
-        }
-
         refresh.setOnClickListener {
             loadData()
         }
 
         refresh.performClick()
+
+        mSparkServicePresenter.bind()
     }
 
     private fun loadData() {
         showProgress()
 
         mPresenter.getAllClasses()
-
-        SparkService.mUsbSerialNum?.run {
-            keyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
-        }
-
     }
 
     override fun onPageSizeChanged(pageSize: Int) {
@@ -191,6 +184,18 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         return false
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        updateKeyPadCountTip()
+    }
+
+    private fun updateKeyPadCountTip() {
+        SparkService.mUsbSerialNum?.run {
+            keyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
+        }
+    }
+
     private fun checkEmpty() {
         if (mAdapter.data.isEmpty()) {
             emptyLayout.visible()
@@ -203,6 +208,12 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
             recycler.requestFocus()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mSparkServicePresenter.unBind()
     }
 }
 

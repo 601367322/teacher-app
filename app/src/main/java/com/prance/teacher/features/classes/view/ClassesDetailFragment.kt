@@ -40,7 +40,7 @@ import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_classes_detail.*
-import kotlinx.android.synthetic.main.fragment_replace.*
+import kotlinx.android.synthetic.main.fragment_delete_keypad.*
 import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
