@@ -9,6 +9,7 @@ import android.widget.ImageView
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
+import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
@@ -20,6 +21,7 @@ import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import com.prance.teacher.features.match.view.MatchedKeyPadAdapter
+import com.prance.teacher.features.modifybind.ChooseKeyPadActivity
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_choose_keypad.*
@@ -104,6 +106,21 @@ class ChooseKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View {
                 outRect?.bottom = resources.getDimensionPixelOffset(R.dimen.m40_0)
             }
         })
+
+        mAdapter.setOnItemChildClickListener { _, _, position ->
+            val keyPadEntity = mAdapter.getItem(position)
+
+            context?.run {
+                AlertDialog(this)
+                        .setMessage("确认使用该答题器吗？")
+                        .setCancelButton("取消", null)
+                        .setConfirmButton("确认") { _ ->
+
+                        }
+                        .show()
+            }
+        }
+
         //添加数据源
         recycler.adapter = mAdapter
 

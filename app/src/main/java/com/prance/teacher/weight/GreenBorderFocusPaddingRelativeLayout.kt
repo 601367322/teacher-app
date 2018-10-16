@@ -24,24 +24,20 @@ class GreenBorderFocusPaddingRelativeLayout : FocusRelativeLayout {
     }
 
     override fun onDraw(canvas: Canvas) {
-        var mRect = Rect()
+        val mRect = Rect()
         super.getDrawingRect(mRect)
-
         super.onDraw(canvas)
-
         if (hasFocus()) {
-
             //画阴影
             val drawablePadding = Rect()
             mDrawable.getPadding(drawablePadding)
             var shadowBound = Rect(
-                    (mRect.left - drawablePadding.left -paddingH ),
+                    (mRect.left - drawablePadding.left - paddingH),
                     (mRect.top - drawablePadding.top - paddingV),
-                    (mRect.right + drawablePadding.right+paddingH),
-                    (mRect.bottom + drawablePadding.bottom+paddingH))
+                    (mRect.right + drawablePadding.right + paddingH),
+                    (mRect.bottom + drawablePadding.bottom + paddingH))
             mDrawable.bounds = shadowBound
             mDrawable.draw(canvas)
-
         }
     }
 }

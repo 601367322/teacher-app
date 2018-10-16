@@ -84,6 +84,10 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
             }
         }
 
+        cancelBtn.setOnClickListener {
+            activity?.finish()
+        }
+
         mAdapter.setOnItemClickListener { _, _, position ->
             context?.run {
                 AlertDialog(this)
