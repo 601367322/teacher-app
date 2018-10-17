@@ -15,7 +15,6 @@ import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
@@ -97,9 +96,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
             }
         }
 
-        SparkService.mUsbSerialNum?.run {
-            matchKeyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
-        }
+        updateKeyPadCount()
 
         loadData()
     }
@@ -109,6 +106,18 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         val id = mClassesEntity.klass?.id.toString()
         id.let {
             mPresenter.getStudentsByClassesId(id)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        updateKeyPadCount()
+    }
+
+    private fun updateKeyPadCount() {
+        SparkService.mUsbSerialNum?.run {
+            matchKeyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
         }
     }
 
