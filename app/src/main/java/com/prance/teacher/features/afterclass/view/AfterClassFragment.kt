@@ -49,6 +49,12 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
                 }
             }
 
+            override fun onServiceConnected() {
+                super.onServiceConnected()
+
+                startSendQuestion()
+            }
+
         })
     }
 
@@ -71,7 +77,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
         showProgress()
     }
 
-    override fun startSendQuestion() {
+    private fun startSendQuestion() {
         mSparkServicePresenter.sendQuestion(SparkService.QuestionType.SINGLE)
     }
 

@@ -22,7 +22,6 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
     var mDisposable: Disposable? = null
     override val mModel: IAfterClassContract.Model = AfterClassModel()
     override fun startReceive(feedback: ClassesDetailFragment.Question) {
-        mView?.startSendQuestion()
         mDisposable = Flowable.interval(1000, TimeUnit.MILLISECONDS)
                 .take(30)
                 .subscribeOn(Schedulers.io())

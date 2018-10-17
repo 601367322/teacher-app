@@ -23,7 +23,6 @@ interface IAfterClassContract {
          */
         fun confirmChooseSuccess()
         fun showLoading()
-        fun startSendQuestion()
         fun stopSendQuestion()
     }
     interface Presenter : IPresenter<View, Model> {
