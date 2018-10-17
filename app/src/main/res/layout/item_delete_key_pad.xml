@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.prance.teacher.weight.GreenBorderFocusRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.prance.lib.common.utils.weight.FocusRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/keyPadBtn"
     android:layout_width="wrap_content"
@@ -17,6 +17,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:duplicateParentState="true"
+            android:background="@drawable/item_delete_key_pad_drawable"
             android:scaleType="fitXY"
             android:src="@drawable/bg_keypad_background_normal" />
 
@@ -32,4 +33,4 @@
             android:textSize="@dimen/m36.0" />
 
     </RelativeLayout>
-</com.prance.teacher.weight.GreenBorderFocusRelativeLayout>
+</com.prance.lib.common.utils.weight.FocusRelativeLayout>
