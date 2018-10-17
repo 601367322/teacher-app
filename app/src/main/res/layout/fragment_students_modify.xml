@@ -85,26 +85,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.prance.lib.common.utils.weight.MyButton
-            android:id="@+id/complete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:nextFocusLeft="@id/cancel"
-            app:icon="@drawable/icon_yes_button"
-            android:layout_marginEnd="@dimen/m48.0"
-            app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:text="保存" />
-
-        <com.prance.lib.common.utils.weight.MyButton
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:nextFocusRight="@id/complete"
-            app:icon="@drawable/icon_no_button"
+            app:icon="@drawable/icon_back_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:text="取消" />
+            app:text="返回" />
 
     </LinearLayout>
 
