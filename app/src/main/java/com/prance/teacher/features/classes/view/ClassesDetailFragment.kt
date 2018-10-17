@@ -1,11 +1,8 @@
 package com.prance.teacher.features.classes.view
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
@@ -22,10 +19,8 @@ import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.afterclass.AfterClassActivity
-import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
@@ -38,9 +33,6 @@ import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.SubjectRankActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
-import com.spark.teaching.answertool.usb.model.ReportBindCard
-import kotlinx.android.synthetic.main.fragment_classes_detail.*
-import kotlinx.android.synthetic.main.fragment_delete_keypad.*
 import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
@@ -56,6 +48,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     private val mSparkServicePresenter: SparkServicePresenter by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
+
+            override fun onServiceConnected() {
+                super.onServiceConnected()
+
+                sendNameToKeyPad()
+            }
         })
     }
 
@@ -155,6 +153,13 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     fun onEvent(result: SubjectRankFragment.QuestionResult) {
         startActivity(SubjectRankActivity.callingIntent(context!!, result))
     }
+
+    @Subscribe
+    fun onEvent(bean: SendNameToKeyPad) {
+        sendNameToKeyPad()
+    }
+
+    class SendNameToKeyPad : Serializable
 
     override fun needEventBus(): Boolean = true
 
@@ -293,6 +298,10 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
         }
 
+        sendNameToKeyPad()
+    }
+
+    private fun sendNameToKeyPad() {
         //发送学生名称
         mStudentList?.run {
             for (s in this) {
@@ -302,7 +311,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
         }
     }
-
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         return true

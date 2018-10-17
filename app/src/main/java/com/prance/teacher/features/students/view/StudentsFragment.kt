@@ -17,6 +17,7 @@ import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.modifybind.StudentsModifyBindActivity
 import com.prance.teacher.features.modifybind.view.StudentsModifyBindFragment
@@ -24,6 +25,7 @@ import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.presenter.StudentsPresenter
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_students.*
+import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
 /**
@@ -175,6 +177,11 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     override fun bindSuccess() {
         hideBindProgress()
+
+        //更新用户列表和答题器显示
+        ClassesDetailFragment.mStudentList = mAdapter.data
+        EventBus.getDefault().post(ClassesDetailFragment.SendNameToKeyPad())
+
         bindSuccessDialog?.show()
         Flowable.timer(3, TimeUnit.SECONDS)
                 .mySubscribe {
