@@ -79,7 +79,7 @@ interface ApiService {
             get() = if (UrlUtil.isLocalHost())
                 "clicker/replace"
             else
-                "backend/course/clicker/replace"
+                "backend/teacher/clicker/replace"
     }
 
     @GET

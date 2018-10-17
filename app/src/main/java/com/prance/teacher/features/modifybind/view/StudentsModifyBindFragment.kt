@@ -51,6 +51,10 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
 
     override var mPresenter: IStudentsModifyBindContract.Presenter = StudentsModifyBindPresenter()
 
+    private var lastSelected = -1
+
+    private val mChooseKeyPadRequestCode = 10086
+
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
 
@@ -65,9 +69,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
 
         recycler.adapter = mAdapter
 
-        SparkService.mUsbSerialNum?.run {
-            matchKeyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
-        }
+        updateKeyPadCount()
 
         complete.setOnClickListener {
             val intent = Intent()
@@ -88,19 +90,32 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
                         .setMessage("确认修改该绑定关系吗？")
                         .setCancelButton("取消", null)
                         .setConfirmButton("确认") { _ ->
-                            startActivity(
+                            lastSelected = position
+                            this@StudentsModifyBindFragment.startActivityForResult(
                                     ChooseKeyPadActivity.callingIntent(
                                             this,
                                             DeleteKeyPadActivity.SerializableList(mAdapter.data),
                                             mClassesEntity,
                                             position
-                                    ))
+                                    ), mChooseKeyPadRequestCode)
                         }
                         .show()
             }
         }
 
         loadData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        updateKeyPadCount()
+    }
+
+    private fun updateKeyPadCount() {
+        SparkService.mUsbSerialNum?.run {
+            matchKeyPadCount.text = Html.fromHtml("""答题器数 <font color="#3AF0EE">${mPresenter.getKeyPadCount(this)}</font>""")
+        }
     }
 
     private fun loadData() {
@@ -113,16 +128,28 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
 
     override fun renderStudents(list: MutableList<StudentsEntity>) {
         hideProgress()
+
         mAdapter.setNewData(list)
         mAdapter.notifyDataSetChanged()
+
         studentCount.text = Html.fromHtml("""班级人数 <font color="#3AF0EE">${list.size}</font>""")
         calculateBindStudent()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1001) {
+        if (requestCode == mChooseKeyPadRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
+                val list = (data?.getSerializableExtra(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
+                mAdapter.setNewData(list)
+                mAdapter.notifyDataSetChanged()
+
+                //重新设置焦点
+                if (lastSelected != -1) {
+                    recycler.postDelayed({
+                        recycler.layoutManager.findViewByPosition(lastSelected).requestFocus()
+                    }, 250)
+                }
             }
         }
     }

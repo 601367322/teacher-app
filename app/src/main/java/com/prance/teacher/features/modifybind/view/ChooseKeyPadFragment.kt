@@ -46,8 +46,9 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
 
     private var mOldKeyPadList: MutableList<KeyPadEntity>? = null
 
-    lateinit var mClassesEntity: ClassesEntity
-    var mPosition: Int? = 0
+    private lateinit var mClassesEntity: ClassesEntity
+
+    private var mPosition: Int = 0
 
     companion object {
 
@@ -81,10 +82,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
                     mAdapter.addData(keyPadEntity)
                     mAdapter.notifyDataSetChanged()
 
-                    recycler.postDelayed({
-                        //最后一个答题器获取焦点
-                        recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).requestFocus()
-                    }, 250)
+                    requestLastFocus()
 
                     displayMoreBtn()
                 }
@@ -106,7 +104,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
 
         mClassesEntity = arguments?.getSerializable(ChooseKeyPadActivity.CLASSES) as ClassesEntity
 
-        mPosition = arguments?.getInt(ChooseKeyPadActivity.POSITION)
+        mPosition = arguments?.getInt(ChooseKeyPadActivity.POSITION,0)!!
 
         mEmptyView = rootView.findViewById(R.id.emptyImage)
 
@@ -119,7 +117,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
             }
         })
 
-        mAdapter.setOnItemChildClickListener { _, _, position ->
+        mAdapter.setOnItemClickListener { _, _, position ->
             val keyPadEntity = mAdapter.getItem(position)
 
             context?.run {
@@ -128,7 +126,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
                         .setCancelButton("取消", null)
                         .setConfirmButton("确认") { _ ->
                             showProgress()
-                            mPresenter.modifyBind(mClassesEntity.klass!!.id.toString(), mStudents[position], keyPadEntity!!.keyId)
+                            mPresenter.modifyBind(mClassesEntity.klass!!.id.toString(), mStudents[mPosition], keyPadEntity!!)
                         }
                         .show()
             }
@@ -141,6 +139,8 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
         displayMoreBtn()
 
         mSparkServicePresenter.bind()
+
+        requestLastFocus()
     }
 
     /**
@@ -218,6 +218,15 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
             emptyImage.invisible()
             recycler.visible()
         }
+    }
+
+    private fun requestLastFocus(){
+
+        recycler.postDelayed({
+            //最后一个答题器获取焦点
+            recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).requestFocus()
+        }, 250)
+
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

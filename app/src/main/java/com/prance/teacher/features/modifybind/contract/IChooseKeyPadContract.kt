@@ -26,7 +26,7 @@ interface IChooseKeyPadContract {
 
         fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity?
 
-        fun modifyBind(classId: String, student: StudentsEntity, newKeyPadId: String)
+        fun modifyBind(classId: String, student: StudentsEntity, keyPadEntity: KeyPadEntity)
     }
 
     interface Model : IModel {

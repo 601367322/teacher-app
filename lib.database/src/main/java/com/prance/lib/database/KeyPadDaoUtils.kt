@@ -32,6 +32,15 @@ class KeyPadDaoUtils {
         return keyPadEntity
     }
 
+    fun getKeyPadByKeyId(keyId: String): KeyPadEntity? {
+        val list = mDao.queryRaw("""where ${KeyPadEntityDao.Properties.KeyId.columnName} = '$keyId'""")
+        return if (list.isEmpty()) {
+            null
+        } else {
+            list[0]
+        }
+    }
+
     fun deleteKeyPad(serialNumber: String): Boolean {
         try {
             val builder = mDao.queryBuilder().where(KeyPadEntityDao.Properties.BaseStationSN.eq(serialNumber)).buildDelete()

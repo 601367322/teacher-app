@@ -33,11 +33,6 @@ class MatchKeyPadPresenter : BasePresenterKt<IMatchKeyPadContract.View>(), IMatc
 
     }
 
-
-    override fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity? {
-        return mModel.saveMatchedKeyPad(keyPadEntity)
-    }
-
     override fun saveAllKeyPad(serialNumber: String, data: List<KeyPadEntity>) {
         //删除所有已配对的答题器
         mModel.deleteKeyPad(serialNumber)

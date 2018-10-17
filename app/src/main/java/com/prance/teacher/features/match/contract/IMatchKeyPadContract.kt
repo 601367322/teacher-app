@@ -17,7 +17,6 @@ interface IMatchKeyPadContract {
 
     interface Presenter : IPresenter<View, Model> {
         fun getMatchedKeyPadByBaseStationId(serialNumber: String)
-        fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity?
         fun saveAllKeyPad(serialNumber: String, data: List<KeyPadEntity>)
     }
 
