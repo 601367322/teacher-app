@@ -71,17 +71,13 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
 
         updateKeyPadCount()
 
-        complete.setOnClickListener {
+        cancelBtn.setOnClickListener {
             val intent = Intent()
             intent.putExtra(STUDENTS, DeleteKeyPadActivity.SerializableList(mAdapter.data))
             activity?.run {
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
-        }
-
-        cancelBtn.setOnClickListener {
-            activity?.finish()
         }
 
         mAdapter.setOnItemClickListener { _, _, position ->
