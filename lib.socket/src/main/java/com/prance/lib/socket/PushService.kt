@@ -128,8 +128,8 @@ class PushService : Service() {
                 e.printStackTrace()
             }
 
-//            val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
-            val future = mBootstrap.connect("10.88.89.57", 8081);
+            val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
+//            val future = mBootstrap.connect("10.88.89.57", 8081);
 
             try {
                 future.addListener(object : ChannelFutureListener {
