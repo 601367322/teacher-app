@@ -158,11 +158,6 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_students
 
-    override fun onNetworkError(throwable: Throwable): Boolean {
-        hideProgress()
-        return true
-    }
-
     override fun bindFail() {
         hideBindProgress()
         ToastUtils.showShort("绑定失败，请按“OK”键重新绑定")

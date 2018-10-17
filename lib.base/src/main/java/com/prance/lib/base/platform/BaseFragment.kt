@@ -73,7 +73,7 @@ abstract class BaseFragment : Fragment(), ITopView {
 
     protected fun showProgress(str: String?) = progressStatus(View.VISIBLE, str)
 
-    protected fun hideProgress() = progressStatus(View.GONE, null)
+    fun hideProgress() = progressStatus(View.GONE, null)
 
     private fun progressStatus(viewStatus: Int, str: String?) {
         with(activity) {

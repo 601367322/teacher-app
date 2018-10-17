@@ -45,12 +45,6 @@ interface ApiService {
             else
                 "backend/course/app/binding"
 
-        val replaceKeyPad: String
-            get() = if (UrlUtil.isLocalHost())
-                "app/replace"
-            else
-                "backend/course/app/replace"
-
         val checkVersion: String
             get() = if (UrlUtil.isLocalHost())
                 "unauth/webApp/selectNewlyResult"
@@ -80,6 +74,12 @@ interface ApiService {
                 "web/interactiveResult"
             else
                 "backend/course/web/interactiveResult"
+
+        val modifyBind: String
+            get() = if (UrlUtil.isLocalHost())
+                "clicker/replace"
+            else
+                "backend/course/clicker/replace"
     }
 
     @GET
@@ -127,4 +127,11 @@ interface ApiService {
      */
     @GET
     fun getPKResult(@Url url: String, @Query("questionId") questionId: Int): Flowable<PKResult>
+
+    /**
+     * 替换答题器
+     */
+    @FormUrlEncoded
+    @POST
+    fun modifyBind(@Url url: String, @Field("classId") classId: String, @Field("oldClickerNum") oldClickerNum: String, @Field("newClickerNum") newClickerNum: String): Flowable<Any>
 }

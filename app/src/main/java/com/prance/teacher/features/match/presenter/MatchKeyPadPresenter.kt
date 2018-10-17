@@ -19,11 +19,9 @@ class MatchKeyPadPresenter : BasePresenterKt<IMatchKeyPadContract.View>(), IMatc
 
     override val mModel: IMatchKeyPadContract.Model = MatchKeyPadModel()
 
-    val mMatchKeyPadModel = MatchKeyPadModel()
-
     override fun getMatchedKeyPadByBaseStationId(serialNumber: String) {
         Flowable.create<MutableList<KeyPadEntity>>({
-            val list = mMatchKeyPadModel.getAllKeyPadByBaseStationSN(serialNumber)
+            val list = mModel.getAllKeyPadByBaseStationSN(serialNumber)
             if (list?.isNotEmpty()!!) {
                 it.onNext(list)
                 it.onComplete()

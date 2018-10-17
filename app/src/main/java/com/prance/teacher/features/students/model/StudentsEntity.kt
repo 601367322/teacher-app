@@ -23,6 +23,11 @@ class StudentsEntity : Serializable {
     class Clicker : Serializable {
         var id: Int? = null
         var number: String? = null
+
+        constructor(number: String) {
+            this.number = number
+        }
+
         override fun toString(): String {
             return "Clicker(id=$id, number=$number)"
         }

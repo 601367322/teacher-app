@@ -179,11 +179,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
     override fun layoutId(): Int = R.layout.fragment_classes
 
-    override fun onNetworkError(throwable: Throwable): Boolean {
-        hideProgress()
-        return false
-    }
-
     override fun onResume() {
         super.onResume()
 

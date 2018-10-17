@@ -8,12 +8,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
-import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.spark.SparkService
-import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
@@ -21,11 +18,8 @@ import com.prance.teacher.features.modifybind.ChooseKeyPadActivity
 import com.prance.teacher.features.modifybind.contract.IStudentsModifyBindContract
 import com.prance.teacher.features.modifybind.presenter.StudentsModifyBindPresenter
 import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.students.presenter.StudentsPresenter
-import com.prance.teacher.features.students.view.StudentsFragment
 import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import kotlinx.android.synthetic.main.fragment_students_modify.*
-import java.io.Serializable
 
 /**
  * Description :
@@ -94,7 +88,13 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
                         .setMessage("确认修改该绑定关系吗？")
                         .setCancelButton("取消", null)
                         .setConfirmButton("确认") { _ ->
-                            startActivity(ChooseKeyPadActivity.callingIntent(this, DeleteKeyPadActivity.SerializableList(mAdapter.data)))
+                            startActivity(
+                                    ChooseKeyPadActivity.callingIntent(
+                                            this,
+                                            DeleteKeyPadActivity.SerializableList(mAdapter.data),
+                                            mClassesEntity,
+                                            position
+                                    ))
                         }
                         .show()
             }
@@ -118,13 +118,6 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
         studentCount.text = Html.fromHtml("""班级人数 <font color="#3AF0EE">${list.size}</font>""")
         calculateBindStudent()
     }
-
-
-    override fun onNetworkError(throwable: Throwable): Boolean {
-        hideProgress()
-        return true
-    }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

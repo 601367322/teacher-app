@@ -37,9 +37,9 @@ class AfterClassPresenter : BasePresenterKt<IAfterClassContract.View>(), IAfterC
                     if (mTime < 1) {
                         mDisposable()
                         mView?.showLoading()
-                        mModel.confirmChoose(feedback.classId!!, feedback.questionId!!).mySubscribe(onSubscribeError, {
+                        mModel.confirmChoose(feedback.classId!!, feedback.questionId!!).mySubscribe(onSubscribeError) {
                             mView?.confirmChooseSuccess()
-                        })
+                        }
                     }
                 }
     }

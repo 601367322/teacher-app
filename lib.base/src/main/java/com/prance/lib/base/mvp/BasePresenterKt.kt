@@ -1,5 +1,6 @@
 package com.prance.lib.base.mvp
 
+import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.ResultException
 import retrofit2.HttpException
@@ -13,9 +14,14 @@ open class BasePresenterKt<V : ITopView> {
     var mView: V? = null
 
     var onSubscribeError: (Throwable) -> Unit = {
+        mView?.run {
+            if (this is BaseFragment) {
+                hideProgress()
+            }
+        }
         if (it is HttpException && it.code() == 401) {
             mView?.exitToLogin()
-        }else{
+        } else {
             if (mView?.onNetworkError(it) == false)
                 defaultOnNetworkError(it)
         }
