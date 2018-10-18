@@ -56,6 +56,9 @@ abstract class BaseFragment : Fragment(), ITopView {
         if (!inited) {
             val rootView = mRootView!!.get()
             rootView?.let {
+                if (needEventBus()) {
+                    EventBus.getDefault().register(this)
+                }
 
                 inited()
                 inited = true
@@ -103,6 +106,9 @@ abstract class BaseFragment : Fragment(), ITopView {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        if (needEventBus())
+            EventBus.getDefault().unregister(this)
 
         hideProgress()
     }

@@ -183,8 +183,8 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         for (newC in list) {
             for (oldC in mAdapter.data) {
                 if (newC.id == oldC.id) {
-                    oldC.studentCount += newC.studentCount + 1
-                    oldC.bindingCount += newC.bindingCount + 1
+                    oldC.studentCount = newC.studentCount
+                    oldC.bindingCount = newC.bindingCount
                 }
             }
         }
