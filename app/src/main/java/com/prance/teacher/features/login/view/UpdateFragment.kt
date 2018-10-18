@@ -80,17 +80,21 @@ class UpdateFragment : BaseFragment(), UpdateService.MyDownloadListener {
     }
 
     private fun startInstall(downloadFile: File) {
-        val install = Intent(Intent.ACTION_VIEW)
-        install.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        //判断是否是AndroidN以及更高的版本
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val contentUri = FileProvider.getUriForFile(appContext, "${appContext.packageName}.fileProvider", downloadFile)
-            install.setDataAndType(contentUri, "application/vnd.android.package-archive")
-        } else {
-            install.setDataAndType(Uri.fromFile(downloadFile), "application/vnd.android.package-archive")
+        try {
+            val install = Intent(Intent.ACTION_VIEW)
+            install.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            //判断是否是AndroidN以及更高的版本
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val contentUri = FileProvider.getUriForFile(appContext, "${appContext.packageName}.fileProvider", downloadFile)
+                install.setDataAndType(contentUri, "application/vnd.android.package-archive")
+            } else {
+                install.setDataAndType(Uri.fromFile(downloadFile), "application/vnd.android.package-archive")
+            }
+            startActivity(install)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        startActivity(install)
     }
 
     override fun onProgress(currSize: Long, totalSize: Long) {

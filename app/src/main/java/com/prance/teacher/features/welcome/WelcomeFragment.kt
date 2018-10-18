@@ -3,6 +3,7 @@ package com.prance.teacher.features.welcome
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.spark.SparkListenerAdapter
@@ -21,6 +22,10 @@ class WelcomeFragment : BaseFragment() {
     var mDisposable: Disposable? = null
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+
+        //清理所有已打开的页面
+        ActivityUtils.finishAllActivitiesExceptNewest()
+
         mDisposable = Flowable.timer(3, TimeUnit.SECONDS)
                 .mySubscribe {
                     (activity as FragmentActivity).supportFragmentManager.inTransaction {
