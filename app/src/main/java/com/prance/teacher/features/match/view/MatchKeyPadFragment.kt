@@ -148,7 +148,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun onClick(v: View?) {
         when (v) {
             complete -> {
-                if (mMinStudentCount != null && mMinStudentCount != -1) {
+                if (mMinStudentCount != null && mMinStudentCount != -1 && mMinStudentCount!! > mAdapter.itemCount) {
                     context?.run {
                         AlertDialog(this)
                                 .setMessage("答题器数量小于班级人数，会出现有人无答题器使用的情况，是否完成配对？")
