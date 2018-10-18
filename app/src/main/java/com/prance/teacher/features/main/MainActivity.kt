@@ -13,6 +13,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
+import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.students.view.StudentsFragment
 import com.prance.teacher.utils.SoundUtils
 import com.prance.teacher.weight.FloatIcon
@@ -59,6 +60,8 @@ class MainActivity : BaseActivity() {
                 .setCancelButton("取消", null)
                 .setConfirmButton("退出") { _ ->
                     finish()
+
+                    startActivity(LoginActivity.callingIntent(this))
                 }
                 .show()
     }
