@@ -220,7 +220,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
                     return
                 }
                 574 -> {
-                    loginTip.text = "已登录\n在腾跃教师端确认登录"
+                    loginTip.text = "已扫码\n在腾跃教师端确认登录"
                 }
             }
         }
