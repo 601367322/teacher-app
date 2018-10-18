@@ -157,10 +157,10 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     override fun renderClasses(it: MutableList<ClassVo>) {
         hideProgress()
         mAdapter.setNewData(it)
-//        mAdapter.addData(it)
-//        mAdapter.addData(it)
-//        mAdapter.addData(it)
-//        mAdapter.addData(it)
+        mAdapter.addData(it)
+        mAdapter.addData(it)
+        mAdapter.addData(it)
+        mAdapter.addData(it)
         mAdapter.notifyDataSetChanged()
 
         rightArrow.post {
@@ -191,7 +191,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         isPaused = true
     }
 
-    private var isPaused = false
+    var isPaused = false
 
     override fun refreshClasses(list: MutableList<ClassVo>) {
         for (newC in list) {
@@ -202,7 +202,10 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
                 }
             }
         }
-        mAdapter.notifyItemRangeInserted(0,mAdapter.itemCount)
+        mAdapter.notifyDataSetChanged()
+        recycler?.postDelayed({
+            recycler.layoutManager?.findViewByPosition(mLastFocusPosition?:0)?.requestFocus()
+        },250)
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {
