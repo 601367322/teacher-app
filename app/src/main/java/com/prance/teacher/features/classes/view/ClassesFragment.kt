@@ -33,6 +33,8 @@ import com.prance.teacher.features.main.MainActivity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_classes.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import java.io.Serializable
 
 
 /**
@@ -175,19 +177,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         super.onResume()
 
         updateKeyPadCountTip()
-
-        if (isPaused) {
-            mLastFocusPosition = recycler.layoutManager?.getPosition(recycler.layoutManager?.focusedChild)
-            mPresenter.getAllClasses(false)
-        }
     }
-
-    override fun onPause() {
-        super.onPause()
-        isPaused = true
-    }
-
-    var isPaused = false
 
     override fun refreshClasses(list: MutableList<ClassVo>) {
         for (newC in list) {
@@ -200,9 +190,19 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         }
         mAdapter.notifyDataSetChanged()
         recycler?.postDelayed({
-            recycler.layoutManager?.findViewByPosition(mLastFocusPosition?:0)?.requestFocus()
-        },250)
+            recycler.layoutManager?.findViewByPosition(mLastFocusPosition ?: 0)?.requestFocus()
+        }, 250)
     }
+
+    override fun needEventBus(): Boolean = true
+
+    @Subscribe
+    fun onEvent(bean: RefreshClasses) {
+        mLastFocusPosition = recycler.layoutManager?.getPosition(recycler.layoutManager?.focusedChild)
+        mPresenter.getAllClasses(false)
+    }
+
+    class RefreshClasses : Serializable
 
     override fun onNetworkError(throwable: Throwable): Boolean {
         context?.let {

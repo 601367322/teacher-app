@@ -18,6 +18,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.modifybind.StudentsModifyBindActivity
 import com.prance.teacher.features.modifybind.view.StudentsModifyBindFragment
@@ -177,6 +178,9 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     override fun bindSuccess() {
         hideBindProgress()
+
+        //刷新班级信息
+        EventBus.getDefault().post(ClassesFragment.RefreshClasses())
 
         //更新用户列表和答题器显示
         ClassesDetailFragment.mStudentList = mAdapter.data
