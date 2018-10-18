@@ -24,7 +24,7 @@ import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.BuildConfig
-import com.prance.teacher.R.id.name
+import com.prance.teacher.R.id.*
 import com.prance.teacher.features.classes.ClassesNextStepActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.common.NetErrorFragment
@@ -60,6 +60,8 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
             }
         })
     }
+
+    private var mLastFocusPosition: Int? = 0
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         layoutManager = PagerGridLayoutManager(
@@ -155,6 +157,10 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     override fun renderClasses(it: MutableList<ClassVo>) {
         hideProgress()
         mAdapter.setNewData(it)
+//        mAdapter.addData(it)
+//        mAdapter.addData(it)
+//        mAdapter.addData(it)
+//        mAdapter.addData(it)
         mAdapter.notifyDataSetChanged()
 
         rightArrow.post {
@@ -174,19 +180,29 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         updateKeyPadCountTip()
 
-        mPresenter.getAllClasses(false)
+        if (isPaused) {
+            mLastFocusPosition = recycler.layoutManager?.getPosition(recycler.layoutManager?.focusedChild)
+            mPresenter.getAllClasses(false)
+        }
     }
 
+    override fun onPause() {
+        super.onPause()
+        isPaused = true
+    }
+
+    private var isPaused = false
+
     override fun refreshClasses(list: MutableList<ClassVo>) {
-        for (newC in list){
-            for(oldC in mAdapter.data){
-                if(newC.id == oldC.id){
-                    oldC.studentCount = newC.studentCount
-                    oldC.bindingCount = newC.bindingCount
+        for (newC in list) {
+            for (oldC in mAdapter.data) {
+                if (newC.id == oldC.id) {
+                    oldC.studentCount += newC.studentCount + 1
+                    oldC.bindingCount += newC.bindingCount + 1
                 }
             }
         }
-        mAdapter.notifyDataSetChanged()
+        mAdapter.notifyItemRangeInserted(0,mAdapter.itemCount)
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {
