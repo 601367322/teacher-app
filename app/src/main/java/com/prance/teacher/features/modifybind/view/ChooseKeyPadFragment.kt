@@ -104,7 +104,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
 
         mClassesEntity = arguments?.getSerializable(ChooseKeyPadActivity.CLASSES) as ClassesEntity
 
-        mPosition = arguments?.getInt(ChooseKeyPadActivity.POSITION,0)!!
+        mPosition = arguments?.getInt(ChooseKeyPadActivity.POSITION, 0)!!
 
         mEmptyView = rootView.findViewById(R.id.emptyImage)
 
@@ -220,12 +220,14 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
         }
     }
 
-    private fun requestLastFocus(){
+    private fun requestLastFocus() {
 
-        recycler.postDelayed({
-            //最后一个答题器获取焦点
-            recycler.layoutManager.findViewByPosition(mAdapter.data.size - 1).requestFocus()
-        }, 250)
+        if (mAdapter.data.size > 0) {
+            recycler?.postDelayed({
+                //最后一个答题器获取焦点
+                recycler.layoutManager?.findViewByPosition(mAdapter.data.size - 1)?.requestFocus()
+            }, 250)
+        }
 
     }
 
