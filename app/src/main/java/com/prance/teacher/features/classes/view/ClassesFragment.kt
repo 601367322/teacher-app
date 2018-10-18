@@ -157,10 +157,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     override fun renderClasses(it: MutableList<ClassVo>) {
         hideProgress()
         mAdapter.setNewData(it)
-        mAdapter.addData(it)
-        mAdapter.addData(it)
-        mAdapter.addData(it)
-        mAdapter.addData(it)
         mAdapter.notifyDataSetChanged()
 
         rightArrow.post {
