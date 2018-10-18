@@ -1,5 +1,6 @@
 package com.prance.teacher.features.classes.view
 
+import android.graphics.ColorSpace
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
@@ -119,7 +120,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
     private fun loadData() {
         showProgress()
 
-        mPresenter.getAllClasses()
+        mPresenter.getAllClasses(true)
     }
 
     override fun onPageSizeChanged(pageSize: Int) {
@@ -172,6 +173,20 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         super.onResume()
 
         updateKeyPadCountTip()
+
+        mPresenter.getAllClasses(false)
+    }
+
+    override fun refreshClasses(list: MutableList<ClassVo>) {
+        for (newC in list){
+            for(oldC in mAdapter.data){
+                if(newC.id == oldC.id){
+                    oldC.studentCount = newC.studentCount
+                    oldC.bindingCount = newC.bindingCount
+                }
+            }
+        }
+        mAdapter.notifyDataSetChanged()
     }
 
     override fun onNetworkError(throwable: Throwable): Boolean {

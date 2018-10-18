@@ -15,10 +15,11 @@ import io.reactivex.Flowable
 interface IClassesContract {
     interface View : IView<Presenter> {
         fun renderClasses(it: MutableList<ClassVo>)
+        fun refreshClasses(list: MutableList<ClassVo>)
     }
 
     interface Presenter : IPresenter<View, Model> {
-        fun getAllClasses()
+        fun getAllClasses(isRender: Boolean)
         fun getKeyPadCount(stationId: String): Int
     }
 

@@ -19,10 +19,13 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
 
     private val keyPadModel: MatchKeyPadModel = MatchKeyPadModel()
 
-    override fun getAllClasses() {
+    override fun getAllClasses(isRender: Boolean) {
         mModel.getAllClasses()
                 .mySubscribe(onSubscribeError) {
-                    mView?.renderClasses(it.list)
+                    if (isRender)
+                        mView?.renderClasses(it.list)
+                    else
+                        mView?.refreshClasses(it.list)
                 }
     }
 
