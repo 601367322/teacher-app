@@ -24,7 +24,7 @@ import java.io.Serializable
 
 class MainActivity : BaseActivity() {
 
-    override fun fragment(): BaseFragment = ClassesFragment.forAction(ClassesFragment.ACTION_TO_CLASS)
+    override fun fragment(): BaseFragment = ClassesFragment()
 
     companion object {
 

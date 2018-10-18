@@ -2,10 +2,12 @@ package com.prance.teacher.features.classes.view
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
+import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.ToastUtils
@@ -21,8 +23,11 @@ import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.teacher.BuildConfig
+import com.prance.teacher.R.id.name
 import com.prance.teacher.features.classes.ClassesNextStepActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
+import com.prance.teacher.features.common.NetErrorFragment
+import com.prance.teacher.features.login.view.UpdateFragment
 import com.prance.teacher.features.main.MainActivity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_classes.*
@@ -53,22 +58,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
                 updateKeyPadCountTip()
             }
         })
-    }
-
-    companion object {
-        const val ACTION = "action"
-        const val ACTION_TO_CLASS = 0
-        const val ACTION_TO_BIND = 1
-
-        fun forAction(action: Int?): ClassesFragment {
-            val fragment = ClassesFragment()
-            action?.let {
-                val arguments = Bundle()
-                arguments.putInt(ACTION, action)
-                fragment.arguments = arguments
-            }
-            return fragment
-        }
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
@@ -183,6 +172,19 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         super.onResume()
 
         updateKeyPadCountTip()
+    }
+
+    override fun onNetworkError(throwable: Throwable): Boolean {
+        context?.let {
+            (activity as FragmentActivity).supportFragmentManager.inTransaction {
+                replace(R.id.fragmentContainer, NetErrorFragment.callIntent {
+                    (it as FragmentActivity).supportFragmentManager.inTransaction {
+                        replace(R.id.fragmentContainer, ClassesFragment())
+                    }
+                })
+            }
+        }
+        return true
     }
 
     private fun updateKeyPadCountTip() {
