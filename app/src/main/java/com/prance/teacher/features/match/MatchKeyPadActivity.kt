@@ -9,9 +9,17 @@ import com.prance.teacher.features.match.view.MatchKeyPadFragment
 class MatchKeyPadActivity : BaseActivity() {
 
     companion object {
-        fun callingIntent(context: Context) = Intent(context, MatchKeyPadActivity::class.java)
+        const val STUDENT_COUNT = "studentCount"
+
+        fun callingIntent(context: Context, studentCount: Int?): Intent {
+            val intent = Intent(context, MatchKeyPadActivity::class.java)
+            studentCount?.run {
+                intent.putExtra(STUDENT_COUNT, studentCount)
+            }
+            return intent
+        }
     }
 
-    override fun fragment(): BaseFragment = MatchKeyPadFragment()
+    override fun fragment(): BaseFragment = MatchKeyPadFragment.forStudentCount(intent?.getIntExtra(STUDENT_COUNT, -1))
 
 }

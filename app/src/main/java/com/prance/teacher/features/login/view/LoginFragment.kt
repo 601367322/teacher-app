@@ -85,7 +85,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         match.setOnClickListener {
 
-//            if(BuildConfig.DEBUG){
+            //            if(BuildConfig.DEBUG){
 //                context?.let { startActivity(MainActivity.callingIntent(it)) }
 //                return@setOnClickListener
 //            }
@@ -94,7 +94,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
                 ToastUtils.showShort("请先连接接收器")
                 return@setOnClickListener
             }
-            activity?.run { startActivity(MatchKeyPadActivity.callingIntent(this)) }
+            activity?.run { startActivity(MatchKeyPadActivity.callingIntent(this, -1)) }
         }
 
         mSparkServicePresenter.bind()

@@ -23,6 +23,8 @@ import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.deletekeypad.view.DeleteKeyPadFragment
+import com.prance.teacher.features.login.LoginActivity
+import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
 
@@ -39,7 +41,22 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     private var mAdapter: MatchedKeyPadAdapter = MatchedKeyPadAdapter(R.layout.item_match_key_pad)
 
-    lateinit var mEmptyView:ImageView
+    lateinit var mEmptyView: ImageView
+
+    private var mMinStudentCount: Int? = -1
+
+    companion object {
+
+        fun forStudentCount(studentCount: Int?): MatchKeyPadFragment {
+            var fragment = MatchKeyPadFragment()
+            studentCount?.run {
+                var bundle = Bundle()
+                bundle.putInt(MatchKeyPadActivity.STUDENT_COUNT, studentCount)
+                fragment.arguments = bundle
+            }
+            return fragment
+        }
+    }
 
     private val mSparkServicePresenter: SparkServicePresenter  by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {
@@ -71,6 +88,8 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
         mEmptyView = rootView.findViewById(R.id.emptyImage)
+
+        mMinStudentCount = arguments?.getInt(MatchKeyPadActivity.STUDENT_COUNT, -1)
 
         //设置显示格式
         recycler.layoutManager = FocusGridLayoutManager(context!!, 6)
@@ -129,11 +148,20 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun onClick(v: View?) {
         when (v) {
             complete -> {
-                //保存答题器
-                SparkService.mUsbSerialNum?.run {
-                    mPresenter.saveAllKeyPad(this, mAdapter.data)
+                if (mMinStudentCount != null && mMinStudentCount != -1) {
+                    context?.run {
+                        AlertDialog(this)
+                                .setMessage("答题器数量小于班级人数，会出现有人无答题器使用的情况，是否完成配对？")
+                                .setCancelButton("继续配对", null)
+                                .setConfirmButton("完成配对") { _ ->
+                                    //保存答题器
+                                    completeMatch()
+                                }
+                                .show()
+                    }
+                } else {
+                    completeMatch()
                 }
-                activity?.finish()
             }
             replace -> {
                 context?.run {
@@ -141,6 +169,14 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
                 }
             }
         }
+    }
+
+    private fun completeMatch() {
+        //保存答题器
+        SparkService.mUsbSerialNum?.run {
+            mPresenter.saveAllKeyPad(this, mAdapter.data)
+        }
+        activity?.finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

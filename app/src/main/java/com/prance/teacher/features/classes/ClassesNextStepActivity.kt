@@ -74,7 +74,7 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
                         }
 
                         autoNextStep = {
-                            startActivity(MatchKeyPadActivity.callingIntent(this@ClassesNextStepActivity))
+                            startActivity(MatchKeyPadActivity.callingIntent(this@ClassesNextStepActivity, classVo.studentCount))
                         }
                     }
                     else -> {
