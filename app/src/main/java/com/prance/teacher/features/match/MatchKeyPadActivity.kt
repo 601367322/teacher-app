@@ -3,7 +3,6 @@ package com.prance.teacher.features.match
 import android.content.Context
 import android.content.Intent
 import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.common.utils.Constants.CLASS
 import com.prance.lib.common.utils.Constants.CLASSES
 import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.teacher.base.core.platform.BaseActivity
