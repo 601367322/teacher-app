@@ -27,8 +27,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.subject.SubjectActivity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.subject.model.KeyPadResult
 import com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
@@ -121,12 +120,12 @@ class SubjectOnStartFragment : BaseFragment() {
                     //答题器事件
                     val keyPadResult = msg.obj as KeyPadResult
 
-                    var studentEntity: StudentsEntity? = ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyPadResult.clickerId)
+                    var studentEntity: StudentEntity? = ClassesDetailFragment.checkIsSignStudent(mQuestion?.signStudents, keyPadResult.clickerId)
 
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
                         if (studentEntity == null) {
-                            studentEntity = StudentsEntity(1, "假数据01", "https://upload.jianshu.io/users/upload_avatars/2897594/eb8b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
+                            studentEntity = StudentEntity(1, "假数据01", "https://upload.jianshu.io/users/upload_avatars/2897594/eb8b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
                         }
                     }
                     if (studentEntity == null) {
@@ -171,7 +170,7 @@ class SubjectOnStartFragment : BaseFragment() {
                 }
                 SHOW_DANMU_WHAT -> {
                     //显示弹幕
-                    val studentsEntity = msg.obj as StudentsEntity
+                    val studentsEntity = msg.obj as StudentEntity
                     val avatarHeight = resources.getDimensionPixelOffset(R.dimen.m104_0)
                     //加载头像
                     GlideApp.with(this@SubjectOnStartFragment)

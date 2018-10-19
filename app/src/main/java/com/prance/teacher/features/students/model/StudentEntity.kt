@@ -2,7 +2,7 @@ package com.prance.teacher.features.students.model
 
 import java.io.Serializable
 
-class StudentsEntity : Serializable {
+class StudentEntity : Serializable {
 
     var id: Int? = null
     var name: String = ""
@@ -41,7 +41,7 @@ class StudentsEntity : Serializable {
     }
 
     override fun toString(): String {
-        return "StudentsEntity(id=$id, name=$name, clickers=$clickers)"
+        return "StudentEntity(id=$id, name=$name, clickers=$clickers)"
     }
 
 }

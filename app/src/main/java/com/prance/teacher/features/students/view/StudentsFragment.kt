@@ -19,13 +19,12 @@ import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.modifybind.StudentsModifyBindActivity
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.students.presenter.StudentsPresenter
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_students.*
@@ -137,7 +136,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         bindProgress?.dismiss()
     }
 
-    override fun renderStudents(list: MutableList<StudentsEntity>) {
+    override fun renderStudents(list: MutableList<StudentEntity>) {
         hideProgress()
         mAdapter.setNewData(list)
         mAdapter.notifyDataSetChanged()
@@ -203,7 +202,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         if (requestCode == mModifyBindRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
                 data?.run {
-                    val students = (getSerializableExtra(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
+                    val students = (getSerializableExtra(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentEntity>).list
                     mAdapter.setNewData(students)
                     mAdapter.notifyDataSetChanged()
                 }
@@ -222,7 +221,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     }
 
     override fun checkMatch() {
-        var hasNoKeyPadStudent: StudentsEntity? = null
+        var hasNoKeyPadStudent: StudentEntity? = null
         for (student in mAdapter.data) {
             if (student.clickers == null || student.clickers?.isEmpty()!!) {
                 hasNoKeyPadStudent = student

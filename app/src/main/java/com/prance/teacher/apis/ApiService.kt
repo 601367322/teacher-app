@@ -7,7 +7,7 @@ import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.teacher.features.login.model.QrCodeEntity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.pk.model.PKResult
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.Flowable
 import retrofit2.http.*
 
@@ -92,10 +92,10 @@ interface ApiService {
     fun allClasses(@Url url: String): Flowable<ResponseBody<ClassVo>>
 
     @GET
-    fun studentsForClasses(@Url url: String, @Query("classId") classId: String): Flowable<ResponseBody<StudentsEntity>>
+    fun studentsForClasses(@Url url: String, @Query("classId") classId: String): Flowable<ResponseBody<StudentEntity>>
 
     @GET
-    fun bindKeyPad(@Url url: String, @Query("classId") classId: String, @Query("clickerNums") clickerNums: MutableList<String>): Flowable<ResponseBody<StudentsEntity>>
+    fun bindKeyPad(@Url url: String, @Query("classId") classId: String, @Query("clickerNums") clickerNums: MutableList<String>): Flowable<ResponseBody<StudentEntity>>
 
     @POST
     fun replaceKeyPad(@Url url: String, @Query("classId") classId: String, @Query("oldClikerNum") oldKeyPadId: String, @Query("newClikerNum") newKeyPadId: String): Flowable<Any>

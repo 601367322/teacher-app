@@ -6,13 +6,13 @@ import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import kotlinx.android.synthetic.main.item_students.view.*
 
-class StudentsModifyBindAdapter : BaseQuickAdapter<StudentsEntity, BaseViewHolder> {
+class StudentsModifyBindAdapter : BaseQuickAdapter<StudentEntity, BaseViewHolder> {
     constructor(layoutResId: Int) : super(layoutResId)
 
-    override fun convert(helper: BaseViewHolder?, bean: StudentsEntity?) {
+    override fun convert(helper: BaseViewHolder?, bean: StudentEntity?) {
         bean?.run {
             helper?.run {
                 itemView.keyPadId.invisible()

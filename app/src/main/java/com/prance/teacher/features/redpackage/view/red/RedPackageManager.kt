@@ -10,7 +10,7 @@ import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.redpackage.model.RedPackageStatus
 import com.prance.teacher.features.redpackage.model.StudentScore
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -360,7 +360,7 @@ class RedPackageManager {
         //如果没有找到，则说明第一次答对题
         if (studentScore == null) {
             //根据keyId去找到对应的学生信息
-            var studentEntity: StudentsEntity? = null
+            var studentEntity: StudentEntity? = null
             ClassesDetailFragment.mStudentList?.let {
                 for (item in it) {
                     if (KeyID == item.getClicker()?.number) {
@@ -370,7 +370,7 @@ class RedPackageManager {
             }
 
             if (BuildConfig.DEBUG) {
-//                studentEntity = StudentsEntity("", "")
+//                studentEntity = StudentEntity("", "")
             }
 
             //如果学生信息没有找到，则放弃处理

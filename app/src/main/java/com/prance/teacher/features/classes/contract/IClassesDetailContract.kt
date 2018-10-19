@@ -3,7 +3,7 @@ package com.prance.teacher.features.classes.contract
 import com.prance.lib.base.mvp.*
 import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.lib.database.KeyPadEntity
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.Flowable
 
 /**
@@ -18,7 +18,7 @@ interface IClassesDetailContract {
         /**
          * 获取到了学生列表的集合
          */
-        fun studentList(list: MutableList<StudentsEntity>)
+        fun studentList(list: MutableList<StudentEntity>)
     }
     interface Presenter : IPresenter<View, Model> {
         /**
@@ -30,6 +30,6 @@ interface IClassesDetailContract {
 
     }
     interface Model : IModel {
-        fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>>
+        fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentEntity>>
     }
 }

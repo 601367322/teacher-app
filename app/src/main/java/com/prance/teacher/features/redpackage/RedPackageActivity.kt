@@ -56,10 +56,10 @@ class RedPackageActivity : BaseActivity(), MessageListener {
 //            Flowable.timer(3, TimeUnit.SECONDS)
 //                    .subscribe {
 //                        redPackageRank(mutableListOf(
-//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-//                                StudentScore(StudentsEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5)
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5)
 //                        ))
 //                    }
         }

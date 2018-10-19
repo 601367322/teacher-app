@@ -9,13 +9,12 @@ import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.RedPackageTipStatus
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.weight.FontCustom
 import android.graphics.PaintFlagsDrawFilter
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.SimpleTarget
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 
@@ -54,7 +53,7 @@ class ScoreTip {
     //动画集
     var animatorSet: AnimatorSet? = null
 
-    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentsEntity, score: Int, tipBitmap: Bitmap, scoreBitmaps: MutableMap<String, Bitmap>) {
+    constructor(context: Context, x: Int, y: Int, redPackageWidth: Int, redPackageHeight: Int, student: StudentEntity, score: Int, tipBitmap: Bitmap, scoreBitmaps: MutableMap<String, Bitmap>) {
 
         this.context = context
 

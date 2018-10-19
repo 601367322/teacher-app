@@ -6,7 +6,7 @@ import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.match.model.MatchKeyPadModel
 import com.prance.teacher.features.modifybind.model.ChooseKeyPadModel
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 
@@ -39,16 +39,16 @@ class ChooseKeyPadPresenter : BasePresenterKt<IChooseKeyPadContract.View>(), ICh
     }
 
 
-    override fun modifyBind(classId: String, student: StudentsEntity, keyPadEntity: KeyPadEntity) {
+    override fun modifyBind(classId: String, student: StudentEntity, keyPadEntity: KeyPadEntity) {
         mModel.modifyBind(classId, student.getClicker()?.number!!, keyPadEntity.keyId)
                 .mySubscribe(onSubscribeError) {
                     //将答题器保存数据库
                     mMatchKeyPadModel.saveMatchedKeyPad(keyPadEntity)
 
                     student.clickers = mutableListOf(
-                            StudentsEntity.Clicker(keyPadEntity.keyId)
+                            StudentEntity.Clicker(keyPadEntity.keyId)
                     )
-                    mView?.modifySuccess()
+                    mView?.modifySuccess(student)
                 }
     }
 

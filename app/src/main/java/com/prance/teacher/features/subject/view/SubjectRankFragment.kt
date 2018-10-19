@@ -10,10 +10,7 @@ import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
-import com.prance.teacher.features.students.model.StudentsEntity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.utils.SoundUtils
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
@@ -73,11 +70,11 @@ class SubjectRankFragment : BaseFragment() {
         var classId: Int? = null
         var answerMsg: Answer? = null
         var answer: String? = null
-        var rank: List<StudentsEntity> = mutableListOf()
+        var rank: List<StudentEntity> = mutableListOf()
 
         constructor()
 
-        constructor(classId: Int?, answerMsg: Answer?, answer: String?, rank: List<StudentsEntity>) {
+        constructor(classId: Int?, answerMsg: Answer?, answer: String?, rank: List<StudentEntity>) {
             this.classId = classId
             this.answerMsg = answerMsg
             this.answer = answer

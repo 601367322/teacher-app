@@ -17,7 +17,7 @@ import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Compani
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_WIDTH
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.lines
 import com.prance.teacher.features.redpackage.view.red.RedPackageManager.Companion.DEFAULT_SCORE
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.utils.SoundUtils
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
@@ -152,7 +152,7 @@ class RedPackage {
 
                 if (BuildConfig.DEBUG) {
                     if (y > 300 && hideAnimator == null) {
-                        destroy(StudentScore(StudentsEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "https://gd2.alicdn.i4/698598873/O1CN012FPskizp9t8Ufvn_!!698598873.jpg_400x400.jpg"), 2, 2))
+                        destroy(StudentScore(StudentEntity(mutableListOf("百度", "笑话", "呵呵")[(Math.random() * 2).toInt()], "https://gd2.alicdn.i4/698598873/O1CN012FPskizp9t8Ufvn_!!698598873.jpg_400x400.jpg"), 2, 2))
                     }
                 }
             }

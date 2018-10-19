@@ -2,7 +2,7 @@ package com.prance.teacher.features.modifybind.contract
 
 import com.prance.lib.base.mvp.*
 import com.prance.lib.common.utils.http.ResponseBody
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.Flowable
 
 /**
@@ -14,13 +14,13 @@ import io.reactivex.Flowable
 
 interface IStudentsModifyBindContract {
     interface View : IView<Presenter> {
-        fun renderStudents(list: MutableList<StudentsEntity>)
+        fun renderStudents(list: MutableList<StudentEntity>)
     }
     interface Presenter : IPresenter<View, Model> {
         fun getStudentsByClassesId(id: String)
         fun getKeyPadCount(mUsbSerialNum: String): Int
     }
     interface Model : IModel {
-        fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>>
+        fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentEntity>>
     }
 }

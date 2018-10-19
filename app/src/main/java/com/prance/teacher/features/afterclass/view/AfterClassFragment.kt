@@ -9,11 +9,10 @@ import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
-import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.afterclass.contract.IAfterClassContract
 import com.prance.teacher.features.afterclass.presenter.AfterClassPresenter
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import kotlinx.android.synthetic.main.fragment_after_class.*
 
@@ -33,7 +32,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     override fun layoutId(): Int = R.layout.fragment_after_class
 
-    private var mSignStudents: MutableList<StudentsEntity> = mutableListOf()
+    private var mSignStudents: MutableList<StudentEntity> = mutableListOf()
 
     private val mSparkServicePresenter by lazy {
         SparkServicePresenter(context!!, object : SparkListenerAdapter() {

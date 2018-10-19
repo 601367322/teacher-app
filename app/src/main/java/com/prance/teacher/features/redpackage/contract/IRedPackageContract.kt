@@ -5,7 +5,7 @@ import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.Flowable
 
 /**
@@ -55,6 +55,6 @@ interface IRedPackageContract {
         /**
          * 获取学生列表信息
          */
-        fun getStudentList(classId: String): Flowable<ResponseBody<StudentsEntity>>
+        fun getStudentList(classId: String): Flowable<ResponseBody<StudentEntity>>
     }
 }

@@ -2,7 +2,7 @@ package com.prance.teacher.features.modifybind.contract
 
 import com.prance.lib.base.mvp.*
 import com.prance.lib.database.KeyPadEntity
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.Flowable
 
 /**
@@ -17,7 +17,7 @@ interface IChooseKeyPadContract {
 
         fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>)
 
-        fun modifySuccess()
+        fun modifySuccess(student: StudentEntity)
     }
 
     interface Presenter : IPresenter<View, Model> {
@@ -26,7 +26,7 @@ interface IChooseKeyPadContract {
 
         fun saveMatchedKeyPad(keyPadEntity: KeyPadEntity): KeyPadEntity?
 
-        fun modifyBind(classId: String, student: StudentsEntity, keyPadEntity: KeyPadEntity)
+        fun modifyBind(classId: String, student: StudentEntity, keyPadEntity: KeyPadEntity)
     }
 
     interface Model : IModel {

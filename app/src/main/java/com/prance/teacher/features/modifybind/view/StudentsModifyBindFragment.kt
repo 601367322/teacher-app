@@ -15,12 +15,11 @@ import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.modifybind.ChooseKeyPadActivity
 import com.prance.teacher.features.modifybind.contract.IStudentsModifyBindContract
 import com.prance.teacher.features.modifybind.presenter.StudentsModifyBindPresenter
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import kotlinx.android.synthetic.main.fragment_students_modify.*
 
 /**
@@ -122,7 +121,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
         }
     }
 
-    override fun renderStudents(list: MutableList<StudentsEntity>) {
+    override fun renderStudents(list: MutableList<StudentEntity>) {
         hideProgress()
 
         mAdapter.setNewData(list)
@@ -136,7 +135,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == mChooseKeyPadRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
-                val list = (data?.getSerializableExtra(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
+                val list = (data?.getSerializableExtra(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentEntity>).list
                 mAdapter.setNewData(list)
                 mAdapter.notifyDataSetChanged()
 

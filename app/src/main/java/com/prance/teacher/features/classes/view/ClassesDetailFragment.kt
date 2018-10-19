@@ -28,7 +28,7 @@ import com.prance.teacher.features.classes.presenter.ClassesDetailPresenter
 import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.SubjectRankActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
@@ -72,12 +72,12 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         /**
          * 班级学生列表的集合
          */
-        var mStudentList: MutableList<StudentsEntity>? = null
+        var mStudentList: MutableList<StudentEntity>? = null
 
         var mKeyPadList: MutableList<KeyPadEntity>? = null
 
-        fun getSignStudents(signStudents: MutableList<StudentsEntity>?): MutableList<StudentsEntity> {
-            val mSignStudents = mutableListOf<StudentsEntity>()
+        fun getSignStudents(signStudents: MutableList<StudentEntity>?): MutableList<StudentEntity> {
+            val mSignStudents = mutableListOf<StudentEntity>()
             mStudentList?.run {
                 for (s in this) {
                     signStudents?.let {
@@ -95,7 +95,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         /**
          * 根据答题器，检测学员是否签到
          */
-        fun checkIsSignStudent(signStudents: MutableList<StudentsEntity>?, keyPadId: String): StudentsEntity? {
+        fun checkIsSignStudent(signStudents: MutableList<StudentEntity>?, keyPadId: String): StudentEntity? {
 
             if (!checkIsMatchedKeyPad(keyPadId)) {
                 return null
@@ -250,9 +250,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var result: String? = null
         var createTime = System.currentTimeMillis()
         var duration: Int? = null
-        var signStudents: MutableList<StudentsEntity>? = null
+        var signStudents: MutableList<StudentEntity>? = null
 
-        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, signStudents: MutableList<StudentsEntity>?) {
+        constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, signStudents: MutableList<StudentEntity>?) {
             this.classId = classId
             this.type = type
             this.param = param
@@ -285,7 +285,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         }
     }
 
-    override fun studentList(list: MutableList<StudentsEntity>) {
+    override fun studentList(list: MutableList<StudentEntity>) {
         mStudentList = list
 
         //提前下载学生头像缓存

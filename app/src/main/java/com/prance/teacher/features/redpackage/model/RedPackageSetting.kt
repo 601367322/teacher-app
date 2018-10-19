@@ -1,6 +1,6 @@
 package com.prance.teacher.features.redpackage.model
 
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import java.io.Serializable
 
 /**
@@ -23,7 +23,7 @@ class RedPackageSetting : Serializable {
      */
     var integrat: Int? = null
 
-    var signStudents: MutableList<StudentsEntity>? = null
+    var signStudents: MutableList<StudentEntity>? = null
 
     constructor(classId: Int?, lastTime: Int?, interactId: Int?, integrat: Int?) {
         this.classId = classId

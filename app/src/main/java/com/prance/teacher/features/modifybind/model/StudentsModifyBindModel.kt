@@ -5,7 +5,7 @@ import com.prance.lib.common.utils.http.ResponseBody
 import com.prance.lib.common.utils.http.RetrofitUtils
 import com.prance.teacher.apis.ApiService
 import com.prance.teacher.features.modifybind.contract.IStudentsModifyBindContract
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import io.reactivex.Flowable
 
 /**
@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 
 class StudentsModifyBindModel : BaseModelKt(), IStudentsModifyBindContract.Model {
 
-    override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentsEntity>> {
+    override fun getStudentsByClassesId(id: String): Flowable<ResponseBody<StudentEntity>> {
         return RetrofitUtils.getApiService(ApiService::class.java).studentsForClasses(ApiService.studentsForClasses, id)
     }
 }

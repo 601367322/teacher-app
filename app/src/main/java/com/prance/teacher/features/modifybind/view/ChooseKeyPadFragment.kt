@@ -24,12 +24,10 @@ import com.prance.teacher.features.modifybind.contract.IChooseKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.match.view.MatchedKeyPadAdapter
-import com.prance.teacher.features.modifybind.ChooseKeyPadActivity
 import com.prance.teacher.features.modifybind.presenter.ChooseKeyPadPresenter
-import com.prance.teacher.features.students.model.StudentsEntity
+import com.prance.teacher.features.students.model.StudentEntity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_choose_keypad.*
 
@@ -46,7 +44,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
 
     lateinit var mEmptyView: ImageView
 
-    private lateinit var mStudents: MutableList<StudentsEntity>
+    private lateinit var mStudents: MutableList<StudentEntity>
 
     private var mOldKeyPadList: MutableList<KeyPadEntity>? = null
 
@@ -56,7 +54,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
 
     companion object {
 
-        fun forStudents(list: DeleteKeyPadActivity.SerializableList<StudentsEntity>, classes: ClassVo, position: Int): ChooseKeyPadFragment {
+        fun forStudents(list: DeleteKeyPadActivity.SerializableList<StudentEntity>, classes: ClassVo, position: Int): ChooseKeyPadFragment {
             val fragment = ChooseKeyPadFragment()
             val arguments = Bundle()
             arguments.putSerializable(STUDENTS, list)
@@ -104,7 +102,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
-        mStudents = (arguments?.getSerializable(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
+        mStudents = (arguments?.getSerializable(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentEntity>).list
 
         mClassesEntity = arguments?.getSerializable(CLASSES) as ClassVo
 
@@ -170,8 +168,13 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
         displayMoreBtn()
     }
 
-    override fun modifySuccess() {
+    override fun modifySuccess(student: StudentEntity) {
         ToastUtils.showShort("绑定成功")
+
+        student.getClicker()?.number?.run {
+            mSparkServicePresenter.sendData(student.name, this)
+        }
+
         activity?.run {
             val intent = Intent()
             intent.putExtra(STUDENTS, DeleteKeyPadActivity.SerializableList(mStudents))
