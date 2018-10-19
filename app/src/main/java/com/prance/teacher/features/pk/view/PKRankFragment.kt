@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.Constants.PK_RESULT
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -25,8 +26,6 @@ class PKRankFragment : BaseFragment() {
     override fun layoutId(): Int = R.layout.fragment_pk_rank
 
     companion object {
-
-        const val PK_RESULT = "PKResult"
 
         fun forPKResult(pkResult: PKResult): PKRankFragment {
             var fragment = PKRankFragment()

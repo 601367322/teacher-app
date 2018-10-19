@@ -10,8 +10,11 @@ import android.text.Html
 import android.view.View
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.Constants.CLASSES
+import com.prance.lib.common.utils.Constants.STUDENTS
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -20,8 +23,8 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
+import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.modifybind.StudentsModifyBindActivity
-import com.prance.teacher.features.modifybind.view.StudentsModifyBindFragment
 import com.prance.teacher.features.students.model.StudentsEntity
 import com.prance.teacher.features.students.presenter.StudentsPresenter
 import io.reactivex.Flowable
@@ -39,9 +42,8 @@ import java.util.concurrent.TimeUnit
 class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     companion object {
-        const val CLASSES = "classes"
 
-        fun forClasses(classes: ClassesEntity): StudentsFragment {
+        fun forClasses(classes: ClassVo): StudentsFragment {
             val fragment = StudentsFragment()
             val arguments = Bundle()
             arguments.putSerializable(CLASSES, classes)
@@ -50,7 +52,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         }
     }
 
-    lateinit var mClassesEntity: ClassesEntity
+    lateinit var mClassesEntity: ClassVo
 
     private val bindProgress by lazy(mode = LazyThreadSafetyMode.NONE) {
         context?.run {
@@ -71,7 +73,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override var mPresenter: IStudentsContract.Presenter = StudentsPresenter()
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
+        mClassesEntity = arguments?.getSerializable(CLASSES) as ClassVo
 
         recycler.layoutManager = GridLayoutManager(activity, 6)
 
@@ -84,12 +86,15 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
         recycler.adapter = mAdapter
 
-        startClass.setOnClickListener { activity?.finish() }
+        startClass.setOnClickListener {
+            EventBus.getDefault().post(MainActivity.EventMainStartClass())
+            activity?.finish()
+        }
 
         start.setOnClickListener {
             SparkService.mUsbSerialNum?.let {
                 showBindProgress()
-                mPresenter.startBind(mClassesEntity.klass?.id.toString(), it)
+                mPresenter.startBind(mClassesEntity.id.toString(), it)
             }
         }
 
@@ -106,7 +111,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
 
     private fun loadData() {
         showProgress()
-        val id = mClassesEntity.klass?.id.toString()
+        val id = mClassesEntity.id.toString()
         id.let {
             mPresenter.getStudentsByClassesId(id)
         }
@@ -198,7 +203,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         if (requestCode == mModifyBindRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
                 data?.run {
-                    val students = (getSerializableExtra(StudentsModifyBindFragment.STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
+                    val students = (getSerializableExtra(STUDENTS) as DeleteKeyPadActivity.SerializableList<StudentsEntity>).list
                     mAdapter.setNewData(students)
                     mAdapter.notifyDataSetChanged()
                 }

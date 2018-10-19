@@ -14,4 +14,26 @@ object Constants {
     const val SOCKET_HOST = "socket_host"
 
     const val SOCKET_PORT = "socket_port"
+
+    const val CLASSES = "classes"
+
+    const val POSITION = "position"
+
+    const val FEED_BACK = "feedback"
+
+    const val KEYPAD_LIST = "keypad_list"
+
+    const val SETTING = "setting"
+
+    const val PK_RESULT = "PKResult"
+
+    const val SCORES = "scores"
+
+    const val STUDENTS = "students"
+
+    const val QUESTION = "question"
+
+    const val QUESTION_RESULT = "questionResult"
+
+    const val VERSION_ENTITY = "entity"
 }

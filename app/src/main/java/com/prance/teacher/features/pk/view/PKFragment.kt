@@ -15,6 +15,7 @@ import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.isVisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
+import com.prance.lib.common.utils.Constants.SETTING
 import com.prance.lib.common.utils.dateFormat_Min_Second
 import com.prance.lib.common.utils.format
 import com.prance.lib.common.utils.http.mySubscribe
@@ -51,7 +52,6 @@ import java.util.concurrent.TimeUnit
 class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTimeListener {
 
     companion object {
-        const val SETTING = "setting"
 
         fun forSetting(setting: ClassesDetailFragment.Question): PKFragment {
             val fragment = PKFragment()

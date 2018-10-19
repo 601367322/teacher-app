@@ -5,16 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.common.utils.Constants.CLASSES
 import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.lib.teacher.base.core.platform.BaseActivity
-import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.contract.IClassesNextStepContract
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.presenter.ClassesNextStepPresenter
-import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.classes.view.ClassesNextStepExistUnBindStudents
 import com.prance.teacher.features.classes.view.ClassesNextStepKeyPadInadequate
 import com.prance.teacher.features.classes.view.ClassesNextStepOK
@@ -22,9 +19,7 @@ import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
 import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.weight.CountTimeButton
-import io.reactivex.Flowable
 import org.greenrobot.eventbus.EventBus
-import java.util.concurrent.TimeUnit
 
 class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, CountTimeButton.CountTimButtonListener {
 
@@ -32,14 +27,11 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
 
     override var mPresenter: IClassesNextStepContract.Presenter = ClassesNextStepPresenter()
 
-    var mClassEntity: ClassesEntity? = null
-
     companion object {
-        const val CLASS = "class"
 
         fun callingIntent(context: Context, classVo: ClassVo): Intent {
             val intent = Intent(context, ClassesNextStepActivity::class.java)
-            intent.putExtra(CLASS, classVo)
+            intent.putExtra(CLASSES, classVo)
             return intent
         }
     }
@@ -48,17 +40,17 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
 
     var autoNextStep: (() -> Unit)? = null
 
+    lateinit var mClassesEntity: ClassVo
+
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        val classVo = intent.getSerializableExtra(CLASS) as ClassVo
-
-        mClassEntity = ClassesEntity(classVo.id!!, classVo.name!!)
+        mClassesEntity = intent.getSerializableExtra(CLASSES) as ClassVo
 
         SparkService.mUsbSerialNum?.run {
             var keyPadCount = mPresenter.getKeyPadCount(this)
 
-            classVo.run {
+            mClassesEntity.run {
                 when {
                     studentCount in (bindingCount + 1)..keyPadCount -> {
                         //如未做过学生与答题器的绑定，且答题器数量>=学生数量，则进入5.答题器检测页面，检测完进入6 绑定页面
@@ -68,7 +60,7 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
                         }
 
                         autoNextStep = {
-                            startActivity(StudentsActivity.callingIntent(this@ClassesNextStepActivity, ClassesEntity(this.id!!)))
+                            startActivity(StudentsActivity.callingIntent(this@ClassesNextStepActivity, this))
                         }
                     }
                     keyPadCount < studentCount -> {
@@ -78,7 +70,7 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
                         }
 
                         autoNextStep = {
-                            startActivity(MatchKeyPadActivity.callingIntent(this@ClassesNextStepActivity, classVo.studentCount))
+                            startActivity(MatchKeyPadActivity.callingIntent(this@ClassesNextStepActivity, this))
                         }
                     }
                     else -> {
@@ -95,10 +87,6 @@ class ClassesNextStepActivity : BaseActivity(), IClassesNextStepContract.View, C
             }
         }
 
-        Flowable.timer(3,TimeUnit.SECONDS)
-                .mySubscribe {
-                    EventBus.getDefault().post(ClassesFragment.RefreshClasses())
-                }
     }
 
     override fun onTimeEnd() {

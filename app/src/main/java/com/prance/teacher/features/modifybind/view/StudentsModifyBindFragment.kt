@@ -8,7 +8,10 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
+import com.prance.lib.common.utils.Constants.CLASSES
+import com.prance.lib.common.utils.Constants.STUDENTS
 import com.prance.lib.common.utils.weight.AlertDialog
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
@@ -18,7 +21,6 @@ import com.prance.teacher.features.modifybind.ChooseKeyPadActivity
 import com.prance.teacher.features.modifybind.contract.IStudentsModifyBindContract
 import com.prance.teacher.features.modifybind.presenter.StudentsModifyBindPresenter
 import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import kotlinx.android.synthetic.main.fragment_students_modify.*
 
 /**
@@ -32,9 +34,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
 
     companion object {
 
-        const val STUDENTS = "students"
-
-        fun forClasses(classes: ClassesEntity): StudentsModifyBindFragment {
+        fun forClasses(classes: ClassVo): StudentsModifyBindFragment {
             val fragment = StudentsModifyBindFragment()
             val arguments = Bundle()
             arguments.putSerializable(CLASSES, classes)
@@ -43,7 +43,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
         }
     }
 
-    lateinit var mClassesEntity: ClassesEntity
+    lateinit var mClassesEntity: ClassVo
 
     override fun layoutId(): Int = R.layout.fragment_students_modify
 
@@ -56,7 +56,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
     private val mChooseKeyPadRequestCode = 10086
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        mClassesEntity = arguments?.getSerializable(CLASSES) as ClassesEntity
+        mClassesEntity = arguments?.getSerializable(CLASSES) as ClassVo
 
         recycler.layoutManager = GridLayoutManager(activity, 6)
 
@@ -116,7 +116,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
 
     private fun loadData() {
         showProgress()
-        val id = mClassesEntity.klass?.id.toString()
+        val id = mClassesEntity.id.toString()
         id.let {
             mPresenter.getStudentsByClassesId(id)
         }

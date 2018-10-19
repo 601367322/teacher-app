@@ -11,20 +11,26 @@ import android.view.View
 import android.widget.ImageView
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.Constants
+import com.prance.lib.common.utils.Constants.CLASSES
+import com.prance.lib.common.utils.Constants.KEYPAD_LIST
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.ClassesNextStepActivity
 import com.prance.teacher.features.match.contract.IMatchKeyPadContract
 import com.prance.teacher.features.match.presenter.MatchKeyPadPresenter
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.deletekeypad.view.DeleteKeyPadFragment
 import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.students.StudentsActivity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_match_keypad.*
 
@@ -43,15 +49,15 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
     lateinit var mEmptyView: ImageView
 
-    private var mMinStudentCount: Int? = -1
+    private var mClasses: ClassVo? = null
 
     companion object {
 
-        fun forStudentCount(studentCount: Int?): MatchKeyPadFragment {
-            var fragment = MatchKeyPadFragment()
-            studentCount?.run {
-                var bundle = Bundle()
-                bundle.putInt(MatchKeyPadActivity.STUDENT_COUNT, studentCount)
+        fun forClasses(classes: ClassVo?): MatchKeyPadFragment {
+            val fragment = MatchKeyPadFragment()
+            classes?.run {
+                val bundle = Bundle()
+                bundle.putSerializable(CLASSES, classes)
                 fragment.arguments = bundle
             }
             return fragment
@@ -89,7 +95,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
 
         mEmptyView = rootView.findViewById(R.id.emptyImage)
 
-        mMinStudentCount = arguments?.getInt(MatchKeyPadActivity.STUDENT_COUNT, -1)
+        mClasses = arguments?.getSerializable(CLASSES)?.run { this as ClassVo }
 
         //设置显示格式
         recycler.layoutManager = FocusGridLayoutManager(context!!, 6)
@@ -148,7 +154,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
     override fun onClick(v: View?) {
         when (v) {
             complete -> {
-                if (mMinStudentCount != null && mMinStudentCount != -1 && mMinStudentCount!! > mAdapter.itemCount) {
+                if (mClasses != null && mClasses!!.studentCount > mAdapter.itemCount) {
                     context?.run {
                         AlertDialog(this)
                                 .setMessage("答题器数量小于班级人数，会出现有人无答题器使用的情况，是否完成配对？")
@@ -177,6 +183,13 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             mPresenter.saveAllKeyPad(this, mAdapter.data)
         }
         activity?.finish()
+
+        //如果是上课流程
+        mClasses?.let {
+            activity?.run {
+                startActivity(StudentsActivity.callingIntent(this, it))
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -185,7 +198,7 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
             DELETE_REQUESTCODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     data?.run {
-                        val list = (getSerializableExtra(DeleteKeyPadFragment.KEYPAD_LIST) as DeleteKeyPadActivity.SerializableList<KeyPadEntity>).list
+                        val list = (getSerializableExtra(KEYPAD_LIST) as DeleteKeyPadActivity.SerializableList<KeyPadEntity>).list
                         mAdapter.setNewData(list)
                         mAdapter.notifyDataSetChanged()
 
@@ -210,8 +223,6 @@ class MatchKeyPadFragment : BaseFragment(), IMatchKeyPadContract.View, View.OnCl
         }
         return false
     }
-
-    override fun needEventBus(): Boolean = true
 
     /**
      * 空状态展示

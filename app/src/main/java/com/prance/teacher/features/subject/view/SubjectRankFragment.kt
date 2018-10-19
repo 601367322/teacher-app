@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.Constants.QUESTION_RESULT
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -30,8 +31,6 @@ class SubjectRankFragment : BaseFragment() {
     lateinit var rankAvatars: MutableList<ImageView>
 
     companion object {
-
-        const val QUESTION_RESULT = "questionResult"
 
         fun forQuestionResult(questionResult: QuestionResult): SubjectRankFragment {
             var fragment = SubjectRankFragment()

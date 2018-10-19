@@ -18,6 +18,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
+import com.prance.lib.common.utils.Constants.QUESTION
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
@@ -62,7 +63,7 @@ class SubjectOnStartFragment : BaseFragment() {
         fun forQuestion(question: ClassesDetailFragment.Question): SubjectOnStartFragment {
             val fragment = SubjectOnStartFragment()
             val bundle = Bundle()
-            bundle.putSerializable(SubjectActivity.QUESTION, question)
+            bundle.putSerializable(QUESTION, question)
             fragment.arguments = bundle
             return fragment
         }
@@ -71,7 +72,7 @@ class SubjectOnStartFragment : BaseFragment() {
     override fun layoutId(): Int = R.layout.fragment_subject_on_start
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        mQuestion = arguments?.getSerializable(SubjectActivity.QUESTION) as ClassesDetailFragment.Question?
+        mQuestion = arguments?.getSerializable(QUESTION) as ClassesDetailFragment.Question?
 
         avatarBackground = BitmapFactory.decodeResource(resources, R.drawable.subject_danmu_avatar_bg)
 

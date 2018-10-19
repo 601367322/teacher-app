@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
+import com.prance.lib.common.utils.Constants.KEYPAD_LIST
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.database.KeyPadEntity
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -31,7 +32,6 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
 
     companion object {
 
-        const val  KEYPAD_LIST = "keypad_list"
 
         fun forData(list: Serializable?): DeleteKeyPadFragment {
             val fragment = DeleteKeyPadFragment()
@@ -96,7 +96,7 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
         when (v) {
             complete -> {
                 val intent = Intent()
-                intent.putExtra(DeleteKeyPadFragment.KEYPAD_LIST, DeleteKeyPadActivity.SerializableList(mAdapter.data))
+                intent.putExtra(KEYPAD_LIST, DeleteKeyPadActivity.SerializableList(mAdapter.data))
                 activity?.setResult(Activity.RESULT_OK, intent)
                 activity?.finish()
             }

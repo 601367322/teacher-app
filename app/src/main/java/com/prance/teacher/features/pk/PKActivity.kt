@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.SETTING
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
@@ -31,7 +32,7 @@ class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
         fun callingIntent(context: Context, setting: ClassesDetailFragment.Question): Intent {
             val intent = Intent(context, PKActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            intent.putExtra(PKFragment.SETTING, setting)
+            intent.putExtra(SETTING, setting)
             return intent
         }
     }
@@ -44,10 +45,10 @@ class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
 
     var mSetting: ClassesDetailFragment.Question? = null
 
-    override fun fragment(): BaseFragment? = PKFragment.forSetting(intent.getSerializableExtra(PKFragment.SETTING) as ClassesDetailFragment.Question)
+    override fun fragment(): BaseFragment? = PKFragment.forSetting(intent.getSerializableExtra(SETTING) as ClassesDetailFragment.Question)
 
     override fun initView(savedInstanceState: Bundle?) {
-        mSetting = intent.getSerializableExtra(PKFragment.SETTING) as ClassesDetailFragment.Question?
+        mSetting = intent.getSerializableExtra(SETTING) as ClassesDetailFragment.Question?
         mPushServicePresenter.bind()
         inited()
 

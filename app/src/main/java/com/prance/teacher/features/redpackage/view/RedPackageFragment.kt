@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
 import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.base.extension.invisible
+import com.prance.lib.common.utils.Constants.SETTING
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
@@ -34,7 +35,6 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
 
     companion object {
-        const val SETTING: String = "settting"
 
         fun forSetting(setting: RedPackageSetting): RedPackageFragment {
             val fragment = RedPackageFragment()

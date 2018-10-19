@@ -7,6 +7,7 @@ import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.ClassesNextStepActivity
 import com.prance.teacher.features.modifybind.StudentsModifyBindActivity
+import com.prance.teacher.features.students.StudentsActivity
 import kotlinx.android.synthetic.main.fragment_classes_next_step_ok.*
 
 /**
@@ -26,8 +27,8 @@ class ClassesNextStepOK : BaseFragment() {
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         modifyBind.setOnClickListener {
             activity?.run {
-                mActivity?.mClassEntity?.run {
-                    startActivity(StudentsModifyBindActivity.callingIntent(activity!!,this))
+                mActivity?.mClassesEntity?.run {
+                    startActivity(StudentsActivity.callingIntent(activity!!,this))
                     finish()
                 }
             }

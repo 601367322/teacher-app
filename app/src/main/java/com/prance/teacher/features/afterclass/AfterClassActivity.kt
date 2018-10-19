@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.FEED_BACK
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.features.afterclass.view.AfterClassFragment
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
@@ -14,11 +15,10 @@ class AfterClassActivity : BaseActivity() {
     var mFragment: AfterClassFragment? = null
 
     companion object {
-        const val feedback: String = "feedback"
         fun callingIntent(context: Context, fb: ClassesDetailFragment.Question): Intent {
             val intent = Intent(context, AfterClassActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            intent.putExtra(feedback, fb)
+            intent.putExtra(FEED_BACK, fb)
             return intent
         }
     }
@@ -32,9 +32,9 @@ class AfterClassActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mFeedBack = intent?.getSerializableExtra(AfterClassActivity.feedback) as ClassesDetailFragment.Question?
+        mFeedBack = intent?.getSerializableExtra(FEED_BACK) as ClassesDetailFragment.Question?
         val bundle = Bundle()
-        bundle.putSerializable(feedback, mFeedBack)
+        bundle.putSerializable(FEED_BACK, mFeedBack)
         if (mFragment!!.arguments != null) {
             mFragment!!.arguments?.putAll(bundle)
         } else {

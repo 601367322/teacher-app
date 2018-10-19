@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.QUESTION
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
@@ -56,8 +57,6 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
     }
 
     companion object {
-
-        const val QUESTION = "question"
 
         fun callingIntent(context: Context, question: ClassesDetailFragment.Question): Intent {
             val intent = Intent(context, SubjectActivity::class.java)

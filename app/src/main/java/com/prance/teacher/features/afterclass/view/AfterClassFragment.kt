@@ -3,6 +3,7 @@ package com.prance.teacher.features.afterclass.view
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import com.prance.lib.common.utils.Constants.FEED_BACK
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
@@ -60,7 +61,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
         mTime = rootView.findViewById(R.id.timer)
-        mQuestion = arguments?.getSerializable(AfterClassActivity.feedback) as ClassesDetailFragment.Question
+        mQuestion = arguments?.getSerializable(FEED_BACK) as ClassesDetailFragment.Question
 
         mSignStudents = ClassesDetailFragment.getSignStudents(mQuestion?.signStudents)
 

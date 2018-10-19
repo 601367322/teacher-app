@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.Constants.SCORES
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
@@ -34,7 +35,7 @@ class RedPackageRankFragment : BaseFragment() {
     lateinit var rankAvatars: MutableList<ImageView>
 
     companion object {
-        const val SCORES = "scores"
+
         fun create(scores: BundleScore): RedPackageRankFragment {
             var fragment = RedPackageRankFragment()
             val bundle = Bundle()

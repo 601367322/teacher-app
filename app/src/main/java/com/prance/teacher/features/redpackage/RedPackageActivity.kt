@@ -6,6 +6,7 @@ import com.prance.lib.database.MessageEntity
 import android.os.Bundle
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.SETTING
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
 import com.prance.lib.socket.PushServicePresenter
@@ -36,7 +37,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
         fun callingIntent(context: Context, redPackage: RedPackageSetting): Intent {
             val intent = Intent(context, RedPackageActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            intent.putExtra(RedPackageFragment.SETTING, redPackage)
+            intent.putExtra(SETTING, redPackage)
             return intent
         }
     }
@@ -46,7 +47,7 @@ class RedPackageActivity : BaseActivity(), MessageListener {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mSetting = intent?.getSerializableExtra(RedPackageFragment.SETTING) as RedPackageSetting?
+        mSetting = intent?.getSerializableExtra(SETTING) as RedPackageSetting?
 
         mPushServicePresenterPresenter.bind()
 

@@ -16,8 +16,6 @@ class NetErrorFragment : BaseFragment() {
 
     companion object {
 
-        const val RETRY = "retry"
-
         fun callIntent(onRetry: ((context: Context) -> Unit)?): NetErrorFragment {
             val fragment = NetErrorFragment()
             fragment.onRetry = onRetry

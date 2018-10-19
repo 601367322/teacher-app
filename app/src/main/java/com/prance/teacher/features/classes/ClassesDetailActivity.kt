@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.CLASSES
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -19,12 +20,12 @@ class ClassesDetailActivity : BaseActivity() {
 
         fun callingIntent(context: Context, classes: ClassesEntity): Intent {
             val intent = Intent(context, ClassesDetailActivity::class.java)
-            intent.putExtra(StudentsFragment.CLASSES, classes)
+            intent.putExtra(CLASSES, classes)
             return intent
         }
     }
 
-    override fun fragment(): BaseFragment = ClassesDetailFragment.forClasses(intent?.getSerializableExtra(StudentsFragment.CLASSES) as ClassesEntity)
+    override fun fragment(): BaseFragment = ClassesDetailFragment.forClasses(intent?.getSerializableExtra(CLASSES) as ClassesEntity)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

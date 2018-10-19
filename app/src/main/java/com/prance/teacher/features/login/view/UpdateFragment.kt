@@ -17,6 +17,7 @@ import com.prance.lib.base.extension.appContext
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
+import com.prance.lib.common.utils.Constants.VERSION_ENTITY
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.common.NetErrorFragment
@@ -30,8 +31,6 @@ class UpdateFragment : BaseFragment(), UpdateService.MyDownloadListener {
     lateinit var mVersionEntity: VersionEntity
 
     companion object {
-
-        const val VERSION_ENTITY = "entity"
 
         fun forVersion(versionEntity: VersionEntity): UpdateFragment {
             val fragment = UpdateFragment()

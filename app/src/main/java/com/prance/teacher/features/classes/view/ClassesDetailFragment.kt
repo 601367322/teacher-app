@@ -3,6 +3,7 @@ package com.prance.teacher.features.classes.view
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.prance.lib.common.utils.Constants.CLASSES
 import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.database.KeyPadEntity
@@ -28,7 +29,6 @@ import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentsEntity
-import com.prance.teacher.features.students.view.StudentsFragment.Companion.CLASSES
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.SubjectRankActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment

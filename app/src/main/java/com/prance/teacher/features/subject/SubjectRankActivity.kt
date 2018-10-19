@@ -3,9 +3,9 @@ package com.prance.teacher.features.subject
 import android.content.Context
 import android.content.Intent
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.QUESTION_RESULT
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
-import com.prance.teacher.features.subject.view.SubjectRankFragment.Companion.QUESTION_RESULT
 
 /**
  * 上课答题

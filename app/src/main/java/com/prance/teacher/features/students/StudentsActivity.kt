@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.Constants.CLASSES
+import com.prance.lib.server.vo.teacher.ClassVo
 import com.prance.lib.spark.SparkService
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
@@ -15,9 +17,9 @@ class StudentsActivity : BaseActivity() {
 
     companion object {
 
-        fun callingIntent(context: Context, classes: ClassesEntity): Intent {
+        fun callingIntent(context: Context, classes: ClassVo): Intent {
             val intent = Intent(context, StudentsActivity::class.java)
-            intent.putExtra(StudentsFragment.CLASSES, classes)
+            intent.putExtra(CLASSES, classes)
             return intent
         }
     }
@@ -31,5 +33,5 @@ class StudentsActivity : BaseActivity() {
         super.initView(savedInstanceState)
     }
 
-    override fun fragment(): BaseFragment = StudentsFragment.forClasses(intent.getSerializableExtra(StudentsFragment.CLASSES) as ClassesEntity)
+    override fun fragment(): BaseFragment = StudentsFragment.forClasses(intent.getSerializableExtra(CLASSES) as ClassVo)
 }
