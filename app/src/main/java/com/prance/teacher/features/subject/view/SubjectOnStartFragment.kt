@@ -85,9 +85,9 @@ class SubjectOnStartFragment : BaseFragment() {
         if (BuildConfig.DEBUG) {
 //            powerProgressbar.max = 32
 
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            },1000)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            },1000)
         }
 
         mSparkServicePresenter.bind()
@@ -124,9 +124,9 @@ class SubjectOnStartFragment : BaseFragment() {
 
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-                        if (studentEntity == null) {
-                            studentEntity = StudentEntity(1, "假数据01", "https://upload.jianshu.io/users/upload_avatars/2897594/eb8b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
-                        }
+//                        if (studentEntity == null) {
+//                            studentEntity = StudentEntity(1, "假数据01", "https://upload.jianshu.io/users/upload_avatars/2897594/eb8b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
+//                        }
                     }
                     if (studentEntity == null) {
                         return

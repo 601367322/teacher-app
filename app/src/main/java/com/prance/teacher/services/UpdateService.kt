@@ -62,6 +62,12 @@ class UpdateService : Service() {
         }
 
         url?.run {
+
+            if(!this.startsWith("http")){
+                mListener?.onError()
+                return@run
+            }
+
             mTask = DownloadTask.Builder(this, updateDir)
                     .setFilename("""${this.hashCode()}.apk""")
                     // the minimal interval millisecond for callback progress

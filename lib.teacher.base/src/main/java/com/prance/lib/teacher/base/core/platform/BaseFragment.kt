@@ -36,16 +36,4 @@ abstract class BaseFragment : BaseFragment() {
         (context?.applicationContext as TeacherApplication)
     }
 
-    override fun exitToLogin() {
-        if (BuildConfig.DEBUG) {
-            return
-        }
-        ToastUtils.showShort("登录状态已过期，请重新登录")
-        ActivityUtils.finishAllActivities()
-        val packageManager = getApp().packageManager
-        val intent = packageManager.getLaunchIntentForPackage(getApp().packageName) ?: return
-        val componentName = intent.component
-        val mainIntent = Intent.makeRestartActivityTask(componentName)
-        getApp().startActivity(mainIntent)
-    }
 }

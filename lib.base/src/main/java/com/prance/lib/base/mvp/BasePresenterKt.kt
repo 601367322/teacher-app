@@ -1,5 +1,8 @@
 package com.prance.lib.base.mvp
 
+import android.content.Intent
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.http.ResultException
@@ -20,8 +23,18 @@ open class BasePresenterKt<V : ITopView> {
             }
         }
         if (it is HttpException && it.code() == 401) {
-            mView?.exitToLogin()
-        } else {
+            ToastUtils.showShort("登录状态已过期，请重新登录")
+            try {
+                ActivityUtils.finishAllActivities()
+                val packageManager = Utils.getApp().packageManager
+                val intent = packageManager.getLaunchIntentForPackage(Utils.getApp().packageName)
+                val componentName = intent.component
+                val mainIntent = Intent.makeRestartActivityTask(componentName)
+                Utils.getApp().startActivity(mainIntent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }else{
             if (mView?.onNetworkError(it) == false)
                 defaultOnNetworkError(it)
         }

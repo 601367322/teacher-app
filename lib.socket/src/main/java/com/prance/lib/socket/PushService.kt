@@ -2,8 +2,10 @@ package com.prance.lib.socket
 
 import android.annotation.SuppressLint
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
@@ -20,20 +22,22 @@ import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
+import android.net.NetworkInfo
+import android.content.IntentFilter
 
 
 class PushService : Service() {
 
     private var mEventLoopGroup: EventLoopGroup? = null
     private var mChannel: Channel? = null
-    private lateinit var mSocketThread: SocketThread
+    private var mSocketThread: SocketThread? = null
     private var mListeners: MutableList<MessageListener> = mutableListOf()
     private val mMessageDaoUtils = MessageDaoUtils()
     private var mPushApiService: PushApiService? = null
+    private var mBroadcast: BroadcastReceiver? = null
 
     companion object {
 
@@ -73,7 +77,7 @@ class PushService : Service() {
         }
 
         fun sendMessage(msg: String) {
-            mSocketThread.sendMessage(msg)
+            mSocketThread?.sendMessage(msg)
         }
     }
 
@@ -83,12 +87,36 @@ class PushService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        mSocketThread = SocketThread()
-        mSocketThread.start()
+        initSocket()
 
         mPushApiService = RetrofitUtils.getApiService(PushApiService::class.java)
 
+        val filter = IntentFilter()
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        mBroadcast = NetworkReceiver(this)
+        registerReceiver(mBroadcast, filter)
+
         startPostResponseMessage(null)
+    }
+
+    private fun initSocket() {
+        if (mSocketThread == null) {
+            mSocketThread = SocketThread()
+            mSocketThread!!.start()
+        }
+    }
+
+    private fun destorySocket() {
+        try {
+            mChannel?.close()
+            mEventLoopGroup?.shutdownGracefully()
+            mChannel = null
+            mEventLoopGroup = null
+            mSocketThread?.interrupt()
+            mSocketThread = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -285,15 +313,44 @@ class PushService : Service() {
         super.onDestroy()
         LogUtils.d("onDestroy")
         stopPostResponseMessage()
-        try {
-            mChannel?.close()
-            mEventLoopGroup?.shutdownGracefully()
-            mChannel = null
-            mEventLoopGroup = null
-            mSocketThread.interrupt()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        destorySocket()
+        unregisterReceiver(mBroadcast)
+    }
+
+    class NetworkReceiver(private val mPushService: PushService) : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent?.action
+            action?.run {
+                if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
+                    val isConnect = checkNetwork(context)
+                    LogUtils.d("网络连接\t$isConnect")
+                    if (!isConnect) {
+                        mPushService.destorySocket()
+                    } else {
+                        mPushService.initSocket()
+                    }
+                }
+            }
         }
+
+        private fun checkNetwork(context: Context?): Boolean {
+            try {
+                val connectivity = context?.getSystemService(Context.CONNECTIVITY_SERVICE)?.run { this as ConnectivityManager }
+                connectivity?.run {
+                    val info = this.activeNetworkInfo
+                    if (info != null && info.isConnected) {
+                        if (info.state == NetworkInfo.State.CONNECTED) {
+                            return true
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                return false
+            }
+            return false
+        }
+
     }
 
 }

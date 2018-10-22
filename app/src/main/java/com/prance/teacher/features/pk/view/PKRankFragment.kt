@@ -85,9 +85,9 @@ class PKRankFragment : BaseFragment() {
         var myClass = ClassesDetailFragment.mClassesEntity
 
         if (BuildConfig.DEBUG) {
-            if (myClass == null) {
-                myClass = ClassesEntity(1, "第一名")
-            }
+//            if (myClass == null) {
+//                myClass = ClassesEntity(1, "第一名")
+//            }
         }
 
         var classVO: PKPresenter.PKResultMessage.ClassVO? = null
