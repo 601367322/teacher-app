@@ -40,6 +40,7 @@ class ChooseKeyPadPresenter : BasePresenterKt<IChooseKeyPadContract.View>(), ICh
 
 
     override fun modifyBind(classId: String, student: StudentEntity, keyPadEntity: KeyPadEntity) {
+        val oldKeyPadId = student.getClicker()?.number!!
         mModel.modifyBind(classId, student.getClicker()?.number!!, keyPadEntity.keyId)
                 .mySubscribe(onSubscribeError) {
                     //将答题器保存数据库
@@ -48,7 +49,7 @@ class ChooseKeyPadPresenter : BasePresenterKt<IChooseKeyPadContract.View>(), ICh
                     student.clickers = mutableListOf(
                             StudentEntity.Clicker(keyPadEntity.keyId)
                     )
-                    mView?.modifySuccess(student)
+                    mView?.modifySuccess(student, oldKeyPadId)
                 }
     }
 

@@ -17,7 +17,7 @@ interface IChooseKeyPadContract {
 
         fun renderKeyPadItemFromDatabase(list: MutableList<KeyPadEntity>)
 
-        fun modifySuccess(student: StudentEntity)
+        fun modifySuccess(student: StudentEntity, oldKeyPadId: String)
     }
 
     interface Presenter : IPresenter<View, Model> {

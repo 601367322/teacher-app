@@ -128,6 +128,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/m24.0"
+            android:textColor="#fff"
             android:text="提示：使用" />
 
         <ImageView
@@ -148,6 +150,8 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:textSize="@dimen/m24.0"
+            android:textColor="#fff"
             android:layout_height="wrap_content"
             android:text="键切换班级，点击确认键选择班级" />
 
@@ -156,6 +160,8 @@
     <TextView
         android:id="@+id/keyPadCount"
         android:layout_width="wrap_content"
+        android:textSize="@dimen/m24.0"
+        android:textColor="#fff"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/m121.0"
         android:text="答题器数："

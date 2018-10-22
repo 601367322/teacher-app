@@ -168,11 +168,17 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
         displayMoreBtn()
     }
 
-    override fun modifySuccess(student: StudentEntity) {
+    override fun modifySuccess(student: StudentEntity, oldKeyPadId: String) {
         ToastUtils.showShort("绑定成功")
 
-        student.getClicker()?.number?.run {
-            mSparkServicePresenter.sendData(student.name, this)
+        try {
+            mSparkServicePresenter.sendData("", oldKeyPadId)
+
+            student.getClicker()?.number?.run {
+                mSparkServicePresenter.sendData(student.name, this)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         activity?.run {
