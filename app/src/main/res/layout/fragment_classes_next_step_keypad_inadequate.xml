@@ -51,7 +51,7 @@
             android:layout_width="@dimen/m300.0"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:text="跳过" />
+            app:text="跳过并开始上课" />
     </LinearLayout>
 
     <TextView
