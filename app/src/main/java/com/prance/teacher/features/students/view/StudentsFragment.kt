@@ -239,7 +239,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
             activity?.run {
                 finish()
 
-                ClassesNextStepActivity.callingIntent(this, mClassesEntity)
+                startActivity(ClassesNextStepActivity.callingIntent(this, mClassesEntity))
             }
         }
         startClass?.requestFocus()

@@ -105,7 +105,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            val classes = ClassesEntity(7)
 //            context?.let { startActivity(ClassesActivity.callingIntent(it)) }
 //            context?.let { startActivity(ClassesDetailActivity.callingIntent(it,classes)) }
-            context?.let { startActivity(MainActivity.callingIntent(it)) }
+//            context?.let { startActivity(MainActivity.callingIntent(it)) }
 //            context?.let { startActivity(StudentsModifyBindActivity.callingIntent(it, ClassesEntity(1))) }
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
@@ -118,7 +118,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-            activity?.finish()
+//            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }
