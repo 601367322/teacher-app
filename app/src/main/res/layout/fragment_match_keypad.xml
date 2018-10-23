@@ -27,7 +27,7 @@
         android:layout_marginBottom="@dimen/m48.0"
         android:visibility="invisible"
         android:nextFocusLeft="@id/replace"
-        android:nextFocusRight="@id/back"
+        android:nextFocusRight="@id/replace"
         app:icon="@drawable/icon_complete_match_button"
         app:layout_constraintEnd_toStartOf="@+id/replace"
         app:layout_constraintBottom_toBottomOf="parent"

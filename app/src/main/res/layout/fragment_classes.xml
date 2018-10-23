@@ -46,31 +46,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <com.prance.lib.common.utils.weight.MyButton
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/m120.0"
-        android:layout_marginBottom="@dimen/m90.0"
-        android:onClick="onBackBtnClick"
-        android:visibility="gone"
-        app:icon="@drawable/icon_back_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:text="返回" />
-
-    <com.prance.lib.common.utils.weight.MyButton
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/m120.0"
-        android:visibility="gone"
-        app:icon="@drawable/icon_refresh_button"
-        app:layout_constraintBottom_toBottomOf="@+id/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/back"
-        app:text="刷新" />
-
     <ImageView
         android:id="@+id/rightArrow"
         android:layout_width="@dimen/m42.0"
@@ -93,79 +68,88 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.rd.PageIndicatorView
-        android:id="@+id/pageIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/m30.0"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/m16.0"
-        android:layout_marginBottom="@dimen/m48.0"
-        android:clipToPadding="false"
-        android:paddingLeft="@dimen/m2.0"
-        android:paddingTop="@dimen/m2.0"
-        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:piv_animationType="fill"
-        app:piv_dynamicCount="true"
-        app:piv_interactiveAnimation="true"
-        app:piv_padding="@dimen/m16.0"
-        app:piv_radius="@dimen/m12.0"
-        app:piv_selectedColor="#3A81F0"
-        app:piv_strokeWidth="@dimen/m3.0"
-        app:piv_unselectedColor="#FFFFFF" />
 
-    <LinearLayout
-        android:id="@+id/classesTip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m121.0"
-        android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/pageIndicatorView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pageIndicatorView">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/m24.0"
-            android:textColor="#fff"
-            android:text="提示：使用" />
-
-        <ImageView
-            android:layout_width="@dimen/m21.0"
-            android:layout_height="@dimen/m21.0"
-            android:layout_marginStart="@dimen/m4.0"
-            android:layout_marginEnd="@dimen/m8.0"
-            android:scaleType="centerInside"
-            android:src="@drawable/icon_classes_tip_left_arrow" />
-
-        <ImageView
-            android:layout_width="@dimen/m21.0"
-            android:layout_height="@dimen/m21.0"
-            android:layout_marginStart="@dimen/m8.0"
-            android:layout_marginEnd="@dimen/m4.0"
-            android:scaleType="centerInside"
-            android:src="@drawable/icon_classes_tip_right_arrow" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/m24.0"
-            android:textColor="#fff"
-            android:layout_height="wrap_content"
-            android:text="键切换班级，点击确认键选择班级" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/keyPadCount"
-        android:layout_width="wrap_content"
-        android:textSize="@dimen/m24.0"
-        android:textColor="#fff"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/bottomTip"
+        android:layout_marginBottom="@dimen/m32.0"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/m32.0"
+        android:paddingEnd="@dimen/m32.0"
+        android:layout_height="@dimen/m56.0"
         android:layout_marginEnd="@dimen/m121.0"
-        android:text="答题器数："
-        app:layout_constraintBottom_toBottomOf="@+id/pageIndicatorView"
+        android:background="@drawable/classes_bottom_tip_background"
+        android:layout_marginStart="@dimen/m121.0"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pageIndicatorView" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/classesTip"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提示：使用"
+                android:textColor="#fff"
+                android:textSize="@dimen/m24.0" />
+
+            <ImageView
+                android:layout_width="@dimen/m21.0"
+                android:layout_height="@dimen/m21.0"
+                android:layout_marginStart="@dimen/m4.0"
+                android:layout_marginEnd="@dimen/m8.0"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_classes_tip_left_arrow" />
+
+            <ImageView
+                android:layout_width="@dimen/m21.0"
+                android:layout_height="@dimen/m21.0"
+                android:layout_marginStart="@dimen/m8.0"
+                android:layout_marginEnd="@dimen/m4.0"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_classes_tip_right_arrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="键切换班级，点击确认键选择班级"
+                android:textColor="#fff"
+                android:textSize="@dimen/m24.0" />
+
+        </LinearLayout>
+
+        <com.rd.PageIndicatorView
+            android:id="@+id/pageIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/m30.0"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/m16.0"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/m2.0"
+            android:paddingTop="@dimen/m2.0"
+            app:piv_animationType="fill"
+            app:piv_dynamicCount="true"
+            android:layout_centerVertical="true"
+            app:piv_interactiveAnimation="true"
+            app:piv_padding="@dimen/m16.0"
+            app:piv_radius="@dimen/m12.0"
+            app:piv_selectedColor="#3A81F0"
+            app:piv_strokeWidth="@dimen/m3.0"
+            app:piv_unselectedColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/keyPadCount"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:text="答题器数："
+            android:textColor="#fff"
+            android:textSize="@dimen/m24.0" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

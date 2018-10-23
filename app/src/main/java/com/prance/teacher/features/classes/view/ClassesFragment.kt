@@ -112,13 +112,9 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
 
         recycler.adapter = mAdapter
 
-        refresh.setOnClickListener {
-            loadData()
-        }
-
-        refresh.performClick()
-
         mSparkServicePresenter.bind()
+
+        loadData()
     }
 
     private fun loadData() {
@@ -227,8 +223,6 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
         if (mAdapter.data.isEmpty()) {
             emptyLayout.visible()
             recycler.invisible()
-
-            refresh.requestFocus()
         } else {
             emptyLayout.invisible()
             recycler.visible()
