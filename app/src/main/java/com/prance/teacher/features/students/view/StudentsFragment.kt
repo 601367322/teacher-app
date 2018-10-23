@@ -19,6 +19,7 @@ import com.prance.lib.spark.SparkService
 import com.prance.teacher.features.students.contract.IStudentsContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.ClassesNextStepActivity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
@@ -211,13 +212,17 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     }
 
     private fun calculateBindStudent() {
+        bindStudentCount.text = Html.fromHtml("""已绑定人数 <font color="#3AF0EE">${getBindStudentCount()}</font>""")
+    }
+
+    private fun getBindStudentCount(): Int {
         var count = 0
         for (student in mAdapter.data) {
             if (student.clickers != null) {
                 count++
             }
         }
-        bindStudentCount.text = Html.fromHtml("""已绑定人数 <font color="#3AF0EE">$count</font>""")
+        return count
     }
 
     override fun checkMatch() {
@@ -228,9 +233,16 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
             }
         }
         hasNoKeyPadStudent?.let {
-            ToastUtils.showShort("答题器数量不够，请去配对足够的答题器对未绑定的学员进行绑定操作")
+            ToastUtils.showShort("答题器数量不足")
+
+            mClassesEntity.bindingCount = getBindStudentCount()
+            activity?.run {
+                finish()
+
+                ClassesNextStepActivity.callingIntent(this, mClassesEntity)
+            }
         }
-        startClass.requestFocus()
+        startClass?.requestFocus()
     }
 }
 
