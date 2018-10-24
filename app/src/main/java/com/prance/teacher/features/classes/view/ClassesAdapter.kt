@@ -25,9 +25,11 @@ class ClassesAdapter : BaseQuickAdapter<ClassVo, BaseViewHolder> {
             helper?.run {
                 itemView.title.text = name
                 itemView.subTitle.text =  course?.name
-                itemView.secondTitle.text = lesson?.name
-                if (startTime != null && endTime != null) {
-                    itemView.date.text = """${format(dateFormat_Year_Month_Day_Hour_Min, startTime!!)}-${format(dateFormat_Hour_Min, endTime!!)}"""
+                lesson?.run {
+                    itemView.secondTitle.text = name
+                    if (startTime != null && endTime != null) {
+                        itemView.date.text = """${format(dateFormat_Year_Month_Day_Hour_Min, startTime!!)}-${format(dateFormat_Hour_Min, endTime!!)}"""
+                    }
                 }
                 itemView.teacher.text = """主讲老师：${teacher?.name}"""
                 itemView.assistantTeacher.text = """辅导老师：${assistant?.name}"""
