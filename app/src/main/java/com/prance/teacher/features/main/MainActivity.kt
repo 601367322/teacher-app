@@ -57,7 +57,7 @@ class MainActivity : BaseActivity() {
 
         val filter = IntentFilter()
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        mBroadcast = PushService.NetworkReceiver(this)
+        mBroadcast = NetworkReceiver()
         registerReceiver(mBroadcast, filter)
 
         EventBus.getDefault().register(this)
