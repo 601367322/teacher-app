@@ -10,6 +10,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ActivityUtils.getActivityList
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.Utils
@@ -17,6 +19,7 @@ import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.common.utils.weight.AlertDialog
 import com.prance.lib.socket.PushService
 import com.prance.teacher.R
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
@@ -115,21 +118,27 @@ class MainActivity : BaseActivity() {
         EventBus.getDefault().unregister(this)
     }
 
-    class NetworkReceiver() : BroadcastReceiver() {
+    class NetworkReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
             val action = intent?.action
             action?.run {
-                if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
-                    val isConnect = NetworkUtils.isConnected()
-                    LogUtils.d("网络连接\t$isConnect")
-                    if (!isConnect) {
-
+                try {
+                    if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
+                        val isConnect = NetworkUtils.isConnected()
+                        LogUtils.d("网络连接\t$isConnect")
+                        if (!isConnect) {
+                            for(activity in ActivityUtils.getActivityList()){
+                                if(activity is OnStartClassActivity){
+                                    activity.finish()
+                                }
+                            }
+                        }
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
-
     }
-
 }

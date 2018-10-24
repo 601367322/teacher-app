@@ -5,12 +5,13 @@ import android.content.Intent
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.Constants.QUESTION_RESULT
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 
 /**
  * 上课答题
  */
-class SubjectRankActivity : BaseActivity(){
+class SubjectRankActivity : BaseActivity(), OnStartClassActivity {
 
     companion object {
 

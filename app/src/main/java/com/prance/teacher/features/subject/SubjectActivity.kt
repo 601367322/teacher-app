@@ -11,6 +11,7 @@ import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.*
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit
 /**
  * 上课答题
  */
-class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener {
+class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener, OnStartClassActivity {
 
     private var mQuestion: ClassesDetailFragment.Question? = null
 

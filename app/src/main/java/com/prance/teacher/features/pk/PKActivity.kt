@@ -14,6 +14,7 @@ import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.contract.IPKResultContract
 import com.prance.teacher.features.pk.model.PKResult
@@ -25,7 +26,7 @@ import com.prance.teacher.features.pk.view.PKWaitingFragment
 import io.reactivex.Flowable
 import java.util.concurrent.TimeUnit
 
-class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View {
+class PKActivity : BaseActivity(), MessageListener, IPKResultContract.View , OnStartClassActivity {
 
     companion object {
 

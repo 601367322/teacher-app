@@ -6,11 +6,12 @@ import android.os.Bundle
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.Constants.FEED_BACK
 import com.prance.lib.teacher.base.core.platform.BaseActivity
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.afterclass.view.AfterClassFragment
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 
 
-class AfterClassActivity : BaseActivity() {
+class AfterClassActivity : BaseActivity(), OnStartClassActivity {
     var mFeedBack: ClassesDetailFragment.Question? = null
     var mFragment: AfterClassFragment? = null
 

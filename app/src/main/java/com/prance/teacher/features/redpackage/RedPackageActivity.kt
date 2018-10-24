@@ -13,13 +13,14 @@ import com.prance.lib.socket.PushServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.RedPackageCountTimeFragment
 import com.prance.teacher.features.redpackage.view.RedPackageRankFragment
 import com.prance.teacher.features.redpackage.view.RedPackageFragment
 
-class RedPackageActivity : BaseActivity(), MessageListener {
+class RedPackageActivity : BaseActivity(), MessageListener, OnStartClassActivity {
 
     /**
      * 下发的抢红包设置
