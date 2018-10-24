@@ -36,6 +36,7 @@ import com.prance.teacher.utils.IntentUtils
 import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
+import java.util.*
 
 /**
  * 班级详情页面
@@ -280,6 +281,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 val json = JSONObject()
                 json.put(PushService.CMD, ATTEND_CLASS)
                 json.put("classId", mClassesEntity?.klass?.id)
+                json.put("uuid", UUID.randomUUID())
                 mPushServicePresenter.mService?.sendMessage(json.toString())
             }
         }
