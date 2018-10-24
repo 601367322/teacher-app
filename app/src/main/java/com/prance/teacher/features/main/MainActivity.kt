@@ -1,14 +1,21 @@
 package com.prance.teacher.features.main
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.common.utils.weight.AlertDialog
+import com.prance.lib.socket.PushService
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
@@ -25,6 +32,8 @@ import java.io.Serializable
 class MainActivity : BaseActivity() {
 
     override fun fragment(): BaseFragment = ClassesFragment()
+
+    private var mBroadcast: BroadcastReceiver? = null
 
     companion object {
 
@@ -45,6 +54,11 @@ class MainActivity : BaseActivity() {
         //初始化字体
         FontCustom.getCOMICSANSMSGRASFont(Utils.getApp())
         FontCustom.getFZY1JWFont(Utils.getApp())
+
+        val filter = IntentFilter()
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        mBroadcast = PushService.NetworkReceiver(this)
+        registerReceiver(mBroadcast, filter)
 
         EventBus.getDefault().register(this)
     }
@@ -92,8 +106,30 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
+        mBroadcast?.run {
+            unregisterReceiver(this)
+        }
+
         FloatIcon.hidePopupWindow()
+
         EventBus.getDefault().unregister(this)
+    }
+
+    class NetworkReceiver() : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent?.action
+            action?.run {
+                if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
+                    val isConnect = NetworkUtils.isConnected()
+                    LogUtils.d("网络连接\t$isConnect")
+                    if (!isConnect) {
+
+                    }
+                }
+            }
+        }
+
     }
 
 }

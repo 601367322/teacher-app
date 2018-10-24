@@ -25,8 +25,8 @@ import io.netty.channel.socket.nio.NioSocketChannel
 import io.reactivex.schedulers.Schedulers
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
-import android.net.NetworkInfo
 import android.content.IntentFilter
+import com.blankj.utilcode.util.NetworkUtils
 
 
 class PushService : Service() {
@@ -106,7 +106,7 @@ class PushService : Service() {
         }
     }
 
-    private fun destorySocket() {
+    private fun destroySocket() {
         try {
             mChannel?.close()
             mEventLoopGroup?.shutdownGracefully()
@@ -313,7 +313,7 @@ class PushService : Service() {
         super.onDestroy()
         LogUtils.d("onDestroy")
         stopPostResponseMessage()
-        destorySocket()
+        destroySocket()
         unregisterReceiver(mBroadcast)
     }
 
@@ -323,32 +323,15 @@ class PushService : Service() {
             val action = intent?.action
             action?.run {
                 if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
-                    val isConnect = checkNetwork(context)
+                    val isConnect = NetworkUtils.isConnected()
                     LogUtils.d("网络连接\t$isConnect")
                     if (!isConnect) {
-                        mPushService.destorySocket()
+                        mPushService.destroySocket()
                     } else {
                         mPushService.initSocket()
                     }
                 }
             }
-        }
-
-        private fun checkNetwork(context: Context?): Boolean {
-            try {
-                val connectivity = context?.getSystemService(Context.CONNECTIVITY_SERVICE)?.run { this as ConnectivityManager }
-                connectivity?.run {
-                    val info = this.activeNetworkInfo
-                    if (info != null && info.isConnected) {
-                        if (info.state == NetworkInfo.State.CONNECTED) {
-                            return true
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                return false
-            }
-            return false
         }
 
     }
