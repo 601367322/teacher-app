@@ -58,15 +58,10 @@ class TestSettingFragment : BaseFragment() {
 
         dev.setOnClickListener {
             ok(mHost[1], mPort[0], mSocketHost[5], mSocketPort[0])
-//            ok(mHost[1], mPort[0], mSocketHost[2], mSocketPort[0])
         }
 
-        frode.setOnClickListener {
-            ok(mHost[3], mPort[2], mSocketHost[0], mSocketPort[0])
-        }
-
-        landy.setOnClickListener {
-            ok(mHost[4], mPort[2], mSocketHost[1], mSocketPort[0])
+        r3.setOnClickListener {
+            ok(mHost[6], mPort[0], mSocketHost[6], mSocketPort[1])
         }
     }
 
