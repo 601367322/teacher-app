@@ -22,17 +22,9 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.view.SubjectOnStartFragment
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
-
-
-/**
- * Description : 抢红包
- * @author  rich
- * @date 2018/7/26  下午2:34
- * 								 - generate by MvpAutoCodePlus plugin.
- */
+import org.greenrobot.eventbus.EventBus
 
 class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
-
 
     companion object {
 
@@ -120,6 +112,9 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
     override fun stopSendRedPackage() {
         mSparkServicePresenter.stopAnswer()
+
+        //重新发送姓名
+        EventBus.getDefault().post(ClassesDetailFragment.SendNameToKeyPad())
     }
 
     override fun startTimer(totalTime: Long) {

@@ -207,7 +207,7 @@ class SubjectOnStartFragment : BaseFragment() {
                                         }
                                         lastDanmuTime = System.currentTimeMillis() + delay
 
-                                        Thread({
+                                        Thread {
                                             while (mDanmuView?.mDanmuManager == null) {
                                                 try {
                                                     Thread.sleep(50)
@@ -227,7 +227,7 @@ class SubjectOnStartFragment : BaseFragment() {
                                                     e.printStackTrace()
                                                 }
                                             }, delay)
-                                        }).start()
+                                        }.start()
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }

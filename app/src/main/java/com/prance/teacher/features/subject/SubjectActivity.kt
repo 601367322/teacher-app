@@ -42,6 +42,8 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener, 
                 if (question.classId == mQuestion?.classId) {
                     onSubjectStop()
                 }
+                //重新发送名字
+                EventBus.getDefault().post(ClassesDetailFragment.SendNameToKeyPad())
             }
             PushService.QUESTION_RESULT -> {
                 //答题结果

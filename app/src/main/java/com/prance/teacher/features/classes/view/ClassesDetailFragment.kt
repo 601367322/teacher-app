@@ -21,6 +21,7 @@ import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
+import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.afterclass.AfterClassActivity
 import com.prance.teacher.features.classes.contract.IClassesDetailContract
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -33,6 +34,7 @@ import com.prance.teacher.features.subject.SubjectActivity
 import com.prance.teacher.features.subject.SubjectRankActivity
 import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.json.JSONObject
 import java.io.Serializable
@@ -53,7 +55,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             override fun onServiceConnected() {
                 super.onServiceConnected()
 
-                sendNameToKeyPad()
+                sendNameToKeyPad(null)
             }
         })
     }
@@ -157,10 +159,20 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
     @Subscribe
     fun onEvent(bean: SendNameToKeyPad) {
-        sendNameToKeyPad()
+        sendNameToKeyPad(null)
+    }
+
+    /**
+     * 发送题型到答题器
+     */
+    @Subscribe
+    fun onEvent(bean: SendQuestionNameToKeyPad) {
+        sendNameToKeyPad(bean.name)
     }
 
     class SendNameToKeyPad : Serializable
+
+    class SendQuestionNameToKeyPad(val name: String) : Serializable
 
     override fun needEventBus(): Boolean = true
 
@@ -179,6 +191,18 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 val question = msg.getData(Question::class.java)
                 if (question.classId == mClassesEntity?.klass?.id) {
 
+                    when (question.getQuestionType()) {
+                        SparkService.QuestionType.SINGLE -> {
+                            EventBus.getDefault().post(SendQuestionNameToKeyPad("单选题"))
+                        }
+                        SparkService.QuestionType.MULTI -> {
+                            EventBus.getDefault().post(SendQuestionNameToKeyPad("多选题"))
+                        }
+                        SparkService.QuestionType.YES_OR_NO -> {
+                            EventBus.getDefault().post(SendQuestionNameToKeyPad("判断题"))
+                        }
+                    }
+
                     context?.run {
                         startActivity(SubjectActivity.callingIntent(this, question))
                     }
@@ -189,6 +213,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 //抢红包
                 val setting = msg.getData(RedPackageSetting::class.java)
                 if (setting.classId == mClassesEntity?.klass?.id) {
+
+                    EventBus.getDefault().post(SendQuestionNameToKeyPad("抢红包"))
+
                     context?.run {
                         startActivity(RedPackageActivity.callingIntent(this, setting))
                     }
@@ -218,11 +245,11 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     }
 
     private fun doFinishActivity() {
-        ActivityUtils.finishActivity(SubjectActivity::class.java)
-        ActivityUtils.finishActivity(SubjectRankActivity::class.java)
-        ActivityUtils.finishActivity(AfterClassActivity::class.java)
-        ActivityUtils.finishActivity(PKActivity::class.java)
-        ActivityUtils.finishActivity(RedPackageActivity::class.java)
+        for (activity in ActivityUtils.getActivityList()) {
+            if (activity is OnStartClassActivity) {
+                activity.finish()
+            }
+        }
 
         System.gc()
         System.runFinalization()
@@ -300,15 +327,19 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
             }
         }
 
-        sendNameToKeyPad()
+        sendNameToKeyPad(null)
     }
 
-    private fun sendNameToKeyPad() {
+    private fun sendNameToKeyPad(name: String?) {
         //发送学生名称
         mStudentList?.run {
             for (s in this) {
                 s.getClicker()?.number?.let {
-                    mSparkServicePresenter.sendData(s.name, it)
+                    if (name != null) {
+                        mSparkServicePresenter.sendData(name, it)
+                    } else {
+                        mSparkServicePresenter.sendData(s.name, it)
+                    }
                 }
             }
         }
