@@ -89,7 +89,7 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
                 SparkService.mUsbSerialNum?.run {
                     val list = mPresenter.getAllKeyPad(this)
                     for (k in list) {
-                        mSparkServicePresenter.sendData("123", k.keyId)
+                        mSparkServicePresenter.sendData("", k.keyId)
                     }
                 }
             }.start()
