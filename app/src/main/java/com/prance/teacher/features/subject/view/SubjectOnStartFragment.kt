@@ -98,6 +98,10 @@ class SubjectOnStartFragment : BaseFragment() {
 
             override fun onAnswer(answer: ReceiveAnswer) {
                 val keyId = answer.uid.toString()
+
+                //提交反馈
+                mSparkServicePresenter.sendData("已提交", keyId)
+
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult(keyId, answer.answer, System.currentTimeMillis())).sendToTarget()
             }
 
