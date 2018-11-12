@@ -3,6 +3,7 @@ package com.prance.teacher.features.classes.presenter
 import com.prance.teacher.features.classes.contract.IClassesContract
 import com.prance.lib.base.mvp.BasePresenterKt
 import com.prance.lib.common.utils.http.mySubscribe
+import com.prance.lib.database.KeyPadEntity
 import com.prance.teacher.features.classes.model.ClassesModel
 import com.prance.teacher.features.match.model.MatchKeyPadModel
 
@@ -31,6 +32,10 @@ class ClassesPresenter : BasePresenterKt<IClassesContract.View>(), IClassesContr
 
     override fun getKeyPadCount(stationId: String): Int {
         return keyPadModel.getAllKeyPadByBaseStationSN(stationId).size
+    }
+
+    override fun getAllKeyPad(stationId: String): List<KeyPadEntity> {
+        return keyPadModel.getAllKeyPadByBaseStationSN(stationId)
     }
 }
 

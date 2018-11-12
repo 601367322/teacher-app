@@ -46,7 +46,8 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         })
     }
 
-    lateinit var pingNetEntity: PingNetEntity
+//    lateinit var pingNetEntity: PingNetEntity
+    var IsNetworkOk = false
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
 
@@ -90,7 +91,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
 
-                if (!pingNetEntity.isResult) {
+                if (!IsNetworkOk) {
                     networkProgress.error()
                 } else {
                     networkProgress.ok()
@@ -102,7 +103,7 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
                     stationProgress.ok()
                 }
 
-                if (pingNetEntity.isResult && !TextUtils.isEmpty(SparkService.mUsbSerialNum)) {
+                if (IsNetworkOk && !TextUtils.isEmpty(SparkService.mUsbSerialNum)) {
                     nextStep.visible()
                     nextStep.requestFocus()
                 } else {
@@ -113,9 +114,11 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
         })
 
         Thread {
-            pingNetEntity = PingNetEntity(UrlUtil.getHost(), 3, 5, StringBuffer())
-            pingNetEntity = PingNet.ping(pingNetEntity)
-            LogUtils.d(pingNetEntity.pingTime)
+            for (i in 0..4){
+                if(PingNet.ping(PingNetEntity(UrlUtil.getHost(), 1, 5, StringBuffer())).isResult){
+                    IsNetworkOk = true
+                }
+            }
         }.start()
     }
 

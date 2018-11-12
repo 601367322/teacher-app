@@ -86,10 +86,10 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
         match.setOnClickListener {
 
-            //            if(BuildConfig.DEBUG){
-//                context?.let { startActivity(MainActivity.callingIntent(it)) }
-//                return@setOnClickListener
-//            }
+            if (BuildConfig.DEBUG) {
+                context?.let { startActivity(MainActivity.callingIntent(it)) }
+                return@setOnClickListener
+            }
 
             if (!BuildConfig.DEBUG && SparkService.mUsbSerialNum == null) {
                 ToastUtils.showShort("请先连接接收器")

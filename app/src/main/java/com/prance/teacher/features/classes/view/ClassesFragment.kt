@@ -84,6 +84,16 @@ class ClassesFragment : BaseFragment(), IClassesContract.View, PagerGridLayoutMa
                 return@setOnItemClickListener
             }
 
+            Thread {
+                //清空答题器名称
+                SparkService.mUsbSerialNum?.run {
+                    val list = mPresenter.getAllKeyPad(this)
+                    for (k in list) {
+                        mSparkServicePresenter.sendData("123", k.keyId)
+                    }
+                }
+            }.start()
+
             classVo?.run {
                 EventBus.getDefault().post(MainActivity.EventMainClassesEntity(ClassesEntity(id!!, name!!)))
                 activity?.run {
