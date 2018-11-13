@@ -69,6 +69,7 @@ ext {
     danmu = '0.9.25'
     baseadapter = '2.9.30'
     downloader = "1.0.4"
+    mvvm = "3.0.4"
 
     dependencies = [
             constraintLayout              : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
@@ -201,5 +202,7 @@ ext {
             downloader                    : "com.liulishuo.okdownload:okdownload:${downloader}",
             downloaderSqlite              : "com.liulishuo.okdownload:sqlite:${downloader}",
             downloaderOkHttp              : "com.liulishuo.okdownload:okhttp:${downloader}",
+
+            mvvm                          : "com.github.goldze:MVVMHabit:${mvvm}"
     ]
 }
