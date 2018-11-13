@@ -53,10 +53,6 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".features.classes.ClassesActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
             android:name=".features.modifybind.ChooseKeyPadActivity"
             android:screenOrientation="landscape" />
 

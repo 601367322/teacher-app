@@ -11,8 +11,6 @@ import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.common.NetErrorFragment
-import com.prance.teacher.features.common.Retry
-import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.view.UpdateFragment
 

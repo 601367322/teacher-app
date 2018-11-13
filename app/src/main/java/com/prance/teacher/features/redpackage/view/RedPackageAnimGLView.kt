@@ -2,6 +2,7 @@ package com.prance.teacher.features.redpackage.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 
 import com.chillingvan.canvasgl.ICanvasGL
 import com.chillingvan.canvasgl.glview.GLContinuousView
