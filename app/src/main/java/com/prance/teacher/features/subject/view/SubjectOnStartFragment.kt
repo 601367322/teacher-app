@@ -26,6 +26,7 @@ import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.R.id.danmu
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.subject.model.KeyPadResult
@@ -45,13 +46,7 @@ class SubjectOnStartFragment : BaseFragment() {
     var KEY_ENENT_HANDLER_WHAT = 1
     var SHOW_DANMU_WHAT = 2
 
-    var lastDanmuTime = 0L
-
-    var danmuInterval = 3000L
-
     var boxLightAnim: ValueAnimator? = null
-
-    var mDanmuView: DanmuAnimGLView? = null
 
     var doubleScore = false
 
@@ -75,19 +70,31 @@ class SubjectOnStartFragment : BaseFragment() {
 
         avatarBackground = BitmapFactory.decodeResource(resources, R.drawable.subject_danmu_avatar_bg)
 
-        mDanmuView = rootView.findViewById(R.id.danmu)
-
         //设置进度条最大人数
         mQuestion?.let {
             powerProgressbar.max = it.signStudents?.size ?: 0
         }
 
         if (BuildConfig.DEBUG) {
-//            powerProgressbar.max = 32
 
-//            Handler().postDelayed({
-//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-//            },1000)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1000)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1050)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1100)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1150)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1200)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1250)
         }
 
         mSparkServicePresenter.bind()
@@ -128,9 +135,9 @@ class SubjectOnStartFragment : BaseFragment() {
 
                     //如果学生信息没有找到，则放弃处理
                     if (BuildConfig.DEBUG) {
-//                        if (studentEntity == null) {
-//                            studentEntity = StudentEntity(1, "假数据01", "https://upload.jianshu.io/users/upload_avatars/2897594/eb8b1a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96")
-//                        }
+                        if (studentEntity == null) {
+                            studentEntity = StudentEntity(1, "假数据01", "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3376193873,2090747280&fm=27&gp=0.jpg")
+                        }
                     }
                     if (studentEntity == null) {
                         return
@@ -175,68 +182,15 @@ class SubjectOnStartFragment : BaseFragment() {
                 SHOW_DANMU_WHAT -> {
                     //显示弹幕
                     val studentsEntity = msg.obj as StudentEntity
-                    val avatarHeight = resources.getDimensionPixelOffset(R.dimen.m104_0)
-                    //加载头像
-                    GlideApp.with(this@SubjectOnStartFragment)
-                            .asBitmap()
-                            .load(studentsEntity.head)
-                            .error(R.drawable.danmu_default_avatar)
-                            .override(avatarHeight, avatarHeight)
-                            .transform(CropCircleTransformation())
-                            .into(object : SimpleTarget<Bitmap>() {
-                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                    showDanmu(resource)
-                                }
-
-                                override fun onLoadFailed(errorDrawable: Drawable?) {
-                                    errorDrawable?.let { showDanmu((it as BitmapDrawable).bitmap) }
-                                }
-
-                                var inited = false
-
-                                private fun showDanmu(resource: Bitmap) {
-                                    if (activity == null || inited) {
-                                        return
-                                    }
-                                    inited = true
-                                    try {
-
-                                        var delay = 0L
-                                        val diffTime = System.currentTimeMillis() - lastDanmuTime
-                                        //计算弹幕出现的时间，间隔danmuInterval
-                                        if (diffTime in 1..(danmuInterval - 1)) {
-                                            delay = danmuInterval - diffTime
-                                        } else if (diffTime < 0) {
-                                            delay = lastDanmuTime + danmuInterval - System.currentTimeMillis()
-                                        }
-                                        lastDanmuTime = System.currentTimeMillis() + delay
-
-                                        Thread {
-                                            while (mDanmuView?.mDanmuManager == null) {
-                                                try {
-                                                    Thread.sleep(50)
-                                                } catch (e: Exception) {
-                                                    e.printStackTrace()
-                                                }
-                                            }
-                                            danmu.postDelayed({
-
-                                                if (activity == null) {
-                                                    return@postDelayed
-                                                }
-
-                                                try {
-                                                    mDanmuView?.mDanmuManager?.add(resource, studentsEntity.name)
-                                                } catch (e: Exception) {
-                                                    e.printStackTrace()
-                                                }
-                                            }, delay)
-                                        }.start()
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
-                                    }
-                                }
-                            })
+                    try {
+                        val height = box.measuredHeight
+                        val width = box.measuredWidth
+                        val position = IntArray(2)
+                        box.getLocationInWindow(position)
+                        danmu?.mDanmuManager?.add(studentsEntity, width.toFloat() / 2f + position[0], height.toFloat() / 2f + position[1])
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
             super.dispatchMessage(msg)

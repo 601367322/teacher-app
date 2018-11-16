@@ -34,4 +34,10 @@ class DanmuAnimGLView : GLContinuousView {
         }
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        mDanmuManager?.destory()
+    }
+
 }

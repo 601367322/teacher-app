@@ -111,22 +111,33 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
 
-            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1,"A",200)
-            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
-//            context?.let {
-//                startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(
-//                        1,   mutableListOf(
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240")
-//                )
-//                )))
-//            }
+//            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1,"A",200)
+//            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
+            context?.let {
+                startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(
+                        1,   mutableListOf(
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240")
+                )
+                )))
+            }
 
 
 //            val feedBack = FeedBack(1,1)

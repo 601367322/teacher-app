@@ -9,6 +9,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.subject.SubjectActivity
 import kotlinx.android.synthetic.main.fragment_subject_count_time.*
@@ -24,9 +25,14 @@ class SubjectCountTimeFragment : BaseFragment() {
     var countDownTimerImg = mutableListOf(R.drawable.count_down_timer_go, R.drawable.count_down_timer_1, R.drawable.count_down_timer_2, R.drawable.count_down_timer_3)
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        createAnimate().start()
-
         SoundUtils.play("four_count_time")
+
+        if (BuildConfig.DEBUG) {
+            (activity as SubjectActivity).onSubjectStart()
+            return
+        }
+
+        createAnimate().start()
     }
 
     private fun createAnimate(): AnimatorSet {

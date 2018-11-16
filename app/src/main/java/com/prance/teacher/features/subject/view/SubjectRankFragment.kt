@@ -55,7 +55,7 @@ class SubjectRankFragment : BaseFragment() {
             if (rank.isNotEmpty()) {
                 rankBackground.peopleNumber = rank.size
 
-                for (i in 0..min(10, rank.size - 1)) {
+                for (i in 0 until min(10, rank.size)) {
                     rankNames[i].text = rank[i].name
 
                     if (i < rankAvatars.size) {

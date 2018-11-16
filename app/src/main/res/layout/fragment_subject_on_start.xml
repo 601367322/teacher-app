@@ -11,21 +11,20 @@
         android:id="@+id/powerProgressbar"
         android:layout_width="@dimen/m325.0"
         android:layout_height="@dimen/m16.0"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="@dimen/m123.0"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginLeft="@dimen/m15.0"
+        android:layout_marginTop="@dimen/m123.0"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
         android:id="@+id/danmu"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/m20.0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/powerProgressbar"
-        android:layout_height="@dimen/m200.0" />
+        app:layout_constraintTop_toBottomOf="@+id/powerProgressbar" />
 
     <ImageView
         android:id="@+id/boxLight"
@@ -33,8 +32,8 @@
         android:layout_height="@dimen/m220.0"
         android:layout_marginStart="@dimen/m920.0"
         android:layout_marginTop="@dimen/m15.0"
-        android:visibility="gone"
         android:src="@drawable/box_light"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,8 +51,8 @@
         android:id="@+id/imageView3"
         android:layout_width="@dimen/m364.0"
         android:layout_height="@dimen/m90.0"
-        android:layout_marginBottom="@dimen/m9.0"
         android:layout_marginEnd="@dimen/m80.0"
+        android:layout_marginBottom="@dimen/m9.0"
         android:src="@drawable/subject_answer_student_number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -71,9 +70,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/m6.0"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        android:paddingTop="@dimen/m6.0"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3">
 
@@ -87,13 +86,13 @@
         <com.prance.teacher.weight.FZTextView
             android:id="@+id/answerNumber"
             android:layout_width="wrap_content"
-            android:text="0"
-            android:textSize="@dimen/m60.0"
-            app:strokeWidth="@dimen/m5.0"
-            app:strokeColor="#512B90"
-            android:paddingRight="@dimen/m2.0"
-            android:textColor="#fff"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/m8.0"
-            android:layout_height="wrap_content" />
+            android:paddingRight="@dimen/m2.0"
+            android:text="0"
+            android:textColor="#fff"
+            android:textSize="@dimen/m60.0"
+            app:strokeColor="#512B90"
+            app:strokeWidth="@dimen/m5.0" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
