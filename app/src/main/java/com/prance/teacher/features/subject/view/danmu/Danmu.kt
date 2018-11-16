@@ -27,12 +27,13 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
 
     var lightRotate = 0f
 
+    var alpha = 255
+
     var lightAnim: ValueAnimator? = null
 
     var xd = 0f
     var yd = 0f
 
-    var canRotate = true
 
     val avatarHeight = context.resources.getDimensionPixelOffset(R.dimen.m92_0)
 
@@ -47,10 +48,10 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
         x = getRandom(0, ScreenUtils.getScreenWidth() - light.width).toFloat()
         y = getRandom(border, ScreenUtils.getScreenHeight() - light.width).toFloat()
 
-        var tempBitmap = background
+        val tempBitmap = background
 
         //重新绘制一张空图
-        var bg = Bitmap.createBitmap(
+        val bg = Bitmap.createBitmap(
                 tempBitmap.width,
                 tempBitmap.height,
                 Bitmap.Config.ARGB_4444)
@@ -145,18 +146,18 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
 
     private fun startTranslateAnim() {
 
-        var toXAnim = ObjectAnimator.ofFloat(x, toX)
+        val toXAnim = ObjectAnimator.ofFloat(x, (toX - light.width * 0.1 / 2f).toFloat())
         toXAnim.addUpdateListener {
             x = it.animatedValue.toString().toFloat()
 
-            canRotate = false
+            destroy()
         }
-        var toYAnim = ObjectAnimator.ofFloat(y, toY)
+        val toYAnim = ObjectAnimator.ofFloat(y, (toY - light.height * 0.1 / 2f).toFloat())
         toYAnim.addUpdateListener {
             y = it.animatedValue.toString().toFloat()
         }
 
-        val toScaleAnim = ObjectAnimator.ofFloat(1.0f, 0f)
+        val toScaleAnim = ObjectAnimator.ofFloat(1.0f, 0.1f)
         toScaleAnim.addUpdateListener {
             scaleX = it.animatedValue.toString().toFloat()
             scaleY = it.animatedValue.toString().toFloat()
@@ -167,7 +168,12 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
         transAnimSet.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
-                destroy()
+
+                val anim = ObjectAnimator.ofInt(255, 0)
+                anim.addUpdateListener {
+                    alpha = it.animatedValue.toString().toInt()
+                }
+                anim.start()
             }
         })
         transAnimSet.startDelay = 1000
@@ -188,10 +194,12 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
 
         bitmap?.run {
             if (!isRecycled) {
+
+                canvas.setAlpha(alpha)
+
                 val matrix = ICanvasGL.BitmapMatrix()
                 matrix.translate(x, y)
-                if (canRotate)
-                    matrix.rotateZ(lightRotate)
+                matrix.rotateZ(lightRotate)
                 matrix.scale(scaleX, scaleY)
                 canvas.drawBitmap(light, matrix)
 
