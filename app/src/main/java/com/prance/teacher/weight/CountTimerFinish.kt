@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 class CountTimerFinish : FZTextView {
 
     var mDisposable: Disposable? = null
-    var mTotalTime = 1000
+    var mTotalTime = 10
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
 
