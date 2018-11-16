@@ -1,8 +1,6 @@
 package com.prance.teacher.features.subject.view.danmu
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
+import android.animation.*
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -24,6 +22,9 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
     var x = 0f
     var y = 0f
 
+    var scaleX = 1f
+    var scaleY = 1f
+
     var lightRotate = 0f
 
     var lightAnim: ValueAnimator? = null
@@ -31,12 +32,20 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
     var xd = 0f
     var yd = 0f
 
+    var canRotate = true
+
     val avatarHeight = context.resources.getDimensionPixelOffset(R.dimen.m92_0)
 
     init {
 
         xd = (light.width.toFloat() - background.width.toFloat()) / 2f
         yd = (light.height.toFloat() - background.height.toFloat()) / 2f
+
+
+        val border = context.resources.getDimensionPixelOffset(R.dimen.m200_0)
+
+        x = getRandom(0, ScreenUtils.getScreenWidth() - light.width).toFloat()
+        y = getRandom(border, ScreenUtils.getScreenHeight() - light.width).toFloat()
 
         var tempBitmap = background
 
@@ -136,22 +145,33 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
 
     private fun startTranslateAnim() {
 
-        var border = context.resources.getDimensionPixelOffset(R.dimen.m200_0)
-
-        x = getRandom(0, ScreenUtils.getScreenWidth() - light.width).toFloat()
-        y = getRandom(border, ScreenUtils.getScreenHeight() - light.width).toFloat()
-
-        var toXAnim = ObjectAnimator.ofFloat(x, toX - light.width.toFloat() / 2)
+        var toXAnim = ObjectAnimator.ofFloat(x, toX)
         toXAnim.addUpdateListener {
             x = it.animatedValue.toString().toFloat()
+
+            canRotate = false
         }
-        var toYAnim = ObjectAnimator.ofFloat(y, toY - light.height.toFloat() / 2)
+        var toYAnim = ObjectAnimator.ofFloat(y, toY)
         toYAnim.addUpdateListener {
             y = it.animatedValue.toString().toFloat()
         }
 
-        var transAnimSet = AnimatorSet()
-        transAnimSet.playTogether(toXAnim, toYAnim)
+        val toScaleAnim = ObjectAnimator.ofFloat(1.0f, 0f)
+        toScaleAnim.addUpdateListener {
+            scaleX = it.animatedValue.toString().toFloat()
+            scaleY = it.animatedValue.toString().toFloat()
+        }
+
+        val transAnimSet = AnimatorSet()
+        transAnimSet.playTogether(toXAnim, toYAnim, toScaleAnim)
+        transAnimSet.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+                destroy()
+            }
+        })
+        transAnimSet.startDelay = 1000
+        transAnimSet.duration = 500
         transAnimSet.start()
 
     }
@@ -169,11 +189,20 @@ class Danmu(var context: Context, var head: String?, var name: String, var light
         bitmap?.run {
             if (!isRecycled) {
                 val matrix = ICanvasGL.BitmapMatrix()
-                matrix.rotateZ(lightRotate)
                 matrix.translate(x, y)
+                if (canRotate)
+                    matrix.rotateZ(lightRotate)
+                matrix.scale(scaleX, scaleY)
                 canvas.drawBitmap(light, matrix)
 
-                canvas.drawBitmap(this, (x + xd).toInt(), (y + yd + context.resources.getDimensionPixelOffset(R.dimen.m30_0)).toInt())
+                val bitmapMatrix = ICanvasGL.BitmapMatrix()
+                bitmapMatrix.scale(scaleX, scaleY)
+
+                xd = (light.width.toFloat() * scaleX - this.width.toFloat() * scaleX) / 2f
+                yd = (light.height.toFloat() * scaleX - this.height.toFloat() * scaleX) / 2f
+
+                bitmapMatrix.translate((x + xd), (y + yd + context.resources.getDimensionPixelOffset(R.dimen.m30_0) * scaleX))
+                canvas.drawBitmap(this, bitmapMatrix)
             }
         }
 
