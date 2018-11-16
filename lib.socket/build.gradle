@@ -32,8 +32,6 @@ dependencies {
     implementation dependencies.netty
     implementation dependencies.utilcode
     implementation dependencies.kotlin
-    implementation dependencies.kotlinCoroutines
-    implementation dependencies.kotlinCoroutinesAndroid
     implementation dependencies.gson
     implementation dependencies.rxjava
     implementation dependencies.rxandroid

@@ -1,25 +1,9 @@
 package com.prance.lib.common.utils
 
-import android.app.Activity
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.view.View
-import android.widget.ImageView
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.Utils
-
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
 import com.bumptech.glide.annotation.GlideModule
-
-import java.util.ArrayList
 import com.bumptech.glide.module.AppGlideModule
 import com.prance.lib.common.utils.GlideOptions.bitmapTransform
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
 import okhttp3.OkHttpClient
 
 
@@ -73,7 +57,7 @@ class ImageLoaderFactory : AppGlideModule() {
 
             requestBuilder = mGlideRequests?.load(config.mUrl)
 
-            config.mBitmapTypes.forEach({ i ->
+            config.mBitmapTypes.forEach { i ->
                 run {
                     when (i) {
                         ImageConfig.AS_BITMAP -> mGlideRequests?.asBitmap()
@@ -87,7 +71,7 @@ class ImageLoaderFactory : AppGlideModule() {
                         }
                     }
                 }
-            })
+            }
 
             if (config.mBorderRadius > 0) {
                 requestBuilder?.apply(bitmapTransform(RoundedCornersTransformation(config.mBorderRadius, 0)))
@@ -98,12 +82,5 @@ class ImageLoaderFactory : AppGlideModule() {
             }
         }
 
-        fun clearData() {
-            async {
-
-                GlideApp.get(Utils.getApp()).clearDiskCache()
-                GlideApp.get(Utils.getApp()).clearMemory()
-            }
-        }
     }
 }
