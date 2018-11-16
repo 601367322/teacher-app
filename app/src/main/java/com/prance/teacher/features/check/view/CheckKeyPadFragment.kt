@@ -22,6 +22,7 @@ import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.teacher.features.check.presenter.CheckKeyPadPresenter
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.LoginActivity
+import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.utils.ping.PingNet
 import com.prance.teacher.utils.ping.PingNetEntity

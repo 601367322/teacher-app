@@ -12,18 +12,21 @@
         android:layout_height="@dimen/m192.0"
         android:scaleType="centerInside"
         android:src="@drawable/rank_meteor" />
+
     <ImageView
         android:id="@+id/meteor2"
         android:layout_width="@dimen/m383.0"
         android:layout_height="@dimen/m192.0"
         android:scaleType="centerInside"
         android:src="@drawable/rank_meteor" />
+
     <ImageView
         android:id="@+id/meteor3"
         android:layout_width="@dimen/m383.0"
         android:layout_height="@dimen/m192.0"
         android:scaleType="centerInside"
         android:src="@drawable/rank_meteor" />
+
     <ImageView
         android:id="@+id/light"
         android:layout_width="@dimen/m1920.0"
@@ -36,15 +39,77 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/cups"
+        android:id="@+id/star5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/m44.0"
+        android:layout_marginStart="336dp"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/rank_star_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/cups"
+        android:layout_width="@dimen/m1426.0"
+        android:layout_height="@dimen/m593.0"
+        android:layout_marginTop="@dimen/m437.0"
         android:scaleType="fitXY"
         android:src="@drawable/rank_cups_background"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/scoreLayout1"
+        layout="@layout/layout_rank_background_score_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m635.0"
+        android:layout_marginBottom="@dimen/m494.0"
+        app:layout_constraintBottom_toBottomOf="@+id/cups"
+        app:layout_constraintStart_toStartOf="@+id/cups" />
+
+    <include
+        android:id="@+id/scoreLayout2"
+        layout="@layout/layout_rank_background_score_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m362.0"
+        android:layout_marginBottom="@dimen/m450.0"
+        app:layout_constraintBottom_toBottomOf="@+id/cups"
+        app:layout_constraintLeft_toLeftOf="@+id/cups" />
+
+
+    <include
+        android:id="@+id/scoreLayout3"
+        layout="@layout/layout_rank_background_score_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m925.0"
+        android:layout_marginBottom="@dimen/m435.0"
+        app:layout_constraintBottom_toBottomOf="@+id/cups"
+        app:layout_constraintLeft_toLeftOf="@+id/cups" />
+
+
+    <include
+        android:id="@+id/scoreLayout4"
+        layout="@layout/layout_rank_background_score_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m72.0"
+        android:layout_marginBottom="@dimen/m405.0"
+        app:layout_constraintBottom_toBottomOf="@+id/cups"
+        app:layout_constraintLeft_toLeftOf="@+id/cups" />
+
+    <include
+        android:id="@+id/scoreLayout5"
+        layout="@layout/layout_rank_background_score_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m1200.0"
+        android:layout_marginBottom="@dimen/m410.0"
+        app:layout_constraintBottom_toBottomOf="@+id/cups"
+        app:layout_constraintLeft_toLeftOf="@+id/cups" />
 
     <ImageView
         android:layout_width="0dp"
@@ -77,8 +142,8 @@
         android:id="@+id/star3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="260dp"
         android:layout_marginTop="124dp"
+        android:layout_marginEnd="260dp"
         android:src="@drawable/rank_star_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -87,28 +152,19 @@
         android:id="@+id/star4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="148dp"
         android:layout_marginStart="116dp"
+        android:layout_marginBottom="148dp"
         android:src="@drawable/rank_star_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/star5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="68dp"
-        android:src="@drawable/rank_star_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/star6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="88dp"
         android:src="@drawable/rank_star_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -120,4 +176,287 @@
         android:scaleType="fitXY"
         android:src="@drawable/rank_title_background"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RelativeLayout
+        android:id="@+id/lower_anim_0"
+        android:layout_width="match_parent"
+        android:scaleY="0"
+        android:scaleX="0"
+        android:layout_height="@dimen/m296.0"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/lower_anim_1"
+            android:layout_width="@dimen/m1686.0"
+            android:layout_height="@dimen/m190.0"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/m25.0"
+            android:scaleY="0"
+            android:scaleX="0"
+            android:background="@drawable/icon_rank_lower_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/scoreLayout6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m81.0"
+                android:alpha="0"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/m110.0"
+                    android:layout_height="@dimen/m105.0"
+                    android:src="@drawable/icon_rank_6" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/rankText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/scoreText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:layout_marginTop="@dimen/m20.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:visibility="gone"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scoreLayout7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m51.0"
+                android:alpha="0"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/m110.0"
+                    android:layout_height="@dimen/m105.0"
+                    android:src="@drawable/icon_rank_7" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/rankText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:text="呵呵呵呵"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/scoreText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:layout_marginTop="@dimen/m20.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:visibility="gone"
+                        android:maxLines="1"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scoreLayout8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m51.0"
+                android:alpha="0"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/m110.0"
+                    android:layout_height="@dimen/m105.0"
+                    android:src="@drawable/icon_rank_8" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/rankText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:text="呵呵呵呵"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/scoreText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:layout_marginTop="@dimen/m20.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:visibility="gone"
+                        android:maxLines="1"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scoreLayout9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m51.0"
+                android:alpha="0"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/m110.0"
+                    android:layout_height="@dimen/m105.0"
+                    android:src="@drawable/icon_rank_9" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/rankText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:text="呵呵呵呵"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/scoreText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:layout_marginTop="@dimen/m20.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:textColor="#FFFEFE"
+                        android:visibility="gone"
+                        android:textSize="@dimen/m34.0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scoreLayout10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m51.0"
+                android:alpha="0"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/m110.0"
+                    android:layout_height="@dimen/m105.0"
+                    android:src="@drawable/icon_rank_10" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/rankText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:text="呵呵呵呵"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+
+                    <com.prance.teacher.weight.FZTextView
+                        android:id="@+id/scoreText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m18.0"
+                        android:layout_marginTop="@dimen/m20.0"
+                        android:width="@dimen/m140.0"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:visibility="gone"
+                        android:textColor="#FFFEFE"
+                        android:textSize="@dimen/m34.0" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/m17.0">
+
+            <ImageView
+                android:layout_width="@dimen/m100.0"
+                android:layout_height="@dimen/m220.0"
+                android:src="@drawable/icon_rank_left_border" />
+
+            <ImageView
+                android:id="@+id/lower_anim_2"
+                android:layout_width="@dimen/m100.0"
+                android:layout_height="@dimen/m220.0"
+                android:layout_marginLeft="@dimen/m80.0"
+                android:src="@drawable/icon_rank_right_border" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/lower_anim_3"
+            android:layout_width="@dimen/m330.0"
+            android:layout_height="@dimen/m146.0"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/icon_rank_chibang" />
+
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

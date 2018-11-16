@@ -5,9 +5,9 @@
     android:layout_height="match_parent">
 
     <com.prance.teacher.weight.RankBackground
+        android:id="@+id/rankBackground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cups="@drawable/rank_cups_three_background" />
+        android:layout_height="match_parent" />
 
     <com.prance.teacher.weight.CountTimerFinish
         android:id="@+id/time"
@@ -23,130 +23,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#D86410"
         app:strokeWidth="@dimen/m5.0" />
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/rankText1"
-        android:layout_width="@dimen/m170.0"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m894.0"
-        android:layout_marginTop="@dimen/m535.0"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m41.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#0C0731"
-        app:strokeWidth="@dimen/m4.0" />
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/rankText2"
-        android:layout_width="@dimen/m170.0"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m536.0"
-        android:layout_marginTop="@dimen/m591.0"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m41.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#0C0731"
-        app:strokeWidth="@dimen/m4.0" />
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/rankText3"
-        android:layout_width="@dimen/m170.0"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m1269.0"
-        android:layout_marginTop="@dimen/m611.0"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m41.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#0C0731"
-        app:strokeWidth="@dimen/m4.0" />
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/rankScore1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m69.0"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m60.0"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rankText1"
-        app:layout_constraintEnd_toEndOf="@+id/rankText1"
-        app:layout_constraintStart_toStartOf="@+id/rankText1"
-        app:strokeWidth="@dimen/m4.0"
-        app:typeface="COMICSANSMSGRAS" />
-
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/rankScore3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m69.0"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m60.0"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rankText3"
-        app:layout_constraintEnd_toEndOf="@+id/rankText3"
-        app:layout_constraintStart_toStartOf="@+id/rankText3"
-        app:strokeWidth="@dimen/m4.0"
-        app:typeface="COMICSANSMSGRAS" />
-
-    <com.prance.teacher.weight.FZTextView
-        android:id="@+id/rankScore2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/m69.0"
-        android:textColor="#FFFEFE"
-        android:textSize="@dimen/m60.0"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rankText2"
-        app:layout_constraintEnd_toEndOf="@+id/rankText2"
-        app:layout_constraintStart_toStartOf="@+id/rankText2"
-        app:strokeWidth="@dimen/m4.0"
-        app:typeface="COMICSANSMSGRAS" />
-
-    <com.prance.lib.common.utils.weight.CircleImageView
-        android:id="@+id/rankAvatar1"
-        android:layout_width="@dimen/m145.0"
-        android:layout_height="@dimen/m145.0"
-        android:layout_marginBottom="@dimen/m4.0"
-        android:background="@drawable/rank_avatar_bg"
-        android:padding="@dimen/m15.0"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/rankScore1"
-        app:layout_constraintEnd_toEndOf="@+id/rankText1"
-        app:layout_constraintStart_toStartOf="@+id/rankText1" />
-
-    <com.prance.lib.common.utils.weight.CircleImageView
-        android:id="@+id/rankAvatar2"
-        android:layout_width="@dimen/m145.0"
-        android:layout_height="@dimen/m145.0"
-        android:layout_marginBottom="@dimen/m4.0"
-        android:background="@drawable/rank_avatar_bg"
-        android:padding="@dimen/m15.0"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/rankScore3"
-        app:layout_constraintEnd_toEndOf="@+id/rankText2"
-        app:layout_constraintStart_toStartOf="@+id/rankText2" />
-
-
-    <com.prance.lib.common.utils.weight.CircleImageView
-        android:id="@+id/rankAvatar3"
-        android:layout_width="@dimen/m145.0"
-        android:layout_height="@dimen/m145.0"
-        android:layout_marginBottom="@dimen/m4.0"
-        android:background="@drawable/rank_avatar_bg"
-        android:padding="@dimen/m15.0"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/rankScore2"
-        app:layout_constraintEnd_toEndOf="@+id/rankText3"
-        app:layout_constraintStart_toStartOf="@+id/rankText3" />
 
 </android.support.constraint.ConstraintLayout>

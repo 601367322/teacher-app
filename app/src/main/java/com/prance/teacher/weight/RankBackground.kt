@@ -2,14 +2,15 @@ package com.prance.teacher.weight
 
 import android.animation.*
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
-import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.common.utils.getInflate
 import com.prance.teacher.R
 import kotlinx.android.synthetic.main.layout_rank_background.view.*
@@ -18,11 +19,10 @@ class RankBackground : RelativeLayout {
 
     val animators: MutableList<Animator> = mutableListOf()
 
+    var peopleNumber: Int = 0
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         addView(getInflate(this, R.layout.layout_rank_background))
-
-        var cupsTranslationY = 0
-        var cupsTranslationYDiff = 0
 
         attrs?.let {
             val a = context.obtainStyledAttributes(it, R.styleable.RankBackground)
@@ -31,14 +31,13 @@ class RankBackground : RelativeLayout {
                 if (cupsRes != -1) {
                     cups.setImageResource(cupsRes)
                 }
-                cupsTranslationY = a.getDimensionPixelOffset(R.styleable.RankBackground_cupsTranslationY, resources.getDimensionPixelOffset(R.dimen.m200_0))
-                cupsTranslationYDiff = a.getDimensionPixelOffset(R.styleable.RankBackground_cupsTranslationYDiff, 0)
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
                 a.recycle()
             }
         }
+
 
         //背景旋转光效
         val lightAnim = AnimatorSet()
@@ -63,9 +62,61 @@ class RankBackground : RelativeLayout {
                 ObjectAnimator.ofFloat(light, AnimUtil.SCALEX, 0F, 1F))
         lightAnim.interpolator = LinearInterpolator()
 
+        //更多排名边框
+        val borderAnim = ObjectAnimator.ofInt(80, 1580)
+        animators.add(borderAnim)
+        borderAnim.addUpdateListener { i ->
+            val params = lower_anim_2.layoutParams as LinearLayout.LayoutParams
+            params.leftMargin = i.animatedValue.toString().toInt()
+            lower_anim_2.layoutParams = params
+        }
+
+        //更多排名背景
+        val lowerBGScale = AnimatorSet()
+        animators.add(lowerBGScale)
+        lowerBGScale.playTogether(ObjectAnimator.ofFloat(lower_anim_1, AnimUtil.SCALEY, 0F, 1F), ObjectAnimator.ofFloat(lower_anim_1, AnimUtil.SCALEX, 0F, 1F))
+        lowerBGScale.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                val scoreLayouts = mutableListOf(scoreLayout6, scoreLayout7, scoreLayout8, scoreLayout9, scoreLayout10)
+                var delay = 0L
+                for ((index, layout) in scoreLayouts.withIndex()) {
+                    if (index + 5 < peopleNumber) {
+                        postDelayed({
+                            val animatorSet = AnimatorSet()
+                            animators.add(animatorSet)
+                            animatorSet.playTogether(ObjectAnimator.ofFloat(layout, AnimUtil.ALPHA, 0f, 1f), ObjectAnimator.ofFloat(layout, AnimUtil.SCALEY, 1.5F, 1F), ObjectAnimator.ofFloat(layout, AnimUtil.SCALEX, 1.5F, 1F))
+                            animatorSet.start()
+                        }, delay)
+                        delay += 50
+                    }
+                }
+            }
+        })
+
+        //更多排名效果
+        val lowerScale = AnimatorSet()
+        animators.add(lowerScale)
+        lowerScale.playTogether(ObjectAnimator.ofFloat(lower_anim_0, AnimUtil.SCALEY, 0F, 1F), ObjectAnimator.ofFloat(lower_anim_0, AnimUtil.SCALEX, 0F, 1F))
+        lowerScale.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+
+                borderAnim.start()
+
+                lowerBGScale.start()
+            }
+        })
+
+
         //奖杯效果
-        val cupAnim = ObjectAnimator.ofFloat(cups, AnimUtil.TRANSLATIONY, cups.y + cupsTranslationY, cups.y + cupsTranslationYDiff)
+        val cupsParams = cups.layoutParams as ConstraintLayout.LayoutParams
+        val cupAnim = ObjectAnimator.ofInt(cupsParams.topMargin + cupsParams.height, cupsParams.topMargin)
         animators.add(cupAnim)
+        cupAnim.addUpdateListener { it ->
+            val params = cups.layoutParams as ConstraintLayout.LayoutParams
+            params.topMargin = it.animatedValue.toString().toInt()
+            cups.layoutParams = params
+        }
         cupAnim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 cups.visible()
@@ -74,9 +125,12 @@ class RankBackground : RelativeLayout {
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
                 lightAnim.start()
+
+                if (peopleNumber > 6)
+                    lowerScale.start()
             }
         })
-        cupAnim.duration = 500
+        cupAnim.duration = 1000
         cupAnim.start()
 
         //星星效果

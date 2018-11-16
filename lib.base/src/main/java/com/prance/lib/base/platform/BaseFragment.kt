@@ -15,7 +15,6 @@
  */
 package com.prance.lib.base.platform
 
-import android.app.Application
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -34,7 +33,7 @@ abstract class BaseFragment : Fragment(), ITopView {
 
     private var inited = false
 
-    protected var mRootView: WeakReference<View>? = null
+    private var mRootView: WeakReference<View>? = null
 
     abstract fun layoutId(): Int
 

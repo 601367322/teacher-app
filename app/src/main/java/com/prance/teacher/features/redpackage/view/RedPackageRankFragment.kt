@@ -7,19 +7,15 @@ import android.widget.TextView
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.Constants.SCORES
 import com.prance.lib.common.utils.GlideApp
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.utils.SoundUtils
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_red_rank.*
+import kotlinx.android.synthetic.main.layout_rank_background.*
+import kotlinx.android.synthetic.main.layout_rank_background_score_layout.view.*
 import java.io.Serializable
-import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
 /**
@@ -30,9 +26,9 @@ class RedPackageRankFragment : BaseFragment() {
 
     lateinit var scores: MutableList<StudentScore>
 
-    lateinit var rankNames: MutableList<TextView>
-    lateinit var rankScores: MutableList<TextView>
-    lateinit var rankAvatars: MutableList<ImageView>
+    var rankNames: MutableList<TextView> = mutableListOf()
+    var rankScores: MutableList<TextView> = mutableListOf()
+    var rankAvatars: MutableList<ImageView> = mutableListOf()
 
     companion object {
 
@@ -60,24 +56,33 @@ class RedPackageRankFragment : BaseFragment() {
 
         SoundUtils.play("rank_background")
 
-        rankNames = mutableListOf(rankText1, rankText2, rankText3)
-        rankScores = mutableListOf(rankScore1, rankScore2, rankScore3)
-        rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3)
+        val scoreLayouts = mutableListOf(scoreLayout1, scoreLayout2, scoreLayout3, scoreLayout4, scoreLayout5, scoreLayout6, scoreLayout7, scoreLayout8, scoreLayout9, scoreLayout10)
+
+        for (layout in scoreLayouts) {
+            rankNames.add(layout.rankText)
+            rankScores.add(layout.scoreText)
+            if (layout.rankAvatar != null)
+                rankAvatars.add(layout.rankAvatar)
+        }
 
         val rank = sort(scores)
 
-        Flowable.timer(500,TimeUnit.MILLISECONDS)
-                .mySubscribe {
-                    for (i in 0 until min(3, rank.size)) {
-                        rankNames[i].text = rank[i].student.name
-                        rankScores[i].text = "${rank[i].score}分"
-                        rankAvatars[i].visible()
-                        GlideApp.with(this)
-                                .load(rank[i].student.head)
-                                .placeholder(R.drawable.default_avatar_boy)
-                                .into(rankAvatars[i])
-                    }
-                }
+        rankBackground.peopleNumber = rank.size
+
+        for (i in 0 until min(10, rank.size)) {
+            rankNames[i].text = rank[i].student.name
+
+            rankScores[i].visible()
+            rankScores[i].text = "${rank[i].score}分"
+
+            if (i < rankAvatars.size) {
+                rankAvatars[i].visible()
+                GlideApp.with(this)
+                        .load(rank[i].student.head)
+                        .placeholder(R.drawable.default_avatar_boy)
+                        .into(rankAvatars[i])
+            }
+        }
 
 
         if (BuildConfig.DEBUG) {

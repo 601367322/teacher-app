@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal|bottom"
+    android:orientation="vertical">
+
+    <com.prance.lib.common.utils.weight.CircleImageView
+        android:id="@+id/rankAvatar"
+        android:layout_width="@dimen/m146.0"
+        android:layout_height="@dimen/m146.0"
+        android:background="@drawable/rank_avatar_bg"
+        android:padding="@dimen/m15.0"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m26.0"
+        android:width="@dimen/m140.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="#FFFEFE"
+        android:textSize="@dimen/m46.0"
+        android:visibility="gone"
+        app:strokeColor="#0C0731"
+        app:strokeWidth="@dimen/m4.0" />
+
+    <com.prance.teacher.weight.FZTextView
+        android:id="@+id/rankText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m30.0"
+        android:width="@dimen/m140.0"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="#FFFEFE"
+        android:textSize="@dimen/m30.0" />
+</LinearLayout>

@@ -277,7 +277,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         var questionId: Int? = null
         var result: String? = null
         var createTime = System.currentTimeMillis()
-        var duration: Int? = null
+        var duration: Int? = null //持续时间
         var signStudents: MutableList<StudentEntity>? = null
 
         constructor(classId: Int?, type: Int?, param: String?, questionId: Int?, answer: String?, signStudents: MutableList<StudentEntity>?) {

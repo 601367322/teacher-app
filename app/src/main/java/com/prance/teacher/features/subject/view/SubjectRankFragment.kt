@@ -7,15 +7,14 @@ import android.widget.TextView
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.Constants.QUESTION_RESULT
 import com.prance.lib.common.utils.GlideApp
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.R
 import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.utils.SoundUtils
-import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_subject_on_destroy.*
+import kotlinx.android.synthetic.main.layout_rank_background.*
+import kotlinx.android.synthetic.main.layout_rank_background_score_layout.view.*
 import java.io.Serializable
-import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
 class SubjectRankFragment : BaseFragment() {
@@ -24,8 +23,8 @@ class SubjectRankFragment : BaseFragment() {
 
     var mQuestionResult: QuestionResult? = null
 
-    lateinit var rankNames: MutableList<TextView>
-    lateinit var rankAvatars: MutableList<ImageView>
+    var rankNames: MutableList<TextView> = mutableListOf()
+    var rankAvatars: MutableList<ImageView> = mutableListOf()
 
     companion object {
 
@@ -43,57 +42,47 @@ class SubjectRankFragment : BaseFragment() {
         SoundUtils.play("rank_background")
 
         mQuestionResult = arguments?.getSerializable(QUESTION_RESULT) as QuestionResult?
-        Flowable.timer(500, TimeUnit.MILLISECONDS)
-                .mySubscribe {
-                    rankNames = mutableListOf(rankText1, rankText2, rankText3, rankText4, rankText5)
-                    rankAvatars = mutableListOf(rankAvatar1, rankAvatar2, rankAvatar3, rankAvatar4, rankAvatar5)
+        val scoreLayouts = mutableListOf(scoreLayout1, scoreLayout2, scoreLayout3, scoreLayout4, scoreLayout5, scoreLayout6, scoreLayout7, scoreLayout8, scoreLayout9, scoreLayout10)
 
-                    mQuestionResult?.run {
+        for (layout in scoreLayouts) {
+            rankNames.add(layout.rankText)
+            if (layout.rankAvatar != null)
+                rankAvatars.add(layout.rankAvatar)
+        }
 
-                        if (rank.isNotEmpty()) {
-                            for (i in 0..min(4, rank.size - 1)) {
-                                rankNames[i].text = rank[i].name
-                                rankAvatars[i].visible()
-                                GlideApp.with(this@SubjectRankFragment)
-                                        .load(rank[i].head)
-                                        .placeholder(R.drawable.default_avatar_boy)
-                                        .into(rankAvatars[i])
-                            }
-                        }
+        mQuestionResult?.run {
+
+            if (rank.isNotEmpty()) {
+                rankBackground.peopleNumber = rank.size
+
+                for (i in 0..min(10, rank.size - 1)) {
+                    rankNames[i].text = rank[i].name
+
+                    if (i < rankAvatars.size) {
+                        rankAvatars[i].visible()
+                        GlideApp.with(this@SubjectRankFragment)
+                                .load(rank[i].head)
+                                .placeholder(R.drawable.default_avatar_boy)
+                                .into(rankAvatars[i])
                     }
                 }
+            }
+        }
 
     }
 
     class QuestionResult : Serializable {
 
         var classId: Int? = null
-        var answerMsg: Answer? = null
-        var answer: String? = null
         var rank: List<StudentEntity> = mutableListOf()
 
-        constructor()
-
-        constructor(classId: Int?, answerMsg: Answer?, answer: String?, rank: List<StudentEntity>) {
+        constructor(classId: Int?, rank: List<StudentEntity>) {
             this.classId = classId
-            this.answerMsg = answerMsg
-            this.answer = answer
             this.rank = rank
         }
 
 
     }
 
-    class Answer : Serializable {
-        var right: Int = 0
-        var noAnswer: Int = 0
-        var wrong: Int = 0
-
-        constructor(right: Int, noAnswer: Int, wrong: Int) {
-            this.right = right
-            this.noAnswer = noAnswer
-            this.wrong = wrong
-        }
-    }
 
 }
