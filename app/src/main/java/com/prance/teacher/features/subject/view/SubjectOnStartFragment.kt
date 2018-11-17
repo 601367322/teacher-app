@@ -1,7 +1,6 @@
 package com.prance.teacher.features.subject.view
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
+import android.animation.*
 import android.graphics.*
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
@@ -10,9 +9,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.text.TextUtils
+import android.util.TypedValue
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.blankj.utilcode.util.LogUtils
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -50,6 +54,19 @@ class SubjectOnStartFragment : BaseFragment() {
 
     var doubleScore = false
 
+    var mRankNames = mutableListOf<TextView>()
+
+    var rankBackgrounds = mutableListOf(R.drawable.subject_onstart_rank_bg_1,
+            R.drawable.subject_onstart_rank_bg_2,
+            R.drawable.subject_onstart_rank_bg_3,
+            R.drawable.subject_onstart_rank_bg_4,
+            R.drawable.subject_onstart_rank_bg_5,
+            R.drawable.subject_onstart_rank_bg_6,
+            R.drawable.subject_onstart_rank_bg_7,
+            R.drawable.subject_onstart_rank_bg_8,
+            R.drawable.subject_onstart_rank_bg_9,
+            R.drawable.subject_onstart_rank_bg_10)
+
     lateinit var avatarBackground: Bitmap
 
     companion object {
@@ -73,6 +90,18 @@ class SubjectOnStartFragment : BaseFragment() {
         //设置进度条最大人数
         mQuestion?.let {
             powerProgressbar.max = it.signStudents?.size ?: 0
+
+            when (it.getQuestionType()) {
+                SparkService.QuestionType.SINGLE -> {
+
+                }
+                SparkService.QuestionType.MULTI -> {
+
+                }
+                SparkService.QuestionType.YES_OR_NO -> {
+
+                }
+            }
         }
 
         if (BuildConfig.DEBUG) {
@@ -82,22 +111,70 @@ class SubjectOnStartFragment : BaseFragment() {
             }, 1000)
             Handler().postDelayed({
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1050)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1100)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
             }, 1150)
             Handler().postDelayed({
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
             }, 1200)
             Handler().postDelayed({
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1250)
+            }, 1350)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1400)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1550)
+        }
+
+        for (i in 0 until 10) {
+            generateView(i)
+        }
+
+        subjectBottomLayout.post {
+            ObjectAnimator.ofFloat(subjectBottomLayout, AnimUtil.TRANSLATIONY, resources.getDimensionPixelOffset(R.dimen.m190_0).toFloat(), 0f).start()
         }
 
         mSparkServicePresenter.bind()
+    }
+
+
+    private fun generateView(index: Int) {
+
+        val relativeLayout = RelativeLayout(context)
+        relativeLayout.visibility = View.GONE
+
+        val image = ImageView(context)
+        val imageLayoutParams = RelativeLayout.LayoutParams(resources.getDimensionPixelOffset(R.dimen.m204_0), resources.getDimensionPixelOffset(R.dimen.m60_0))
+        image.setImageResource(rankBackgrounds[index])
+        image.layoutParams = imageLayoutParams
+
+        val text = TextView(context)
+        val textLayoutParams = RelativeLayout.LayoutParams(resources.getDimensionPixelOffset(R.dimen.m116_0), RelativeLayout.LayoutParams.WRAP_CONTENT)
+        textLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
+        textLayoutParams.leftMargin = resources.getDimensionPixelOffset(R.dimen.m11_0)
+        text.maxLines = 1
+        text.ellipsize = TextUtils.TruncateAt.END
+        text.setTextColor(Color.WHITE)
+        text.setTextSize(12f)
+        text.layoutParams = textLayoutParams
+
+        relativeLayout.addView(image)
+        relativeLayout.addView(text)
+
+        rankLayout.addView(relativeLayout)
+
+        mRankNames.add(text)
+
+        rankLayout.postDelayed({
+            val anim = ObjectAnimator.ofFloat(relativeLayout, AnimUtil.TRANSLATIONX, resources.getDimensionPixelOffset(R.dimen.m300_0).toFloat(), 0f)
+            anim.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    super.onAnimationStart(animation)
+                    relativeLayout.visibility = View.VISIBLE
+                }
+            })
+            anim.start()
+        }, (index * 50).toLong())
     }
 
     private val mSparkServicePresenter: SparkServicePresenter by lazy {
@@ -143,6 +220,19 @@ class SubjectOnStartFragment : BaseFragment() {
                         return
                     }
                     mResult.add(keyPadResult)
+
+                    if (mResult.size < mRankNames.size) {
+                        var textView = mRankNames[mResult.size - 1]
+                        textView.text = studentEntity.name
+
+                        var anim = AnimatorSet()
+                        anim.playTogether(
+                                ObjectAnimator.ofFloat(textView, AnimUtil.ALPHA, 0f, 255f),
+                                ObjectAnimator.ofFloat(textView, AnimUtil.SCALEX, 1.2f, 1.0f),
+                                ObjectAnimator.ofFloat(textView, AnimUtil.SCALEY, 1.2f, 1.0f)
+                        )
+                        anim.start()
+                    }
 
                     answerNumber.text = (answerNumber.text.toString().toInt() + 1).toString()
 

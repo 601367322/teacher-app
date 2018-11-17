@@ -48,16 +48,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="@dimen/m364.0"
-        android:layout_height="@dimen/m90.0"
-        android:layout_marginEnd="@dimen/m80.0"
-        android:layout_marginBottom="@dimen/m9.0"
-        android:src="@drawable/subject_answer_student_number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
         android:id="@+id/imageView4"
         android:layout_width="@dimen/m51.0"
         android:layout_height="@dimen/m89.0"
@@ -67,32 +57,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
+        android:id="@+id/rankLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/m6.0"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.prance.teacher.weight.FZTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="作答人数"
-            android:textColor="#512B90"
-            android:textSize="@dimen/m58.0" />
 
-        <com.prance.teacher.weight.FZTextView
-            android:id="@+id/answerNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/m8.0"
-            android:paddingRight="@dimen/m2.0"
-            android:text="0"
-            android:textColor="#fff"
-            android:textSize="@dimen/m60.0"
-            app:strokeColor="#512B90"
-            app:strokeWidth="@dimen/m5.0" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/subjectBottomLayout"
+        android:translationY="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/m190.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="@dimen/m364.0"
+            android:layout_height="@dimen/m90.0"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/m14.0"
+            android:layout_marginBottom="@dimen/m7.0"
+            android:background="@drawable/subject_answer_student_number"
+            android:gravity="center"
+            android:paddingTop="@dimen/m6.0">
+
+            <com.prance.teacher.weight.FZTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="作答人数"
+                android:textColor="#512B90"
+                android:textSize="@dimen/m58.0" />
+
+            <com.prance.teacher.weight.FZTextView
+                android:id="@+id/answerNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m8.0"
+                android:paddingRight="@dimen/m2.0"
+                android:text="0"
+                android:textColor="#fff"
+                android:textSize="@dimen/m60.0"
+                app:strokeColor="#512B90"
+                app:strokeWidth="@dimen/m5.0" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/m456.0"
+            android:layout_height="@dimen/m190.0"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/subject_icon_left_des" />
+
+        <LinearLayout
+            android:layout_width="@dimen/m840.0"
+            android:layout_height="@dimen/m139.0"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/subject_bottom_des">
+
+            <TextView
+                android:id="@+id/questionTypeText"
+                android:layout_width="wrap_content"
+                android:text="单选题-点击abcd作答"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

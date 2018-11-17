@@ -16,7 +16,7 @@ import com.prance.teacher.R
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import java.util.*
 
-class Danmu(var context: Context, var head: String?, var name: String, var light: Bitmap, background: Bitmap, var toX: Float, var toY: Float) {
+class Danmu(var context: Context, head: String?, var name: String, var light: Bitmap, background: Bitmap, var toX: Float, var toY: Float) {
 
     var bitmap: Bitmap? = null
     var x = 0f

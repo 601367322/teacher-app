@@ -111,8 +111,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            context?.let { startActivity(CheckKeyPadActivity.callingIntent(it)) }
 //            context?.let { startActivity(Intent(it,DanmuTestActivity::class.java)) }
 
-            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1,"A",200)
-            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
+//            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1,"A",200)
+//            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
 //            context?.let {
 //                startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(
 //                        1,   mutableListOf(
@@ -145,7 +145,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-            activity?.finish()
+//            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }
