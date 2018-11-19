@@ -250,9 +250,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 activity.finish()
             }
         }
-
-        System.gc()
-        System.runFinalization()
     }
 
     class Question : Serializable {
