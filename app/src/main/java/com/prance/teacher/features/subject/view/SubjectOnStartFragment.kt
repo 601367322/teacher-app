@@ -124,6 +124,18 @@ class SubjectOnStartFragment : BaseFragment() {
             Handler().postDelayed({
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
             }, 1550)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1550)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1550)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1550)
+            Handler().postDelayed({
+                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+            }, 1550)
         }
 
         for (i in 0 until 10) {
@@ -221,7 +233,7 @@ class SubjectOnStartFragment : BaseFragment() {
                     }
                     mResult.add(keyPadResult)
 
-                    if (mResult.size < mRankNames.size) {
+                    if (mResult.size <= mRankNames.size) {
                         var textView = mRankNames[mResult.size - 1]
                         textView.text = studentEntity.name
 
