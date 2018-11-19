@@ -91,23 +91,23 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
                 super.onAnimationEnd(animation)
 
                 if (!pingNetEntity.isResult) {
-                    networkProgress.error()
+                    networkProgress?.error()
                 } else {
-                    networkProgress.ok()
+                    networkProgress?.ok()
                 }
 
                 if (SparkService.mUsbSerialNum == null) {
-                    stationProgress.error()
+                    stationProgress?.error()
                 } else {
-                    stationProgress.ok()
+                    stationProgress?.ok()
                 }
 
                 if (pingNetEntity.isResult && !TextUtils.isEmpty(SparkService.mUsbSerialNum)) {
-                    nextStep.visible()
-                    nextStep.requestFocus()
+                    nextStep?.visible()
+                    nextStep?.requestFocus()
                 } else {
-                    reCheck.visible()
-                    reCheck.requestFocus()
+                    reCheck?.visible()
+                    reCheck?.requestFocus()
                 }
             }
         })
