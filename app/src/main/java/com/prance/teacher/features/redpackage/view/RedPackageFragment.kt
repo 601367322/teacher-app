@@ -138,6 +138,10 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         mPresenter.detachView()
 
         mSparkServicePresenter.unBind()
+
+        mMediaPlayer?.stop()
+        mMediaPlayer?.release()
+        mMediaPlayer = null
     }
 
 }
