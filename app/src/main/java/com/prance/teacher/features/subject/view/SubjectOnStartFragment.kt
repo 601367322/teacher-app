@@ -155,7 +155,7 @@ class SubjectOnStartFragment : BaseFragment() {
         text.maxLines = 1
         text.ellipsize = TextUtils.TruncateAt.END
         text.setTextColor(Color.WHITE)
-        text.setTextSize(12f)
+        text.setTextSize(resources.getDimensionPixelOffset(R.dimen.m12_0).toFloat())
         text.layoutParams = textLayoutParams
 
         relativeLayout.addView(image)
