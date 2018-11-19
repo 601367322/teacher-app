@@ -13,11 +13,20 @@ class MatchedKeyPadAdapter : BaseQuickAdapter<KeyPadEntity, BaseViewHolder> {
     override fun convert(helper: BaseViewHolder?, bean: KeyPadEntity?) {
         bean?.run {
             helper?.run {
-                itemView.keyNumber.text = """${bean?.keyId.substring(4)}"""
+                itemView.keyNumber.text = getLastStr(keyId)
                 itemView.keyPadBtn.setTag(R.id.tag_data, bean)
                 itemView.keyImage.setImageResource(R.drawable.match_keypad_focus_icon)
             }
         }
     }
 
+}
+
+fun getLastStr(str: String): String {
+    try {
+        return str.substring(str.length - 6)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return str
 }

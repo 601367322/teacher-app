@@ -15,6 +15,7 @@ import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.match.view.MatchedKeyPadAdapter
+import com.prance.teacher.features.match.view.getLastStr
 import kotlinx.android.synthetic.main.fragment_delete_keypad.*
 import java.io.Serializable
 
@@ -63,7 +64,7 @@ class DeleteKeyPadFragment : BaseFragment(), View.OnClickListener {
                 context?.run {
                     AlertDialog(this)
                             .setMessage(
-                                    Html.fromHtml("""删除编号为 <font color="#3AF0EE">${keyPad.keyId.substring(4)}</font> 的答题器吗？<br/>若答题器已绑定学生，删除后需重新为学生更换绑定的答题器"""))
+                                    Html.fromHtml("""删除编号为 <font color="#3AF0EE">${getLastStr(keyPad.keyId)}</font> 的答题器吗？<br/>若答题器已绑定学生，删除后需重新为学生更换绑定的答题器"""))
                             .setCancelButton("取消", null)
                             .setConfirmButton("删除") { _ ->
                                 mAdapter.data.remove(keyPad)
