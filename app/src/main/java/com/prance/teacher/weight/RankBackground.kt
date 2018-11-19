@@ -126,7 +126,7 @@ class RankBackground : RelativeLayout {
                 super.onAnimationEnd(animation)
                 lightAnim.start()
 
-                if (peopleNumber > 6)
+                if (peopleNumber >= 6)
                     lowerScale.start()
             }
         })

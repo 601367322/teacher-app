@@ -125,18 +125,7 @@ class SubjectOnStartFragment : BaseFragment() {
             Handler().postDelayed({
                 Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
             }, 1550)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1550)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1550)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1550)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1550)
+
         }
 
         for (i in 0 until 10) {

@@ -41,11 +41,11 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         if (BuildConfig.DEBUG) {
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
 //            startActivity(SubjectActivity.callingIntent(this, question))
-
-            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
-            startActivity(PKActivity.callingIntent(this, question))
-            finish()
-            return
+//
+//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
+//            startActivity(PKActivity.callingIntent(this, question))
+//            finish()
+//            return
         }
         mPresenter.checkVersion()
     }
