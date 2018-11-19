@@ -45,6 +45,7 @@ import kotlinx.android.synthetic.main.fragment_subject_on_start.*
 class SubjectOnStartFragment : BaseFragment() {
 
     val mResult = mutableListOf<KeyPadResult>()
+    val mRightResult = mutableListOf<KeyPadResult>()
     var mQuestion: ClassesDetailFragment.Question? = null
 
     var KEY_ENENT_HANDLER_WHAT = 1
@@ -231,26 +232,29 @@ class SubjectOnStartFragment : BaseFragment() {
                     if (studentEntity == null) {
                         return
                     }
+
                     mResult.add(keyPadResult)
-
-                    if (mResult.size <= mRankNames.size) {
-                        var textView = mRankNames[mResult.size - 1]
-                        textView.text = studentEntity.name
-
-                        var anim = AnimatorSet()
-                        anim.playTogether(
-                                ObjectAnimator.ofFloat(textView, AnimUtil.ALPHA, 0f, 255f),
-                                ObjectAnimator.ofFloat(textView, AnimUtil.SCALEX, 1.2f, 1.0f),
-                                ObjectAnimator.ofFloat(textView, AnimUtil.SCALEY, 1.2f, 1.0f)
-                        )
-                        anim.start()
-                    }
 
                     answerNumber.text = (answerNumber.text.toString().toInt() + 1).toString()
 
                     //判断答案是否正确
                     if (keyPadResult.answer != mQuestion?.result) {
                         return
+                    }
+
+                    mRightResult.add(keyPadResult)
+
+                    if (mRightResult.size <= mRankNames.size) {
+                        val textView = mRankNames[mRightResult.size - 1]
+                        textView.text = studentEntity.name
+
+                        val anim = AnimatorSet()
+                        anim.playTogether(
+                                ObjectAnimator.ofFloat(textView, AnimUtil.ALPHA, 0f, 255f),
+                                ObjectAnimator.ofFloat(textView, AnimUtil.SCALEX, 1.2f, 1.0f),
+                                ObjectAnimator.ofFloat(textView, AnimUtil.SCALEY, 1.2f, 1.0f)
+                        )
+                        anim.start()
                     }
 
                     //添加弹幕
