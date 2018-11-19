@@ -99,6 +99,11 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         timer.invisible()
         gameOver.start {
             try {
+
+                mMediaPlayer?.stop()
+                mMediaPlayer?.release()
+                mMediaPlayer = null
+
                 (activity as RedPackageActivity).redPackageRank(scores)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -133,10 +138,6 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
         mPresenter.detachView()
 
         mSparkServicePresenter.unBind()
-
-        mMediaPlayer?.stop()
-        mMediaPlayer?.release()
-        mMediaPlayer = null
     }
 
 }

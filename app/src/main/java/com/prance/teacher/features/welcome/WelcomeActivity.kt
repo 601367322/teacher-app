@@ -15,6 +15,7 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.common.NetErrorFragment
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.view.UpdateFragment
+import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.subject.SubjectActivity
 
 class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
@@ -38,8 +39,11 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         inited()
 
         if (BuildConfig.DEBUG) {
+//            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
+//            startActivity(SubjectActivity.callingIntent(this, question))
+
             var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
-            startActivity(SubjectActivity.callingIntent(this, question))
+            startActivity(PKActivity.callingIntent(this, question))
             finish()
             return
         }

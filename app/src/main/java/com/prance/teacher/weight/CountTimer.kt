@@ -124,4 +124,9 @@ class CountTimer(context: Context?, attrs: AttributeSet?) : RelativeLayout(conte
             }
         }
     }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        end()
+    }
 }
