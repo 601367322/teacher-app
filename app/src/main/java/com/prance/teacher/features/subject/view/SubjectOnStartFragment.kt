@@ -93,13 +93,13 @@ class SubjectOnStartFragment : BaseFragment() {
 
             when (it.getQuestionType()) {
                 SparkService.QuestionType.SINGLE -> {
-
+                    questionTypeLayout1.visibility = View.VISIBLE
                 }
                 SparkService.QuestionType.MULTI -> {
-
+                    questionTypeLayout2.visibility = View.VISIBLE
                 }
                 SparkService.QuestionType.YES_OR_NO -> {
-
+                    questionTypeLayout3.visibility = View.VISIBLE
                 }
             }
         }

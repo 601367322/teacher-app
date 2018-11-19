@@ -72,9 +72,9 @@
 
     <RelativeLayout
         android:id="@+id/subjectBottomLayout"
-        android:translationY="300dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/m190.0"
+        android:translationY="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -120,16 +120,94 @@
         <LinearLayout
             android:layout_width="@dimen/m840.0"
             android:layout_height="@dimen/m139.0"
-            android:gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/subject_bottom_des">
+            android:background="@drawable/subject_bottom_des"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/questionTypeText"
+            <LinearLayout
+                android:id="@+id/questionTypeLayout1"
                 android:layout_width="wrap_content"
-                android:text="单选题-点击abcd作答"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/m10.0"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击 A B C D 作答"
+                    android:textColor="#512B90"
+                    android:textSize="@dimen/m44.0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/questionTypeLayout2"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/m10.0"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击 A B C D 选择，点击"
+                    android:textColor="#512B90"
+                    android:textSize="@dimen/m44.0" />
+
+                <ImageView
+                    android:layout_width="@dimen/m60.0"
+                    android:layout_height="@dimen/m60.0"
+                    android:layout_marginLeft="@dimen/m10.0"
+                    android:src="@drawable/icon_subject_right" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提交"
+                    android:layout_marginLeft="@dimen/m10.0"
+                    android:textColor="#512B90"
+                    android:textSize="@dimen/m44.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/questionTypeLayout3"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/m10.0"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击"
+                    android:textColor="#512B90"
+                    android:textSize="@dimen/m44.0" />
+
+                <ImageView
+                    android:layout_width="@dimen/m60.0"
+                    android:layout_height="@dimen/m60.0"
+                    android:layout_marginLeft="@dimen/m10.0"
+                    android:src="@drawable/icon_subject_right" />
+
+                <ImageView
+                    android:layout_width="@dimen/m60.0"
+                    android:layout_height="@dimen/m60.0"
+                    android:layout_marginLeft="@dimen/m10.0"
+                    android:src="@drawable/icon_subject_fail" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/m10.0"
+                    android:text="作答"
+                    android:textColor="#512B90"
+                    android:textSize="@dimen/m44.0" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
