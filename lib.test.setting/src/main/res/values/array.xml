@@ -14,6 +14,7 @@
         <item>10.88.89.57</item>
         <item>api-shuangshi.staging.tengyue360.com</item>
         <item>api-shuangshi.r3.tengyue360.com</item>
+        <item>api-shuangshi.r4.tengyue360.com</item>
     </string-array>
 
     <string-array name="port">
@@ -31,6 +32,7 @@
         <item>mq-shuangshi.staging.tengyue360.com</item>
         <item>10.88.88.219</item>
         <item>mq-shuangshi.r3.tengyue360.com</item>
+        <item>mq-shuangshi.r4.tengyue360.com</item>
     </string-array>
 
     <string-array name="socket_port">

@@ -63,6 +63,9 @@ class TestSettingFragment : BaseFragment() {
         r3.setOnClickListener {
             ok(mHost[6], mPort[0], mSocketHost[6], mSocketPort[1])
         }
+        r4.setOnClickListener {
+            ok(mHost[7], mPort[0], mSocketHost[7], mSocketPort[1])
+        }
     }
 
     fun ok(host: String) {

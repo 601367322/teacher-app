@@ -10,6 +10,11 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/r4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="R4联测" />
+    <Button
         android:id="@+id/r3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
