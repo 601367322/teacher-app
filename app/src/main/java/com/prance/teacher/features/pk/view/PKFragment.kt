@@ -89,12 +89,14 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                     try {
                         val keyId = answer.uid.toString()
 
+                        val keyPadResult = KeyPadResult(keyId, answer.answer, System.currentTimeMillis())
+
                         //签到学员才可以答题
                         ClassesDetailFragment.checkIsSignStudent(mQuestion.signStudents, keyId)
                                 ?: return@post
 
                         //进度条宝箱
-                        if (answer.answer == mQuestion.result) {
+                        if (keyPadResult.answer == mQuestion.result) {
                             powerProgressbar.progress += 1
                         }
                         if ((powerProgressbar.progress.toFloat() / powerProgressbar.max.toFloat()) * 100 > 70) {
