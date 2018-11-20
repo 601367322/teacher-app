@@ -144,9 +144,6 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener, 
     private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
         finish()
 
-        System.gc()
-        System.runFinalization()
-
         //TODO 不能在此打开一个新的界面，否则会影响小鱼的视频卡死
         EventBus.getDefault().post(questionResult)
     }
