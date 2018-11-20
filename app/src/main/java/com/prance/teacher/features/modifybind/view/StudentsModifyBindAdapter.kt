@@ -6,6 +6,7 @@ import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.GlideApp
 import com.prance.teacher.R
+import com.prance.teacher.features.match.view.getLastStr
 import com.prance.teacher.features.students.model.StudentEntity
 import kotlinx.android.synthetic.main.item_students.view.*
 
@@ -20,7 +21,9 @@ class StudentsModifyBindAdapter : BaseQuickAdapter<StudentEntity, BaseViewHolder
                 clickers?.run {
                     if (isNotEmpty()) {
                         itemView.keyPadId.visible()
-                        itemView.keyPadId.text = clickers!![0].number?.substring(4)
+                        clickers!![0].number?.run {
+                            itemView.keyPadId.text = getLastStr(this)
+                        }
                     }
                 }
                 GlideApp.with(itemView)
