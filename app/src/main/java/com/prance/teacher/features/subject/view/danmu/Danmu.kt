@@ -193,7 +193,7 @@ class Danmu(var context: Context, head: String?, var name: String, var light: Bi
         canvas.save()
 
         bitmap?.run {
-            if (!isRecycled) {
+            if (!isRecycled && alpha > 0) {
 
                 canvas.setAlpha(alpha)
 
