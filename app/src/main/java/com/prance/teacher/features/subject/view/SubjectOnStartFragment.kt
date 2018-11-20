@@ -1,16 +1,15 @@
 package com.prance.teacher.features.subject.view
 
 import android.animation.*
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
-import android.util.TypedValue
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -18,26 +17,20 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.LogUtils
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.Constants.QUESTION
-import com.prance.lib.common.utils.GlideApp
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
-import com.prance.teacher.R.id.danmu
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.subject.model.KeyPadResult
-import com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
 import com.prance.teacher.utils.SoundUtils
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
-import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_start.*
 
 /**
