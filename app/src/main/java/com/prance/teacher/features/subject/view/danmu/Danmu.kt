@@ -151,7 +151,6 @@ class Danmu(var context: Context, head: String?, var name: String, var light: Bi
             x = it.animatedValue.toString().toFloat()
 
             destroy()
-            lightRotate = 0f
         }
         val toYAnim = ObjectAnimator.ofFloat(y, (toY - light.height * 0.1 / 2f).toFloat())
         toYAnim.addUpdateListener {
