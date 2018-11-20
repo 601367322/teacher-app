@@ -35,6 +35,7 @@ import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.subject.model.KeyPadResult
 import com.prance.teacher.features.subject.view.danmu.DanmuAnimGLView
+import com.prance.teacher.utils.SoundUtils
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_subject_on_start.*
@@ -263,6 +264,9 @@ class SubjectOnStartFragment : BaseFragment() {
                         postDelayed({
                             try {
                                 boxLight.visible()
+
+                                SoundUtils.play("open_box")
+
                                 boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
                                 boxLightAnim!!.interpolator = LinearInterpolator()
                                 boxLightAnim!!.repeatCount = Animation.INFINITE
