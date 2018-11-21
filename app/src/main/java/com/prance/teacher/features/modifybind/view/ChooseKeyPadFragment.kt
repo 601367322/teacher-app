@@ -24,12 +24,14 @@ import com.prance.teacher.features.modifybind.contract.IChooseKeyPadContract
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.lib.teacher.base.weight.FocusGridLayoutManager
 import com.prance.teacher.R
+import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.deletekeypad.DeleteKeyPadActivity
 import com.prance.teacher.features.match.view.MatchedKeyPadAdapter
 import com.prance.teacher.features.modifybind.presenter.ChooseKeyPadPresenter
 import com.prance.teacher.features.students.model.StudentEntity
 import com.spark.teaching.answertool.usb.model.ReportBindCard
 import kotlinx.android.synthetic.main.fragment_choose_keypad.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * 配对答题器
@@ -180,6 +182,9 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        //通知上课页，更新学员列表
+        EventBus.getDefault().post(ClassesDetailFragment.RefreshStudentList())
 
         activity?.run {
             val intent = Intent()

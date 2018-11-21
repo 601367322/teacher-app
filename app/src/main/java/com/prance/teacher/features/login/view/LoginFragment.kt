@@ -116,18 +116,18 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 
 //            var question = ClassesDetailFragment.Question(1,10,"1,0,0,0,4,1",1,"A",200)
 //            context?.let { startActivity(SubjectActivity.callingIntent(it,question)) }
-            context?.let {
-                startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(
-                        1,   mutableListOf(
-                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
-                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240")
-                )
-                )))
-            }
+//            context?.let {
+//                startActivity(SubjectRankActivity.callingIntent(it, SubjectRankFragment.QuestionResult(
+//                        1,   mutableListOf(
+//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"),
+//                        StudentEntity("呵呵", "https://upload.jianshu.io/users/upload_avatars/2694946/47cc8e69-2c02-4781-bb4a-43b2c415b4a8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240")
+//                )
+//                )))
+//            }
 
 
 //            val feedBack = FeedBack(1,1)
@@ -135,7 +135,7 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //
 //            val redConfig = RedPackageSetting(1,30,1,1)
 //            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-            activity?.finish()
+//            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }

@@ -141,6 +141,9 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         mSparkServicePresenter.bind()
     }
 
+    /**
+     * 开始上课，打开小鱼，打开socket
+     */
     fun startClass() {
         try {
             //开始Socket监听
@@ -162,6 +165,11 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         sendNameToKeyPad(null)
     }
 
+    @Subscribe
+    fun onEvent(event: RefreshStudentList){
+        mPresenter.getStudentsByClassesId(mClassesEntity?.klass!!.id.toString())
+    }
+
     /**
      * 发送题型到答题器
      */
@@ -171,6 +179,8 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     }
 
     class SendNameToKeyPad : Serializable
+
+    class RefreshStudentList : Serializable
 
     class SendQuestionNameToKeyPad(val name: String) : Serializable
 
