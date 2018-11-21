@@ -133,9 +133,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            val feedBack = FeedBack(1,1)
 //            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
 //
-//            val redConfig = RedPackageSetting(1,5,1,1)
-//            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-//            activity?.finish()
+            val redConfig = RedPackageSetting(1,5,1,1)
+            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }
