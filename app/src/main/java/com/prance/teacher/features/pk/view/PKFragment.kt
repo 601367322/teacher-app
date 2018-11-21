@@ -6,19 +6,13 @@ import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.extension.invisible
-import com.prance.lib.base.extension.isVisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.Constants.SETTING
-import com.prance.lib.common.utils.dateFormat_Min_Second
-import com.prance.lib.common.utils.format
-import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
 import com.prance.lib.socket.PushService
@@ -31,18 +25,15 @@ import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.rocket.BigRocket
 import com.prance.teacher.features.subject.model.KeyPadResult
 import com.prance.teacher.utils.SoundUtils
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
-import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_pk.*
 import org.greenrobot.eventbus.Subscribe
-import java.util.concurrent.TimeUnit
 
 /**
  * Description :
@@ -235,12 +226,13 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
         }
     }
 
-    private fun endPK() {
+    private fun endPK(showGameOver: Boolean = true) {
         activity?.run {
             try {
                 isEnd = true
 
                 //隐藏倒计时
+                timer.end()
                 timer.invisible()
 
                 //清理火箭
@@ -251,16 +243,18 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.m2000_0)
                 scoreLayout.layoutParams = layoutParams
 
-                //开始游戏结束动画
-                gameOver.start {
-                    try {
-                        mMediaPlayer?.stop()
-                        mMediaPlayer?.release()
-                        mMediaPlayer = null
+                if (showGameOver) {
+                    //开始游戏结束动画
+                    gameOver.start {
+                        try {
+                            mMediaPlayer?.stop()
+                            mMediaPlayer?.release()
+                            mMediaPlayer = null
 
-                        (activity as PKActivity).endPk()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                            (activity as PKActivity).endPk()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -316,6 +310,13 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                             avgTime.text = "${mRank.averageTime}秒"
                             rank.text = "第 ${data.indexOf(mRank) + 1} 名"
                         }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                PushService.CMD_END_QUESTION -> {
+                    try {
+                        endPK(false)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
