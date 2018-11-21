@@ -64,6 +64,7 @@ public class ConnectHelper {
                         afterUsbPermission();
                     } else {
                         LogUtils.d("usbPremission:" + usbPremission + "  " + usbDevice);
+                        getUsbPermission(context);
                     }
                 }
             } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED)) { // usb插入
