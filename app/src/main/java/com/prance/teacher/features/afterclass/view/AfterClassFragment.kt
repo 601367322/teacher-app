@@ -98,6 +98,7 @@ class AfterClassFragment : BaseFragment(), IAfterClassContract.View {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.stopReceive()
+        mSparkServicePresenter.stopAnswer()
 
         mSparkServicePresenter.unBind()
     }
