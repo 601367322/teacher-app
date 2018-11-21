@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.AnimUtil
 import com.prance.lib.common.utils.Constants.QUESTION
+import com.prance.lib.common.utils.getInflate
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
@@ -32,6 +33,7 @@ import com.prance.teacher.features.subject.model.KeyPadResult
 import com.prance.teacher.utils.SoundUtils
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import kotlinx.android.synthetic.main.fragment_subject_on_start.*
+import kotlinx.android.synthetic.main.include_subject_on_start_rank_item.view.*
 
 /**
  * 开始答题
@@ -136,37 +138,20 @@ class SubjectOnStartFragment : BaseFragment() {
 
     private fun generateView(index: Int) {
 
-        val relativeLayout = RelativeLayout(context)
-        relativeLayout.visibility = View.GONE
+        var itemView = getInflate(rankLayout,R.layout.include_subject_on_start_rank_item)
 
-        val image = ImageView(context)
-        val imageLayoutParams = RelativeLayout.LayoutParams(resources.getDimensionPixelOffset(R.dimen.m204_0), resources.getDimensionPixelOffset(R.dimen.m60_0))
-        image.setImageResource(rankBackgrounds[index])
-        image.layoutParams = imageLayoutParams
+        itemView.visibility = View.GONE
+        itemView.image.setImageResource(rankBackgrounds[index])
+        rankLayout.addView(itemView)
 
-        val text = TextView(context)
-        val textLayoutParams = RelativeLayout.LayoutParams(resources.getDimensionPixelOffset(R.dimen.m116_0), RelativeLayout.LayoutParams.WRAP_CONTENT)
-        textLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
-        textLayoutParams.leftMargin = resources.getDimensionPixelOffset(R.dimen.m11_0)
-        text.maxLines = 1
-        text.ellipsize = TextUtils.TruncateAt.END
-        text.setTextColor(Color.WHITE)
-        text.setTextSize(resources.getDimensionPixelOffset(R.dimen.m12_0).toFloat())
-        text.layoutParams = textLayoutParams
-
-        relativeLayout.addView(image)
-        relativeLayout.addView(text)
-
-        rankLayout.addView(relativeLayout)
-
-        mRankNames.add(text)
+        mRankNames.add(itemView.text)
 
         rankLayout.postDelayed({
-            val anim = ObjectAnimator.ofFloat(relativeLayout, AnimUtil.TRANSLATIONX, resources.getDimensionPixelOffset(R.dimen.m300_0).toFloat(), 0f)
+            val anim = ObjectAnimator.ofFloat(itemView, AnimUtil.TRANSLATIONX, resources.getDimensionPixelOffset(R.dimen.m300_0).toFloat(), 0f)
             anim.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     super.onAnimationStart(animation)
-                    relativeLayout.visibility = View.VISIBLE
+                    itemView.visibility = View.VISIBLE
                 }
             })
             anim.start()
