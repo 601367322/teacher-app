@@ -35,6 +35,7 @@ import com.prance.teacher.features.pk.model.PKRuntimeData
 import com.prance.teacher.features.pk.presenter.PKPresenter
 import com.prance.teacher.features.pk.rocket.BigRocket
 import com.prance.teacher.features.subject.model.KeyPadResult
+import com.prance.teacher.utils.SoundUtils
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
@@ -109,6 +110,9 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                             animGlView?.postDelayed({
                                 try {
                                     boxLight.visible()
+
+                                    SoundUtils.play("open_box")
+
                                     boxLightAnim = ObjectAnimator.ofFloat(boxLight, AnimUtil.ROTATION, 0F, 360F).setDuration(1000)
                                     boxLightAnim!!.interpolator = LinearInterpolator()
                                     boxLightAnim!!.repeatCount = Animation.INFINITE
@@ -248,7 +252,15 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
                 //开始游戏结束动画
                 gameOver.start {
-                    (activity as PKActivity).endPk()
+                    try {
+                        mMediaPlayer?.stop()
+                        mMediaPlayer?.release()
+                        mMediaPlayer = null
+
+                        (activity as PKActivity).endPk()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
