@@ -320,15 +320,6 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                         e.printStackTrace()
                     }
                 }
-                PushService.CMD_END_QUESTION -> {
-                    try {
-                        mMediaPlayer?.stop()
-                        mMediaPlayer?.release()
-                        mMediaPlayer = null
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
             }
         }
         return super.onMessageResponse(msg)
