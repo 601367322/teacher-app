@@ -18,6 +18,7 @@ import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
+import com.prance.teacher.R.id.*
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.teacher.features.check.presenter.CheckKeyPadPresenter
 import com.prance.teacher.features.classes.model.ClassesEntity
@@ -65,14 +66,14 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         reCheck.setOnClickListener {
             if (BuildConfig.DEBUG) {
-                context?.run {
-                    startActivity(LoginActivity.callingIntent(this))
-                }
+//                context?.run {
+//                    startActivity(LoginActivity.callingIntent(this))
+//                }
 //                context?.run {
 //                    startActivity(StudentsActivity.callingIntent(this,ClassesEntity(1)))
 //                }
-                activity?.finish()
-                return@setOnClickListener
+//                activity?.finish()
+//                return@setOnClickListener
             }
             check()
         }
