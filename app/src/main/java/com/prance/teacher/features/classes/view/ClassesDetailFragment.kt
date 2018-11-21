@@ -146,6 +146,14 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
      */
     fun startClass() {
         try {
+            //获取学生列表
+            mPresenter.getStudentsByClassesId(mClassesEntity?.klass!!.id.toString())
+
+            //获取所有配对的答题器
+            SparkService.mUsbSerialNum?.run {
+                mKeyPadList = mPresenter.getKeyPadList(this)
+            }
+
             //开始Socket监听
             mPushServicePresenter.bind()
             startActivity(IntentUtils.callingXYDial())
@@ -166,7 +174,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     }
 
     @Subscribe
-    fun onEvent(event: RefreshStudentList){
+    fun onEvent(event: RefreshStudentList) {
         mPresenter.getStudentsByClassesId(mClassesEntity?.klass!!.id.toString())
     }
 
