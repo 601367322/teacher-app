@@ -21,6 +21,7 @@ import com.prance.lib.common.utils.format
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.database.MessageEntity
 import com.prance.lib.socket.MessageListener
+import com.prance.lib.socket.PushService
 import com.prance.lib.socket.PushService.Companion.PK_RUNTIME_DATA
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkServicePresenter
@@ -315,6 +316,15 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                             avgTime.text = "${mRank.averageTime}秒"
                             rank.text = "第 ${data.indexOf(mRank) + 1} 名"
                         }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                PushService.CMD_END_QUESTION -> {
+                    try {
+                        mMediaPlayer?.stop()
+                        mMediaPlayer?.release()
+                        mMediaPlayer = null
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
