@@ -101,24 +101,24 @@ class SubjectOnStartFragment : BaseFragment() {
 
         if (BuildConfig.DEBUG) {
 
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1000)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1150)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1200)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1350)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1400)
-            Handler().postDelayed({
-                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
-            }, 1550)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            }, 1000)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            }, 1150)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            }, 1200)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            }, 1350)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            }, 1400)
+//            Handler().postDelayed({
+//                Message.obtain(mHandler, KEY_ENENT_HANDLER_WHAT, KeyPadResult("123456", "A", System.currentTimeMillis())).sendToTarget()
+//            }, 1550)
 
         }
 

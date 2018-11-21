@@ -57,20 +57,20 @@ class RedPackageActivity : BaseActivity(), MessageListener, OnStartClassActivity
 
 
         if (BuildConfig.DEBUG) {
-            Flowable.timer(3, TimeUnit.SECONDS)
-                    .subscribe {
-                        redPackageRank(mutableListOf(
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
-                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5)
-                        ))
-                    }
+//            Flowable.timer(3, TimeUnit.SECONDS)
+//                    .subscribe {
+//                        redPackageRank(mutableListOf(
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5),
+//                                StudentScore(StudentEntity("申兵兵", "http://cdn.aixifan.com/acfun-pc/2.4.13/img/logo.png"), 10, 5)
+//                        ))
+//                    }
         }
     }
 

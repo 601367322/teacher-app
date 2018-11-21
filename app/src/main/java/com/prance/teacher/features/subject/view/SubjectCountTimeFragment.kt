@@ -28,8 +28,8 @@ class SubjectCountTimeFragment : BaseFragment() {
         SoundUtils.play("four_count_time")
 
         if (BuildConfig.DEBUG) {
-            (activity as SubjectActivity).onSubjectStart()
-            return
+//            (activity as SubjectActivity).onSubjectStart()
+//            return
         }
 
         createAnimate().start()

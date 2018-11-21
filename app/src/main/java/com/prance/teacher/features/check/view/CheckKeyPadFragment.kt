@@ -65,14 +65,14 @@ class CheckKeyPadFragment : BaseFragment(), ICheckKeyPadContract.View {
 
         reCheck.setOnClickListener {
             if (BuildConfig.DEBUG) {
-                context?.run {
-                    startActivity(LoginActivity.callingIntent(this))
-                }
+//                context?.run {
+//                    startActivity(LoginActivity.callingIntent(this))
+//                }
 //                context?.run {
 //                    startActivity(StudentsActivity.callingIntent(this,ClassesEntity(1)))
 //                }
-                activity?.finish()
-                return@setOnClickListener
+//                activity?.finish()
+//                return@setOnClickListener
             }
             check()
         }
