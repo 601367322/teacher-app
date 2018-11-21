@@ -131,6 +131,10 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
     }
 
     override fun onDestroy() {
+
+        //重新发送姓名
+        EventBus.getDefault().post(ClassesDetailFragment.SendNameToKeyPad())
+
         super.onDestroy()
 
         mAnimGlView?.destroy()

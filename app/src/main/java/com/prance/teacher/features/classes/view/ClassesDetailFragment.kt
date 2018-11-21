@@ -245,19 +245,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 doFinishActivity()
                 val pkSetting = msg.getData(Question::class.java)
                 if (pkSetting.classId == mClassesEntity?.klass?.id) {
-
-                    when (pkSetting.getQuestionType()) {
-                        SparkService.QuestionType.SINGLE -> {
-                            EventBus.getDefault().post(SendQuestionNameToKeyPad("单选题"))
-                        }
-                        SparkService.QuestionType.MULTI -> {
-                            EventBus.getDefault().post(SendQuestionNameToKeyPad("多选题"))
-                        }
-                        SparkService.QuestionType.YES_OR_NO -> {
-                            EventBus.getDefault().post(SendQuestionNameToKeyPad("判断题"))
-                        }
-                    }
-
                     context?.run {
                         startActivity(PKActivity.callingIntent(this, pkSetting))
                     }
