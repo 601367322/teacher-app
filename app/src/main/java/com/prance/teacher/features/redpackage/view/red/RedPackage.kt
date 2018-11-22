@@ -8,6 +8,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -131,6 +132,7 @@ class RedPackage {
 
             disposable = Flowable.interval(133, TimeUnit.MILLISECONDS)
                     .subscribe {
+                        println("Flowable.interval(133, TimeUnit.MILLISECONDS)")
                         if (position < redPackageArray.size) {
                             redPackage = redPackageArray[position]
                             position++

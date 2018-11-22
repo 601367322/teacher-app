@@ -271,9 +271,9 @@ class SparkService : Service() {
 
     companion object {
 
-        var mIsUsbConnected: Boolean = false
+        var mIsUsbConnected: Boolean = true
 
-        var mUsbSerialNum: String? = null
+        var mUsbSerialNum: String? = "123"
 
         fun callingIntent(context: Context): Intent = Intent(context, SparkService::class.java)
     }
