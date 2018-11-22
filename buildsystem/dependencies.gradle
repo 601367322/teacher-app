@@ -12,7 +12,7 @@ ext {
     abortOnError = false//
     targetSdkVersion = 24//支持最大版本号
     minSdkVersion = 22//支持最小版本号
-    versionCode = 10//当前程序版本号
+    versionCode = 11//当前程序版本号
     versionName = "2.0.1"
     supportVersion = "27.1.1"//v4 v7版本号
 
