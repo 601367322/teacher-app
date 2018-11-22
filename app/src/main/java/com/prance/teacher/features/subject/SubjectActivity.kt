@@ -140,9 +140,18 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener, 
      * 但是，执行完毕后，基站会自动断开。经过反复测试，推测跟内存有关。由于SubjectActivity是透明的，可能会占用更多内存，导致USB读取数据阻塞中断
      *
      * 改为打开一个不透明的Activity，问题解决
+     *
+     *   System.gc()
+     *   System.runFinalization()
+     *   防止小鱼视频卡死
+     *
+     *
      */
     private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
         finish()
+
+        System.gc()
+        System.runFinalization()
 
         //TODO 不能在此打开一个新的界面，否则会影响小鱼的视频卡死
         EventBus.getDefault().post(questionResult)
