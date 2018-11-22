@@ -147,7 +147,8 @@ class RedPackage {
 
                 if (y >= height) {
                     //全部出来之后才可以抢
-                    state = RedPackageStatus.CANGRAB
+                    if (state == RedPackageStatus.CANNOTGRAB)
+                        state = RedPackageStatus.CANGRAB
                 }
 
                 if (BuildConfig.DEBUG) {
