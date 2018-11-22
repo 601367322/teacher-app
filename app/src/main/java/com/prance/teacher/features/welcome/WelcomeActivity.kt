@@ -45,9 +45,9 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
 //            startActivity(SubjectActivity.callingIntent(this, question))
 //
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
-            startActivity(MainActivity.callingIntent(this))
-            finish()
-            return
+//            startActivity(PKActivity.callingIntent(this, question))
+//            finish()
+//            return
         }
         mPresenter.checkVersion()
     }

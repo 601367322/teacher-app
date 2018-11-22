@@ -132,7 +132,6 @@ class RedPackage {
 
             disposable = Flowable.interval(133, TimeUnit.MILLISECONDS)
                     .subscribe {
-                        println("Flowable.interval(133, TimeUnit.MILLISECONDS)")
                         if (position < redPackageArray.size) {
                             redPackage = redPackageArray[position]
                             position++
