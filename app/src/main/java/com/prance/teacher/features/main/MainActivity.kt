@@ -113,7 +113,7 @@ class MainActivity : BaseActivity() {
             unregisterReceiver(this)
         }
 
-        FloatIcon.hidePopupWindow()
+//        FloatIcon.hidePopupWindow()
 
         EventBus.getDefault().unregister(this)
     }

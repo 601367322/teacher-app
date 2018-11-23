@@ -31,8 +31,6 @@ import com.prance.teacher.features.redpackage.RedPackageActivity
 import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.students.model.StudentEntity
 import com.prance.teacher.features.subject.SubjectActivity
-import com.prance.teacher.features.subject.SubjectRankActivity
-import com.prance.teacher.features.subject.view.SubjectRankFragment
 import com.prance.teacher.utils.IntentUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -164,11 +162,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
     }
 
     @Subscribe
-    fun onEvent(result: SubjectRankFragment.QuestionResult) {
-        startActivity(SubjectRankActivity.callingIntent(context!!, result))
-    }
-
-    @Subscribe
     fun onEvent(bean: SendNameToKeyPad) {
         sendNameToKeyPad(null)
     }
@@ -268,9 +261,6 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
                 activity.finish()
             }
         }
-
-        System.gc()
-        System.runFinalization()
     }
 
     class Question : Serializable {

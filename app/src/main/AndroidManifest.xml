@@ -78,25 +78,23 @@
 
         <activity
             android:name=".features.afterclass.AfterClassActivity"
+            android:theme="@style/ActivityTranslucent"
             android:screenOrientation="landscape" />
 
         <activity
             android:name=".features.redpackage.RedPackageActivity"
+            android:theme="@style/ActivityTranslucent"
             android:screenOrientation="landscape" />
 
         <activity
             android:name=".features.pk.PKActivity"
+            android:theme="@style/ActivityTranslucent"
             android:screenOrientation="landscape" />
 
         <activity
             android:name=".features.subject.SubjectActivity"
             android:screenOrientation="landscape"
             android:theme="@style/ActivityTranslucent" />
-
-        <activity
-            android:name=".features.subject.SubjectRankActivity"
-            android:screenOrientation="landscape" />
-
 
         <service
             android:name=".services.UpdateService"
