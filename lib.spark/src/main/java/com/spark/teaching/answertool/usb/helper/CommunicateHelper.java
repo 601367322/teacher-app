@@ -131,12 +131,12 @@ public class CommunicateHelper {
     }
 
     public void write(byte[] data, int timeOut) {
-        LogUtils.d( "write " + System.currentTimeMillis());
+//        LogUtils.d( "write " + System.currentTimeMillis());
         synchronized (mSynchronizedWriteObj) {
             ByteBuffer buffer = BufferUtils.allocateByteBuffer(data.length);
             buffer.put(data);
             int length = mUsbDeviceConnection.bulkTransfer(mOutUsbEndpoint, data, data.length, timeOut);
-            LogUtils.d( "write length " + System.currentTimeMillis() + " " + length);
+//            LogUtils.d( "write length " + System.currentTimeMillis() + " " + length);
         }
     }
 

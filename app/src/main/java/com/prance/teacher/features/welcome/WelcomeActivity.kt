@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.LogUtils
+import com.chillingvan.canvasgl.util.FileUtil
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.http.ResultException
@@ -19,6 +22,7 @@ import com.prance.teacher.features.login.view.UpdateFragment
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.pk.PKActivity
 import com.prance.teacher.features.subject.SubjectActivity
+import java.io.File
 
 class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
 
@@ -41,6 +45,10 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         inited()
 
         if (BuildConfig.DEBUG) {
+            var file = File("/data/log/logcat_full.log")
+            if(file.exists()){
+                LogUtils.d(file.parentFile)
+            }
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
 //            startActivity(SubjectActivity.callingIntent(this, question))
 //
