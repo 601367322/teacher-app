@@ -15,6 +15,7 @@ import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.test.setting.R
 import com.prance.lib.test.setting.R.array.port
+import com.prance.lib.test.setting.R.id.r3
 import kotlinx.android.synthetic.main.activity_test_setting.*
 import java.io.File
 import java.io.FileOutputStream
@@ -58,10 +59,6 @@ class TestSettingFragment : BaseFragment() {
 
         dev.setOnClickListener {
             ok(mHost[1], mPort[0], mSocketHost[5], mSocketPort[0])
-        }
-
-        r3.setOnClickListener {
-            ok(mHost[6], mPort[0], mSocketHost[6], mSocketPort[1])
         }
         r4.setOnClickListener {
             ok(mHost[7], mPort[0], mSocketHost[7], mSocketPort[1])
