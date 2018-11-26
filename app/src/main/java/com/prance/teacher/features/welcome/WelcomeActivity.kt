@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.LogUtils
-import com.chillingvan.canvasgl.util.FileUtil
 import com.prance.lib.base.extension.inTransaction
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.http.ResultException
@@ -14,14 +12,9 @@ import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
 import com.prance.teacher.features.check.CheckKeyPadActivity
-import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.common.NetErrorFragment
-import com.prance.teacher.features.login.LoginActivity
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.view.UpdateFragment
-import com.prance.teacher.features.main.MainActivity
-import com.prance.teacher.features.pk.PKActivity
-import com.prance.teacher.features.subject.SubjectActivity
 import java.io.File
 
 class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
@@ -54,6 +47,7 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
                     LogUtils.d(f.name)
                 }
             }
+
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
 //            startActivity(SubjectActivity.callingIntent(this, question))
 //

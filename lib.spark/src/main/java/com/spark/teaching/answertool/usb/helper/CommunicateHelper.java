@@ -120,7 +120,7 @@ public class CommunicateHelper {
             int length = mUsbDeviceConnection.bulkTransfer(mInUsbEndpoint, receives, receives.length, TIME_OUT_READ);
 
             if (length > 0) {
-                LogUtils.d( "read length " + length);
+//                LogUtils.d( "read length " + length);
 
                 ByteBuffer buffer = ByteBuffer.wrap(receives, 0, length);
                 return buffer;
