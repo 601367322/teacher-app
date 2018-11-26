@@ -38,16 +38,6 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         inited()
 
         if (BuildConfig.DEBUG) {
-            var file = File("/data/log/logcat_full.log")
-            if(file.exists()){
-                LogUtils.i(file.parentFile)
-                var parent = file.parentFile
-                var files = parent.listFiles()
-                for(f in files){
-                    LogUtils.i(f.name)
-                }
-            }
-
 //            var question = ClassesDetailFragment.Question(1, 10, "1,0,0,0,4,1", 1, "A", 200)
 //            startActivity(SubjectActivity.callingIntent(this, question))
 //

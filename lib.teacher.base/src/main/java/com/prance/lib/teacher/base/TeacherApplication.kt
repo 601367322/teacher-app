@@ -37,6 +37,7 @@ class TeacherApplication : Application() {
          */
         if (!ModelUtil.isTestModel)
             LogUtils.getConfig().setLogSwitch(false)
+        LogUtils.getConfig().setLog2FileSwitch(true)
 
         /**
          * 注册生命周期
