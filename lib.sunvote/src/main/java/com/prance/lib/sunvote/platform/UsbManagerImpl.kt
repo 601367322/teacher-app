@@ -93,7 +93,7 @@ class UsbManagerImpl : IUsbManagerInterface {
 
             mUsbConnection?.let {
                 val ret = it.claimInterface(mUsbInterface, true)
-                LogUtils.d("打开设备")
+                LogUtils.i("打开设备")
 
                 val message = Message()
                 message.what = MSG_USB_CONNECTED
@@ -167,7 +167,7 @@ class UsbManagerImpl : IUsbManagerInterface {
                 ref = it.bulkTransfer(epOut, buffer, length, 1000)
                 it.claimInterface(mUsbInterface, true)
             }
-//            LogUtils.d("发送数据:len" + ref + ",Data: " + getDataBufString(buffer))
+//            LogUtils.i("发送数据:len" + ref + ",Data: " + getDataBufString(buffer))
             return ref
         }
         return ref
@@ -189,7 +189,7 @@ class UsbManagerImpl : IUsbManagerInterface {
 
         Arrays.fill(recvBuffer, 0x0.toByte())
         val ret = mUsbConnection?.bulkTransfer(epIn, recvBuffer, 64, 3000)
-//        LogUtils.d("ret", "ret:$ret")
+//        LogUtils.i("ret", "ret:$ret")
 
         return recvBuffer
     }

@@ -40,11 +40,11 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         if (BuildConfig.DEBUG) {
             var file = File("/data/log/logcat_full.log")
             if(file.exists()){
-                LogUtils.d(file.parentFile)
+                LogUtils.i(file.parentFile)
                 var parent = file.parentFile
                 var files = parent.listFiles()
                 for(f in files){
-                    LogUtils.d(f.name)
+                    LogUtils.i(f.name)
                 }
             }
 

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -46,12 +48,12 @@ public class ActivityLifeManager implements Application.ActivityLifecycleCallbac
 
     @Override
     public void onActivityResumed(Activity activity) {
-
+        LogUtils.i(activity.getComponentName());
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-
+        LogUtils.i(activity.getComponentName());
     }
 
     @Override

@@ -26,7 +26,7 @@ class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : Broa
                     val deviceIds = inputManager?.inputDeviceIds// 获取所有的设备id
                     val inputDevice = inputManager?.getInputDevice(deviceIds!![deviceIds.size - 1])
 
-                    LogUtils.d("找到设备：$inputDevice")
+                    LogUtils.i("找到设备：$inputDevice")
 
                     if (SunARS.checkBaseConnection() == 0) {
                         mUsbManagerInterface.checkUsbDevice(context)
@@ -41,7 +41,7 @@ class UsbReceiver(private val mUsbManagerInterface: IUsbManagerInterface) : Broa
                         if (device.deviceName == mUsbManagerInterface.getUsbDevice()?.deviceName) {
                             if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                                 // 授权成功,在这里进行打开设备操作
-                                LogUtils.d("授权成功")
+                                LogUtils.i("授权成功")
                                 if (System.currentTimeMillis() - lastOpenTime > 1000) {
                                     lastOpenTime = System.currentTimeMillis()
                                     mUsbManagerInterface.checkUsbDevice(context)

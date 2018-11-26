@@ -264,7 +264,7 @@ class SparkService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.d("onDestroy")
+        LogUtils.i("onDestroy")
         ConnectHelper.getInstance().onServiceDestroy(this)
         CommunicateHelper.getInstance().stop()
     }

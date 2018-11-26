@@ -151,7 +151,7 @@ class PushService : Service() {
             }
 
             try {
-                LogUtils.d(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt() + "\n" + InetAddress.getByName(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)).hostAddress)
+                LogUtils.i(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST) + "\n" + UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt() + "\n" + InetAddress.getByName(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST)).hostAddress)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -166,7 +166,7 @@ class PushService : Service() {
                             if (isSuccess) {
                                 mChannel = channel()
 
-                                LogUtils.d("连接成功")
+                                LogUtils.i("连接成功")
 
                                 if (BuildConfig.DEBUG) {
                                     ToastUtils.showLong("Socket 连接成功")
@@ -174,7 +174,7 @@ class PushService : Service() {
                                 }
 
                             } else {
-                                LogUtils.d("连接失败，3秒后重新链接")
+                                LogUtils.i("连接失败，3秒后重新链接")
 
                                 if (BuildConfig.DEBUG) {
                                     ToastUtils.showLong("Socket 连接失败，3秒后重新链接")
@@ -211,13 +211,13 @@ class PushService : Service() {
         }
 
         public fun sendMessage(msg: String) {
-            LogUtils.d(msg)
+            LogUtils.i(msg)
             mChannel?.writeAndFlush("$msg\n")
         }
 
         override fun onServiceStatusConnectChanged(statusCode: Int) {
             if (statusCode == STATUS_CONNECT_CLOSED) {
-                LogUtils.d("断开连接")
+                LogUtils.i("断开连接")
                 if (BuildConfig.DEBUG) {
                     ToastUtils.showLong("Socket 断开连接")
                 }
@@ -311,7 +311,7 @@ class PushService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.d("onDestroy")
+        LogUtils.i("onDestroy")
         stopPostResponseMessage()
         destroySocket()
         unregisterReceiver(mBroadcast)
@@ -324,7 +324,7 @@ class PushService : Service() {
             action?.run {
                 if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
                     val isConnect = NetworkUtils.isConnected()
-                    LogUtils.d("网络连接\t$isConnect")
+                    LogUtils.i("网络连接\t$isConnect")
                     if (!isConnect) {
                         mPushService.destroySocket()
                     } else {

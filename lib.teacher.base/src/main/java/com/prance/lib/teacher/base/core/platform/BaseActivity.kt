@@ -237,7 +237,7 @@ abstract class BaseActivity : BaseActivity() {
     open inner class HomeMenuBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(p0: Context?, intent: Intent?) {
-            LogUtils.d(intent?.action)
+            LogUtils.i(intent?.action)
             intent?.let {
                 val action = intent.action
                 if (action == Intent.ACTION_CLOSE_SYSTEM_DIALOGS) {
@@ -245,7 +245,7 @@ abstract class BaseActivity : BaseActivity() {
                     val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
                     if (SYSTEM_DIALOG_REASON_HOME_KEY == reason) {
                         if (onHomeKeyEvent()) {
-                            LogUtils.d("abortBroadcast")
+                            LogUtils.i("abortBroadcast")
                             abortBroadcast
                         }
                     }

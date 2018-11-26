@@ -65,7 +65,7 @@ object UrlUtil {
                 result = properties[key].toString()
             }
         } catch (e: Exception) {
-            LogUtils.d("getAssetsProperties e[$e]")
+            LogUtils.i("getAssetsProperties e[$e]")
         }
 
         return result
