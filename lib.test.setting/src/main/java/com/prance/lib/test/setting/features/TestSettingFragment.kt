@@ -66,7 +66,11 @@ class TestSettingFragment : BaseFragment() {
                             "logcat_full.log.2",
                             "logcat_full.log.3",
                             "logcat_full.log.4",
-                            "logcat_full.log.5"
+                            "logcat_full.log.5",
+                            "logcat_full.log.6",
+                            "logcat_full.log.7",
+                            "logcat_full.log.8",
+                            "logcat_full.log.9"
                     )
 
                     val zipFiles = mutableListOf<File>()
