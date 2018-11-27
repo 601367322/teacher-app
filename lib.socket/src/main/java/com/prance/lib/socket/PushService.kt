@@ -213,8 +213,7 @@ class PushService : Service() {
 
         fun sendMessage(msg: String) {
             LogUtils.i(msg)
-            mChannel?.writeAndFlush("${msg.substring(0, 5)}")
-            mChannel?.writeAndFlush("${msg.substring(5)}$LINE_SEP")
+            mChannel?.writeAndFlush("$msg$LINE_SEP")
         }
 
         override fun onServiceStatusConnectChanged(statusCode: Int) {
