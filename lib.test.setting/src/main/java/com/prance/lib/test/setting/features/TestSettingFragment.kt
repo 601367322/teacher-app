@@ -107,6 +107,7 @@ class TestSettingFragment : BaseFragment() {
                                 return@flatMap RetrofitUtils.getApiService(TestApiService::class.java).uploadLogInfo(Build.SERIAL, it.url)
                             }
                             .mySubscribe({
+                                it.printStackTrace()
                                 ToastUtils.showLong("上传日志失败")
                                 uploadLog.isEnabled = true
                             }) {
