@@ -111,7 +111,7 @@ class TestSettingFragment : BaseFragment() {
                                 uploadLog.isEnabled = true
                             }) {
                                 LogUtils.i("上传日志地址成功")
-                                ToastUtils.showLong("上传日志失败")
+                                ToastUtils.showLong("上传日志成功")
                                 zipLogFile.delete()
                                 uploadLog.isEnabled = true
                             }
