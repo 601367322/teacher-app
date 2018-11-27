@@ -132,6 +132,7 @@ class PushService : Service() {
     internal inner class SocketThread : Thread(), MessageListener {
 
         lateinit var mBootstrap: Bootstrap
+        private val LINE_SEP = System.getProperty("line.separator")
 
         override fun run() {
             mEventLoopGroup = NioEventLoopGroup()
@@ -156,8 +157,8 @@ class PushService : Service() {
                 e.printStackTrace()
             }
 
-            val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
-//            val future = mBootstrap.connect("10.88.89.57", 8081);
+//            val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
+            val future = mBootstrap.connect("10.88.89.57", 8081);
 
             try {
                 future.addListener(object : ChannelFutureListener {
@@ -210,9 +211,10 @@ class PushService : Service() {
             return super.onMessageResponse(msg)
         }
 
-        public fun sendMessage(msg: String) {
+        fun sendMessage(msg: String) {
             LogUtils.i(msg)
-            mChannel?.writeAndFlush("$msg\n")
+            mChannel?.writeAndFlush("${msg.substring(0, 5)}")
+            mChannel?.writeAndFlush("${msg.substring(5)}$LINE_SEP")
         }
 
         override fun onServiceStatusConnectChanged(statusCode: Int) {
