@@ -13,6 +13,7 @@ import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
+import com.prance.teacher.features.pk.model.PKResult
 import com.prance.teacher.features.subject.contract.ISubjectContract
 import com.prance.teacher.features.subject.presenter.SubjectPresenter
 import com.prance.teacher.features.subject.view.SubjectCountTimeFragment
@@ -121,7 +122,7 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener, 
 
         Flowable.timer(1, TimeUnit.SECONDS)
                 .mySubscribe {
-                    if (!isDestroyed) {
+                    if (result == null) {
                         supportFragmentManager.inTransaction {
                             replace(R.id.fragmentContainer, SubjectOnWaitingFragment())
                         }
@@ -129,22 +130,12 @@ class SubjectActivity : BaseActivity(), ISubjectContract.View, MessageListener, 
                 }
     }
 
-    /**
-     * 这里有个大坑
-     *
-     * 该方法内原代码是
-     * supportFragmentManager.inTransaction {
-     *      replace(R.id.fragmentContainer, SubjectRankFragment.forQuestionResult(questionResult))
-     * }
-     *
-     * 但是，执行完毕后，基站会自动断开。经过反复测试，推测跟内存有关。由于SubjectActivity是透明的，可能会占用更多内存，导致USB读取数据阻塞中断
-     *
-     * 改为打开一个不透明的Activity，问题解决
-     */
-    private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
-        finish()
+    var result: SubjectRankFragment.QuestionResult? = null
 
-        //TODO 不能在此打开一个新的界面，否则会影响小鱼的视频卡死
-        EventBus.getDefault().post(questionResult)
+    private fun onSubjectDestroy(questionResult: SubjectRankFragment.QuestionResult) {
+        this.result = questionResult
+        supportFragmentManager.inTransaction {
+            replace(R.id.fragmentContainer, SubjectRankFragment.forQuestionResult(questionResult))
+        }
     }
 }

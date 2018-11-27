@@ -8,6 +8,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.view.animation.LinearInterpolator
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
@@ -147,7 +148,8 @@ class RedPackage {
 
                 if (y >= height) {
                     //全部出来之后才可以抢
-                    state = RedPackageStatus.CANGRAB
+                    if (state == RedPackageStatus.CANNOTGRAB)
+                        state = RedPackageStatus.CANGRAB
                 }
 
                 if (BuildConfig.DEBUG) {

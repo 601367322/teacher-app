@@ -8,10 +8,12 @@ import io.netty.handler.timeout.IdleStateEvent
 
 internal class NettyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
 
+    private val LINE_SEP = System.getProperty("line.separator")
+
     override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
             if (it == "#") {
-                LogUtils.d("接收心跳\t$it")
+                LogUtils.i("接收心跳\t$it")
                 return
             }
             ctx?.fireChannelRead(it)
@@ -22,8 +24,8 @@ internal class NettyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
     override fun userEventTriggered(ctx: ChannelHandlerContext, evt: Any) {
         if (evt is IdleStateEvent) {
             if (evt.state() == IdleState.WRITER_IDLE) {
-                LogUtils.d("发送心跳\t#")
-                ctx.writeAndFlush("#\n")
+                LogUtils.i("发送心跳\t#")
+                ctx.writeAndFlush("#$LINE_SEP")
             } else if (evt.state() == IdleState.READER_IDLE) {
             }
         }

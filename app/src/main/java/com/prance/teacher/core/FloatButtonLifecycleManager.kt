@@ -18,7 +18,7 @@ class FloatButtonLifecycleManager : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityStarted(activity: Activity?) {
         if (AppUtils.isAppForeground()) {
-            FloatIcon.hidePopupWindow()
+//            FloatIcon.hidePopupWindow()
         }
     }
 
@@ -32,7 +32,7 @@ class FloatButtonLifecycleManager : Application.ActivityLifecycleCallbacks {
 
         if (!AppUtils.isAppForeground()) {
             if (ActivityLifeManager.getInstance().contains(MainActivity::class.java.name)) {
-                FloatIcon.showPopupWindow(Utils.getApp())
+//                FloatIcon.showPopupWindow(Utils.getApp())
             }
         }
     }

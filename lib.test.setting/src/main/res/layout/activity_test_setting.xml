@@ -14,11 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="R4联测" />
-    <Button
-        android:id="@+id/r3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="R3联测" />
 
     <Button
         android:id="@+id/release"
@@ -43,6 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="开发环境dev" />
+
+    <Button
+        android:id="@+id/uploadLog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="日志上传" />
 
     <Button
         android:id="@+id/systemSettingBtn"

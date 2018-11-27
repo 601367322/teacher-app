@@ -120,7 +120,7 @@ public class CommunicateHelper {
             int length = mUsbDeviceConnection.bulkTransfer(mInUsbEndpoint, receives, receives.length, TIME_OUT_READ);
 
             if (length > 0) {
-                LogUtils.d( "read length " + length);
+//                LogUtils.i( "read length " + length);
 
                 ByteBuffer buffer = ByteBuffer.wrap(receives, 0, length);
                 return buffer;
@@ -131,18 +131,18 @@ public class CommunicateHelper {
     }
 
     public void write(byte[] data, int timeOut) {
-        LogUtils.d( "write " + System.currentTimeMillis());
+//        LogUtils.i( "write " + System.currentTimeMillis());
         synchronized (mSynchronizedWriteObj) {
             ByteBuffer buffer = BufferUtils.allocateByteBuffer(data.length);
             buffer.put(data);
             int length = mUsbDeviceConnection.bulkTransfer(mOutUsbEndpoint, data, data.length, timeOut);
-            LogUtils.d( "write length " + System.currentTimeMillis() + " " + length);
+//            LogUtils.i( "write length " + System.currentTimeMillis() + " " + length);
         }
     }
 
     public void sendAsync(DataPackage dataPackage) {
         if (null == mUsbDeviceConnection || null == mInUsbEndpoint || null == mOutUsbEndpoint || null == mSendDispatcher) {
-            LogUtils.d( "send before connected");
+            LogUtils.i( "send before connected");
             return;
         }
 

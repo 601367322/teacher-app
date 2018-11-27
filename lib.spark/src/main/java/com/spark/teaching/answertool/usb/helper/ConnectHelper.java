@@ -53,7 +53,7 @@ public class ConnectHelper {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            LogUtils.d("onReceive " + action, true);
+            LogUtils.i("onReceive " + action, true);
 
             if (action.equals(ACTION_USB_PERMISSION)) { // 请求usb权限
                 synchronized (this) {
@@ -63,7 +63,7 @@ public class ConnectHelper {
                         mUsbDevice = usbDevice;
                         afterUsbPermission();
                     } else {
-                        LogUtils.d("usbPremission:" + usbPremission + "  " + usbDevice);
+                        LogUtils.i("usbPremission:" + usbPremission + "  " + usbDevice);
                         getUsbPermission(context);
                     }
                 }
@@ -74,11 +74,11 @@ public class ConnectHelper {
                     if (mUsbManager.hasPermission(usbDevice)) {
                         afterUsbPermission();
                     } else {
-                        LogUtils.d("attached usb no permission", false);
+                        LogUtils.i("attached usb no permission", false);
                         getUsbPermission(context);
                     }
                 } else {
-                    LogUtils.d("not wanted usb attached");
+                    LogUtils.i("not wanted usb attached");
                 }
             } else if (action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
                 UsbDevice usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
@@ -88,7 +88,7 @@ public class ConnectHelper {
                         mUsbListener.onDisConnected();
                     }
                 } else {
-                    LogUtils.d("not wanted usb detached");
+                    LogUtils.i("not wanted usb detached");
                 }
             }
         }
@@ -109,7 +109,7 @@ public class ConnectHelper {
         mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
         if (deviceList.isEmpty()) {
-            LogUtils.d("device list empty");
+            LogUtils.i("device list empty");
             return;
         } else {
             for (UsbDevice device : deviceList.values()) {
@@ -118,13 +118,13 @@ public class ConnectHelper {
                     if (mUsbManager.hasPermission(device)) {
                         afterUsbPermission();
                     } else {
-                        LogUtils.d("no usb permission");
+                        LogUtils.i("no usb permission");
                         getUsbPermission(context);
                     }
                     return;
                 }
             }
-            LogUtils.d("device not found");
+            LogUtils.i("device not found");
             return;
         }
     }
@@ -143,7 +143,7 @@ public class ConnectHelper {
     private void afterUsbPermission() {
         try {
             int interfaceCount = mUsbDevice.getInterfaceCount(); // 获取设备接口，一般都是一个接口，在这个接口上有两个端点，OUT 和 IN
-            LogUtils.d("interfaceCount:" + interfaceCount);
+            LogUtils.i("interfaceCount:" + interfaceCount);
             if (interfaceCount <= 0) {
                 throw new RuntimeException("interfaceCount <= 0");
             }

@@ -1,24 +1,33 @@
 package com.prance.lib.test.setting.features
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.ZipUtils
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.UrlUtil
+import com.prance.lib.common.utils.http.RetrofitUtils
+import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.test.setting.R
-import com.prance.lib.test.setting.R.array.port
+import com.prance.lib.test.setting.R.id.ok
+import com.prance.lib.test.setting.api.TestApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_test_setting.*
+import okhttp3.MediaType
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+
 
 class TestSettingFragment : BaseFragment() {
 
@@ -40,6 +49,77 @@ class TestSettingFragment : BaseFragment() {
 
         current.text = "当前环境：\t" + UrlUtil.getHost()
 
+        uploadLog.setOnClickListener { it ->
+
+            it.isEnabled = false
+
+            ToastUtils.showLong("正在上传日志")
+
+            Thread {
+                val dir = File("/data/log/")
+                if (dir.exists()) {
+
+                    //所有Logcat输出日志
+                    val zipFilesPath = mutableListOf(
+                            "logcat_full.log",
+                            "logcat_full.log.1",
+                            "logcat_full.log.2",
+                            "logcat_full.log.3",
+                            "logcat_full.log.4",
+                            "logcat_full.log.5",
+                            "logcat_full.log.6",
+                            "logcat_full.log.7",
+                            "logcat_full.log.8",
+                            "logcat_full.log.9"
+                    )
+
+                    val zipFiles = mutableListOf<File>()
+
+                    for (f in zipFilesPath) {
+                        val logFile = File(dir, f)
+                        if (logFile.exists()) {
+                            zipFiles.add(logFile)
+                        }
+                    }
+
+                    //纯本应用日志
+                    val mDefaultDir = if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() && Utils.getApp().externalCacheDir != null)
+                        File(Utils.getApp().externalCacheDir, "log")
+                    else {
+                        File(Utils.getApp().cacheDir, "log")
+                    }
+
+                    val appLogs = mDefaultDir.listFiles()
+                    for (i in 0 until Math.min(appLogs.size, 3)) {
+                        zipFiles.add(appLogs[i])
+                    }
+
+                    val zipLogFile = File(dir, "logs.zip")
+                    ZipUtils.zipFiles(zipFiles, File(dir, "logs.zip"))
+
+                    val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), zipLogFile)
+                    val body = MultipartBody.Part.createFormData("file",
+                            zipLogFile.name, requestFile)
+
+                    RetrofitUtils.getApiService(TestApiService::class.java).uploadLog(body)
+                            .flatMap {
+                                LogUtils.i(it.url)
+                                return@flatMap RetrofitUtils.getApiService(TestApiService::class.java).uploadLogInfo(Build.SERIAL, it.url)
+                            }
+                            .mySubscribe({
+                                ToastUtils.showLong("上传日志失败")
+                                uploadLog.isEnabled = true
+                            }) {
+                                LogUtils.i("上传日志地址成功")
+                                ToastUtils.showLong("上传日志失败")
+                                zipLogFile.delete()
+                                uploadLog.isEnabled = true
+                            }
+
+                }
+            }.start()
+        }
+
         systemSettingBtn.setOnClickListener {
             startActivity(Intent(Settings.ACTION_SETTINGS))
         }
@@ -58,10 +138,6 @@ class TestSettingFragment : BaseFragment() {
 
         dev.setOnClickListener {
             ok(mHost[1], mPort[0], mSocketHost[5], mSocketPort[0])
-        }
-
-        r3.setOnClickListener {
-            ok(mHost[6], mPort[0], mSocketHost[6], mSocketPort[1])
         }
         r4.setOnClickListener {
             ok(mHost[7], mPort[0], mSocketHost[7], mSocketPort[1])

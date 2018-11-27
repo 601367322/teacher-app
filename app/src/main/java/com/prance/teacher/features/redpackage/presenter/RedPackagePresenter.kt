@@ -132,7 +132,7 @@ class RedPackagePresenter : BasePresenterKt<IRedPackageContract.View>(), IRedPac
                 list.add(RedPackageRecord(score))
             }
             mModel.postRedPackageResult(mSetting?.classId.toString(), Gson().toJson(list), mSetting?.interactId.toString())
-                    .mySubscribe(onSubscribeError) { LogUtils.d("发送抢红包结果成功") }
+                    .mySubscribe(onSubscribeError) { LogUtils.i("发送抢红包结果成功") }
         }
     }
 }

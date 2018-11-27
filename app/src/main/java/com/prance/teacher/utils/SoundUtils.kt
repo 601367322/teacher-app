@@ -30,7 +30,7 @@ object SoundUtils {
         mSoundPoll.setOnLoadCompleteListener(object : SoundPool.OnLoadCompleteListener {
 
             override fun onLoadComplete(soundPool: SoundPool?, sampleId: Int, status: Int) {
-                LogUtils.d("onLoadComplete  $sampleId")
+                LogUtils.i("onLoadComplete  $sampleId")
             }
         })
     }

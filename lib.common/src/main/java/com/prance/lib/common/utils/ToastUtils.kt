@@ -28,6 +28,18 @@ class ToastUtils {
             toast.show()
         }
 
+        fun showLong(format: String?) {
+            cancel()
+            val view = getView(R.layout.toast_layout)
+            view!!.toast_str.text = format
+
+            var toast = Toast.makeText(Utils.getApp(), format, Toast.LENGTH_LONG)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.view = view
+            mToast = toast
+            toast.show()
+        }
+
         private fun cancel() {
             mToast?.let {
                 it.cancel()

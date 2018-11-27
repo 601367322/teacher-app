@@ -20,7 +20,7 @@ class SubjectPresenter : BasePresenterKt<ISubjectContract.View>(), ISubjectContr
 
     override fun sendResult(classId: Int, mResult: MutableList<KeyPadResult>, questionId: String, i: Int) {
         mModel.sendResult(classId, mResult, questionId, i)
-                .mySubscribe(onSubscribeError, { LogUtils.d("success") })
+                .mySubscribe(onSubscribeError, { LogUtils.i("success") })
     }
 }
 

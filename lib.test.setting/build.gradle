@@ -32,6 +32,12 @@ dependencies {
     implementation dependencies.v4
     implementation dependencies.kotlin
     implementation dependencies.utilcode
+    implementation dependencies.rxjava
+    implementation dependencies.rxandroid
+    implementation dependencies.okhttp3
+    implementation (dependencies.retrofit2) {
+        exclude group: 'com.squareup.okhttp3'
+    }
 
     implementation project(":lib.base")
     implementation project(":lib.teacher.base")

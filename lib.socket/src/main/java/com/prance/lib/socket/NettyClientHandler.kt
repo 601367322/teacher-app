@@ -21,7 +21,7 @@ class NettyClientHandler(private val listener: MessageListener) : SimpleChannelI
 
     override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
-            LogUtils.d(msg)
+            LogUtils.i(msg)
             try {
                 listener.onMessageResponse(Gson().fromJson(msg, MessageEntity::class.java))
             } catch (e: Exception) {

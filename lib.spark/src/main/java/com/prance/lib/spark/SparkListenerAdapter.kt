@@ -33,7 +33,7 @@ abstract class SparkListenerAdapter(var duplicate: Boolean = false) : UsbListene
         }
 
 
-        LogUtils.d(answer)
+        LogUtils.i(answer)
         onAnswer(answer)
     }
 

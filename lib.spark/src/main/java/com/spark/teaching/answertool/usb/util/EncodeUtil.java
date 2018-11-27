@@ -68,7 +68,7 @@ public class EncodeUtil {
         for (int i = 0; i < 64; i++) {
             stringBuilder.append(String.format("%02X ", bytes[i]));
         }
-        LogUtils.d( stringBuilder.toString(), false);
+        LogUtils.i( stringBuilder.toString(), false);
         return bytes;
     }
 

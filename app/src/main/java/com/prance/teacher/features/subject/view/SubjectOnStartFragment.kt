@@ -174,7 +174,7 @@ class SubjectOnStartFragment : BaseFragment() {
                 SparkService.mUsbSerialNum?.let {
                     mQuestion?.run {
                         //基站开始发送题目
-                        LogUtils.d("开始发送题目")
+                        LogUtils.i("开始发送题目")
                         mSparkServicePresenter.sendQuestion(getQuestionType())
                     }
                 }

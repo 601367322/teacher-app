@@ -50,8 +50,8 @@ class SunVoteService : Service() {
             val filePath = applicationContext?.filesDir
             SunARS.setArchiveDir(filePath.toString())
         } catch (e: Throwable) {
-            LogUtils.d(e.message)
-            LogUtils.d("loadLibrary Error")
+            LogUtils.i(e.message)
+            LogUtils.i("loadLibrary Error")
         }
 
         //链接USB
@@ -67,14 +67,14 @@ class SunVoteService : Service() {
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        LogUtils.d("onUnbind")
+        LogUtils.i("onUnbind")
         return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        LogUtils.d("onDestroy")
+        LogUtils.i("onDestroy")
 
         SunARS.removeListener(mSunARSListener)
 

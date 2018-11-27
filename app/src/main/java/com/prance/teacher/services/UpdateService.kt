@@ -129,7 +129,7 @@ class UpdateService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         mTask?.cancel()
-        LogUtils.d("onDestroy")
+        LogUtils.i("onDestroy")
     }
 
     interface MyDownloadListener {

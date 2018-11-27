@@ -113,7 +113,7 @@ class MainActivity : BaseActivity() {
             unregisterReceiver(this)
         }
 
-        FloatIcon.hidePopupWindow()
+//        FloatIcon.hidePopupWindow()
 
         EventBus.getDefault().unregister(this)
     }
@@ -126,7 +126,7 @@ class MainActivity : BaseActivity() {
                 try {
                     if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
                         val isConnect = NetworkUtils.isConnected()
-                        LogUtils.d("网络连接\t$isConnect")
+                        LogUtils.i("网络连接\t$isConnect")
                         if (!isConnect) {
                             for(activity in ActivityUtils.getActivityList()){
                                 if(activity is OnStartClassActivity){

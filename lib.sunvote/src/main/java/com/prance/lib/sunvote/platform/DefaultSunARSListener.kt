@@ -9,7 +9,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
 
 
     override fun onConnectEventCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
-        LogUtils.d("onConnectEventCallBack>>$iBaseID $iMode $sInfo")
+        LogUtils.i("onConnectEventCallBack>>$iBaseID $iMode $sInfo")
 
         when (iMode) {
             SunARS.BaseStation_Connected_Model -> {
@@ -49,7 +49,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
      * 在收到参数读写事件时调用该回调函数，二次开发客户在回调函数内部处理参数读写事件。
      */
     override fun onHDParamCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
-        LogUtils.d("onHDParamCallBack>>$iBaseID $iMode $sInfo")
+        LogUtils.i("onHDParamCallBack>>$iBaseID $iMode $sInfo")
         try {
             when (iMode) {
             //基站主信道
@@ -66,7 +66,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
     }
 
     override fun onHDParamBySnCallBack(KeySn: String, iMode: Int, sInfo: String) {
-        LogUtils.d("onHDParamBySnCallBack>>$KeySn $iMode $sInfo")
+        LogUtils.i("onHDParamBySnCallBack>>$KeySn $iMode $sInfo")
 
     }
 
@@ -76,7 +76,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
      * 到投票事件时调用该回调函数，二次开发客户在回调函数内部处理投票事件。
      */
     override fun onVoteEventCallBack(iBaseID: Int, iMode: Int, sInfo: String) {
-        LogUtils.d("onVoteEventCallBack>>>$iBaseID $iMode $sInfo")
+        LogUtils.i("onVoteEventCallBack>>>$iBaseID $iMode $sInfo")
     }
 
     /**
@@ -86,7 +86,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
      * 键盘事件时调用该回调函数，二次开发客户在回调函数内部处理键盘事件。
      */
     override fun onKeyEventCallBack(KeyID: String, iMode: Int, Time: Float, sInfo: String) {
-        LogUtils.d("onKeyEventCallBack>>$KeyID $iMode $Time $sInfo")
+        LogUtils.i("onKeyEventCallBack>>$KeyID $iMode $Time $sInfo")
 
         when (iMode) {
         //答题结果
@@ -97,7 +97,7 @@ class DefaultSunARSListener(private val mUsbManagerInterface: IUsbManagerInterfa
     }
 
     override fun onStaEventCallBack(sInfo: String) {
-        LogUtils.d(sInfo)
+        LogUtils.i(sInfo)
 
     }
 
