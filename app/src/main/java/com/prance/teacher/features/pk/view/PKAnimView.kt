@@ -37,31 +37,35 @@ class PKAnimView(context: Context, attrs: AttributeSet?) : GLContinuousView(cont
     }
 
     override fun onGLDraw(canvas: ICanvasGL) {
-        mPKAnimManager?.run {
+        try {
+            mPKAnimManager?.run {
 
-            if (pkBackground == null) {
-                canvas.save()
-                canvas.drawBitmap(defaultBackground, 0, 0)
-                canvas.restore()
-            }
-
-            //画背景
-            pkBackground?.draw(canvas)
-
-            earth?.let {
-                it.draw(canvas)
-            }
-
-            //画火箭
-            rockets?.run {
-                for (rocket in this) {
-                    rocket.draw(canvas)
+                if (pkBackground == null) {
+                    canvas.save()
+                    canvas.drawBitmap(defaultBackground, 0, 0)
+                    canvas.restore()
                 }
+
+                //画背景
+                pkBackground?.draw(canvas)
+
+                earth?.let {
+                    it.draw(canvas)
+                }
+
+                //画火箭
+                rockets?.run {
+                    for (rocket in this) {
+                        rocket.draw(canvas)
+                    }
+                }
+
+                //倒计时
+                countTime.draw(canvas)
+
             }
-
-            //倒计时
-            countTime.draw(canvas)
-
+        } catch (e: Throwable) {
+            e.printStackTrace()
         }
     }
 

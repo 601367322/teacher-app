@@ -27,10 +27,14 @@ class DanmuAnimGLView : GLContinuousView {
     }
 
     override fun onGLDraw(canvas: ICanvasGL) {
-        mDanmuManager?.run {
-            for (i in danmus) {
-                i.onDraw(canvas)
+        try {
+            mDanmuManager?.run {
+                for (i in danmus) {
+                    i.onDraw(canvas)
+                }
             }
+        } catch (e: Throwable) {
+            e.printStackTrace()
         }
     }
 
