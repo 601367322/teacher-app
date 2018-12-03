@@ -39,3 +39,4 @@ build
 *.ipr
 *~
 *.swp
+/app/dev/release/output.json

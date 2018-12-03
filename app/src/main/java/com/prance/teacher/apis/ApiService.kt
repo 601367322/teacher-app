@@ -35,15 +35,15 @@ interface ApiService {
 
         val studentsForClasses: String
             get() = if (UrlUtil.isLocalHost())
-                "app/studentList"
+                "android/student/list"
             else
-                "backend/course/app/studentList"
+                "backend/teacher/android/student/list"
 
         val bindKeyPad: String
             get() = if (UrlUtil.isLocalHost())
-                "app/binding"
+                "clicker/binding"
             else
-                "backend/course/app/binding"
+                "backend/teacher/clicker/binding"
 
         val checkVersion: String
             get() = if (UrlUtil.isLocalHost())
@@ -94,11 +94,11 @@ interface ApiService {
     @GET
     fun studentsForClasses(@Url url: String, @Query("classId") classId: String): Flowable<ResponseBody<StudentEntity>>
 
+    /**
+     * 绑定答题器
+     */
     @GET
     fun bindKeyPad(@Url url: String, @Query("classId") classId: String, @Query("clickerNums") clickerNums: MutableList<String>): Flowable<ResponseBody<StudentEntity>>
-
-    @POST
-    fun replaceKeyPad(@Url url: String, @Query("classId") classId: String, @Query("oldClikerNum") oldKeyPadId: String, @Query("newClikerNum") newKeyPadId: String): Flowable<Any>
 
     @GET
     fun checkVersion(@Url url: String): Flowable<VersionEntity>

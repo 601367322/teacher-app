@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.TextUtils
 import android.view.View
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
@@ -156,7 +157,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         var existUnBindStudent = false
 
         for (s in mAdapter.data) {
-            if (s.getClicker() == null) {
+            if (s.clickNumber == null) {
                 existUnBindStudent = true
             }
         }
@@ -218,7 +219,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     private fun getBindStudentCount(): Int {
         var count = 0
         for (student in mAdapter.data) {
-            if (student.clickers != null) {
+            if (student.clickNumber != null) {
                 count++
             }
         }
@@ -228,7 +229,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun checkMatch() {
         var hasNoKeyPadStudent: StudentEntity? = null
         for (student in mAdapter.data) {
-            if (student.clickers == null || student.clickers?.isEmpty()!!) {
+            if (TextUtils.isEmpty(student.clickNumber)) {
                 hasNoKeyPadStudent = student
             }
         }

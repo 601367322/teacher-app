@@ -6,7 +6,7 @@ class StudentEntity : Serializable {
 
     var id: Int? = null
     var name: String = ""
-    var clickers: MutableList<Clicker>? = null
+    var clickNumber: String? = null
     var head: String? = null
 
     constructor(name: String?, avatar: String?) {
@@ -34,14 +34,8 @@ class StudentEntity : Serializable {
 
     }
 
-
-    fun getClicker(): Clicker? {
-        clickers?.let { return it[0] }
-        return null
-    }
-
     override fun toString(): String {
-        return "StudentEntity(id=$id, name=$name, clickers=$clickers)"
+        return "StudentEntity(id=$id, name=$name, clickers=$clickNumber)"
     }
 
 }

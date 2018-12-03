@@ -15,7 +15,7 @@ class RedPackageRecord : Serializable {
     var score: Long? = null
 
     constructor(score: StudentScore) {
-        this.clickerId = score.student.getClicker()?.number
+        this.clickerId = score.student.clickNumber
         this.studentId = score.student.id
         this.score = score.score
     }
