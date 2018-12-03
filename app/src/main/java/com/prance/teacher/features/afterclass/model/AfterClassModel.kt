@@ -26,8 +26,8 @@ class AfterClassModel : BaseModelKt(), IAfterClassContract.Model {
         answer.answer = choose
         answer.answerTime = Date().time
         for (StudentsEntity in ClassesDetailFragment.mStudentList!!){
-            StudentsEntity.clickers?.let {
-                if (deviceId == StudentsEntity.clickers!![0].number){
+            StudentsEntity.clickerNumber?.let {
+                if (deviceId == it){
                     answer.studentId = StudentsEntity.id
                 }
             }

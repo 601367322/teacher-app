@@ -6,7 +6,7 @@ class StudentEntity : Serializable {
 
     var id: Int? = null
     var name: String = ""
-    var clickNumber: String? = null
+    var clickerNumber: String? = null
     var head: String? = null
 
     constructor(name: String?, avatar: String?) {
@@ -35,7 +35,7 @@ class StudentEntity : Serializable {
     }
 
     override fun toString(): String {
-        return "StudentEntity(id=$id, name=$name, clickers=$clickNumber)"
+        return "StudentEntity(id=$id, name=$name, clickers=$clickerNumber)"
     }
 
 }

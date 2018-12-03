@@ -104,7 +104,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
 
             val mSignStudents = getSignStudents(signStudents)
             for (s in mSignStudents) {
-                if (keyPadId == s.clickNumber) {
+                if (keyPadId == s.clickerNumber) {
                     return s
                 }
             }
@@ -342,7 +342,7 @@ class ClassesDetailFragment : BaseFragment(), MessageListener, IClassesDetailCon
         //发送学生名称
         mStudentList?.run {
             for (s in this) {
-                s.clickNumber?.let {
+                s.clickerNumber?.let {
                     if (name != null) {
                         mSparkServicePresenter.sendData(name, it)
                     } else {

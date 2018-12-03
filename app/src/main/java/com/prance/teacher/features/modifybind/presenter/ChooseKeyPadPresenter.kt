@@ -40,13 +40,13 @@ class ChooseKeyPadPresenter : BasePresenterKt<IChooseKeyPadContract.View>(), ICh
 
 
     override fun modifyBind(classId: String, student: StudentEntity, keyPadEntity: KeyPadEntity) {
-        val oldKeyPadId = student.clickNumber
-        mModel.modifyBind(classId, student.clickNumber!!, keyPadEntity.keyId)
+        val oldKeyPadId = student.clickerNumber
+        mModel.modifyBind(classId, student.clickerNumber!!, keyPadEntity.keyId)
                 .mySubscribe(onSubscribeError) {
                     //将答题器保存数据库
                     mMatchKeyPadModel.saveMatchedKeyPad(keyPadEntity)
 
-                    student.clickNumber = keyPadEntity.keyId
+                    student.clickerNumber = keyPadEntity.keyId
 
                     try {
                         mView?.modifySuccess(student, oldKeyPadId!!)

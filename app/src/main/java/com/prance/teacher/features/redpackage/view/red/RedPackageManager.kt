@@ -353,7 +353,7 @@ class RedPackageManager {
         //先找出已经存在缓存中的学生答题积分记录
         var studentScore: StudentScore? = null
         for (item in studentScores) {
-            if (item.student.clickNumber == KeyID) {
+            if (item.student.clickerNumber == KeyID) {
                 studentScore = item
             }
         }
@@ -363,7 +363,7 @@ class RedPackageManager {
             var studentEntity: StudentEntity? = null
             ClassesDetailFragment.mStudentList?.let {
                 for (item in it) {
-                    if (KeyID == item.clickNumber) {
+                    if (KeyID == item.clickerNumber) {
                         studentEntity = item
                     }
                 }

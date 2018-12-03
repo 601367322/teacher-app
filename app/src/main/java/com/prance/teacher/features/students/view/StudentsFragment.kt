@@ -157,7 +157,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         var existUnBindStudent = false
 
         for (s in mAdapter.data) {
-            if (s.clickNumber == null) {
+            if (s.clickerNumber == null) {
                 existUnBindStudent = true
             }
         }
@@ -219,7 +219,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     private fun getBindStudentCount(): Int {
         var count = 0
         for (student in mAdapter.data) {
-            if (student.clickNumber != null) {
+            if (student.clickerNumber != null) {
                 count++
             }
         }
@@ -229,7 +229,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun checkMatch() {
         var hasNoKeyPadStudent: StudentEntity? = null
         for (student in mAdapter.data) {
-            if (TextUtils.isEmpty(student.clickNumber)) {
+            if (TextUtils.isEmpty(student.clickerNumber)) {
                 hasNoKeyPadStudent = student
             }
         }

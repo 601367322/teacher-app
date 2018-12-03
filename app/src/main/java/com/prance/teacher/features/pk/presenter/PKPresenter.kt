@@ -29,7 +29,7 @@ class PKPresenter : BasePresenterKt<IPKContract.View>(), IPKContract.Presenter {
         var studentId: Int? = null
         students?.run {
             for (student in this) {
-                if (student.clickNumber == result.clickerId) {
+                if (student.clickerNumber == result.clickerId) {
                     studentId = student.id
                 }
             }
