@@ -90,8 +90,10 @@ class TestSettingFragment : BaseFragment() {
                     }
 
                     val appLogs = mDefaultDir.listFiles()
-                    for (i in 0 until Math.min(appLogs.size, 3)) {
-                        zipFiles.add(appLogs[i])
+                    appLogs?.run {
+                        for (i in Math.max(this.size - 3, 0) until this.size) {
+                            zipFiles.add(this[i])
+                        }
                     }
 
                     val zipLogFile = File(dir, "logs.zip")
