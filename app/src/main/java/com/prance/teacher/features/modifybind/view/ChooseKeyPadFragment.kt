@@ -176,7 +176,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
         try {
             mSparkServicePresenter.sendData("", oldKeyPadId)
 
-            student.getClicker()?.number?.run {
+            student.clickerNumber?.run {
                 mSparkServicePresenter.sendData(student.name, this)
             }
         } catch (e: Exception) {
@@ -209,7 +209,7 @@ class ChooseKeyPadFragment : BaseFragment(), IChooseKeyPadContract.View {
     private fun isExistsInStudents(KeyID: String?): Boolean {
         mStudents.run {
             for (s in this) {
-                if (KeyID == s.getClicker()?.number) {
+                if (KeyID == s.clickerNumber) {
                     return true
                 }
             }

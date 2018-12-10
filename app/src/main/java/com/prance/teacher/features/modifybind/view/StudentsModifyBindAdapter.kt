@@ -18,13 +18,9 @@ class StudentsModifyBindAdapter : BaseQuickAdapter<StudentEntity, BaseViewHolder
             helper?.run {
                 itemView.keyPadId.invisible()
                 itemView.name.text = name
-                clickers?.run {
-                    if (isNotEmpty()) {
-                        itemView.keyPadId.visible()
-                        clickers!![0].number?.run {
-                            itemView.keyPadId.text = getLastStr(this)
-                        }
-                    }
+                clickerNumber?.run {
+                    itemView.keyPadId.visible()
+                    itemView.keyPadId.text = getLastStr(this)
                 }
                 GlideApp.with(itemView)
                         .load(head)
