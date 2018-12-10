@@ -23,11 +23,19 @@ internal class NettyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
     @Throws(Exception::class)
     override fun userEventTriggered(ctx: ChannelHandlerContext, evt: Any) {
         if (evt is IdleStateEvent) {
-            if (evt.state() == IdleState.WRITER_IDLE) {
-                LogUtils.i("发送心跳\t#")
-                ctx.writeAndFlush("#$LINE_SEP")
-            } else if (evt.state() == IdleState.READER_IDLE) {
+            //服务端对应着读事件，当为READER_IDLE时触发
+            when {
+                evt.state() == IdleState.READER_IDLE -> {
+                    LogUtils.i("读取超时")
+                    ctx.close()
+                }
+                evt.state() == IdleState.WRITER_IDLE -> {
+                    LogUtils.i("写超时，发送心跳\t#")
+                    ctx.writeAndFlush("#$LINE_SEP")
+                }
+                else -> super.userEventTriggered(ctx, evt)
             }
         }
     }
+
 }
