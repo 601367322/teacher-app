@@ -31,12 +31,16 @@ import com.prance.teacher.weight.FontCustom
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.Serializable
+import android.net.Network
+import android.net.NetworkRequest
+
 
 class MainActivity : BaseActivity() {
 
-    override fun fragment(): BaseFragment = ClassesFragment()
+    lateinit var mConnectivityManager: ConnectivityManager
+    lateinit var mNetworkCallback: ConnectivityManager.NetworkCallback
 
-    private var mBroadcast: BroadcastReceiver? = null
+    override fun fragment(): BaseFragment = ClassesFragment()
 
     companion object {
 
@@ -58,10 +62,25 @@ class MainActivity : BaseActivity() {
         FontCustom.getCOMICSANSMSGRASFont(Utils.getApp())
         FontCustom.getFZY1JWFont(Utils.getApp())
 
-        val filter = IntentFilter()
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        mBroadcast = NetworkReceiver()
-        registerReceiver(mBroadcast, filter)
+        mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                LogUtils.i("onLost")
+                for (activity in ActivityUtils.getActivityList()) {
+                    if (activity is OnStartClassActivity) {
+                        activity.finish()
+                    }
+                }
+            }
+
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                ///网络可用的情况下的方法
+                LogUtils.i("onAvailable")
+            }
+        }
+        mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
 
         EventBus.getDefault().register(this)
     }
@@ -109,36 +128,10 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        mBroadcast?.run {
-            unregisterReceiver(this)
-        }
-
+        mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
 //        FloatIcon.hidePopupWindow()
 
         EventBus.getDefault().unregister(this)
     }
 
-    class NetworkReceiver : BroadcastReceiver() {
-
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val action = intent?.action
-            action?.run {
-                try {
-                    if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
-                        val isConnect = NetworkUtils.isConnected()
-                        LogUtils.i("网络连接\t$isConnect")
-                        if (!isConnect) {
-                            for(activity in ActivityUtils.getActivityList()){
-                                if(activity is OnStartClassActivity){
-                                    activity.finish()
-                                }
-                            }
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
 }
