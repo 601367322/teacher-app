@@ -11,6 +11,7 @@ import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.database.DaoManager
 import com.prance.lib.database.UserEntity
 import com.prance.lib.common.utils.http.OkHttpUtils
+import io.reactivex.Flowable
 import org.greenrobot.greendao.query.QueryBuilder
 
 

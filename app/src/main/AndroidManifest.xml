@@ -100,6 +100,12 @@
             android:name=".services.UpdateService"
             android:exported="false" />
 
+        <receiver android:name=".services.KillerBroadcast">
+            <intent-filter>
+                <action android:name="com.prance.teacher.services.KillerBroadcast.kill"/>
+            </intent-filter>
+        </receiver>
+
         <!-- 设置IP测试入口 open close-->
         <meta-data
             android:name="TEST_SETTING"
