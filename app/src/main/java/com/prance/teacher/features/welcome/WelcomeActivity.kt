@@ -98,14 +98,16 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         finish()
     }
 
+    private val mKillHour = 5
+
     private fun startKillAlarm() {
         val now = Calendar.getInstance()
         val tomorrow = Calendar.getInstance()
         //如果是当天凌晨，小于6点，则还是定到今天，否则定到明天
-        if (now.get(Calendar.HOUR_OF_DAY) > 6) {
+        if (now.get(Calendar.HOUR_OF_DAY) > mKillHour) {
             tomorrow.add(Calendar.DATE, 1)
         }
-        tomorrow.set(Calendar.HOUR, 6)
+        tomorrow.set(Calendar.HOUR, mKillHour)
         tomorrow.set(Calendar.MINUTE, 0)
         tomorrow.set(Calendar.SECOND, 0)
         tomorrow.set(Calendar.MILLISECOND, 0)
