@@ -207,7 +207,6 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                 mMediaPlayer = MediaPlayer.create(context, R.raw.pk_background)
                 mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
                 mMediaPlayer!!.isLooping = true
-                mMediaPlayer!!.prepare()
             } catch (e: Exception) {
                 e.printStackTrace()
             }

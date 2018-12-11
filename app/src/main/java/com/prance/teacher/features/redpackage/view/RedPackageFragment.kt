@@ -12,6 +12,7 @@ import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.view.red.RedPackage
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
+import com.blankj.utilcode.util.LogUtils
 import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.common.utils.Constants.SETTING
@@ -76,7 +77,6 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
             mMediaPlayer = MediaPlayer.create(context, R.raw.red_package_background)
             mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
             mMediaPlayer!!.isLooping = true
-            mMediaPlayer!!.prepare()
         } catch (e: Exception) {
             e.printStackTrace()
         }

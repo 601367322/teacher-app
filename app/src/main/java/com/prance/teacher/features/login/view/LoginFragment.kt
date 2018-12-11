@@ -26,6 +26,8 @@ import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.presenter.LoginPresenter
 import com.prance.teacher.features.main.MainActivity
 import com.prance.teacher.features.match.MatchKeyPadActivity
+import com.prance.teacher.features.redpackage.RedPackageActivity
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.storage.CommonShared
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -125,9 +127,9 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
 //            val feedBack = FeedBack(1,1)
 //            context?.let { startActivity(AfterClassActivity.callingIntent(it,feedBack)) }
 //
-//            val redConfig = RedPackageSetting(1,5,1,1)
-//            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
-//            activity?.finish()
+            val redConfig = RedPackageSetting(1,30,1,1)
+            context?.let { startActivity(RedPackageActivity.callingIntent(it,redConfig)) }
+            activity?.finish()
         }
 //        activity?.finish()
 //        context?.let { startActivity(MainActivity.callingIntent(it)) }
