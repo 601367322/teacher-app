@@ -1,28 +1,25 @@
 package com.prance.teacher.features.redpackage.view
 
-import android.os.*
-import android.view.View
-import com.prance.lib.teacher.base.core.platform.BaseFragment
-import com.prance.teacher.features.redpackage.contract.IRedPackageContract
-import com.prance.teacher.R
-import com.prance.teacher.features.redpackage.RedPackageActivity
-import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
-import com.prance.teacher.features.redpackage.model.RedPackageSetting
-import com.prance.teacher.features.redpackage.model.StudentScore
-import com.prance.teacher.features.redpackage.view.red.RedPackage
-import kotlinx.android.synthetic.main.fragment_red_package.*
 import android.media.MediaPlayer
-import com.blankj.utilcode.util.LogUtils
+import android.os.Bundle
+import android.view.View
 import com.chillingvan.canvasgl.glview.GLView
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.common.utils.Constants.SETTING
 import com.prance.lib.spark.SparkListenerAdapter
 import com.prance.lib.spark.SparkService
 import com.prance.lib.spark.SparkServicePresenter
+import com.prance.lib.teacher.base.core.platform.BaseFragment
+import com.prance.teacher.R
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
-import com.prance.teacher.features.subject.SubjectActivity
-import com.prance.teacher.features.subject.view.SubjectOnStartFragment
+import com.prance.teacher.features.redpackage.RedPackageActivity
+import com.prance.teacher.features.redpackage.contract.IRedPackageContract
+import com.prance.teacher.features.redpackage.model.RedPackageSetting
+import com.prance.teacher.features.redpackage.model.StudentScore
+import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
+import com.prance.teacher.features.redpackage.view.red.RedPackage
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
+import kotlinx.android.synthetic.main.fragment_red_package.*
 import org.greenrobot.eventbus.EventBus
 
 class RedPackageFragment : BaseFragment(), IRedPackageContract.View {

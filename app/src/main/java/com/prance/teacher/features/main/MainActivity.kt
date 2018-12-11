@@ -1,38 +1,30 @@
 package com.prance.teacher.features.main
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.ActivityUtils.getActivityList
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.weight.AlertDialog
-import com.prance.lib.socket.PushService
+import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.login.LoginActivity
-import com.prance.teacher.features.students.view.StudentsFragment
 import com.prance.teacher.utils.SoundUtils
-import com.prance.teacher.weight.FloatIcon
 import com.prance.teacher.weight.FontCustom
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.Serializable
-import android.net.Network
-import android.net.NetworkRequest
 
 
 class MainActivity : BaseActivity() {
