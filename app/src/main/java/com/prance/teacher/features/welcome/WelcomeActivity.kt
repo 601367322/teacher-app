@@ -52,6 +52,7 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
 //            return
         }
 
+        //自动强行关闭应用定时，防止"不退出APP则无法更新APP"的情况。
         startKillAlarm()
 
         mPresenter.checkVersion()
