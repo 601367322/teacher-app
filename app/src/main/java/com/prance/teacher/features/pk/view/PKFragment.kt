@@ -250,7 +250,9 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                             mMediaPlayer?.release()
                             mMediaPlayer = null
 
-                            (activity as PKActivity).endPk()
+                            activity?.run {
+                                (this as PKActivity).endPk()
+                            }
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
