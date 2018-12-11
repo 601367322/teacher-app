@@ -18,18 +18,15 @@ interface ILoginContract {
         fun renderQrCode(code: QrCodeEntity)
         fun checkQrCodeSuccessCallBack(it: UserEntity?)
         fun checkQrCodeFailCallBack(it: Throwable)
-        fun checkVersionCallBack(versionEntity: VersionEntity?)
     }
 
     interface Presenter : IPresenter<View, Model> {
         fun loadQrCodeDetail()
         fun checkQrCode(mQrCode: QrCodeEntity?)
-        fun checkVersion()
     }
 
     interface Model : IModel {
         fun loadQrCodeDetail(): Flowable<QrCodeEntity>
-        fun checkVersion(): Flowable<VersionEntity>
         fun checkQrCode(qrCode: QrCodeEntity): Flowable<UserEntity>
     }
 }

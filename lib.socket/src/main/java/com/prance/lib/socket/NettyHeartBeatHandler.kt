@@ -13,7 +13,7 @@ internal class NettyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
     override fun messageReceived(ctx: ChannelHandlerContext?, msg: String?) {
         msg?.let {
             if (it == "#") {
-                LogUtils.i("接收心跳\t$it")
+                LogUtils.i("接收心跳 ============ $it")
                 return
             }
             ctx?.fireChannelRead(it)
@@ -30,7 +30,7 @@ internal class NettyHeartBeatHandler : SimpleChannelInboundHandler<String>() {
                     ctx.close()
                 }
                 evt.state() == IdleState.WRITER_IDLE -> {
-                    LogUtils.i("写超时，发送心跳\t#")
+                    LogUtils.i("发送心跳 --------------- #")
                     ctx.writeAndFlush("#$LINE_SEP")
                 }
                 else -> super.userEventTriggered(ctx, evt)

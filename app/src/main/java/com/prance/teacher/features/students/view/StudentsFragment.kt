@@ -192,6 +192,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         ClassesDetailFragment.mStudentList = mAdapter.data
         EventBus.getDefault().post(ClassesDetailFragment.SendNameToKeyPad())
 
+        //弹出绑定成功提示，3秒后自动消失
         bindSuccessDialog?.show()
         Flowable.timer(3, TimeUnit.SECONDS)
                 .mySubscribe {

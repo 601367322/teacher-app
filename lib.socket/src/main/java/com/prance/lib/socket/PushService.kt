@@ -2,10 +2,11 @@ package com.prance.lib.socket
 
 import android.annotation.SuppressLint
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
@@ -25,11 +26,6 @@ import io.netty.channel.socket.nio.NioSocketChannel
 import io.reactivex.schedulers.Schedulers
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
-import android.content.IntentFilter
-import android.net.Network
-import android.net.NetworkRequest
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.NetworkUtils
 
 
 class PushService : Service() {
@@ -40,6 +36,7 @@ class PushService : Service() {
     private var mListeners: MutableList<MessageListener> = mutableListOf()
     private val mMessageDaoUtils = MessageDaoUtils()
     private var mPushApiService: PushApiService? = null
+    private var isDestroy: Boolean = false
 
     lateinit var mConnectivityManager: ConnectivityManager
     lateinit var mNetworkCallback: ConnectivityManager.NetworkCallback
@@ -174,7 +171,7 @@ class PushService : Service() {
             }
 
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
-//            val future = mBootstrap.connect("10.88.89.57", 8081);
+//            val future = mBootstrap.connect("10.88.88.219", 8081)
 
             try {
                 future.addListener(object : ChannelFutureListener {
@@ -251,7 +248,7 @@ class PushService : Service() {
                 STATUS_CONNECT_CLOSED -> {
                     mChannel = null
 
-                    if (mEventLoopGroup != null) {
+                    if (!isDestroy) {
                         doConnect()
                     }
                 }
@@ -329,6 +326,7 @@ class PushService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         LogUtils.i("onDestroy")
+        isDestroy = true
         stopPostResponseMessage()
         destroySocket()
         mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)

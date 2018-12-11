@@ -67,8 +67,8 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         //显示loading
         showProgress()
 
-        //检查版本更新
-        mPresenter.checkVersion()
+        //获取二维码
+        getNewQrCode(0)
 
         //新版本提示
         if (CommonShared.getPreVersion() != AppUtils.getAppVersionCode()) {
@@ -271,21 +271,5 @@ class LoginFragment : BaseFragment(), ILoginContract.View {
         return true
     }
 
-    /**
-     * 检查更新之后
-     */
-    override fun checkVersionCallBack(versionEntity: VersionEntity?) {
-        //显示更新提示
-        versionEntity?.let {
-            if (versionEntity.codeVersion > AppUtils.getAppVersionCode()) {
-                activity?.supportFragmentManager?.inTransaction {
-                    add(R.id.fragmentContainer, UpdateFragment.forVersion(it))
-                }
-            }
-        }
-
-        //获取二维码
-        getNewQrCode(0)
-    }
 }
 

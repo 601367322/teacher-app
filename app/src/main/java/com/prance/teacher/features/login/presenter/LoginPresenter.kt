@@ -28,9 +28,5 @@ class LoginPresenter : BasePresenterKt<ILoginContract.View>(), ILoginContract.Pr
         }
     }
 
-    override fun checkVersion() {
-        mModel.checkVersion()
-                .mySubscribe({ mView?.checkVersionCallBack(null) }, { mView?.checkVersionCallBack(it) })
-    }
 }
 
