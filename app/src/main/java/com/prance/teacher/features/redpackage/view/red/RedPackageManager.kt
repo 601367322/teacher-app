@@ -44,15 +44,10 @@ class RedPackageManager {
         var DEFAULT_SCALE = 1.3F
     }
 
-
-    //屏幕宽高
-    private var screenWidth: Int = Utils.getApp().resources.displayMetrics.widthPixels
-
     //红包集合
     private val redPackages = CopyOnWriteArrayList<RedPackage>()
 
     private val titles = mutableListOf("A", "B", "C", "D")
-
 
     //红包分数集合
     var studentScores = mutableListOf<StudentScore>()
@@ -302,15 +297,6 @@ class RedPackageManager {
     private fun checkAvailableRedPackageLife(redPackage: RedPackage): Boolean {
         return (System.currentTimeMillis() - redPackage.createTime) > (minInterval + Math.random() * intervalRange)
     }
-
-    private fun createBitmap(baseBitmap: Bitmap, width: Int): Bitmap {
-        // 初始化Matrix对象
-        val matrix = Matrix()
-        // 根据传入的参数设置缩放比例
-        matrix.postScale(width.toFloat() / baseBitmap.width.toFloat(), width.toFloat() / baseBitmap.width.toFloat())
-        return Bitmap.createBitmap(baseBitmap, 0, 0, baseBitmap.width, baseBitmap.height, matrix, true)
-    }
-
 
     /**
      * 计算是否抢到了红包

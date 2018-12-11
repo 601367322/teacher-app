@@ -109,6 +109,7 @@ class PushService : Service() {
         }
         mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
 
+        //启动消息回执
         startPostResponseMessage(null)
     }
 
