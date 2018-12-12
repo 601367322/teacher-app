@@ -10,23 +10,20 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.blankj.utilcode.util.ZipUtils
-import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.common.utils.http.RetrofitUtils
 import com.prance.lib.common.utils.http.mySubscribe
 import com.prance.lib.test.setting.R
-import com.prance.lib.test.setting.R.id.ok
 import com.prance.lib.test.setting.api.TestApiService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_test_setting.*
 import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 
 
 class TestSettingFragment : BaseFragment() {
