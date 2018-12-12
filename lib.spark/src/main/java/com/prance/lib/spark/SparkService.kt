@@ -74,7 +74,6 @@ class SparkService : Service() {
     private val mUsbListener = object : UsbListener {
         override fun onConnected(usbDeviceConnection: UsbDeviceConnection, `in`: UsbEndpoint, out: UsbEndpoint, serialNum: String) {
 
-            mIsUsbConnected = true
             mUsbSerialNum = serialNum
 
             // 可以开始通信了
@@ -93,7 +92,6 @@ class SparkService : Service() {
 
         override fun onDisConnected() {
 
-            mIsUsbConnected = false
             mUsbSerialNum = null
 
             CommunicateHelper.getInstance().setData(null, null, null, this)
@@ -266,8 +264,6 @@ class SparkService : Service() {
     }
 
     companion object {
-
-        var mIsUsbConnected: Boolean = false
 
         var mUsbSerialNum: String? = null
 
