@@ -14,7 +14,7 @@ class NettyClientInitializer(private var listener: MessageListener) : ChannelIni
 
     private val WRITE_WAIT_SECONDS = 3L
 
-    private val READ_WAIT_SECONDS = 5L
+    private val READ_WAIT_SECONDS = 7L
 
     @Throws(Exception::class)
     override fun initChannel(ch: SocketChannel) {
