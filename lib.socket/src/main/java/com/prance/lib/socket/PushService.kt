@@ -93,21 +93,25 @@ class PushService : Service() {
 
         mPushApiService = RetrofitUtils.getApiService(PushApiService::class.java)
 
-        mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
-            override fun onLost(network: Network) {
-                super.onLost(network)
-                LogUtils.i("onLost")
-                destroySocket()
-            }
+        try {
+            mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    LogUtils.i("onLost")
+                    destroySocket()
+                }
 
-            override fun onAvailable(network: Network) {
-                super.onAvailable(network)
-                LogUtils.i("onAvailable")
-                initSocket()
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    LogUtils.i("onAvailable")
+                    initSocket()
+                }
             }
+            mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
 
         //启动消息回执
         startPostResponseMessage(null)
@@ -330,7 +334,11 @@ class PushService : Service() {
         isDestroy = true
         stopPostResponseMessage()
         destroySocket()
-        mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
+        try {
+            mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

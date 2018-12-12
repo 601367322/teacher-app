@@ -102,22 +102,26 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
     private val mKillHour = 5
 
     private fun startKillAlarm() {
-        val now = Calendar.getInstance()
-        val tomorrow = Calendar.getInstance()
-        //如果是当天凌晨，小于${mKillHour}点，则还是定到今天，否则定到明天
-        if (now.get(Calendar.HOUR_OF_DAY) > mKillHour) {
-            tomorrow.add(Calendar.DATE, 1)
+        try {
+            val now = Calendar.getInstance()
+            val tomorrow = Calendar.getInstance()
+            //如果是当天凌晨，小于${mKillHour}点，则还是定到今天，否则定到明天
+            if (now.get(Calendar.HOUR_OF_DAY) > mKillHour) {
+                tomorrow.add(Calendar.DATE, 1)
+            }
+            tomorrow.set(Calendar.HOUR, mKillHour)
+            tomorrow.set(Calendar.MINUTE, 0)
+            tomorrow.set(Calendar.SECOND, 0)
+            tomorrow.set(Calendar.MILLISECOND, 0)
+            val diff = tomorrow.timeInMillis - now.timeInMillis
+            LogUtils.i("距离自动关闭应用还有\t$diff")
+            val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            val intent = Intent(KillerBroadcast.KILL)
+            val pi = PendingIntent.getBroadcast(Utils.getApp(), 0, intent, 0)
+            alarmManager.set(AlarmManager.RTC, tomorrow.timeInMillis, pi)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        tomorrow.set(Calendar.HOUR, mKillHour)
-        tomorrow.set(Calendar.MINUTE, 0)
-        tomorrow.set(Calendar.SECOND, 0)
-        tomorrow.set(Calendar.MILLISECOND, 0)
-        val diff = tomorrow.timeInMillis - now.timeInMillis
-        LogUtils.i("距离自动关闭应用还有\t$diff")
-        val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = Intent(KillerBroadcast.KILL)
-        val pi = PendingIntent.getBroadcast(Utils.getApp(), 0, intent, 0)
-        alarmManager.set(AlarmManager.RTC, tomorrow.timeInMillis, pi)
     }
 
 }

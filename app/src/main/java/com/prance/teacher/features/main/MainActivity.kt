@@ -54,25 +54,29 @@ class MainActivity : BaseActivity() {
         FontCustom.getCOMICSANSMSGRASFont(Utils.getApp())
         FontCustom.getFZY1JWFont(Utils.getApp())
 
-        mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
-            override fun onLost(network: Network) {
-                super.onLost(network)
-                LogUtils.i("onLost")
-                for (activity in ActivityUtils.getActivityList()) {
-                    if (activity is OnStartClassActivity) {
-                        activity.finish()
+        try {
+            mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    LogUtils.i("onLost")
+                    for (activity in ActivityUtils.getActivityList()) {
+                        if (activity is OnStartClassActivity) {
+                            activity.finish()
+                        }
                     }
                 }
-            }
 
-            override fun onAvailable(network: Network) {
-                super.onAvailable(network)
-                ///网络可用的情况下的方法
-                LogUtils.i("onAvailable")
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    ///网络可用的情况下的方法
+                    LogUtils.i("onAvailable")
+                }
             }
+            mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
 
         EventBus.getDefault().register(this)
     }
@@ -120,7 +124,11 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
+        try {
+            mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 //        FloatIcon.hidePopupWindow()
 
         EventBus.getDefault().unregister(this)
