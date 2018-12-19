@@ -13,7 +13,7 @@
         android:id="@+id/r4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="R4联测" />
+        android:text="R5联测" />
 
     <Button
         android:id="@+id/release"
