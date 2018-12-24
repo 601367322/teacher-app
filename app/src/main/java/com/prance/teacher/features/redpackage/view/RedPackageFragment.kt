@@ -72,7 +72,10 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
 
         try {
             mMediaPlayer = MediaPlayer.create(context, R.raw.red_package_background)
-            mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
+            mMediaPlayer!!.setOnPreparedListener { mMediaPlayer ->
+                mMediaPlayer.start()
+                mMediaPlayer.setVolume(0.3f, 0.3f)
+            }
             mMediaPlayer!!.isLooping = true
         } catch (e: Exception) {
             e.printStackTrace()
