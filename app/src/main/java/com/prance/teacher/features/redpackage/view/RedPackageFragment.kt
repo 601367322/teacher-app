@@ -18,6 +18,7 @@ import com.prance.teacher.features.redpackage.model.RedPackageSetting
 import com.prance.teacher.features.redpackage.model.StudentScore
 import com.prance.teacher.features.redpackage.presenter.RedPackagePresenter
 import com.prance.teacher.features.redpackage.view.red.RedPackage
+import com.prance.teacher.utils.SoundUtils
 import com.spark.teaching.answertool.usb.model.ReceiveAnswer
 import kotlinx.android.synthetic.main.fragment_red_package.*
 import org.greenrobot.eventbus.EventBus
@@ -74,7 +75,7 @@ class RedPackageFragment : BaseFragment(), IRedPackageContract.View {
             mMediaPlayer = MediaPlayer.create(context, R.raw.red_package_background)
             mMediaPlayer!!.setOnPreparedListener { mMediaPlayer ->
                 mMediaPlayer.start()
-                mMediaPlayer.setVolume(0.5f, 0.5f)
+                mMediaPlayer.setVolume(SoundUtils.getRatio(), SoundUtils.getRatio())
             }
             mMediaPlayer!!.isLooping = true
         } catch (e: Exception) {

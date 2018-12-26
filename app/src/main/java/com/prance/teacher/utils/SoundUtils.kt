@@ -1,6 +1,5 @@
 package com.prance.teacher.utils
 
-import android.app.Activity
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -41,7 +40,7 @@ object SoundUtils {
         }
     }
 
-    private fun getRatio(): Float {
+    fun getRatio(): Float {
         val am = Utils.getApp().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
         val current = am.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
@@ -64,4 +63,5 @@ object SoundUtils {
             mSoundPoll.stop(this)
         }
     }
+
 }
