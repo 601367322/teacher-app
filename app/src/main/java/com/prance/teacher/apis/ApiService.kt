@@ -80,6 +80,13 @@ interface ApiService {
                 "clicker/replace"
             else
                 "backend/teacher/clicker/replace"
+
+        val logOut: String
+            get() = if (UrlUtil.isLocalHost())
+                "tv/loginOut"
+            else
+                "backend/assistant/tv/loginOut"
+
     }
 
     @GET
@@ -134,4 +141,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST
     fun modifyBind(@Url url: String, @Field("classId") classId: String, @Field("oldClickerNum") oldClickerNum: String, @Field("newClickerNum") newClickerNum: String): Flowable<Any>
+
+    @POST
+    fun logOut(@Url url: String): Flowable<Any>
 }

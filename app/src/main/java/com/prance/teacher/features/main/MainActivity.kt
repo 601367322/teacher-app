@@ -20,6 +20,8 @@ import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.login.LoginActivity
+import com.prance.teacher.features.main.contract.IMainContract
+import com.prance.teacher.features.main.presenter.MainActivityPresenter
 import com.prance.teacher.utils.SoundUtils
 import com.prance.teacher.weight.FontCustom
 import org.greenrobot.eventbus.EventBus
@@ -27,10 +29,12 @@ import org.greenrobot.eventbus.Subscribe
 import java.io.Serializable
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(),IMainContract.MainView {
 
     lateinit var mConnectivityManager: ConnectivityManager
     lateinit var mNetworkCallback: ConnectivityManager.NetworkCallback
+    override var mPresenter: IMainContract.MainPresenter = MainActivityPresenter()
+    override fun getContext(): Context? = this
 
     override fun fragment(): BaseFragment = ClassesFragment()
 
@@ -91,6 +95,9 @@ class MainActivity : BaseActivity() {
                 .setMessage("确认退出此账号？")
                 .setCancelButton("取消", null)
                 .setConfirmButton("退出") { _ ->
+
+                    mPresenter.logOut()
+
                     finish()
 
                     startActivity(LoginActivity.callingIntent(this))
