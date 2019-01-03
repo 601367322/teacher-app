@@ -24,14 +24,9 @@ class OkHttpUtils private constructor() {
         mBuilder.sslSocketFactory(sslSocketFactory)
 
         //日志
-        if (ModelUtil.isTestModel) {
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
-            mBuilder.addInterceptor(logging)
-
-//            if (ModelUtil.isTestModel)
-//                utils.addInterceptor(ChuckInterceptor(this))
-        }
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        mBuilder.addInterceptor(logging)
 
         mOkHttpClient = mBuilder.build()
     }

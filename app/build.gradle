@@ -81,6 +81,7 @@ android {
 
         prod {
             dimension "normal"
+            manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_close")
             manifestPlaceholders.put("APP_CHANNEL", "prod")
         }
     }

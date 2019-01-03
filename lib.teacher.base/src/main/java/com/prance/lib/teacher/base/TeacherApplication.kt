@@ -35,8 +35,6 @@ class TeacherApplication : Application() {
         /**
          * 日志
          */
-        if (!ModelUtil.isTestModel)
-            LogUtils.getConfig().setLogSwitch(false)
         LogUtils.getConfig().setLog2FileSwitch(true)
 
         /**
@@ -64,10 +62,8 @@ class TeacherApplication : Application() {
          */
         DaoManager.init(this)
 
-        if (ModelUtil.isTestModel) {
-            QueryBuilder.LOG_SQL = true
-            QueryBuilder.LOG_VALUES = true
-        }
+        QueryBuilder.LOG_SQL = true
+        QueryBuilder.LOG_VALUES = true
 
         registerActivityLifecycleCallbacks(DefaultActivityLifecycleCallbacks())
 

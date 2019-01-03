@@ -4,40 +4,53 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/current"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/r4"
+    <LinearLayout
+        android:id="@+id/testLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="R5联测" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/release"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="正式环境release" />
+        <TextView
+            android:id="@+id/current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/staging"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="预发布环境staging" />
+        <Button
+            android:id="@+id/r4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="R5联测" />
 
-    <Button
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试环境test" />
+        <Button
+            android:id="@+id/release"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正式环境release" />
 
-    <Button
-        android:id="@+id/dev"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="开发环境dev" />
+        <Button
+            android:id="@+id/staging"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="预发布环境staging" />
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试环境test" />
+
+        <Button
+            android:id="@+id/dev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="开发环境dev" />
+
+        <Button
+            android:id="@+id/systemSettingBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="系统设置" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/uploadLog"
@@ -45,10 +58,5 @@
         android:layout_height="wrap_content"
         android:text="日志上传" />
 
-    <Button
-        android:id="@+id/systemSettingBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="系统设置" />
 
 </LinearLayout>

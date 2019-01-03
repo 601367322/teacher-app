@@ -54,23 +54,23 @@ abstract class BaseActivity : BaseActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         when (keyCode) {
-        //调大声音键
+            //调大声音键
             KeyEvent.KEYCODE_VOLUME_UP -> return super.onKeyDown(keyCode, event)
-        //降低声音键
+            //降低声音键
             KeyEvent.KEYCODE_VOLUME_DOWN -> return super.onKeyDown(keyCode, event)
-        //静音
+            //静音
             KeyEvent.KEYCODE_MUTE -> return super.onKeyDown(keyCode, event)
-        //放大
+            //放大
             KeyEvent.KEYCODE_ZOOM_IN -> return super.onKeyDown(keyCode, event)
-        //缩小
+            //缩小
             KeyEvent.KEYCODE_ZOOM_OUT -> return super.onKeyDown(keyCode, event)
-        //向上键
+            //向上键
             KeyEvent.KEYCODE_DPAD_UP -> {
                 if (!onUpKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //向下键
+            //向下键
             KeyEvent.KEYCODE_DPAD_DOWN ->
                 /*    实际开发中有时候会触发两次，所以要判断一下按下时触发 ，松开按键时不触发
                  *    exp:KeyEvent.ACTION_UP
@@ -80,103 +80,103 @@ abstract class BaseActivity : BaseActivity() {
                         return super.onKeyDown(keyCode, event)
                     }
                 }
-        //向左键
+            //向左键
             KeyEvent.KEYCODE_DPAD_LEFT -> {
                 if (!onLeftKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //向右键
+            //向右键
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
                 if (!onRightKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //OK确认
+            //OK确认
             KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
                 if (!onOkKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //返回键
+            //返回键
             KeyEvent.KEYCODE_BACK -> {
                 if (!onBackKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //菜单键
+            //菜单键
             KeyEvent.KEYCODE_MENU -> {
                 if (!onMenuKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键1
+            //数字键1
             KeyEvent.KEYCODE_1 -> {
                 if (!onNumberKeyEvent(1)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键2
+            //数字键2
             KeyEvent.KEYCODE_2 -> {
                 if (!onNumberKeyEvent(2)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键3
+            //数字键3
             KeyEvent.KEYCODE_3 -> {
                 if (!onNumberKeyEvent(3)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键4
+            //数字键4
             KeyEvent.KEYCODE_4 -> {
                 if (!onNumberKeyEvent(4)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键5
+            //数字键5
             KeyEvent.KEYCODE_5 -> {
                 if (!onNumberKeyEvent(5)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键6
+            //数字键6
             KeyEvent.KEYCODE_6 -> {
                 if (!onNumberKeyEvent(6)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键7
+            //数字键7
             KeyEvent.KEYCODE_7 -> {
                 if (!onNumberKeyEvent(7)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键8
+            //数字键8
             KeyEvent.KEYCODE_8 -> {
                 if (!onNumberKeyEvent(8)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键9
+            //数字键9
             KeyEvent.KEYCODE_9 -> {
                 if (!onNumberKeyEvent(9)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //数字键0
+            //数字键0
             KeyEvent.KEYCODE_0 -> {
                 if (!onNumberKeyEvent(0)) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //星号键
+            //星号键
             KeyEvent.KEYCODE_STAR -> {
                 if (!onStarKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
                 }
             }
-        //井号键
+            //井号键
             KeyEvent.KEYCODE_POUND -> {
                 if (!onPoundKeyEvent()) {
                     return super.onKeyDown(keyCode, event)
@@ -206,11 +206,8 @@ abstract class BaseActivity : BaseActivity() {
     protected open fun onDownKeyEvent(): Boolean = false
 
     protected open fun onMenuKeyEvent(): Boolean {
-        if (ModelUtil.isTestModel) {
-            startActivity(PluginsManager.testSetting?.callingTestIntent(this))
-            return true
-        }
-        return false
+        startActivity(PluginsManager.testSetting?.callingTestIntent(this))
+        return true
     }
 
     protected open fun onNumberKeyEvent(number: Int): Boolean = false

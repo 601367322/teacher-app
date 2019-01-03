@@ -1,6 +1,7 @@
 package com.prance.lib.test.setting.features
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -11,6 +12,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.blankj.utilcode.util.ZipUtils
 import com.prance.lib.base.platform.BaseFragment
+import com.prance.lib.common.utils.ModelUtil
 import com.prance.lib.common.utils.ToastUtils
 import com.prance.lib.common.utils.UrlUtil
 import com.prance.lib.common.utils.http.RetrofitUtils
@@ -43,6 +45,10 @@ class TestSettingFragment : BaseFragment() {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
+
+        if (!ModelUtil.isTestModel) {
+            testLayout.visibility = View.GONE
+        }
 
         current.text = "当前环境：\t" + UrlUtil.getHost()
 
