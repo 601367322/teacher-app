@@ -57,6 +57,7 @@
     <ImageView
         android:id="@+id/scoreLayout"
         android:layout_width="@dimen/m612.0"
+        android:layout_marginTop="@dimen/m2000.0"
         android:layout_height="@dimen/m339.0"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
