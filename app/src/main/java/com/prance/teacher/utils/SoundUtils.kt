@@ -14,11 +14,6 @@ object SoundUtils {
     var mSoundPoll: SoundPool
 
     init {
-        val am = Utils.getApp().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        val audioMaxVolumn = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
-        val volumnCurrent = am.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
-        val volumnRatio = volumnCurrent / audioMaxVolumn
-
         mSoundPoll = SoundPool.Builder()
                 .setMaxStreams(10)
                 .setAudioAttributes(
@@ -45,11 +40,11 @@ object SoundUtils {
         }
     }
 
-    private fun getRatio(): Float {
+    fun getRatio(): Float {
         val am = Utils.getApp().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
         val current = am.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
-        return current / max
+        return current / max * 0.5f
     }
 
     fun play(key: String) {
@@ -68,4 +63,5 @@ object SoundUtils {
             mSoundPoll.stop(this)
         }
     }
+
 }
