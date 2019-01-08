@@ -152,7 +152,7 @@ class StudentsModifyBindFragment : BaseFragment(), IStudentsModifyBindContract.V
     private fun calculateBindStudent() {
         var count = 0
         for (student in mAdapter.data) {
-            if (student.clickers != null) {
+            student.clickerNumber?.run {
                 count++
             }
         }

@@ -38,6 +38,7 @@ public class EncodeUtil {
         }
 
         String cmdName = "";
+        boolean log = true;
         switch (dataPackage.getCmd() & 0xff) {
             case 0x11:
                 cmdName = "【设置信道指令】";
@@ -53,6 +54,7 @@ public class EncodeUtil {
                 break;
             case 0x03:
                 cmdName = "【答题器回显指令】";
+                log = false;
                 break;
             case 0x15:
                 cmdName = "【开启设备绑卡指令】";
@@ -68,7 +70,8 @@ public class EncodeUtil {
         for (int i = 0; i < 64; i++) {
             stringBuilder.append(String.format("%02X ", bytes[i]));
         }
-        LogUtils.i( stringBuilder.toString(), false);
+        if (log)
+            LogUtils.i(stringBuilder.toString(), false);
         return bytes;
     }
 

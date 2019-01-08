@@ -51,8 +51,6 @@ android {
         debug {
             minifyEnabled false
 
-
-
             signingConfig signingConfigs.release
             zipAlignEnabled true
         }
@@ -61,6 +59,9 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
 
             zipAlignEnabled true
             signingConfig signingConfigs.release
@@ -80,6 +81,7 @@ android {
 
         prod {
             dimension "normal"
+            manifestPlaceholders.put("TEST_SETTING", "$Test_Setting_close")
             manifestPlaceholders.put("APP_CHANNEL", "prod")
         }
     }

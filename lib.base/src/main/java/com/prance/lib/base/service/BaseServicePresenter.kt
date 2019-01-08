@@ -29,7 +29,7 @@ abstract class BaseServicePresenter<T : IBinder> {
         try {
             context.unbindService(mServiceConnection)
         } catch (e: Exception) {
-            e.printStackTrace()
+            //Service not registered
         }
     }
 }

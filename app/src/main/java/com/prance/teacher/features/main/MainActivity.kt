@@ -1,42 +1,42 @@
 package com.prance.teacher.features.main
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import com.prance.lib.base.platform.BaseFragment
-import com.prance.lib.teacher.base.core.platform.BaseActivity
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.ActivityUtils.getActivityList
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.Utils
 import com.prance.lib.base.extension.inTransaction
+import com.prance.lib.base.platform.BaseFragment
 import com.prance.lib.common.utils.weight.AlertDialog
-import com.prance.lib.socket.PushService
+import com.prance.lib.teacher.base.core.platform.BaseActivity
 import com.prance.teacher.R
 import com.prance.teacher.core.OnStartClassActivity
 import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.classes.view.ClassesDetailFragment
 import com.prance.teacher.features.classes.view.ClassesFragment
 import com.prance.teacher.features.login.LoginActivity
-import com.prance.teacher.features.students.view.StudentsFragment
+import com.prance.teacher.features.main.contract.IMainContract
+import com.prance.teacher.features.main.presenter.MainActivityPresenter
 import com.prance.teacher.utils.SoundUtils
-import com.prance.teacher.weight.FloatIcon
 import com.prance.teacher.weight.FontCustom
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.Serializable
 
-class MainActivity : BaseActivity() {
+
+class MainActivity : BaseActivity(),IMainContract.MainView {
+
+    lateinit var mConnectivityManager: ConnectivityManager
+    lateinit var mNetworkCallback: ConnectivityManager.NetworkCallback
+    override var mPresenter: IMainContract.MainPresenter = MainActivityPresenter()
+    override fun getContext(): Context? = this
 
     override fun fragment(): BaseFragment = ClassesFragment()
-
-    private var mBroadcast: BroadcastReceiver? = null
 
     companion object {
 
@@ -58,10 +58,29 @@ class MainActivity : BaseActivity() {
         FontCustom.getCOMICSANSMSGRASFont(Utils.getApp())
         FontCustom.getFZY1JWFont(Utils.getApp())
 
-        val filter = IntentFilter()
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        mBroadcast = NetworkReceiver()
-        registerReceiver(mBroadcast, filter)
+        try {
+            mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    LogUtils.i("onLost")
+                    for (activity in ActivityUtils.getActivityList()) {
+                        if (activity is OnStartClassActivity) {
+                            activity.finish()
+                        }
+                    }
+                }
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    ///网络可用的情况下的方法
+                    LogUtils.i("onAvailable")
+                }
+            }
+            mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         EventBus.getDefault().register(this)
     }
@@ -76,6 +95,9 @@ class MainActivity : BaseActivity() {
                 .setMessage("确认退出此账号？")
                 .setCancelButton("取消", null)
                 .setConfirmButton("退出") { _ ->
+
+                    mPresenter.logOut()
+
                     finish()
 
                     startActivity(LoginActivity.callingIntent(this))
@@ -109,36 +131,14 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        mBroadcast?.run {
-            unregisterReceiver(this)
+        try {
+            mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
 //        FloatIcon.hidePopupWindow()
 
         EventBus.getDefault().unregister(this)
     }
 
-    class NetworkReceiver : BroadcastReceiver() {
-
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val action = intent?.action
-            action?.run {
-                try {
-                    if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
-                        val isConnect = NetworkUtils.isConnected()
-                        LogUtils.i("网络连接\t$isConnect")
-                        if (!isConnect) {
-                            for(activity in ActivityUtils.getActivityList()){
-                                if(activity is OnStartClassActivity){
-                                    activity.finish()
-                                }
-                            }
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
 }

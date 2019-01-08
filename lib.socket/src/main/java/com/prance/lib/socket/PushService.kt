@@ -2,10 +2,11 @@ package com.prance.lib.socket
 
 import android.annotation.SuppressLint
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
@@ -25,8 +26,6 @@ import io.netty.channel.socket.nio.NioSocketChannel
 import io.reactivex.schedulers.Schedulers
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
-import android.content.IntentFilter
-import com.blankj.utilcode.util.NetworkUtils
 
 
 class PushService : Service() {
@@ -37,7 +36,10 @@ class PushService : Service() {
     private var mListeners: MutableList<MessageListener> = mutableListOf()
     private val mMessageDaoUtils = MessageDaoUtils()
     private var mPushApiService: PushApiService? = null
-    private var mBroadcast: BroadcastReceiver? = null
+    private var isDestroy: Boolean = false
+
+    lateinit var mConnectivityManager: ConnectivityManager
+    lateinit var mNetworkCallback: ConnectivityManager.NetworkCallback
 
     companion object {
 
@@ -91,11 +93,27 @@ class PushService : Service() {
 
         mPushApiService = RetrofitUtils.getApiService(PushApiService::class.java)
 
-        val filter = IntentFilter()
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        mBroadcast = NetworkReceiver(this)
-        registerReceiver(mBroadcast, filter)
+        try {
+            mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    LogUtils.i("onLost")
+                    destroySocket()
+                }
 
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    LogUtils.i("onAvailable")
+                    initSocket()
+                }
+            }
+            mConnectivityManager.requestNetwork(NetworkRequest.Builder().build(), mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        //启动消息回执
         startPostResponseMessage(null)
     }
 
@@ -158,7 +176,7 @@ class PushService : Service() {
             }
 
             val future = mBootstrap.connect(UrlUtil.getPropertiesValue(Constants.SOCKET_HOST), UrlUtil.getPropertiesValue(Constants.SOCKET_PORT).toInt())
-//            val future = mBootstrap.connect("10.88.89.57", 8081);
+//            val future = mBootstrap.connect("10.88.88.219", 8081)
 
             try {
                 future.addListener(object : ChannelFutureListener {
@@ -235,7 +253,7 @@ class PushService : Service() {
                 STATUS_CONNECT_CLOSED -> {
                     mChannel = null
 
-                    if (mEventLoopGroup != null) {
+                    if (!isDestroy) {
                         doConnect()
                     }
                 }
@@ -313,28 +331,14 @@ class PushService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         LogUtils.i("onDestroy")
+        isDestroy = true
         stopPostResponseMessage()
         destroySocket()
-        unregisterReceiver(mBroadcast)
-    }
-
-    class NetworkReceiver(private val mPushService: PushService) : BroadcastReceiver() {
-
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val action = intent?.action
-            action?.run {
-                if (this == ConnectivityManager.CONNECTIVITY_ACTION) {
-                    val isConnect = NetworkUtils.isConnected()
-                    LogUtils.i("网络连接\t$isConnect")
-                    if (!isConnect) {
-                        mPushService.destroySocket()
-                    } else {
-                        mPushService.initSocket()
-                    }
-                }
-            }
+        try {
+            mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
     }
 
 }

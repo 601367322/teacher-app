@@ -70,7 +70,7 @@ public class DecodeUtil {
                 EchoRep echoRep = new EchoRep();
                 echoRep.decoding(data);
                 msg = "答题器回显设置响应：" + echoRep.toString();
-                LogUtils.i(msg + "\n" + stringBuilder.toString(), false);
+//                LogUtils.i(msg + "\n" + stringBuilder.toString(), false);
                 break;
             case 0x94://清除配置信息指令响应
                 ClearDeviceConfigureRep clearDeviceConfigureRep = new ClearDeviceConfigureRep();

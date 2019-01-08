@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="260dp"
+    android:layout_height="48dp"
+    android:src="@drawable/icom_waiting_timeout_hint"
+    android:scaleType="fitXY"
+
+    >
+</ImageView>
+</LinearLayout>

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.LogUtils
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
 import com.prance.lib.common.utils.UrlUtil
@@ -18,13 +17,9 @@ import com.prance.lib.spark.SparkServicePresenter
 import com.prance.lib.teacher.base.core.platform.BaseFragment
 import com.prance.teacher.BuildConfig
 import com.prance.teacher.R
-import com.prance.teacher.R.id.*
 import com.prance.teacher.features.check.contract.ICheckKeyPadContract
 import com.prance.teacher.features.check.presenter.CheckKeyPadPresenter
-import com.prance.teacher.features.classes.model.ClassesEntity
 import com.prance.teacher.features.login.LoginActivity
-import com.prance.teacher.features.main.MainActivity
-import com.prance.teacher.features.students.StudentsActivity
 import com.prance.teacher.utils.ping.PingNet
 import com.prance.teacher.utils.ping.PingNetEntity
 import kotlinx.android.synthetic.main.fragment_check_keypad.*

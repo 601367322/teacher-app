@@ -12,12 +12,20 @@ import io.reactivex.Flowable
  */
 
 interface IMainContract {
+
     interface View : IView<Presenter> {}
+    interface MainView : IView<MainPresenter> {}
+
     interface Presenter : IPresenter<View, Model> {
         fun checkIfKeyPadAlreadyMatched(serialNumber: String, matched: () -> Unit, unMatch: () -> Unit)
     }
 
+    interface MainPresenter : IPresenter<View, Model> {
+        fun logOut()
+    }
+
     interface Model : IModel {
+        fun logOut(): Flowable<Any>
 
     }
 }

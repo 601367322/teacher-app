@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.TextUtils
 import android.view.View
 import com.prance.lib.base.extension.invisible
 import com.prance.lib.base.extension.visible
@@ -156,7 +157,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         var existUnBindStudent = false
 
         for (s in mAdapter.data) {
-            if (s.getClicker() == null) {
+            if (s.clickerNumber == null) {
                 existUnBindStudent = true
             }
         }
@@ -191,6 +192,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
         ClassesDetailFragment.mStudentList = mAdapter.data
         EventBus.getDefault().post(ClassesDetailFragment.SendNameToKeyPad())
 
+        //弹出绑定成功提示，3秒后自动消失
         bindSuccessDialog?.show()
         Flowable.timer(3, TimeUnit.SECONDS)
                 .mySubscribe {
@@ -218,7 +220,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     private fun getBindStudentCount(): Int {
         var count = 0
         for (student in mAdapter.data) {
-            if (student.clickers != null) {
+            if (student.clickerNumber != null) {
                 count++
             }
         }
@@ -228,7 +230,7 @@ class StudentsFragment : BaseFragment(), IStudentsContract.View {
     override fun checkMatch() {
         var hasNoKeyPadStudent: StudentEntity? = null
         for (student in mAdapter.data) {
-            if (student.clickers == null || student.clickers?.isEmpty()!!) {
+            if (TextUtils.isEmpty(student.clickerNumber)) {
                 hasNoKeyPadStudent = student
             }
         }

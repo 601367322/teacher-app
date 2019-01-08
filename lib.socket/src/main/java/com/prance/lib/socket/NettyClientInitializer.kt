@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit
 
 class NettyClientInitializer(private var listener: MessageListener) : ChannelInitializer<SocketChannel>() {
 
-    private val WRITE_WAIT_SECONDS = 30L
+    private val WRITE_WAIT_SECONDS = 3L
 
-    private val READ_WAIT_SECONDS = 15L
+    private val READ_WAIT_SECONDS = 7L
 
     @Throws(Exception::class)
     override fun initChannel(ch: SocketChannel) {

@@ -205,9 +205,11 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
 
             try {
                 mMediaPlayer = MediaPlayer.create(context, R.raw.pk_background)
-                mMediaPlayer!!.setOnPreparedListener { mMediaPlayer -> mMediaPlayer.start() }
+                mMediaPlayer!!.setOnPreparedListener { mMediaPlayer ->
+                    mMediaPlayer.start()
+                    mMediaPlayer.setVolume(SoundUtils.getRatio(), SoundUtils.getRatio())
+                }
                 mMediaPlayer!!.isLooping = true
-                mMediaPlayer!!.prepare()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -251,7 +253,9 @@ class PKFragment : BaseFragment(), IPKContract.View, MessageListener, ICountTime
                             mMediaPlayer?.release()
                             mMediaPlayer = null
 
-                            (activity as PKActivity).endPk()
+                            activity?.run {
+                                (this as PKActivity).endPk()
+                            }
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

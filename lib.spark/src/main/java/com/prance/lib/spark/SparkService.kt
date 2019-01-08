@@ -1,10 +1,7 @@
 package com.prance.lib.spark
 
-import android.app.AlertDialog
 import android.app.Service
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbEndpoint
@@ -17,7 +14,6 @@ import com.spark.teaching.answertool.usb.helper.CommunicateHelper
 import com.spark.teaching.answertool.usb.helper.ConnectHelper
 import com.spark.teaching.answertool.usb.helper.UsbListener
 import com.spark.teaching.answertool.usb.model.*
-import com.spark.teaching.answertool.util.KLog
 import java.util.*
 
 class SparkService : Service() {
@@ -78,7 +74,6 @@ class SparkService : Service() {
     private val mUsbListener = object : UsbListener {
         override fun onConnected(usbDeviceConnection: UsbDeviceConnection, `in`: UsbEndpoint, out: UsbEndpoint, serialNum: String) {
 
-            mIsUsbConnected = true
             mUsbSerialNum = serialNum
 
             // 可以开始通信了
@@ -97,7 +92,6 @@ class SparkService : Service() {
 
         override fun onDisConnected() {
 
-            mIsUsbConnected = false
             mUsbSerialNum = null
 
             CommunicateHelper.getInstance().setData(null, null, null, this)
@@ -106,9 +100,9 @@ class SparkService : Service() {
             // 不stop
 
             mHandler.post {
-                mListener.forEach({ i ->
+                mListener.forEach { i ->
                     i.onDisConnected()
-                })
+                }
             }
         }
 
@@ -132,9 +126,9 @@ class SparkService : Service() {
             addUid(uid)
 
             mHandler.post {
-                mListener.forEach({ i ->
+                mListener.forEach { i ->
                     i.onAnswerReceived(receiveAnswer)
-                })
+                }
             }
         }
 
@@ -148,9 +142,9 @@ class SparkService : Service() {
             addUid(uid)
 
             mHandler.post {
-                mListener.forEach({ i ->
+                mListener.forEach { i ->
                     i.onCardBind(reportBindCard)
-                })
+                }
             }
         }
 
@@ -270,8 +264,6 @@ class SparkService : Service() {
     }
 
     companion object {
-
-        var mIsUsbConnected: Boolean = false
 
         var mUsbSerialNum: String? = null
 

@@ -1,5 +1,6 @@
 package com.prance.teacher.features.welcome
 
+import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +16,11 @@ import com.prance.teacher.features.check.CheckKeyPadActivity
 import com.prance.teacher.features.common.NetErrorFragment
 import com.prance.teacher.features.login.model.VersionEntity
 import com.prance.teacher.features.login.view.UpdateFragment
-import java.io.File
+import android.app.PendingIntent
+import com.blankj.utilcode.util.Utils
+import com.prance.teacher.services.KillerBroadcast
+import java.util.*
+
 
 class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
 
@@ -46,6 +51,10 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
 //            finish()
 //            return
         }
+
+        //自动强行关闭应用定时，防止"不退出APP则无法更新APP"的情况。
+        startKillAlarm()
+
         mPresenter.checkVersion()
     }
 
@@ -89,4 +98,30 @@ class WelcomeActivity : BaseActivity(), IWelcomeContract.View {
         startActivity(CheckKeyPadActivity.callingIntent(this))
         finish()
     }
+
+    private val mKillHour = 5
+
+    private fun startKillAlarm() {
+        try {
+            val now = Calendar.getInstance()
+            val tomorrow = Calendar.getInstance()
+            //如果是当天凌晨，小于${mKillHour}点，则还是定到今天，否则定到明天
+            if (now.get(Calendar.HOUR_OF_DAY) > mKillHour) {
+                tomorrow.add(Calendar.DATE, 1)
+            }
+            tomorrow.set(Calendar.HOUR, mKillHour)
+            tomorrow.set(Calendar.MINUTE, 0)
+            tomorrow.set(Calendar.SECOND, 0)
+            tomorrow.set(Calendar.MILLISECOND, 0)
+            val diff = tomorrow.timeInMillis - now.timeInMillis
+            LogUtils.i("距离自动关闭应用还有\t$diff")
+            val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            val intent = Intent(KillerBroadcast.KILL)
+            val pi = PendingIntent.getBroadcast(Utils.getApp(), 0, intent, 0)
+            alarmManager.set(AlarmManager.RTC, tomorrow.timeInMillis, pi)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }
